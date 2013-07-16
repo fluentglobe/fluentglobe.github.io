@@ -1,0 +1,43 @@
+<section class="content content-area">
+
+  {% include 'breadcrumbs' %}
+
+  <div class="page-title">
+    <span class="label">{{ page.title }}</span>
+  </div>
+
+  <div class="text-content-wrap clearfix">
+    <div class="rte text-content">
+      {{ page.content }}
+    </div>
+
+    <div class="sidebar rte">
+      {% form 'contact' %}
+
+        {% if form.errors %}
+          <div class="error-message"><span>Error! Something went wrong.</span></div>
+        {% endif %}
+
+        <div class="field-wrap author">
+          <label>Name</label>
+          <input type="text" placeholder="Your name" value="" name="contact[name]" class="field {% if form.errors contains "author" %}error{% endif %}">
+        </div>
+
+        <div class="field-wrap email">
+          <label>Email</label>
+          <input type="text" placeholder="your@email.com" value="" name="contact[email]" class="field {% if form.errors contains "email" %}error{% endif %}">
+        </div>
+
+        <div class="field-wrap body">
+          <label>Message</label>
+          <textarea name="contact[comments]" class="field {% if form.errors contains "body" %}error{% endif %}"></textarea>
+        </div>
+
+        <input type="submit" class="action-button submit-button" value="Submit">
+
+      {% endform %}
+    </div>
+
+  </div>
+
+</section>

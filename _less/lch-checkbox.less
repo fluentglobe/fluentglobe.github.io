@@ -1,0 +1,53 @@
+/*
+    File: lch-checkbox.less
+    Desccription: This is a very simple mixin allowing you to style checkboxes with pure CSS.
+    Author: Boyan `netoholic` Yordanov
+    Date: 07.02.2013
+    Licence: You may use this mixin in any way you might want.
+*/
+
+
+//    @background - Checkbox background
+//    @color - Text color
+//    @fontSize - Font size
+//    @width - Width of the checkbox
+//    @height - Height of the checkbox
+//    @lineHeight - Line height for the checkbox
+//    @textAlign - Text align for the text 
+//    @display - Display type
+//    @border - Border style/color/size
+//    @borderRadius - Border radius
+//    @hoverColor - Text color for hover state
+//    @hoverBackground - Background for hover state
+//    @activeColor - Text colro for active state
+//    @activeBackground - Background for active state
+
+
+.lch-checkbox(@background: "none", @color: "#333", @fontSize: ".8em", @width: "auto", @height: "auto", @lineHeight: "100%", @textAlign: "left", @display: "inline", @border: "none", @borderRadius: "none", @hoverColor: "#999", @hoverBackground: "none", @activeColor: "red", @activeBackground: "none"){
+    position: absolute;
+    top: -9999em;
+      
+    &+label{
+        background: @background;
+        color: @color;
+        font-size: @fontSize;
+        width: @width;
+        height: @height;
+        line-height: @lineHeight;
+        text-align: @textAlign;
+        display: @display;
+        border: @border;
+        border-radius: @borderRadius;
+        cursor: pointer;
+    }   
+    
+    &+label:hover{
+        color: @hoverColor;
+        background: @hoverBackground;
+    }
+    
+    &:checked + label{
+        background: @activeBackground;
+        color: @activeColor;
+    }
+}

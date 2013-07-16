@@ -1,0 +1,8 @@
+server_port: 9191
+title: Memory Widget
+exclude: .git, _site, Jakefile, test.html, README.mdown
+destination: _site
+concatenate:
+- js/prefix|modernizr|essential.js
+- js/memory.js
+#- js/prefix+modernizr+essential.min.js

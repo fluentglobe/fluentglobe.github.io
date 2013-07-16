@@ -1,0 +1,23 @@
+<section class="content content-area">
+
+  {% include 'breadcrumbs' %}
+
+  <div class="page-title">
+    <span class="label">{{ page.title }}</span>
+  </div>
+
+  <div class="text-content-wrap clearfix">
+    <div class="rte text-content">
+      {{ page.content }}
+    </div>
+
+    {% if settings.display-pages-sidebar %}
+    <div class="sidebar rte">
+      {% if settings.pages-sidebar-title %}<h2 class="title">{{ settings.pages-sidebar-title }}</h2>{% endif %}
+      {{ settings.pages-sidebar-content }} 
+    </div>
+    {% endif %}
+
+  </div>
+
+</section>

@@ -1,0 +1,21 @@
+<ul class="pagination">
+    
+    <li class="previous">
+        {% if paginate.previous %}
+            {{ 'Previous' | link_to: paginate.previous.url }}
+        {% else %} 
+            Previous 
+        {% endif %}
+    </li>
+
+    <li class="position">Page {{ paginate.current_page }} of {{ paginate.pages }}</li>
+    
+    <li class="next">
+        {% if paginate.next %}
+            {{ 'Next' | link_to: paginate.next.url }}
+        {% else %} 
+            Next 
+        {% endif %}
+    </li>
+    
+</ul><!-- .pagination -->

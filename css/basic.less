@@ -1,0 +1,140 @@
+@import "common/variables-and-mixins";
+
+// CSS Reset 
+@import "bootstrap/reset";
+
+* { box-sizing: border-box; }
+
+// Core variables and mixins
+@import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
+@import "bootstrap/mixins";
+
+
+// Grid system and page structure
+// @import "bootstrap/scaffolding";
+
+// Styled patterns and elements
+// @import "bootstrap/type";
+// @import "bootstrap/code";
+// @import "bootstrap/forms";
+// @import "bootstrap/tables";
+
+// Alert Styles
+// @import "bootstrap/alerts";
+
+// Components: common
+// @import "bootstrap/sprites.less";
+// @import "bootstrap/dropdowns.less";
+// @import "bootstrap/wells.less";
+// @import "bootstrap/component-animations.less";
+// @import "bootstrap/close.less";
+
+//For more check out bootrap.less
+//@import "connectivity.less";
+
+//@import "inputs.less";
+@import "lch-checkbox.less";
+
+.demo-checkbox{
+    //    @background - Checkbox background
+    //    @color - Text color
+    //    @fontSize - Font size
+    //    @width - Width of the checkbox
+    //    @height - Height of the checkbox
+    //    @lineHeight - Line height for the checkbox
+    //    @textAlign - Text align for the text 
+    //    @display - Display type
+    //    @border - Border style/color/size
+    //    @borderRadius - Border radius
+    //    @hoverColor - Text color for hover state
+    //    @hoverBackground - Background for hover state
+    //    @activeColor - Text colro for active state
+    //    @activeBackground - Background for active state
+
+    .lch-checkbox(#fff, #333, 13px, 50px, 20px, 20px, center, block, 1px solid #ccc, 5px, #666, #efefef, #fff, #27b4ff);
+}
+
+input {
+  .neatTick();
+}
+
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+
+    font-family: "museo-sans", Gill Sans, Open Sans, Tahoma, Arial;
+    font-weight: 300;
+}
+
+html body.splash { 
+    //background-image: url(../images/inthepark.jpg); 
+    //background-image: url(../images/free-blurred-backgrounds.jpg); 
+    //background-image: url(../images/girl-on-terrace.jpg);
+
+    #stuck {
+        position:fixed;
+        width:100%; height:100%;
+        z-index: -9999;
+        background-image: url(../images/Persienner.jpg);
+        background-position: bottom left;
+        background-repeat: no-repeat; 
+        background-size: 100% auto;
+
+        padding-top: 200px;
+        color: white;
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+
+        h3 {
+            position: relative;
+            left: 700px;
+            margin-bottom: 10px;
+            //text-align: center;
+            font-size: 2.4em;
+            text-shadow: 0px 1px 1px black;
+            font-weight: 300;
+        }
+        p {
+            position: relative;
+            left: 700px;
+            font-size: 1.2em;
+            width: 680px;
+            //margin: 0 auto;
+            text-shadow: 0px 1px 1px black;
+        }
+    }
+
+}
+
+.splash article {
+    position:relative; //absolute
+    width: 100%;
+    margin-top: 700px; min-width: 980px;
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+
+    section {
+        padding-top: 3em;
+        padding-bottom: 3em;
+        width: 100%;
+        margin: 0 auto;
+        background-color: white;
+        box-shadow: 0 5px 5px #454545;
+        color: #474747;
+
+        h3 {
+            text-align: center;
+            font-size: 2em;
+        }
+        p {
+            width: 680px;
+            margin: 0 auto;
+        }
+    }
+}
+
+//@import "animated";
+//@import "keyframes";
