@@ -65,9 +65,20 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
     </div>
 
     <div id="stuck">
+<!--         <figure id="shelf"></figure>
+        <figure id="desk"></figure>
 
-        <h3>Learn Portuguese</h3>
-        <p>Language and culture in your own time and comfort</p>
+        <figure id="sofa"></figure>
+ -->
+        <form>
+        <h3>Start Learning <br>Portuguese today.</h3>
+        <p>Language and culture in your own time and comfort.
+        Sign up and we'll mail you ideas and help you make a plan for free</p>
+
+        <input placeholder="Your Name" name="name" type="text" style="width:100%">
+        <input placeholder="e-mail" name="email" type="email" style="width:100%">
+        <button class="btn primary">Get Free Plan for Learning</button>
+        </form>
     </div>
 
     <article>
@@ -82,6 +93,22 @@ Creating beautiful eBooks has never been so easy. With the BookMaker you can wri
         </section>
     </article>
 
+
+    <script>
+        !function() {
+
+
+        var stuck = document.getElementById("stuck");
+        var freeBit = stuck.offsetHeight;
+        var article = document.querySelector('article');
+
+        article.style.marginTop = freeBit+"px";
+        // window.addEventListener("resize",function() {
+        //     article.style.marginTop = freeBit+"px";
+        // });
+
+        }();
+    </script>
 </body>
 </html>
 
