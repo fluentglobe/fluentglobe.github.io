@@ -75,6 +75,14 @@ body {
 html body.splash { 
 
     #stuck {
+        .lines {
+            position: absolute;
+            left:0; right:0;
+            top:0; bottom:0;
+            padding:0; margin:0;
+            background: transparent url(../images/line.png);
+        }
+
         form {
             position: absolute;
             top:50%; margin-top: -110px;
@@ -141,28 +149,41 @@ html body.splash {
         width: 100%;
         margin-top: @top-splash-room; // will be overridden by struck measurement
         min-width: 980px;
+        overflow: hidden;
     }
 
     
-    /* Phone < 5 portrait: */
-    /* iPhone 5 portrait: */
-    // @media screen and (device-aspect-ratio: 2/3) and (orientation:portrait),
-    // @media screen and (device-aspect-ratio: 40/71) and (orientation:portrait) {
-
-    // }
-
     @media only screen 
     and (min-device-width : 320px) 
     and (max-device-width : 568px) 
     and (orientation : portrait) {
 
         #stuck {
-            height:520px;
             min-height: initial;
-            max-height: initial;
+            max-height: 620px;
 
             background-position: top center;
             background-size: auto 568px;
+        }
+        article {
+            min-width: initial;
+        }
+    }
+
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 568px) 
+    and (orientation : landscape) {
+
+        #stuck {
+            min-height: 320px;
+            max-height: 520px;
+
+            background-position: top center;
+            background-size: auto 568px;
+        }
+        article {
+            min-width: initial;
         }
     }
 
@@ -185,18 +206,6 @@ html body.splash {
     //     }
     // }
 }
-
-
-html body.splash-garden {
-
-    .stuck-on-body(url(../images/garden-reading-ipad.jpg));
-
-}
-html body.splash-color {
-
-    .stuck-on-body(url(../images/color1.jpg));
-
-}    
 
 
 // Phone < 5:
@@ -223,23 +232,17 @@ html body.splash-color {
 @media screen and (device-aspect-ratio: 3/4) {}
 
 
-html body.splash-blinds {
-    #stuck {
-        background-image: url(../images/persienner-slice.png);
-        background-position: top left;
-        background-repeat-y: no-repeat; 
-        background-size: auto 50%;
-    }
-}
+html body.splash-garden {
 
-html body.splash-books {
-    #stuck {
-        //background-image: url(../images/bookshelf-white.jpg);
-        background-position: top left;
-        background-repeat: no-repeat; 
-        //background-size: auto 100%;
-    }
+    .stuck-on-body(url(../images/garden-reading-ipad.jpg));
+
 }
+html body.splash-color {
+
+    .stuck-on-body(url(../images/color1.jpg));
+
+}    
+
 
 .splash article {
 

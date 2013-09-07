@@ -1676,6 +1676,16 @@ body {
   font-family: "museo-sans", Gill Sans, Open Sans, Tahoma, Arial;
   font-weight: 300;
 }
+html body.splash #stuck .lines {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent url(../images/line.png);
+}
 html body.splash #stuck form {
   position: absolute;
   top: 50%;
@@ -1703,11 +1713,21 @@ html body.splash #stuck p {
   position: relative;
   text-shadow: 0px 1px 1px black;
 }
-html body.splash-garden {
-  /* Phone < 5 portrait: */
-
-  /* iPhone 5 portrait: */
-
+@media screen and (device-aspect-ratio: 2/3) {
+  
+}
+@media screen and (device-aspect-ratio: 40/71) and (orientation: landscape), only screen and (max-height: 321px) {
+  html body.splash #stuck {
+    height: 100%;
+    min-height: initial;
+    max-height: initial;
+  }
+  html body.splash article {
+    margin-top: 100%;
+  }
+}
+@media screen and (device-aspect-ratio: 3/4) {
+  
 }
 html body.splash-garden #stuck {
   position: fixed;
@@ -1728,14 +1748,28 @@ html body.splash-garden article {
   width: 100%;
   margin-top: 650px;
   min-width: 980px;
+  overflow: hidden;
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-garden #stuck {
-    height: 520px;
     min-height: initial;
-    max-height: initial;
+    max-height: 620px;
     background-position: top center;
     background-size: auto 568px;
+  }
+  html body.splash-garden article {
+    min-width: initial;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+  html body.splash-garden #stuck {
+    min-height: 320px;
+    max-height: 520px;
+    background-position: top center;
+    background-size: auto 568px;
+  }
+  html body.splash-garden article {
+    min-width: initial;
   }
 }
 @media screen and (device-aspect-ratio: 3/4) and (orientation: portrait) {
@@ -1743,12 +1777,6 @@ html body.splash-garden article {
     background-position: bottom center;
     background-size: auto 100%;
   }
-}
-html body.splash-color {
-  /* Phone < 5 portrait: */
-
-  /* iPhone 5 portrait: */
-
 }
 html body.splash-color #stuck {
   position: fixed;
@@ -1769,14 +1797,28 @@ html body.splash-color article {
   width: 100%;
   margin-top: 650px;
   min-width: 980px;
+  overflow: hidden;
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-color #stuck {
-    height: 520px;
     min-height: initial;
-    max-height: initial;
+    max-height: 620px;
     background-position: top center;
     background-size: auto 568px;
+  }
+  html body.splash-color article {
+    min-width: initial;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: landscape) {
+  html body.splash-color #stuck {
+    min-height: 320px;
+    max-height: 520px;
+    background-position: top center;
+    background-size: auto 568px;
+  }
+  html body.splash-color article {
+    min-width: initial;
   }
 }
 @media screen and (device-aspect-ratio: 3/4) and (orientation: portrait) {
@@ -1784,32 +1826,6 @@ html body.splash-color article {
     background-position: bottom center;
     background-size: auto 100%;
   }
-}
-@media screen and (device-aspect-ratio: 2/3) {
-  
-}
-@media screen and (device-aspect-ratio: 40/71) and (orientation: landscape), only screen and (max-height: 321px) {
-  html body.splash #stuck {
-    height: 100%;
-    min-height: initial;
-    max-height: initial;
-  }
-  html body.splash article {
-    margin-top: 100%;
-  }
-}
-@media screen and (device-aspect-ratio: 3/4) {
-  
-}
-html body.splash-blinds #stuck {
-  background-image: url(../images/persienner-slice.png);
-  background-position: top left;
-  background-repeat-y: no-repeat;
-  background-size: auto 50%;
-}
-html body.splash-books #stuck {
-  background-position: top left;
-  background-repeat: no-repeat;
 }
 .splash article h1,
 .splash article h2,
