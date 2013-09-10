@@ -46,6 +46,7 @@
 
     <style>
     /*body { background: #dfe;}*/
+
     </style>
 </head>
 <body class="splash splash-color">
@@ -68,14 +69,36 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         <figure class="lines"></figure>
 
         <form>
-        <h3>Start Learning <br>Portuguese today.</h3>
-        <p>Language and culture in your own time and comfort.
+        <h3 lang="en">Start Learning <br>Portuguese today.</h3>
+        <h3 lang="es">Start Learning <br>Portuguese today.</h3>
+        <h3 lang="de">Start Learning <br>Portuguese today.</h3>
+
+        <p lang="en">Language and culture in your own time and comfort.
+        Sign up and we'll mail you ideas and help you make a plan for free</p>
+        <p lang="es">Language and culture in your own time and comfort.
+        Sign up and we'll mail you ideas and help you make a plan for free</p>
+        <p lang="de">Language and culture in your own time and comfort.
         Sign up and we'll mail you ideas and help you make a plan for free</p>
 
         <input placeholder="Your Name" name="name" type="text" style="width:100%">
         <input placeholder="e-mail" name="email" type="email" style="width:100%">
         <button class="btn primary">Get Free Plan for Learning</button>
         </form>
+    </div>
+
+    <div class="langChoice">
+        <select name="lang">
+            <option>English</option>
+            <option>Francais</option>
+            <option>Deutch</option>
+            <option>Espaniol</option>
+            <option>Portuguese</option>
+            <option>Italiano</option>
+            <option>Polish</option>
+            <option>Czech</option>
+            <option>Chinese</option>
+            <option>Japanese</option>
+        </select>
     </div>
 
     <article>
@@ -105,6 +128,23 @@ Creating beautiful eBooks has never been so easy. With the BookMaker you can wri
         // });
 
         }();
+    </script>
+    <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+    <style type="text/css" media="screen, projection">
+        @import url(http://assets.freshdesk.com/widget/freshwidget.css); 
+    </style> 
+    <script type="text/javascript">
+        FreshWidget.init("", {"queryString": "&widgetType=popup", "widgetType": "popup", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#13BE5A", "backgroundImage": "", "alignment": "2", "offset": "135px", "formHeight": "500px", "url": "http://help.fluentglobe.com"} );
+    </script>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-43938501-1', 'fluentglobe.com');
+    ga('send', 'pageview');
+
     </script>
 </body>
 </html>

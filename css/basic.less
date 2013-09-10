@@ -60,6 +60,165 @@ input {
   .neatTick();
 }
 
+[lang=en] { 
+    // html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=fr] { 
+    html[lang=en] &,
+    // html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=de] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    // html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=es] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    // html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=pt] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    // html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=it] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    // html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=pl] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    // html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=cs] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    // html[lang=cs] &, // Czech
+    html[lang=ch] &,
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=ch] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
+[lang=jp] { 
+    html[lang=en] &,
+    html[lang=fr] &,
+    html[lang=de] &,
+    html[lang=es] &,
+    html[lang=pt] &,
+    html[lang=it] &,
+    html[lang=pl] &,
+    html[lang=cs] &, // Czech
+    html[lang=ch] &
+    // html[lang=jp] &
+     {
+        display:none; 
+    }
+}
+
 html {
     height: 100%;
 }
@@ -80,7 +239,9 @@ html body.splash {
             left:0; right:0;
             top:0; bottom:0;
             padding:0; margin:0;
-            background: transparent url(../images/line.png);
+            background-image: url(../images/line.png); 
+                // -webkit-radial-gradient(50% 120%, circle cover, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+            opacity: .4;
         }
 
         form {
@@ -270,3 +431,10 @@ html body.splash-color {
 
 //@import "animated";
 //@import "keyframes";
+
+
+.langChoice {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
