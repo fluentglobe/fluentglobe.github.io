@@ -1,6 +1,31 @@
-server_port: 9191
-title: Memory Widget
-exclude: _site, Jakefile, test.html, README.mdown
+#server_port: 9191
+url: http://fluentglobe.com
+img_url: http://fluentglobe.com/images
+a_url: http://a.fluentglobe.com
+title: Fluent Globe
+description: A world vibrant with people learning languages and culture.
+email: people@fluentglobe.com
+domain: fluentglobe.com
+analytics_id: UA-43938501-1
+
+exclude: 
+- _site
+- Jakefile
+- test.html
+- README.mdown
+- Rakefile
+
+lsi: false
+pygments: true
+markdown: maruku
+permalink: pretty
+maruku:
+  use_tex: false
+  use_divs: false
+  png_dir: images/latex
+  png_url: /images/latex
+safe: false
+lessc: lessc
 concatenate:
 - js/prefix|modernizr|essential.js
 - js/memory.js
