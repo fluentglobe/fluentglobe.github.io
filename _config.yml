@@ -9,6 +9,7 @@ domain: fluentglobe.com
 analytics_id: UA-43938501-1
 
 exclude: 
+- fluent-globe-4461545
 - _site
 - Jakefile
 - test.html
