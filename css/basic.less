@@ -330,7 +330,7 @@ html body.splash {
         width: 100%;
         margin-top: @top-splash-room; // will be overridden by struck measurement
         min-width: 980px;
-        overflow: hidden;
+        overflow: visible;
     }
 
     
@@ -426,6 +426,14 @@ html body.splash-color {
 
 
 .splash article {
+    > header {
+        position:absolute;
+        top: -60px;
+        height: 60px;
+        left:0; right:0;
+        background-color: rgb(40,40,40);
+        background-color: rgba(0,0,0,.7);
+    }
 
     h1, h2, h3, h4, h5, h6 { font-weight: 300; }
 
@@ -457,4 +465,28 @@ html body.splash-color {
     position: absolute;
     top: 20px;
     right: 20px;
+}
+
+.constrained {
+    overflow: visible;
+
+    .centered-content {
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+}
+
+footer {
+    position: relative;
+    padding: 75px 0 25px 0;
+    background-color: @footer-bg-color;
+    color: #888;
+    line-height: 1.5;
+
+    a {
+        color: @fluent-red;
+        text-decoration: none;
+    }
 }
