@@ -344,17 +344,31 @@ html body.splash-color {
             margin: 0 auto;
         }
     }
+
+    section.even {
+        background-color: rgb(243,243,243);
+        border-top: 1px solid rgb(236,236,236);
+        border-bottom: 1px solid rgb(236,236,236);
+    }
+
+    > footer {
+        position: relative;
+        padding: 75px 0 25px 0;
+        background-color: @footer-bg-color;
+        color: #888;
+        line-height: 1.5;
+
+        a {
+            color: @fluent-red;
+            text-decoration: none;
+        }
+    }
+
 }
 
 //@import "animated";
 //@import "keyframes";
 
-
-.langChoice {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
 
 .constrained {
     overflow: visible;
@@ -367,19 +381,17 @@ html body.splash-color {
     }
 }
 
-footer {
-    position: relative;
-    padding: 75px 0 25px 0;
-    background-color: @footer-bg-color;
-    color: #888;
-    line-height: 1.5;
+.centerContainer {
+    position: 900px;
+    margin: 0 auto;
+}
 
-    a {
-        color: @fluent-red;
-        text-decoration: none;
+.follow {
+    text-align: center;
+
+    h4 {
+        font-size: 15px;
+        padding: 15px 0 5px 0;
     }
 }
 
-.social-icon {
-    font-family: socialicoregular;
-}

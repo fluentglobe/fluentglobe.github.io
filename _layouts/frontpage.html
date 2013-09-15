@@ -6,17 +6,11 @@ body-class: splash splash-color
 ---
 {{ content }}
 
-<footer class="constrained">
-	{% include page-footer-copyright.html %}
-</footer>
-
-
     <script>
         !function() {
 
-
         var stuck = document.getElementById("stuck");
-        var freeBit = stuck.offsetHeight;
+        var maxHeight = stuck.offsetWidth * 0.8, freeBit = Math.min(stuck.offsetHeight,maxHeight);
         var article = document.querySelector('article');
 
         article.style.marginTop = freeBit+"px";
