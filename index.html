@@ -17,60 +17,82 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 <!--
     </div>
 -->
+	<script>
+
+	</script>
+
     <div id="stuck">
         <figure class="lines"></figure>
-        <img src="images/kid-globe.png">
+        <aside class="we-love">
+	        <img width="180" src="images/two-on-globe.png">
+    
+    		<span style="display:inline-block; height:90px;"></span>
+
+            <h3 lang="en">We love languages</h3>
+            <h3 lang="es">Nos encantan los idiomas</h3>
+            <h3 lang="de">Wir lieben Sprachen</h3>
+
+            <p lang="en">- We'll mail you ideas and help you make a plan for free.</p>
+            <p lang="es">- Te enviamos las ideas y te ayudamos a hacer un plan de forma gratuita.</p>
+            <p lang="de">- Wir senden Ihnen Ideen und helfen Ihnen, einen Plan kostenlos zu machen.</p>
+	    </aside>
 
         <form>
         <fieldset>
+        	<!--
             <img src="images/henrik.png" alt="Henrik">
             <img src="images/katty.png" alt="Katty">
+            -->
 
-            <h3>We love languages</h3>
-            <p>- We'll mail you ideas and help you make a plan for free.</p>
-        </fieldset>
+            </fieldset>
 
         <fieldset>
         <h3 lang="en">Start Learning today.</h3>
         <h3 lang="es">Start Learning today.</h3>
-        <h3 lang="de">Start Learning today.</h3>
+        <h3 lang="de">Start Heute zu Lernen.</h3>
 
         <p lang="en">Language and culture in your own time and comfort. </p>
-        <p lang="es">Language and culture in your own time and comfort. </p>
-        <p lang="de">Language and culture in your own time and comfort. </p>
+        <p lang="es">Lengua y cultura en tu propio tiempo y comodidad. </p>
+        <p lang="de">Sprache und Kultur in Ihrer eigenen Zeit und Komfort. </p>
 
         <input placeholder="Your Name" name="name" type="text" size="15">
         <input placeholder="e-mail" name="email" type="email" size="15">
-        <button class="btn primary double-corner">Get Free Plan for Learning</button>
+        <button class="btn primary double-corner">
+        	<span lang="en">Get Free Plan for Learning</span>
+        	<span lang="es">Obtenga un plan de aprendizaje gratis</span>
+        	<span lang="de">Holen Sie sich einen Gratis-Plan für das Lernen</span>
+        </button>
         </fieldset>
+
+        <div class="follow">
+        	<h4>Follow Fluent Globe</h4>
+        	<nav>
+        	<a class="social-icon" href="https://www.facebook.com/fluentglobe" target="_blank">f</a>
+        	<a class="social-icon" href="https://twitter.com/fluentglobe" target="_blank">l</a>
+        	<a class="social-icon" href="https://www.linkedin.com/company/fluentglobe" target="_blank">i</a>
+        	</nav>
+        </div>
 
         </form>
 
         <div class="langChoice" role="form">
-            <select name="lang">
-                <option>English</option>
-                <option>Francais</option>
-                <option>Deutch</option>
-                <option>Espaniol</option>
-                <option>Portuguese</option>
-                <option>Italiano</option>
-                <option>Polish</option>
-                <option>Czech</option>
-                <option>Chinese</option>
-                <option>Japanese</option>
+            <select name="lang" onchange="Resolver('page').set('state.lang',this.value);">
+                <option value="en">English</option>
+                <option value="fr">Francais</option>
+                <option value="de">Deutch</option>
+                <option value="es">Espaniol</option>
+                <option value="pt">Portuguese</option>
+                <option value="it">Italiano</option>
+                <option value="pl">Polish</option>
+                <option value="cs">Czech</option>
+                <option value="ch">Chinese</option>
+                <option value="jp">Japanese</option>
             </select>
         </div>
 
-        <div class="follow">
-        	<h3>Follow Fluent Globe</h3>
-
-        	<a class="facebook" href="https://www.facebook.com/fluentglobe" target="_blank">FB</a>
-        	<a class="twitter" href="https://twitter.com/fluentglobe" target="_blank">T</a>
-        	<a class="linkedin" href="https://www.linkedin.com/company/fluentglobe" target="_blank">in</a>
-        </div>
     </div>
 
-    <header></header>
+    <div class="centerContainer"></div>
 
     <article>
     	<header></header>
@@ -85,7 +107,11 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
             <img src="images/ipad_frame.png">
         </section>
 
-        <section style="height:200px;background-color: rgb(243,243,243);border-top:1px solid rgb(236,236,236);border-bottom:1px solid rgb(236,236,236);">
+        <section style="height:200px;">
         </section>
+
+		<footer class="constrained">
+			{% include page-footer-copyright.html %}
+		</footer>
     </article>
 

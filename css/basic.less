@@ -79,17 +79,10 @@ input {
 .supportLang(ch);
 .supportLang(jp);
 
-html {
-    height: 100%;
+::selection {
+    background: rgba(255,0,70,0.8);
+    color: white;
 }
-body {
-    height: 100%;
-    margin: 0;
-
-    font-family: "museo-sans", Gill Sans, Open Sans, Tahoma, Arial;
-    font-weight: 300;
-}
-
 
 html body.splash { 
 
@@ -100,13 +93,23 @@ html body.splash {
             top:0; bottom:0;
             padding:0; margin:0;
             background-image: url(../images/line.png); 
-                // -webkit-radial-gradient(50% 120%, circle cover, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
-            opacity: .4;
+            // -webkit-radial-gradient(50% 120%, circle cover, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+            // opacity: .4;
+        }
+
+        .we-love {
+            position: absolute;
+            top:10px; left:20px;
+            width: 450px;
+
+            img {
+                float: left;
+            }
         }
 
         form {
             position: absolute;
-            top:50%; margin-top: -110px;
+            top:50%; margin-top: -100px;
             left:50%; width:340px; margin-left: -170px;
             // position: relative;
             // margin-top: 20%;
@@ -154,11 +157,34 @@ html body.splash {
             right: 0;
             width: 100px;
         }
+
+        .btn.primary {
+            background: @fluent-red;
+        }
+        
+        .social-icon {
+            font-family: "socialicoregular";
+            font-size: 40px;
+            color: #888;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+    .langChoice {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        select {
+            background: @fluent-red;
+        }
+    }
+
     }
 
 }
 
 @top-splash-room: 650px;
+@top-splash-room-640: 560px;
 @top-splash-max: 800px;
 
     //background-image: url(../images/inthepark.jpg); 
@@ -194,6 +220,7 @@ html body.splash {
     }
 
     
+    // iPhone portrait
     @media only screen 
     and (min-device-width : 320px) 
     and (max-device-width : 568px) 
@@ -207,10 +234,12 @@ html body.splash {
             background-size: auto 568px;
         }
         article {
+            margin-top: @top-splash-room-640;
             min-width: initial;
         }
     }
 
+    // iPhone landscape
     @media only screen 
     and (min-device-width : 320px) 
     and (max-device-width : 568px) 

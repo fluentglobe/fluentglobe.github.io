@@ -772,7 +772,7 @@ input,
 button,
 select,
 textarea {
-  font-family: "museo-sans", Gill Sans, Open Sans, Tahoma, Arial, sans-serif;
+  font-family: museo, FjordOne, sans-serif;
 }
 label {
   display: block;
@@ -1610,14 +1610,9 @@ html[lang=ch] body [lang=jp] {
 [lang=jp] [lang=ch] {
   display: none !important;
 }
-html {
-  height: 100%;
-}
-body {
-  height: 100%;
-  margin: 0;
-  font-family: "museo-sans", Gill Sans, Open Sans, Tahoma, Arial;
-  font-weight: 300;
+::selection {
+  background: rgba(255, 0, 70, 0.8);
+  color: white;
 }
 html body.splash #stuck .lines {
   position: absolute;
@@ -1628,12 +1623,20 @@ html body.splash #stuck .lines {
   padding: 0;
   margin: 0;
   background-image: url(../images/line.png);
-  opacity: .4;
+}
+html body.splash #stuck .we-love {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 450px;
+}
+html body.splash #stuck .we-love img {
+  float: left;
 }
 html body.splash #stuck form {
   position: absolute;
   top: 50%;
-  margin-top: -110px;
+  margin-top: -100px;
   left: 50%;
   width: 340px;
   margin-left: -170px;
@@ -1672,6 +1675,24 @@ html body.splash #stuck .double-corner {
   bottom: 10px;
   right: 0;
   width: 100px;
+}
+html body.splash #stuck .btn.primary {
+  background: #fb441b;
+}
+html body.splash #stuck .social-icon {
+  font-family: "socialicoregular";
+  font-size: 40px;
+  color: #888;
+  text-decoration: none;
+  line-height: 1;
+}
+html body.splash #stuck .langChoice {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+html body.splash #stuck .langChoice select {
+  background: #fb441b;
 }
 @media screen and (device-aspect-ratio: 2/3) {
   
@@ -1718,6 +1739,7 @@ html body.splash-garden article {
     background-size: auto 568px;
   }
   html body.splash-garden article {
+    margin-top: 560px;
     min-width: initial;
   }
 }
@@ -1767,6 +1789,7 @@ html body.splash-color article {
     background-size: auto 568px;
   }
   html body.splash-color article {
+    margin-top: 560px;
     min-width: initial;
   }
 }
@@ -1821,10 +1844,21 @@ html body.splash-color article {
   width: 680px;
   margin: 0 auto;
 }
-.langChoice {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.splash article section.even {
+  background-color: #f3f3f3;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+}
+.splash article > footer {
+  position: relative;
+  padding: 75px 0 25px 0;
+  background-color: #1d1d1d;
+  color: #888;
+  line-height: 1.5;
+}
+.splash article > footer a {
+  color: #fb441b;
+  text-decoration: none;
 }
 .constrained {
   overflow: visible;
