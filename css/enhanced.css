@@ -1,3 +1,12 @@
+/*
+	Global variables and mixins for common Essential Elements
+
+	Import this at the beginning of your stylesheets and override global variables with 
+	values specific to the application.
+*/
+/*
+	Style radio and checkbox
+*/
 .clearfix {
   *zoom: 1;
 }
