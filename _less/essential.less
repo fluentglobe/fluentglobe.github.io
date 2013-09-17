@@ -540,5 +540,36 @@
     }
 }
 
+.extraBackground(@url, @opacity: 1, @zIndex: -9999) {
+    position: absolute;
+    left:0; right:0;
+    top:0; bottom:0;
+    padding:0; margin:0;
+    background-image: @url; 
+    // -webkit-radial-gradient(50% 120%, circle cover, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+    opacity: @opacity;
+    z-index: @zIndex;
+}
 
+.center-box-horz(@width: 200px) {
+	position: absolute;
+	left: 50%;
+	width: @width;
+	margin-left: -0.5 * @width;
+}
+
+.center-box-vert(@width: 200px) {
+	position: absolute;
+	left: 50%;
+	width: @width;
+	margin-left: -0.5 * @width;
+}
+
+.list-as-menu() {
+	ol, ul { list-style: none; margin-left: 0; }
+	li { text-indent: 0; }
+	a {
+		text-decoration: none;
+	}
+}
 

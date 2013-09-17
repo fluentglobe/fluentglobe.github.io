@@ -24,7 +24,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
     <div id="stuck">
         <figure class="lines"></figure>
         <aside class="we-love">
-	        <img width="180" src="images/two-on-globe.png">
+	        <img width="280" src="images/sit-by-globe.png">
     
     		<span style="display:inline-block; height:90px;"></span>
 
@@ -38,7 +38,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 	    </aside>
 
         <form>
-        <fieldset>
+          <fieldset>
         	<!--
             <img src="images/henrik.png" alt="Henrik">
             <img src="images/katty.png" alt="Katty">
@@ -46,34 +46,34 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
             </fieldset>
 
-        <fieldset>
-        <h3 lang="en">Start Learning today.</h3>
-        <h3 lang="es">Start Learning today.</h3>
-        <h3 lang="de">Start Heute zu Lernen.</h3>
+          <fieldset>
+          <h3 lang="en">Start Learning today.</h3>
+          <h3 lang="es">Start Learning today.</h3>
+          <h3 lang="de">Start Heute zu Lernen.</h3>
 
-        <p lang="en">Language and culture in your own time and comfort. </p>
-        <p lang="es">Lengua y cultura en tu propio tiempo y comodidad. </p>
-        <p lang="de">Sprache und Kultur in Ihrer eigenen Zeit und Komfort. </p>
+          <p lang="en">Language and culture in your own time and comfort. </p>
+          <p lang="es">Lengua y cultura en tu propio tiempo y comodidad. </p>
+          <p lang="de">Sprache und Kultur in Ihrer eigenen Zeit und Komfort. </p>
 
-        <input placeholder="Your Name" name="name" type="text" size="15">
-        <input placeholder="e-mail" name="email" type="email" size="15">
-        <button class="btn primary double-corner">
-        	<span lang="en">Get Free Plan for Learning</span>
-        	<span lang="es">Obtenga un plan de aprendizaje gratis</span>
-        	<span lang="de">Holen Sie sich einen Gratis-Plan für das Lernen</span>
-        </button>
-        </fieldset>
-
-        <div class="follow">
-        	<h4>Follow Fluent Globe</h4>
-        	<nav>
-        	<a class="social-icon" href="https://www.facebook.com/fluentglobe" target="_blank">f</a>
-        	<a class="social-icon" href="https://twitter.com/fluentglobe" target="_blank">l</a>
-        	<a class="social-icon" href="https://www.linkedin.com/company/fluentglobe" target="_blank">i</a>
-        	</nav>
-        </div>
+          <input placeholder="Your Name" name="name" type="text" size="15">
+          <input placeholder="e-mail" name="email" type="email" size="15">
+          <button class="btn primary double-corner">
+          	<span lang="en">Get Free Plan for Learning</span>
+          	<span lang="es">Obtenga un plan de aprendizaje gratis</span>
+          	<span lang="de">Holen Sie sich einen Gratis-Plan für das Lernen</span>
+          </button>
+          </fieldset>
 
         </form>
+
+        <div class="follow">
+          <h4>Follow Fluent Globe</h4>
+          <nav>
+          <a class="social-icon" href="https://www.facebook.com/fluentglobe" target="_blank">f</a>
+          <a class="social-icon" href="https://twitter.com/fluentglobe" target="_blank">l</a>
+          <a class="social-icon" href="https://www.linkedin.com/company/fluentglobe" target="_blank">i</a>
+          </nav>
+        </div>
 
         <div class="langChoice" role="form">
             <select name="lang" onchange="Resolver('page').set('state.lang',this.value);">
@@ -89,6 +89,46 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
                 <option value="jp">Japanese</option>
             </select>
         </div>
+
+        <nav id="main-menu" role="navigation">
+            <a href="#main-menu" title="Show navigation">Show navigation</a>
+            <a href="#" title="Hide navigation">Hide navigation</a>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li>
+                    <a href="/">Blog</a>
+                    <ul>
+                        <li><a href="/">Design</a></li>
+                        <li><a href="/">HTML</a></li>
+                        <li><a href="/">CSS</a></li>
+                        <li><a href="/">JavaScript</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/">Work</a>
+                    <ul>
+                        <li><a href="/">Web Design</a></li>
+                        <li><a href="/">Typography</a></li>
+                        <li><a href="/">Front-End</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/">English</a>
+                    <ul>
+                        <li value="en"><a>English</a></li>
+                        <li value="fr"><a>Francais</a></li>
+                        <li value="de"><a>Deutch</a></li>
+                        <li value="es"><a>Espaniol</a></li>
+                        <li value="pt"><a>Portuguese</a></li>
+                        <li value="it"><a>Italiano</a></li>
+                        <li value="pl"><a>Polish</a></li>
+                        <li value="cs"><a>Czech</a></li>
+                        <li value="ch"><a>Chinese</a></li>
+                        <li value="jp"><a>Japanese</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
 
     </div>
 

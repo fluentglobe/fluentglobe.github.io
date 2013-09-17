@@ -22,3 +22,41 @@
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
 	// iPad landscape
 }
+
+/* 640 */
+@media only screen and ( max-width: 40em ) 
+{
+    #main-menu
+    {
+        position: relative;
+
+        > a {
+        }
+        &:not( :target ) > a:first-of-type,
+        &:target > a:last-of-type {
+            display: block;
+        }
+
+	    /* first level */
+	    > ul {
+	        height: auto;
+	        display: none;
+	        position: absolute;
+	        left: 0;
+	        right: 0;
+	    }
+        > ul.active {
+            display: block;
+        }
+        > ul > li {
+            width: 100%;
+            float: none;
+        }
+ 
+	    /* second level */
+	    li ul {
+	        position: static;
+	    }
+    }
+ 
+}

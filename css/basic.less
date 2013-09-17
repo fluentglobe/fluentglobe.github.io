@@ -17,30 +17,16 @@ html,body {
 }
 body {
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .bodyScaffolding();
 
-// Styled patterns and elements
 @import "bootstrap/type";
 @import "bootstrap/buttons";
 
-// @import "bootstrap/code";
 @import "bootstrap/forms";
-// @import "bootstrap/tables";
 
-// Alert Styles
-// @import "bootstrap/alerts";
-
-// Components: common
-// @import "bootstrap/sprites.less";
-// @import "bootstrap/dropdowns.less";
-// @import "bootstrap/wells.less";
-// @import "bootstrap/component-animations.less";
-// @import "bootstrap/close.less";
-
-//For more check out bootrap.less
-//@import "connectivity.less";
 
 //@import "inputs.less";
 @import "lch-checkbox.less";
@@ -84,22 +70,16 @@ input {
     color: white;
 }
 
+@center-width: 340px;
+
 html body.splash { 
 
     #stuck {
-        .lines {
-            position: absolute;
-            left:0; right:0;
-            top:0; bottom:0;
-            padding:0; margin:0;
-            background-image: url(../images/line.png); 
-            // -webkit-radial-gradient(50% 120%, circle cover, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
-            // opacity: .4;
-        }
+        .lines { .extraBackground(url(../images/line.png)); }
 
         .we-love {
             position: absolute;
-            top:10px; left:20px;
+            top:50px; left:20px;
             width: 450px;
 
             img {
@@ -107,11 +87,20 @@ html body.splash {
             }
         }
 
+        .follow {
+            .center-box-horz(@center-width);
+            text-align: center;
+            bottom: 60px;
+
+            h4 {
+                font-size: 15px;
+                padding: 15px 0 5px 0;
+            }
+        }
         form {
-            position: absolute;
+            .center-box-horz(@center-width);
             top:50%; margin-top: -100px;
-            left:50%; width:340px; margin-left: -170px;
-            // position: relative;
+
             // margin-top: 20%;
         }
 
@@ -170,17 +159,122 @@ html body.splash {
             line-height: 1;
         }
 
-    .langChoice {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        select {
-            background: @fluent-red;
+        .langChoice {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+
+            select {
+                background: @fluent-red;
+            }
+        }
+
+    }
+
+}
+
+#main-menu
+{
+    @fluent-orange: #e15a1f;
+    @fluent-dark-orange: #cc470d;
+    @bg-color: @fluent-orange;
+    @shaded-color: @fluent-dark-orange;
+    //@border-color: darken(@bg-color,5%);
+
+    width: 40em;
+    position: absolute;
+    left: 50%; top: 1em;
+    margin-left: -20em;
+
+
+    .list-as-menu();
+
+    /* container */
+
+    > a {
+        display: none;
+    }
+    li {
+        position: relative;
+
+        a {
+            color: #fff;
+            display: block;
+
+            &:active {
+                background-color: #c00 !important;
+            }
         }
     }
+ 
+    /* first level */
+    > ul {
+        height: 2.75em; /* 60 */
+        // background-color: @bg-color;
+        border: 1px solid @bg-color;
 
+        > li
+        {
+            width: 25%;
+            height: 100%;
+            float: left;
+
+            > a {
+                height: 100%;
+                font-size: 1.2em;
+                line-height: 2.4em; /* 60 (24) */
+                text-align: center;
+            }
+        }
+
+        > li:not( :last-child ) > a {
+            border-right: 1px solid @shaded-color;
+        }
+        > li:hover > a,
+        &:not ( :hover ) > li.active > a {
+            background-color: @shaded-color;
+        }
+    }
+ 
+    /* second level */
+    li ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        background-color: @shaded-color;
+
+        a {
+            font-size: 1.25em;
+            border-top: 1px solid @bg-color;
+            padding: 0.75em;
+        }
+
+        li a:hover,
+        &:not( :hover ) li.active a {
+            background-color: @bg-color;
+        }
+    }
+    li:hover ul {
+        display: block;
+        left: 0; right: 0;
+    }
+    li:not ( :first-child ):hover ul {
+        left: -1px;
     }
 
+
+
+    span:after {
+        width:0; height: 0;
+        border: 0.313em solid transparent; /* 5 */
+        border-top-color: #efa585;
+        content: '';
+        vertical-align: middle;
+        display: inline-block;
+        position: relative;
+        right: -0.313em; /* 5 */
+    }
 }
 
 @top-splash-room: 650px;
@@ -190,93 +284,6 @@ html body.splash {
     //background-image: url(../images/inthepark.jpg); 
     //background-image: url(../images/free-blurred-backgrounds.jpg); 
     //background-image: url(../images/girl-on-terrace.jpg);
-
-.stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
-
-    #stuck {
-
-        position:fixed;
-        top:0;
-        width:100%; height:100%;
-        min-height: @min-height;
-        max-height: @max-height;
-        z-index: -9999;
-
-        //padding-top: 200px;
-        color: white;
-
-        background-image: @image;
-        background-position: bottom center;
-        background-repeat: no-repeat; 
-        background-size: 100% auto;
-    }
-
-    article {
-        position:relative; //absolute
-        width: 100%;
-        margin-top: @top-splash-room; // will be overridden by struck measurement
-        min-width: 980px;
-        overflow: visible;
-    }
-
-    
-    // iPhone portrait
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 568px) 
-    and (orientation : portrait) {
-
-        #stuck {
-            min-height: initial;
-            max-height: 620px;
-
-            background-position: top center;
-            background-size: auto 568px;
-        }
-        article {
-            margin-top: @top-splash-room-640;
-            min-width: initial;
-        }
-    }
-
-    // iPhone landscape
-    @media only screen 
-    and (min-device-width : 320px) 
-    and (max-device-width : 568px) 
-    and (orientation : landscape) {
-
-        #stuck {
-            min-height: 320px;
-            max-height: 520px;
-
-            background-position: top center;
-            background-size: auto 568px;
-        }
-        article {
-            min-width: initial;
-        }
-    }
-
-    // iPad:
-    @media screen and (device-aspect-ratio: 3/4) and (orientation:portrait) {
-
-        #stuck {
-            background-position: bottom center;
-            background-size: auto 100%;
-        }
-    }
-
-    // iPad:
-    // @media screen and (device-aspect-ratio: 3/4) and (orientation:landscape) {
-
-    //     #stuck {
-    //         background-image: @image;
-    //         background-position: bottom center;
-    //         background-size: auto 100%;
-    //     }
-    // }
-}
-
 
 // Phone < 5:
 @media screen and (device-aspect-ratio: 2/3) {
@@ -386,12 +393,4 @@ html body.splash-color {
     margin: 0 auto;
 }
 
-.follow {
-    text-align: center;
-
-    h4 {
-        font-size: 15px;
-        padding: 15px 0 5px 0;
-    }
-}
 
