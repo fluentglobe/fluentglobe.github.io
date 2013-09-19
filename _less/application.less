@@ -41,7 +41,7 @@
 // <link href='http://fonts.googleapis.com/css?family=Fjord+One' rel='stylesheet' type='text/css'>
 
 
-.stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
+.stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
 
     #stuck {
 
@@ -56,9 +56,9 @@
         color: white;
 
         background-image: @image;
-        background-position: bottom center;
+        background-position: top left;
         background-repeat: no-repeat; 
-        background-size: 100% auto;
+        background-size: auto 100%;
     }
 
     article {
@@ -69,7 +69,15 @@
         overflow: visible;
     }
 
+    // past 960px width
+    @media only screen and (min-width : 960px) {
+        #stuck {
+            background-size: 100% auto;
+        }
+    }
     
+    //TODO fixed width 320-360, scale after
+
     // iPhone portrait
     @media only screen 
     and (min-device-width : 320px) 
@@ -77,14 +85,16 @@
     and (orientation : portrait) {
 
         #stuck {
+            width: 100%;
             min-height: initial;
             max-height: 620px;
 
+            background-image: @image-portrait;
             background-position: top center;
-            background-size: auto 568px;
+            background-size: 360px auto;
         }
         article {
-            margin-top: @top-splash-room-640;
+            margin-top: @top-splash-room-640 * 2;
             min-width: initial;
         }
     }
@@ -99,8 +109,8 @@
             min-height: 320px;
             max-height: 520px;
 
-            background-position: top center;
-            background-size: auto 568px;
+            background-position: top left;
+            background-size: auto 100%;
         }
         article {
             min-width: initial;

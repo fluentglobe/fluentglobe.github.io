@@ -1615,18 +1615,6 @@ html[lang=ch] body [lang=jp] {
   background: rgba(255, 0, 70, 0.8);
   color: white;
 }
-html body.splash #stuck .lines {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 0;
-  margin: 0;
-  background-image: url(../images/line.png);
-  opacity: 1;
-  z-index: -9999;
-}
 html body.splash #stuck .we-love {
   position: absolute;
   top: 50px;
@@ -1642,7 +1630,7 @@ html body.splash #stuck .follow {
   width: 340px;
   margin-left: -170px;
   text-align: center;
-  bottom: 10px;
+  bottom: 60px;
 }
 html body.splash #stuck .follow h4 {
   font-size: 15px;
@@ -1835,9 +1823,9 @@ html body.splash-garden #stuck {
   z-index: -9999;
   color: white;
   background-image: url(../images/garden-reading-ipad.jpg);
-  background-position: bottom center;
+  background-position: top left;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: auto 100%;
 }
 html body.splash-garden article {
   position: relative;
@@ -1846,12 +1834,19 @@ html body.splash-garden article {
   min-width: 980px;
   overflow: visible;
 }
+@media only screen and (min-width: 960px) {
+  html body.splash-garden #stuck {
+    background-size: 100% auto;
+  }
+}
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-garden #stuck {
+    width: 100%;
     min-height: initial;
     max-height: 620px;
+    background-image: url(../images/garden-reading-ipad.jpg);
     background-position: top center;
-    background-size: auto 568px;
+    background-size: 360px auto;
   }
   html body.splash-garden article {
     margin-top: 560px;
@@ -1862,8 +1857,8 @@ html body.splash-garden article {
   html body.splash-garden #stuck {
     min-height: 320px;
     max-height: 520px;
-    background-position: top center;
-    background-size: auto 568px;
+    background-position: top left;
+    background-size: auto 100%;
   }
   html body.splash-garden article {
     min-width: initial;
@@ -1884,10 +1879,10 @@ html body.splash-color #stuck {
   max-height: 800px;
   z-index: -9999;
   color: white;
-  background-image: url(../images/color1.jpg);
-  background-position: bottom center;
+  background-image: url(../images/color-960.jpg);
+  background-position: top left;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: auto 100%;
 }
 html body.splash-color article {
   position: relative;
@@ -1896,12 +1891,19 @@ html body.splash-color article {
   min-width: 980px;
   overflow: visible;
 }
+@media only screen and (min-width: 960px) {
+  html body.splash-color #stuck {
+    background-size: 100% auto;
+  }
+}
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-color #stuck {
+    width: 100%;
     min-height: initial;
     max-height: 620px;
+    background-image: url(../images/color-360.jpg);
     background-position: top center;
-    background-size: auto 568px;
+    background-size: 360px auto;
   }
   html body.splash-color article {
     margin-top: 560px;
@@ -1912,8 +1914,8 @@ html body.splash-color article {
   html body.splash-color #stuck {
     min-height: 320px;
     max-height: 520px;
-    background-position: top center;
-    background-size: auto 568px;
+    background-position: top left;
+    background-size: auto 100%;
   }
   html body.splash-color article {
     min-width: initial;
