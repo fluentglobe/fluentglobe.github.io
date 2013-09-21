@@ -6,17 +6,26 @@ body-class: splash splash-color
 ---
 {{ content }}
 
+    <div id="tracer"></div>
     <script>
         !function() {
 
-        var stuck = document.getElementById("stuck");
-        var maxHeight = stuck.offsetWidth * 0.8, freeBit = Math.min(stuck.offsetHeight,maxHeight);
-        var article = document.querySelector('article');
 
-        article.style.marginTop = freeBit+"px";
-        window.addEventListener("resize",function() {
-            article.style.marginTop = freeBit+"px";
-        });
+        function placeParts() {
+            var bgWidth = tracer.offsetWidth, bgHeight = tracer.offsetHeight;
+            var maxHeight = Math.floor(Math.max(bgHeight,(stuck.offsetWidth * bgHeight / bgWidth)));
+            stuck.style.maxHeight = maxHeight + "px";
+
+            article.style.marginTop = stuck.offsetHeight+"px";
+            console.log("heigh <=",maxHeight,"article free",stuck.offsetHeight);
+        }
+
+        var stuck = document.getElementById("stuck");
+        var article = document.querySelector('article');
+        var tracer = document.getElementById("tracer");
+
+        placeParts();
+        window.addEventListener("resize",placeParts,true);
         }();
     </script>
     <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>

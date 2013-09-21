@@ -40,16 +40,21 @@
 
 // <link href='http://fonts.googleapis.com/css?family=Fjord+One' rel='stylesheet' type='text/css'>
 
+@landscape-bg-width: 960px;
+@landscape-bg-height: 548px;
+@portrait-bg-width: 360px; // import from javascript
+@portrait-bg-height: 920px;
 
 .stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
 
+    // default until 960px
     #stuck {
 
         position:fixed;
         top:0;
-        width:100%; height:100%;
-        min-height: @min-height;
-        max-height: @max-height;
+        width:100%; 
+        min-height: @landscape-bg-height;
+        height: @landscape-bg-height;
         z-index: -9999;
 
         //padding-top: 200px;
@@ -60,6 +65,7 @@
         background-repeat: no-repeat; 
         background-size: auto 100%;
     }
+    #tracer { position:absolute; visibility: hidden; width: @landscape-bg-width; height: @landscape-bg-height;}
 
     article {
         position:relative; //absolute
@@ -70,9 +76,12 @@
     }
 
     // past 960px width
-    @media only screen and (min-width : 960px) {
+    @media only screen and (min-width : @landscape-bg-width) {
         #stuck {
             background-size: 100% auto;
+            height:100%;
+            min-height: @min-height;
+            max-height: @max-height;
         }
     }
     
@@ -93,6 +102,8 @@
             background-position: top center;
             background-size: 360px auto;
         }
+        #tracer { width: @portrait-bg-width; height: @portrait-bg-height;}
+
         article {
             margin-top: @top-splash-room-640 * 2;
             min-width: initial;

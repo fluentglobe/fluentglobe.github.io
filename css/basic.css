@@ -1817,15 +1817,20 @@ html body.splash-garden #stuck {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100%;
-  min-height: 650px;
-  max-height: 800px;
+  min-height: 548px;
+  height: 548px;
   z-index: -9999;
   color: white;
   background-image: url(../images/garden-reading-ipad.jpg);
   background-position: top left;
   background-repeat: no-repeat;
   background-size: auto 100%;
+}
+html body.splash-garden #tracer {
+  position: absolute;
+  visibility: hidden;
+  width: 960px;
+  height: 548px;
 }
 html body.splash-garden article {
   position: relative;
@@ -1837,6 +1842,9 @@ html body.splash-garden article {
 @media only screen and (min-width: 960px) {
   html body.splash-garden #stuck {
     background-size: 100% auto;
+    height: 100%;
+    min-height: 650px;
+    max-height: 800px;
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
@@ -1848,8 +1856,12 @@ html body.splash-garden article {
     background-position: top center;
     background-size: 360px auto;
   }
+  html body.splash-garden #tracer {
+    width: 360px;
+    height: 920px;
+  }
   html body.splash-garden article {
-    margin-top: 560px;
+    margin-top: 1120px;
     min-width: initial;
   }
 }
@@ -1874,15 +1886,20 @@ html body.splash-color #stuck {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 100%;
-  min-height: 650px;
-  max-height: 800px;
+  min-height: 548px;
+  height: 548px;
   z-index: -9999;
   color: white;
-  background-image: url(../images/color-960.jpg);
+  background-image: url(../images/color-960-hq.jpg);
   background-position: top left;
   background-repeat: no-repeat;
   background-size: auto 100%;
+}
+html body.splash-color #tracer {
+  position: absolute;
+  visibility: hidden;
+  width: 960px;
+  height: 548px;
 }
 html body.splash-color article {
   position: relative;
@@ -1894,6 +1911,9 @@ html body.splash-color article {
 @media only screen and (min-width: 960px) {
   html body.splash-color #stuck {
     background-size: 100% auto;
+    height: 100%;
+    min-height: 650px;
+    max-height: 800px;
   }
 }
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
@@ -1901,12 +1921,16 @@ html body.splash-color article {
     width: 100%;
     min-height: initial;
     max-height: 620px;
-    background-image: url(../images/color-360.jpg);
+    background-image: url(../images/color-360-hq.jpg);
     background-position: top center;
     background-size: 360px auto;
   }
+  html body.splash-color #tracer {
+    width: 360px;
+    height: 920px;
+  }
   html body.splash-color article {
-    margin-top: 560px;
+    margin-top: 1120px;
     min-width: initial;
   }
 }
