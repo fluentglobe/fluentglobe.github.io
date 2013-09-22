@@ -9,7 +9,7 @@ body-class: splash splash-color
     <div id="tracer"></div>
     <script>
         !function() {
-
+            var afterImageOffset = 180;
 
         function placeParts() {
             var bgWidth = tracer.offsetWidth, bgHeight = tracer.offsetHeight;
@@ -17,15 +17,22 @@ body-class: splash splash-color
             stuck.style.maxHeight = maxHeight + "px";
 
             article.style.marginTop = stuck.offsetHeight+"px";
-            console.log("heigh <=",maxHeight,"article free",stuck.offsetHeight);
+            var scaledImage = (afterImageOffset * stuck.offsetWidth / bgWidth);
+            if (stuckBelowImage) {
+                stuckBelowImage.style.top = scaledImage + "px";
+            }
+            console.log("heigh <=",maxHeight,"article free",stuck.offsetHeight,"scaled",scaledImage);
         }
 
         var stuck = document.getElementById("stuck");
+        var stuckBelowImage = document.getElementById("stuck-below-image")
         var article = document.querySelector('article');
         var tracer = document.getElementById("tracer");
 
-        placeParts();
-        window.addEventListener("resize",placeParts,true);
+        if (stuck) {
+            placeParts();
+            window.addEventListener("resize",placeParts,true);
+        }
         }();
     </script>
     <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>

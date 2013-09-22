@@ -70,15 +70,19 @@ input {
     color: white;
 }
 
-@menu-width: 200px;
+@menu-width: 160px;
 @center-width: 340px;
 
 html body.splash { 
 
+    #stuck-below-image {
+        position:absolute;
+        left:0; right:0; top:200px;
+    }
     #stuck {
         // .lines { .extraBackground(url(../images/line.png)); }
 
-        &.menu-shown {
+        &.state-expanded {
             left: @menu-width;
         }
 
@@ -127,7 +131,7 @@ html body.splash {
 
         .we-love {
             position: absolute;
-            top:250px; left:50px;
+            top:0px; left:50px;
             width: 450px;
 
             img {
@@ -143,7 +147,7 @@ html body.splash {
         .benefits {
             position: absolute;
             left: 50px;
-            top: 50%;
+            top: 80px;
             width: 30%;
         }
 
@@ -151,8 +155,8 @@ html body.splash {
             position: absolute;
             top: 50px;
             left: 50%;
-            width: 300px;
-            margin-left: -150px;
+            width: @center-width;
+            margin-left: -0.5 * @center-width;
         }
 
         .follow {

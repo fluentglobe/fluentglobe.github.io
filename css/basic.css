@@ -1615,13 +1615,19 @@ html[lang=ch] body [lang=jp] {
   background: rgba(255, 0, 70, 0.8);
   color: white;
 }
-html body.splash #stuck.menu-shown {
-  left: 200px;
+html body.splash #stuck-below-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 200px;
+}
+html body.splash #stuck.state-expanded {
+  left: 160px;
 }
 html body.splash #stuck .menu {
   position: absolute;
-  left: -200px;
-  width: 203px;
+  left: -160px;
+  width: 163px;
   border-right: 3px solid #fb441b;
   background-color: #fb441b;
   color: white;
@@ -1691,7 +1697,7 @@ html body.splash #stuck .menu nav.flag label {
 }
 html body.splash #stuck .we-love {
   position: absolute;
-  top: 250px;
+  top: 0px;
   left: 50px;
   width: 450px;
 }
@@ -1705,15 +1711,15 @@ html body.splash #stuck p em {
 html body.splash #stuck .benefits {
   position: absolute;
   left: 50px;
-  top: 50%;
+  top: 80px;
   width: 30%;
 }
 html body.splash #stuck .story {
   position: absolute;
   top: 50px;
   left: 50%;
-  width: 300px;
-  margin-left: -150px;
+  width: 340px;
+  margin-left: -170px;
 }
 html body.splash #stuck .follow {
   position: absolute;

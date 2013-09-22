@@ -1539,7 +1539,7 @@ Generator.ObjectGenerator = Generator(Object);
 	/* Container for laid out elements */
 	function _Layouter(key,el,conf) {
 
-		var layouterDesc = EnhancedDescriptor.all[el.uniqueId];
+		var layouterDesc = EnhancedDescriptor.all[el.uniqueID];
 		var appConfig = Resolver("essential::ApplicationConfig::")();
 
 		for(var i=0,c; c = el.children[i]; ++i) {
@@ -1549,7 +1549,7 @@ Generator.ObjectGenerator = Generator(Object);
 				// set { sizingElement:true } on conf?
 				var desc = EnhancedDescriptor(c,role,conf,false,appConfig);
 				desc.layouterParent = layouterDesc;
-				sizingElements[desc.uniqueId] = desc;
+				sizingElements[desc.uniqueID] = desc;
 			}
 		}
 	}
@@ -1586,15 +1586,15 @@ Generator.ObjectGenerator = Generator(Object);
 	_Laidout.prototype.calcSizing = function(el,sizing) {};
 
 
-	// map of uniqueId referenced (TODO array for performance/memory?)
+	// map of uniqueID referenced (TODO array for performance/memory?)
 	var enhancedElements = essential.declare("enhancedElements",{});
 
 	var unfinishedElements = essential.declare("unfinishedElements",{});
 
-	// map of uniqueId referenced
+	// map of uniqueID referenced
 	var sizingElements = essential.declare("sizingElements",{});
 
-	// map of uniqueId referenced
+	// map of uniqueID referenced
 	var maintainedElements = essential.declare("maintainedElements",{});
 
 	// open windows
@@ -1610,13 +1610,13 @@ Generator.ObjectGenerator = Generator(Object);
 			desc._tryMakeLayouter(""); //TODO key?
 			desc._tryMakeLaidout(""); //TODO key?
 
-			if (desc.conf.sizingElement) sizingElements[desc.uniqueId] = desc;
+			if (desc.conf.sizingElement) sizingElements[desc.uniqueID] = desc;
 		}
 
 	}
 
 	function DescriptorQuery(sel,el) {
-		var q = [], conf = { list:q };
+		var q = [], context = { list:q };
 
 		if (typeof sel == "string") {
 			//TODO
@@ -1624,32 +1624,54 @@ Generator.ObjectGenerator = Generator(Object);
 
 			}
 		} else {
+			var ac = essential("ApplicationConfig")();
 			el=sel; sel=undefined;
-			//TODO if the el is a layouter, pass that in conf
-			essential("ApplicationConfig")()._prep(el,conf);
+			if (el instanceof Array) {
+				for(var i=0,e; e = el[i]; ++i) {
 
+					var conf = ac.getConfig(e), role = e.getAttribute("role");
+					var desc = EnhancedDescriptor(e,role,conf,false,ac);
+					if (desc) {
+						q.push(desc);
+						// if (sizingElement) sizingElements[desc.uniqueID] = desc;
+						desc.layouterParent = context.layouter;
+						if (desc.conf.layouter) {
+							context.layouter = desc;
+						}
+					} 
+				}
+			} else {
+				//TODO if the el is a layouter, pass that in conf
+				ac._prep(el,context);
+				//TODO push those matched descriptors into q
+			}
 		}
 		q.el = el;
 		q.enhance = enhanceQuery;
 		return q;
 	}
 	essential.declare("DescriptorQuery",DescriptorQuery);
+	function EnhancedContext() {
+	}
+	// EnhancedContext.prototype.??
 
-
-	function _EnhancedDescriptor(el,role,conf,page,uniqueId) {
+	function _EnhancedDescriptor(el,role,conf,page,uniqueID) {
 
 		var roles = role? role.split(" ") : [];
 
-		this.needEnhance = roles.length > 0;
-		this.uniqueId = uniqueId;
-		this.roles = roles;
-		this.role = roles[0]; //TODO document that the first role is the switch for enhance
 		this.el = el;
-		this.conf = conf || {};
-		this.instance = null;
 		this.sizing = {
 			"contentWidth":0,"contentHeight":0
 		};
+		this.ensureStateful();
+		this.stateful.set("state.needEnhance", roles.length > 0);
+		this.uniqueID = uniqueID;
+		this.roles = roles;
+		this.role = roles[0]; //TODO document that the first role is the switch for enhance
+		this.conf = conf || {};
+		this.context = new EnhancedContext();
+		this.instance = null;
+
 		// sizingHandler
 		this.layout = {
 			"displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
@@ -1658,19 +1680,33 @@ Generator.ObjectGenerator = Generator(Object);
 			"throttle": null //TODO throttle by default?
 		};
 		// layoutHandler
-		this.enhanced = false;
-		this.discarded = false;
-		this.contentManaged = false; // The content HTML is managed by the enhanced element the content will not be enhanced automatically
+		this.state.enhanced = false;
+		this.state.discarded = false;
+		this.state.contentManaged = false; // The content HTML is managed by the enhanced element the content will not be enhanced automatically
 
 		this.page = page;
 		this.handlers = page.resolver("handlers");
 		this.enabledRoles = page.resolver("enabledRoles");
+		this._updateContext();
 		this._init();
 	}
 
+	_EnhancedDescriptor.prototype._updateContext = function() {
+		for(var el = this.el.parentNode; el; el = el.parentNode) {
+			if (el.uniqueID) {
+				var desc = enhancedElements[el.uniqueID];
+				if (desc) {
+					this.context.el = el;
+					this.context.uniqueID = el.uniqueID;
+					this.context.instance = desc.instance;
+				}
+			}
+		}
+	};
+
 	_EnhancedDescriptor.prototype._init = function() {
 		if (this.role && this.handlers.init[this.role]) {
-			 this.handlers.init[this.role].call(this,this.el,this.role,this.conf);
+			this.handlers.init[this.role].call(this,this.el,this.role,this.conf,this.context);
 		}
 	};
 
@@ -1681,9 +1717,10 @@ Generator.ObjectGenerator = Generator(Object);
 	_EnhancedDescriptor.prototype.ensureStateful = function() {
 		if (this.stateful) return;
 
-			var stateful = this.stateful = essential("StatefulResolver")(this.el,true);
-			stateful.set("sizing",this.sizing);
-			stateful.on("change","state",this,this.onStateChange); //TODO remove on discard
+		var stateful = this.stateful = essential("StatefulResolver")(this.el,true);
+		this.state = stateful("state");
+		stateful.set("sizing",this.sizing);
+		stateful.on("change","state",this,this.onStateChange); //TODO remove on discard
 	};	
 
 	_EnhancedDescriptor.prototype.onStateChange = function(ev) {
@@ -1715,25 +1752,27 @@ Generator.ObjectGenerator = Generator(Object);
 	//TODO keep params on page
 
 	_EnhancedDescriptor.prototype._tryEnhance = function(handlers,enabledRoles) {
-		if (!this.needEnhance) return;
+		if (!this.state.needEnhance) return;
 		if (handlers.enhance == undefined) debugger;
 		// desc.callCount = 1;
 		if (this.role && handlers.enhance[this.role] && enabledRoles[this.role]) {
-			this.instance = handlers.enhance[this.role].call(this,this.el,this.role,this.conf);
-			this.enhanced = this.instance === false? false:true;
-			this.needEnhance = !this.enhanced;
+			this._updateContext();
+			//TODO allow parent to modify context
+			this.instance = handlers.enhance[this.role].call(this,this.el,this.role,this.conf,this.context);
+			this.state.enhanced = this.instance === false? false:true;
+			this.state.needEnhance = !this.state.enhanced;
 		}
-		if (this.enhanced) {
+		if (this.state.enhanced) {
 			this.sizingHandler = handlers.sizing[this.role];
 			this.layoutHandler = handlers.layout[this.role];
 			if (this.layoutHandler && this.layoutHandler.throttle) this.layout.throttle = this.layoutHandler.throttle;
 			var discardHandler = handlers.discard[this.role];
 			if (discardHandler) this.discardHandler = discardHandler;
 			this.el._cleaners.push(_roleEnhancedCleaner(this)); //TODO either enhanced, layouter, or laidout
-			if (this.sizingHandler) sizingElements[this.uniqueId] = this;
+			if (this.sizingHandler) sizingElements[this.uniqueID] = this;
 			if (this.layoutHandler) {
 				this.layout.enable = true;
-				maintainedElements[this.uniqueId] = this;
+				maintainedElements[this.uniqueID] = this;
 			}
 		} 
 	};
@@ -1744,11 +1783,11 @@ Generator.ObjectGenerator = Generator(Object);
 			var varLayouter = Layouter.variants[this.conf.layouter];
 			if (varLayouter) {
 				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.layouterParent);
-				if (this.layouterParent) sizingElements[this.uniqueId] = this;
+				if (this.layouterParent) sizingElements[this.uniqueID] = this;
 				if (varLayouter.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
 	                this.layout.queued = true;
-	                maintainedElements[this.uniqueId] = this;
+	                maintainedElements[this.uniqueID] = this;
 				}
 			}
 		}
@@ -1760,11 +1799,11 @@ Generator.ObjectGenerator = Generator(Object);
 			var varLaidout = Laidout.variants[this.conf.laidout];
 			if (varLaidout) {
 				this.laidout = this.el.laidout = varLaidout.generator(key,this.el,this.conf,this.layouterParent);
-				sizingElements[this.uniqueId] = this;
+				sizingElements[this.uniqueID] = this;
 				if (varLaidout.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
 	                this.layout.queued = true;
-	                maintainedElements[this.uniqueId] = this;
+	                maintainedElements[this.uniqueID] = this;
 				}
 			}
 		}
@@ -1807,7 +1846,7 @@ Generator.ObjectGenerator = Generator(Object);
 	};
 
 	_EnhancedDescriptor.prototype.liveCheck = function() {
-		if (!this.enhanced || this.discarded) return;
+		if (!this.state.enhanced || this.state.discarded) return;
 		var inDom = document.body==this.el || essential("contains")(document.body,this.el); //TODO reorg import
 		//TODO handle subpages
 		if (!inDom) {
@@ -1817,20 +1856,21 @@ Generator.ObjectGenerator = Generator(Object);
 	};
 
 	_EnhancedDescriptor.prototype.discardNow = function() {
-		if (this.discarded) return;
+		if (this.state.discarded) return;
 
 		cleanRecursively(this.el);
+		this.context = undefined;
 		this.el = undefined;
-		this.discarded = true;					
+		this.state.discarded = true;					
 		this.layout.enable = false;					
 	};
 
 	_EnhancedDescriptor.prototype._unlist = function() {
-		this.discarded = true;					
-		if (this.layout.enable) delete maintainedElements[this.uniqueId];
-		if (sizingElements[this.uniqueId]) delete sizingElements[this.uniqueId];
-		if (unfinishedElements[this.uniqueId]) delete unfinishedElements[this.uniqueId];
-		delete enhancedElements[this.uniqueId];
+		this.state.discarded = true;					
+		if (this.layout.enable) delete maintainedElements[this.uniqueID];
+		if (sizingElements[this.uniqueID]) delete sizingElements[this.uniqueID];
+		if (unfinishedElements[this.uniqueID]) delete unfinishedElements[this.uniqueID];
+		delete enhancedElements[this.uniqueID];
 	};
 
 	_EnhancedDescriptor.prototype._queueLayout = function() {
@@ -1871,21 +1911,21 @@ Generator.ObjectGenerator = Generator(Object);
 		}
 	};
 
-	// used to emulate IE uniqueId property
-	var lastUniqueId = 555;
+	// used to emulate IE uniqueID property
+	var lastUniqueID = 555;
 
 	// Get the enhanced descriptor for and element
 	function EnhancedDescriptor(el,role,conf,force,page) {
 		if (!force && role==null && conf==null && arguments.length>=3) return null;
 
-		var uniqueId = el.uniqueId;
-		if (uniqueId == undefined) uniqueId = el.uniqueId = ++lastUniqueId;
-		var desc = enhancedElements[uniqueId];
+		var uniqueID = el.uniqueID;
+		if (uniqueID == undefined) uniqueID = el.uniqueID = ++lastUniqueID;
+		var desc = enhancedElements[uniqueID];
 		if (desc && !force) return desc;
-		desc = new _EnhancedDescriptor(el,role,conf,page,uniqueId);
-		enhancedElements[uniqueId] = desc;
+		desc = new _EnhancedDescriptor(el,role,conf,page,uniqueID);
+		enhancedElements[uniqueID] = desc;
 		var descriptors = page.resolver("descriptors");
-		descriptors[uniqueId] = desc;
+		descriptors[uniqueID] = desc;
 		if (el._cleaners == undefined) el._cleaners = [];
 
 		return desc;
@@ -1920,7 +1960,7 @@ Generator.ObjectGenerator = Generator(Object);
 		for(var n in maintainedElements) {
 			var desc = maintainedElements[n];
 
-			if (desc.layout.enable && !desc.discarded) {
+			if (desc.layout.enable && !desc.state.discarded) {
 				desc.refresh();
 			}
 		}
@@ -1938,7 +1978,7 @@ Generator.ObjectGenerator = Generator(Object);
 
 			desc.liveCheck();
 			//TODO if destroyed, in round 2 discard & move out of maintained 
-			if (desc.discarded) desc._unlist();
+			if (desc.state.discarded) desc._unlist();
 		}
 	};
 
@@ -1947,7 +1987,7 @@ Generator.ObjectGenerator = Generator(Object);
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
 		while(e) {
 			if (e.attributes) {
-				var desc = EnhancedDescriptor.all[e.uniqueId];
+				var desc = EnhancedDescriptor.all[e.uniqueID];
 				if (desc) descs.push(desc);
 			}
 			e = e.nextElementSibling!==undefined? e.nextElementSibling : e.nextSibling;
@@ -1977,7 +2017,7 @@ Generator.ObjectGenerator = Generator(Object);
 	function discardRestricted()
 	{
 		for(var i=Generator.restricted-1,g; g = Generator.restricted[i]; --i) {
-			var discarded = g.info.constructors[-1].discarded;
+			var discarded = g.info.constructors[-1].state.discarded;
 			for(var n in g.info.existing) {
 				var instance = g.info.existing[n];
 				if (discarded) {
@@ -2376,6 +2416,7 @@ Generator.ObjectGenerator = Generator(Object);
 
 	var essential = Resolver("essential",{}),
 		console = essential("console"),
+		EnhancedDescriptor = essential("EnhancedDescriptor"),
 		isIE = navigator.userAgent.indexOf("; MSIE ") > -1 && navigator.userAgent.indexOf("; Trident/") > -1;
 
 	essential.declare("baseUrl",location.href.substring(0,location.href.split("?")[0].lastIndexOf("/")+1));
@@ -3315,7 +3356,7 @@ Generator.ObjectGenerator = Generator(Object);
 			_from = __from;
 		}
 		
-		var e = _doc.createElement(_tagName);
+		var e = _doc.createElement(_tagName), enhanced = false;
 		for(var n in _from) {
 			switch(n) {
 				case "tagName": break; // already used
@@ -3356,6 +3397,10 @@ Generator.ObjectGenerator = Generator(Object);
 					if (_from[n]) e.impl = HTMLElement.impl(e);
 					break;
 
+				case "enhanced":
+					enhanced = _from[n];
+					break;
+
 				// "type" IE9 el.type is readonly:
 
 				//TODO case "onprogress": // partial script progress
@@ -3386,10 +3431,22 @@ Generator.ObjectGenerator = Generator(Object);
 		
 		//TODO .appendTo function
 		
+		if (enhanced) HTMLElement.query([e]); //TODO call enhance?
+		
 		return e;
 	}
 	essential.set("HTMLElement",HTMLElement);
 	
+	HTMLElement.query = essential("DescriptorQuery");
+
+	HTMLElement.getEnhancedParent = function(el) {
+		for(el = el.parentNode; el; el = el.parentNode) {
+			var desc = EnhancedDescriptor.all[el.uniqueID];
+			if (desc && (desc.state.enhanced || desc.state.needEnhance)) return el;
+		}
+		return null;
+	};
+
 	
 	//TODO element cleaner must remove .el references from listeners
 
@@ -3720,7 +3777,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 			return;
 		}
 		if (value) {
-			el.setAttribute(key,key);
+			el.setAttribute(key,this["true"] || "true");
 		} else {
 			el.removeAttribute(key);
 		}
@@ -3731,7 +3788,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 	*/
 	function reflectAria(el,key,value) {
 		if (value) {
-			el.setAttribute("aria-"+key,key);
+			el.setAttribute("aria-"+key,this["true"] || "true");
 		} else {
 			el.removeAttribute("aria-"+key);
 		}
@@ -3742,13 +3799,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 	*/
 	function reflectAttributeAria(el,key,value) {
 		if (value) {
-			el.setAttribute(key,key);
+			el.setAttribute(key,this["true"] || "true");
 		} else {
 			el.removeAttribute(key);
 		}
 
 		if (value) {
-			el.setAttribute("aria-"+key,key);
+			el.setAttribute("aria-"+key,this["true"] || "true");
 		} else {
 			el.removeAttribute("aria-"+key);
 		}
@@ -3759,13 +3816,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 			el[key] = !!value;
 		} else {
 			if (value) {
-				el.setAttribute(key,key);
+				el.setAttribute(key,this["true"] || "true");
 			} else {
 				el.removeAttribute(key);
 			}
 		}
 		if (value) {
-			el.setAttribute("aria-"+key,key);
+			el.setAttribute("aria-"+key,this["true"] || "true");
 		} else {
 			el.removeAttribute("aria-"+key);
 		}
@@ -3774,6 +3831,27 @@ _ElementPlacement.prototype._computeIE = function(style)
 	function reflectAriaProp(el,key,value) {
 		el[this.property] = value;
 	}
+
+	function reflectBoolean(el,key,value) {
+		// html5: html5 property/attribute name
+		// aria: aria property name
+		if (this.html5 !== false && typeof el[this.html5 || key] == "boolean") {
+			el[this.html5] = !!value;
+		} 
+		// Set aria prop or leave it to the attribute ?
+		if (this.aria && typeof el[this.aria] == "boolean") {
+			el[this.aria] = !!value;
+		} 
+
+		if (value) {
+			el.setAttribute("aria-"+key,this["true"] || "true");
+			el.setAttribute(this.html5,this["true"] || "true");
+		} else {
+			el.removeAttribute("aria-"+key);
+			el.removeAttribute(this.html5);
+		}
+	}
+
 
 	function readPropertyAria(el,key) {
 		var value = el.getAttribute("aria-"+key), result;
@@ -3806,6 +3884,25 @@ _ElementPlacement.prototype._computeIE = function(style)
 		return result;
 	}
 
+	function readBoolean(el,key) {
+		// html5: html5 property/attribute name
+		// aria: aria property name
+		if (this.html5 !== false && typeof el[this.html5 || key] == "boolean") {
+			if (el[this.html5]) return true;
+		} 
+		if (this.aria && typeof el[this.aria] == "boolean") {
+			if (el[this.aria]) return true;
+		} 
+
+		var value = el.getAttribute("aria-"+key), result;
+		if (value != null) result = value != "false" && value != ""; 
+
+		value = el.getAttribute(this.html5 || key);
+		if (value != null) result = value != "false" && value != ""; 
+
+		return !!result;
+	}
+
 	function readAria(el,key) {
 		var value = el.getAttribute("aria-"+key), result;
 		if (value != null) result = value != "false" && value != ""; 
@@ -3817,31 +3914,29 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 
 	var state_treatment = {
-		disabled: { index: 0, reflect: reflectPropertyAria, read: readPropertyAria, "default":false, property:"ariaDisabled" }, // IE hardcodes a disabled text shadow for buttons and anchors
+		disabled: { index: 0, reflect: reflectPropertyAria, read: readPropertyAria, "default":false, property:"ariaDisabled", "true":"disabled" }, // IE hardcodes a disabled text shadow for buttons and anchors
 		readOnly: { index: 1, read: readPropertyAria, "default":false, reflect: reflectProperty },
-		hidden: { index: 2, reflect: reflectAttribute, read: readAttributeAria }, // Aria all elements
-		required: { index: 3, reflect: reflectAttributeAria, read: readAttributeAria, property:"ariaRequired" },
-		expanded: { index: 4, reflect: reflectAttributeAria, read: readAria, property:"ariaExpanded" }, //TODO ariaExpanded
-		checked: { index:5, reflect:reflectProperty, read: readPropertyAria, property:"ariaChecked" }, //TODO ariaChecked ?
-		active: { index:6, reflect:reflectAttribute, read: readAttribute } //TODO custom attribute: "data-active"
+		hidden: { index: 2, reflect: reflectBoolean, read: readBoolean, aria:"ariaHidden", html5:"hidden" }, // Aria all elements
+		required: { index: 3, reflect: reflectBoolean, read: readBoolean, aria:"ariaRequired", html5:"required" },
+		invalid: { index: 4, reflect: reflectBoolean, read: readBoolean, aria:"ariaInvalid", html5:false },
+		expanded: { index: 5, reflect: reflectAttributeAria, read: readAria, property:"ariaExpanded" }, //TODO ariaExpanded
+		checked: { index: 6, reflect:reflectProperty, read: readPropertyAria, property:"ariaChecked" }, //TODO ariaChecked ?
+		pressed: { index: 7, reflect: reflectBoolean, read: readBoolean, aria:"ariaPressed", html5:false },
+		selected: { index: 8, reflect: reflectBoolean, read: readBoolean, "default":false, aria:"ariaSelected", html5:"selected" },
+		active: { index: 9, reflect:reflectAttribute, read: readAttribute } //TODO custom attribute: "data-active"
 
 		//TODO inert
 		//TODO draggable
 		//TODO contenteditable
 		//TODO tooltip
 		//TODO hover
-		//TODO down ariaPressed
-		//TODO ariaHidden
+		//TODO down 
 		//TODO ariaDisabled
-		//TODO ariaSelected
-
-		//TODO aria-hidden all elements http://www.w3.org/TR/wai-aria/states_and_properties#aria-hidden
-		//TODO aria-invalid all elements http://www.w3.org/TR/wai-aria/states_and_properties#aria-invalid
 
 		/*TODO IE aria props
 			string:
-			ariaPressed ariaSelected ariaSecret ariaRequired ariaRelevant ariaReadonly ariaLive
-			ariaInvalid ariaHidden ariaBusy ariaActivedescendant ariaFlowto ariaDisabled
+			ariaPressed ariaSecret ariaRelevant ariaReadonly ariaLive
+			ariaBusy ariaActivedescendant ariaFlowto ariaDisabled
 		*/
 
 		//TODO restricted/forbidden tie in with session specific permissions
@@ -4234,6 +4329,22 @@ _ElementPlacement.prototype._computeIE = function(style)
 		return this._getElementRoleConfig(element);
 	};
 
+	_Scripted.prototype.doInitScripts = function() {
+		var inits = this.inits();
+		for(var i=0,s; s = inits[i]; ++i) if (s.parentNode && !s.done) {
+			// this.currently = s
+			try {
+				this.context["element"] = s;
+				this.context["parentElement"] = s.parentElement || s.parentNode;
+				with(this.context) eval(s.text);
+				s.done = true;
+			} catch(ex) {
+				// debugger;
+			} //TODO only ignore ex.ignore
+		}
+		this.context["this"] = undefined;
+	};
+
 	_Scripted.prototype._prep = function(el,context) {
 
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
@@ -4245,7 +4356,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 				var desc = EnhancedDescriptor(e,role,conf,false,this);
 				if (desc) {
 					if (context.list) context.list.push(desc);
-					// if (sizingElement) sizingElements[desc.uniqueId] = desc;
+					// if (sizingElement) sizingElements[desc.uniqueID] = desc;
 					desc.layouterParent = context.layouter;
 					if (desc.conf.layouter) {
 						context.layouter = desc;
@@ -4253,7 +4364,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 				} else {
 
 				}
-				if (desc==null || !desc.contentManaged) this._prep(e,{layouter:context.layouter,list:context.list});
+				if (desc==null || !desc.state.contentManaged) this._prep(e,{layouter:context.layouter,list:context.list});
 			}
 			e = e.nextElementSibling!==undefined? e.nextElementSibling : e.nextSibling;
 		}
@@ -4501,6 +4612,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 			e = this.body.firstElementChild!==undefined? this.body.firstElementChild : this.body.firstChild;
 		}
 
+		this.doInitScripts();
+
 		var descs = this.resolver("descriptors");
 		for(var n in descs) {
 			EnhancedDescriptor.unfinished[n] = descs[n];
@@ -4742,11 +4855,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 					desc._tryMakeLaidout(""); //TODO key?
 
 					if (desc.conf.sizingElement) sizingElements[n] = desc;
-					if (!desc.needEnhance && true/*TODO need others?*/) EnhancedDescriptor.unfinished[n] = undefined;
+					if (!desc.state.needEnhance && true/*TODO need others?*/) EnhancedDescriptor.unfinished[n] = undefined;
 				} else {
 					// freeze in unapplied subpage
 					//TODO & reheat
-					// if (desc.needEnhance && true/*TODO need others?*/) EnhancedDescriptor.unfinished[n] = undefined;
+					// if (desc.state.needEnhance && true/*TODO need others?*/) EnhancedDescriptor.unfinished[n] = undefined;
 				}
 			}
 		}
@@ -4916,26 +5029,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 				e.permanent = true;
 			} catch(ex) {
 				//TODO handle text elements
-				// will probably have to be a managed list of permanent elements or uniqueId
+				// will probably have to be a managed list of permanent elements or uniqueID
 			}
 			e = e.nextElementSibling!==undefined? e.nextElementSibling : e.nextSibling;
 		}
-	};
-
-	ApplicationConfig.prototype.doInitScripts = function() {
-		var inits = this.inits();
-		for(var i=0,s; s = inits[i]; ++i) if (s.parentNode && !s.done) {
-			// this.currently = s
-			try {
-				this.context["element"] = s;
-				this.context["parentElement"] = s.parentElement || s.parentNode;
-				with(this.context) eval(s.text);
-				s.done = true;
-			} catch(ex) {
-				// debugger;
-			} //TODO only ignore ex.ignore
-		}
-		this.context["this"] = undefined;
 	};
 
 	// iBooks HTML widget
@@ -6264,11 +6361,21 @@ function(scripts) {
 		return el; 
 	};
 
+	HTMLElement.fn.setPrefix = function(el,text) {
+
+		if (el.firstChild == null) {
+			el.appendChild(el.ownerDocument.createTextNode(''));
+		} else if (el.firstChild.nodeType != 3/* TEXTNODE */) {
+			el.insertBefore(el.ownerDocument.createTextNode(''),el.firstChild);
+		}
+		el.firstChild.nodeValue = text;
+	};
+
 	HTMLElement.fn.setPostfix = function(el,text) {
 
 		if (el.lastChild == null || el.lastChild.nodeType != 3/* TEXTNODE */) el.appendChild(el.ownerDocument.createTextNode(''));
 		// if (ev.lastChild.)
-		el.lastChild.nodeValue = ev.value;
+		el.lastChild.nodeValue = text;
 	};
 
 
@@ -6399,7 +6506,7 @@ function(scripts) {
 	*/
 	function defaultButtonClick(ev) {
 		ev = MutableEvent(ev).withActionInfo();
-		if (ev.commandElement && ev.commandElement == ev.actionElement) {
+		if (ev.commandElement && (ev.commandElement == ev.actionElement || ev.actionElement == null)) {
 
 			//TODO action event filtering
 			//TODO disabled
@@ -6431,8 +6538,20 @@ function(scripts) {
 			//TODO else dev_note("Submit of " submitName " unknown to DialogAction " action)
 
 		} 
-		else switch(ev.commandName) {
+		else {
+			el = HTMLElement.getEnhancedParent(ev.commandElement);
+
+			switch(ev.commandName) {
 			//TODO other builtin commands
+			case "parent.toggle-expanded":
+			// if (el == null) el = ancestor enhanced
+				StatefulResolver(el.parentNode,true).toggle("state.expanded");
+				break;
+
+			case "toggle-expanded":
+				StatefulResolver(el,true).toggle("state.expanded");
+				break;
+
 			case "close":
 				//TODO close up shop
 				if (ev.submitElement) {
@@ -6440,6 +6559,7 @@ function(scripts) {
 					ev.submitElement.parentNode.removeChild(ev.submitElement);
 				}
 				break;
+			}
 		}
 	}
 	essential.declare("fireAction",fireAction);
@@ -6555,16 +6675,16 @@ function(scripts) {
 
 			desc.ensureStateful();
 
-			if (!desc.enhanced) { //TODO flag needEnhance
+			if (!desc.state.enhanced) { //TODO flag needEnhance
 				desc._tryEnhance(this.handlers);
 				++enhancedCount;	//TODO only increase if enhance handler?
 			} 
-			if (! desc.enhanced) incomplete = true;
+			if (! desc.state.enhanced) incomplete = true;
 
 			desc._tryMakeLayouter(""); //TODO key?
 			desc._tryMakeLaidout(""); //TODO key?
 
-			if (desc.conf.sizingElement) sizingElements[desc.uniqueId] = desc;
+			if (desc.conf.sizingElement) sizingElements[desc.uniqueID] = desc;
 		}
 
 		//TODO enhance additional descriptors created during this instead of double call on loading = false
@@ -6846,12 +6966,17 @@ function(scripts) {
 		return null;
 	}
 
-	var dialog_top = 100, dialog_left = 100, dialog_top_inc = 22, dialog_left_inc = 22;
+	// TODO resolver entries for bounds, use layouter to position
+	var initial_top = 100, initial_left = 40, dialog_top_inc = 32, dialog_left_inc = 32, 
+		dialog_top = initial_top, dialog_left = initial_left,
+		dialog_next_down = initial_top;
 
-	function enhance_dialog(el,role,config) {
+	function enhance_dialog(el,role,config,context) {
+		// TODO if (config['invalid-config']) console.log()
 
 		var configTemplate = config.template,
 			contentTemplate = config['content-template'], 
+			contentClass = config['content-class'] || "dialog-content",
 			contentRole = config['content-role'], contentConfig = config['content-config'];
 		var children = [];
 		for(var i=0,c; c = el.childNodes[i]; ++i) children.push(c);
@@ -6864,23 +6989,28 @@ function(scripts) {
 			var content = template.content.cloneNode(true);
 			el.appendChild(content);
 		}
+
+		var header = el.getElementsByTagName("HEADER")[0],
+			footer = el.getElementsByTagName("FOOTER")[0];
+
 		var wrap = getChildWithRole(el,"content");
-		if (wrap) {
-			wrap.className = ((wrap.className||"") + " dialog-content").replace("  "," ");
-			if (contentTemplate) {
-				var template = Resolver("page::templates","null")([contentTemplate]);
-				if (template == null) return false;
+		// content-template appended to role=content or element
+		if (contentTemplate) {
+			var template = Resolver("page::templates","null")([contentTemplate]);
+			if (template == null) return false;
 
-				var content = template.content.cloneNode(true);
+			var content = template.content.cloneNode(true);
 
-				(wrap || el).appendChild(content);
+			(wrap || el).appendChild(content);
+		}
+		else {
+			if (wrap == null) wrap = HTMLElement("div",{});
+				
+			if (contentRole) {
+				wrap.setAttribute("role",contentRole);
 			}
-			else {
-				if (contentRole) {
-					wrap.setAttribute("role",contentRole);
-				}
-				while(children.length) wrap.appendChild(children.shift());
-			} 
+			while(children.length) wrap.appendChild(children.shift());
+
 
 			if (contentConfig) {
 				if (typeof contentConfig == "object") {
@@ -6889,25 +7019,56 @@ function(scripts) {
 				}
 				wrap.setAttribute("data-role",contentConfig);
 			}
-		}
+		} 
+		if (wrap) wrap.className = ((wrap.className||"") + " "+contentClass).replace("  "," ");
 
+		// restrict height to body (TODO use layouter to restrict this on page resize)
+		if (el.offsetHeight > document.body.offsetHeight) {
+			var height = document.body.offsetHeight - 20;
+			if (header) height -= header.offsetHeight;
+			if (footer) height -= footer.offsetHeight;
+			wrap.style.maxHeight = height + "px";
+		}
 		//("essential::DescriptorQuery::")(el).enhance();
 
 		// position the dialog
-		if (dialog_top + el.offsetHeight > document.body.offsetHeight) {
-			dialog_top = 100;
-			//TODO width of first dialog if reasonable
-			// dialog_left = first + 200;
-		}
-		el.style.top = dialog_top + "px";
-		el.style.left = dialog_left + "px";
+		if (config.placement) { // explicit position
+			if (config.placement.bottom) el.style.bottom = config.placement.bottom + "px";
+			else el.style.top = (config.placement.top || 0) + "px";
 
-		dialog_top += dialog_top_inc;
-		dialog_left += dialog_left_inc;
-		//TODO move down by height of header
+			if (config.placement.right) el.style.right = config.placement.right + "px";
+			else el.style.left = (config.placement.left || 0) + "px";
+		} else { // managed position
+
+			if (dialog_top + el.offsetHeight > document.body.offsetHeight) {
+				dialog_top = initial_top;
+			}
+			if (dialog_left + el.offsetWidth > document.body.offsetWidth) {
+				initial_left += dialog_left_inc;
+				dialog_left = initial_left;
+				if (config.tile) {
+					if (dialog_next_down + el.offsetHeight > document.body.offsetHeight) {
+						initial_top += dialog_top_inc;
+						dialog_next_down =  initial_top;
+					}
+					dialog_top = dialog_next_down;
+				}
+			}
+			el.style.top = Math.max(0,Math.min(dialog_top,document.body.offsetHeight - el.offsetHeight - 12)) + "px";
+			el.style.left = Math.max(0,dialog_left) + "px";
+
+			if (config.tile) { // side by side
+				dialog_left += el.offsetWidth + dialog_left_inc;
+				dialog_next_down = dialog_top + el.offsetHeight + dialog_top_inc;
+			} else { // stacked
+				dialog_top += dialog_top_inc;
+				dialog_left += dialog_left_inc;
+				//TODO move down by height of header
+			}
+		}
+
 
 		// dialog header present
-		var header = el.getElementsByTagName("HEADER")[0];
 		if (header && header.parentNode == el) {
 
 			addEventListeners(header,{ "mousedown": mousedownDialogHeader });
@@ -6981,7 +7142,7 @@ function(scripts) {
 		}
 	}
 
-	function enhance_toolbar(el,role,config) {
+	function enhance_toolbar(el,role,config,context) {
 		// make sure no submit buttons outside form, or enter key will fire the first one.
 		forceNoSubmitType(el.getElementsByTagName("BUTTON"));
 		applyDefaultRole(el.getElementsByTagName("BUTTON"));
@@ -7008,13 +7169,13 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.discard.toolbar",discard_toolbar);
 
-	function enhance_sheet(el,role,config) {
+	function enhance_sheet(el,role,config,context) {
 		
 		return {};
 	}
 	pageResolver.set("handlers.enhance.sheet",enhance_sheet);
 
-	function enhance_spinner(el,role,config) {
+	function enhance_spinner(el,role,config,context) {
 		if (window.Spinner == undefined) return false;
 
 		var opts = {
@@ -7053,7 +7214,7 @@ function(scripts) {
 		return constructor? Generator(constructor) : null;
 	}
 
-	function enhance_application(el,role,config) {
+	function enhance_application(el,role,config,context) {
 		// template around the content
 		if (config.template) {
 			var template = Resolver("page::templates","null")([config.template]);
@@ -7069,7 +7230,7 @@ function(scripts) {
 		if (config.generator) {
 			var g = _lookup_generator(config.generator,config.resolver);
 			if (g) {
-				var instance = g(el,role,config);
+				var instance = g(el,role,config,context);
 				return instance;
 			}
 			else return false; // not yet ready
@@ -7113,7 +7274,7 @@ function(scripts) {
 	// Templates
 
 	function Template(el,config) {
-		this.el = el; // TODO switch to uniqueId
+		this.el = el; // TODO switch to uniqueID
 		this.tagName = el.tagName;
 		this.dataRole = JSON2Attr(config,{id:true});
 
@@ -7173,7 +7334,7 @@ function(scripts) {
 
 	//TODO TemplateContent.prototype.clone = function(config,model) {}
 
-	function enhance_template(el,role,config) {
+	function enhance_template(el,role,config,context) {
 		var id = config.id || el.id;
 		var template = new Template(el,config);
 
@@ -7185,13 +7346,13 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.enhance.template",enhance_template);
 
-	function init_template(el,role,config) {
-		this.contentManaged = true; // template content skipped
+	function init_template(el,role,config,context) {
+		this.state.contentManaged = true; // template content skipped
 	}
 	pageResolver.set("handlers.init.template",init_template);
 
-	function init_templated(el,role,config) {
-		this.contentManaged = true; // templated content skipped
+	function init_templated(el,role,config,context) {
+		this.state.contentManaged = true; // templated content skipped
 	}
 	pageResolver.set("handlers.init.templated",init_templated);
 
@@ -7356,12 +7517,17 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 
 		this.startPageY = event.pageY; // - getComputedStyle( 'top' )
 		this.startPageX = event.pageX; //??
-		document.onselectstart = function(ev) { return false; };
+		document.onselectstart = function(ev) { return false; }; //TODO save old handler?
 
 		//TODO capture in IE
 		//movement.track(event,0,0);
 
 		if (el.stateful) el.stateful.set("dragging",true);
+		this.target = document.body;
+		if (document.body.setCapture) {
+			this.target = this.el;
+			this.target.setCapture();
+		}
 
 		this.drag_events = {
 			//TODO  keyup ESC
@@ -7375,11 +7541,19 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 				movement.track(ev,x,y);
 				// console.log(movement.factorX,movement.factorY)
 			},
+			"click": function(ev) {
+				ev.preventDefault();
+				ev.stopPropagation(); //TODO ev.stopImmediatePropagation() ?
+				return false;
+			},
 			"mouseup": function(ev) {
 				movement.end();
+				ev.preventDefault();
+				ev.stopPropagation(); //TODO ev.stopImmediatePropagation() ?
+				return false;
 			}
 		};
-		addEventListeners(document.body,this.drag_events);
+		addEventListeners(this.target,this.drag_events);
 
 		activeMovement = this;
 
@@ -7388,7 +7562,9 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 
 	ElementMovement.prototype.end = function() {
 		if (this.el.stateful) this.el.stateful.set("dragging",false);
-		removeEventListeners(document.body,this.drag_events);
+		removeEventListeners(this.target,this.drag_events);
+		if (this.target.releaseCapture) this.target.releaseCapture();
+		this.target = null;
 
 		delete document.onselectstart ;
 
@@ -7698,7 +7874,7 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 
 	};
 
-	function enhance_scrolled(el,role,config) {
+	function enhance_scrolled(el,role,config,context) {
 
 		var contentTemplate = config.template;
 		if (contentTemplate) {

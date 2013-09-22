@@ -1,6 +1,5 @@
 ---
 layout: frontpage
-title: Fluent Globe
 ---
 
 <!--     <div role="toolbar" data-role="'generator':'app.Application'" action="controls">
@@ -21,14 +20,14 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
 	</script>
 
-    <div id="stuck">
+    <div id="stuck" data-class="'!state.menu-expanded':'menu-collapsed'" >
 
-      <div class="menu">
+      <div class="menu" role="navigation" data-state="'parent.menu-expanded':'state.expanded'">
         <nav class="flag">
-        <button class="show-menu" onclick="document.getElementById('stuck').className = 'menu-shown';">
+        <button class="show-menu" role="button" name="parent.toggle-expanded">
           &#x2630;
         </button>
-        <label>
+        <label role="button" name="parent.toggle-expanded">
           English
         </label>
         </nav>
@@ -37,6 +36,14 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
             <ul>
                 <li><a href="/">Home</a></li>
+                <li>
+                    <a href="/">Shop</a>
+                    <ul>
+                        <li><a href="/">iBooks for iPad</a></li>
+                        <li><a href="/">Pocket Size app</a></li>
+                        <li><a href="/">10 benefits</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="/">Blog</a>
                     <ul>
@@ -47,15 +54,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
                     </ul>
                 </li>
                 <li>
-                    <a href="/">Work</a>
-                    <ul>
-                        <li><a href="/">Web Design</a></li>
-                        <li><a href="/">Typography</a></li>
-                        <li><a href="/">Front-End</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="/">English</a>
+                    <a href="/">Language</a>
                     <ul onchange="Resolver('page').set('state.lang',this.value);">
                         <li value="en"><a>English</a></li>
                         <li value="fr"><a>Francais</a></li>
@@ -72,28 +71,32 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
             </ul>
       </div>
 
-      <aside class="we-love">
-        <h3 lang="en">We love languages</h3>
-        <h3 lang="es">Nos encantan los idiomas</h3>
-        <h3 lang="de">Wir lieben Sprachen</h3>
+      <div id="stuck-below-image">
+        <aside class="we-love">
+          <h3 lang="en">We love languages</h3>
+          <h3 lang="es">Nos encantan los idiomas</h3>
+          <h3 lang="de">Wir lieben Sprachen</h3>
 
-        <p lang="en">- We'll mail you ideas and help you make a plan for free.</p>
-        <p lang="es">- Te enviamos las ideas y te ayudamos a hacer un plan de forma gratuita.</p>
-        <p lang="de">- Wir senden Ihnen Ideen und helfen Ihnen, einen Plan kostenlos zu machen.</p>
-	    </aside>
+          <p lang="en">- We'll mail you ideas and help you make a plan for free.</p>
+          <p lang="es">- Te enviamos las ideas y te ayudamos a hacer un plan de forma gratuita.</p>
+          <p lang="de">- Wir senden Ihnen Ideen und helfen Ihnen, einen Plan kostenlos zu machen.</p>
+        </aside>
 
-      <section class="benefits">
+        <section class="benefits">
 
-        <ul>
-          <li>Study every day for a month or twice a week for a year.</li>
-          <li>Get reminders for your daily studying</li>
-          <li>Hundreds for free videos.</li>
-          <li>Learn the real spoken language</li>
-          <li>Test your language progress</li>
-        </ul>
+          <ul>
+            <li>Study every day for a month or twice a week for a year.</li>
+            <li>Get reminders for your daily studying</li>
+            <li>Hundreds for free videos.</li>
+            <li>Learn the real spoken language</li>
+            <li>Test your language progress</li>
+          </ul>
 
-        <a>Tell me more <figure class="down"></figure></a>
-      </section>
+          <a>Tell me more <figure class="down"></figure></a>
+        </section>
+
+      </div>
+
 
       <section class="story">
         <p>We have lived in 7 different countries,
