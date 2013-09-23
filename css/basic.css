@@ -44,15 +44,29 @@
 @font-face {
   font-family: 'museo-sans';
   src: url('../fonts/MuseoSans_500-webfont.eot');
-  src: url('../fonts/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/MuseoSans_500-webfont.woff') format('woff'), url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'), url('../fonts/MuseoSans_500-webfont.svg#socialicoregular') format('svg');
+  src: url('../fonts/MuseoSans_500-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/MuseoSans_500-webfont.woff') format('woff'), url('../fonts/MuseoSans_500-webfont.ttf') format('truetype'), url('../fonts/MuseoSans_500-webfont.svg#museo-sans') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: 'museo';
   src: url('../fonts/Museo300-Regular-webfont.eot');
-  src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Museo300-Regular-webfont.woff') format('woff'), url('../fonts/Museo300-Regular-webfont.ttf') format('truetype'), url('../fonts/Museo300-Regular-webfont.svg#socialicoregular') format('svg');
+  src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Museo300-Regular-webfont.woff') format('woff'), url('../fonts/Museo300-Regular-webfont.ttf') format('truetype'), url('../fonts/Museo300-Regular-webfont.svg#museo') format('svg');
   font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'rocksalt';
+  src: url('../fonts/RockSalt-webfont.eot');
+  src: url('../fonts/RockSalt-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/RockSalt-webfont.woff') format('woff'), url('../fonts/RockSalt-webfont.ttf') format('truetype'), url('../fonts/RockSalt-webfont.svg#rocksalt') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'jinky';
+  src: url('../fonts/JINKY-webfont.eot');
+  src: url('../fonts/JINKY-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/JINKY-webfont.woff') format('woff'), url('../fonts/JINKY-webfont.ttf') format('truetype'), url('../fonts/JINKY-webfont.svg#jinky') format('svg');
+  font-weight: normal;
   font-style: normal;
 }
 article,
@@ -1714,6 +1728,13 @@ html body.splash #stuck .benefits {
   top: 80px;
   width: 30%;
 }
+html body.splash #stuck .forward-looking {
+  display: block;
+  font-family: "rocksalt";
+  font-size: 24px;
+  color: #fb441b;
+  margin-top: 16px;
+}
 html body.splash #stuck .story {
   position: absolute;
   top: 50px;
@@ -1934,7 +1955,6 @@ html body.splash-garden article {
   position: relative;
   width: 100%;
   margin-top: 650px;
-  min-width: 980px;
   overflow: visible;
 }
 @media only screen and (min-width: 960px) {
@@ -1948,11 +1968,33 @@ html body.splash-garden article {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-garden #stuck {
     width: 100%;
+    height: 920px;
     min-height: initial;
-    max-height: 620px;
+    max-height: initial;
     background-image: url(../images/garden-reading-ipad.jpg);
     background-position: top center;
     background-size: 360px auto;
+  }
+  html body.splash-garden #stuck .we-love {
+    left: 25px;
+  }
+  html body.splash-garden #stuck .story {
+    position: absolute;
+    top: initial;
+    bottom: 100px;
+    left: 25px;
+    width: 80%;
+  }
+  html body.splash-garden #stuck .benefits {
+    left: 25px;
+    width: 80%;
+  }
+  html body.splash-garden #stuck form {
+    left: 25px;
+    top: 47%;
+    width: 80%;
+    margin-left: 0;
+    margin-top: 0;
   }
   html body.splash-garden #tracer {
     width: 360px;
@@ -2003,7 +2045,6 @@ html body.splash-color article {
   position: relative;
   width: 100%;
   margin-top: 650px;
-  min-width: 980px;
   overflow: visible;
 }
 @media only screen and (min-width: 960px) {
@@ -2017,11 +2058,33 @@ html body.splash-color article {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (orientation: portrait) {
   html body.splash-color #stuck {
     width: 100%;
+    height: 920px;
     min-height: initial;
-    max-height: 620px;
+    max-height: initial;
     background-image: url(../images/color-360-hq.jpg);
     background-position: top center;
     background-size: 360px auto;
+  }
+  html body.splash-color #stuck .we-love {
+    left: 25px;
+  }
+  html body.splash-color #stuck .story {
+    position: absolute;
+    top: initial;
+    bottom: 100px;
+    left: 25px;
+    width: 80%;
+  }
+  html body.splash-color #stuck .benefits {
+    left: 25px;
+    width: 80%;
+  }
+  html body.splash-color #stuck form {
+    left: 25px;
+    top: 47%;
+    width: 80%;
+    margin-left: 0;
+    margin-top: 0;
   }
   html body.splash-color #tracer {
     width: 360px;
@@ -2080,8 +2143,8 @@ html body.splash-color article {
   font-size: 2em;
 }
 .splash article section p {
-  width: 680px;
-  margin: 0 auto;
+  word-wrap: normal;
+  overflow-wrap: break-word;
 }
 .splash article section.even {
   background-color: #f3f3f3;
@@ -2109,6 +2172,6 @@ html body.splash-color article {
   margin: 0 auto;
 }
 .centerContainer {
-  position: 900px;
+  width: 300px;
   margin: 0 auto;
 }

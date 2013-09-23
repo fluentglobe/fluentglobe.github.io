@@ -150,6 +150,13 @@ html body.splash {
             top: 80px;
             width: 30%;
         }
+        .forward-looking {
+            display: block;
+            font-family: "rocksalt";
+            font-size: 24px;
+            color: @fluent-red;
+            margin-top: 16px;
+        }
 
         .story {
             position: absolute;
@@ -449,8 +456,10 @@ html body.splash-color {
             font-size: 2em;
         }
         p {
-            width: 680px;
-            margin: 0 auto;
+            //width: 680px;
+            // margin: 0 auto;
+            word-wrap: normal;
+            overflow-wrap: break-word; 
         }
     }
 
@@ -491,7 +500,7 @@ html body.splash-color {
 }
 
 .centerContainer {
-    position: 900px;
+    width: 300px; //TODO change?
     margin: 0 auto;
 }
 

@@ -71,7 +71,7 @@
         position:relative; //absolute
         width: 100%;
         margin-top: @top-splash-room; // will be overridden by struck measurement
-        min-width: 980px;
+        // min-width: 980px;
         overflow: visible;
     }
 
@@ -95,12 +95,36 @@
 
         #stuck {
             width: 100%;
+            height: @portrait-bg-height;
             min-height: initial;
-            max-height: 620px;
+            max-height: initial;
 
             background-image: @image-portrait;
             background-position: top center;
             background-size: 360px auto;
+
+            .we-love {
+                left: 25px;
+            }
+            .story {
+                position: absolute;
+                top: initial;
+                bottom: 100px;
+                left: 25px;
+                width: 80%;
+            }
+            .benefits {
+                left: 25px;
+                width: 80%;
+            }
+
+            form {
+                left: 25px;
+                top: 47%;
+                width: 80%;
+                margin-left: 0;
+                margin-top: 0;
+            }
         }
         #tracer { width: @portrait-bg-width; height: @portrait-bg-height;}
 
