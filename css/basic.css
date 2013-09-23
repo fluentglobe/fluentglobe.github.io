@@ -1946,7 +1946,7 @@ html body.splash-garden #stuck {
   background-size: auto 100%;
 }
 html body.splash-garden #tracer {
-  position: absolute;
+  position: fixed;
   visibility: hidden;
   width: 960px;
   height: 548px;
@@ -2036,7 +2036,7 @@ html body.splash-color #stuck {
   background-size: auto 100%;
 }
 html body.splash-color #tracer {
-  position: absolute;
+  position: fixed;
   visibility: hidden;
   width: 960px;
   height: 548px;
