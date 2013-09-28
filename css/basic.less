@@ -252,34 +252,60 @@ html body.splash {
     }
 }
 
-.side-menu(@width: 200px, @bg-color: @fluent-orange, @shaded-color: @fluent-dark-orange) {
+.side-menu(@width: 200px, @bg-color: @fluent-orange, @shaded-color: @fluent-dark-orange, @color: white, @active-color: #c00) {
 
     width: @width + 3px;
     .list-as-menu();
     border-right: 3px solid @bg-color;
     background-color: @bg-color;
 
-    color: white;
+    color: @color;
 
     ul {
         li {
-            position: relative;
+            // position: relative;
             height: 2.5em;
 
-            > ul > li a {
+            > ul > li a, 
+            > ul > li q {
                 padding-left: 2em;
                 background-color: @bg-color;
                 border-color: @shaded-color;
             }
         }
 
-        a {
+        a, q {
             display: block;
             height: 100%;
             background-color: @shaded-color;
             border: 1px solid @bg-color;
-            color: white;
+            color: @color;
             padding: .5em 1em;
+        }
+    }
+
+    /* container */
+
+    > a, > q {
+        display: none;
+    }
+    li {
+        position: relative;
+
+        a,q {
+            color: @color;
+            display: block;
+
+            &:active {
+                background-color: @active-color !important;
+            }
+        }
+
+        &[selected=true] q:after {
+            position:absolute;
+            right: 1em;
+            top: 0.6em;
+            content: "\2713";
         }
     }
 }
@@ -298,23 +324,6 @@ html body.splash {
 
     .list-as-menu();
 
-    /* container */
-
-    > a {
-        display: none;
-    }
-    li {
-        position: relative;
-
-        a {
-            color: #fff;
-            display: block;
-
-            &:active {
-                background-color: #c00 !important;
-            }
-        }
-    }
  
     /* first level */
     > ul {
@@ -328,7 +337,7 @@ html body.splash {
             height: 100%;
             float: left;
 
-            > a {
+            > a, > q {
                 height: 100%;
                 font-size: 1.2em;
                 line-height: 2.4em; /* 60 (24) */
@@ -336,11 +345,14 @@ html body.splash {
             }
         }
 
-        > li:not( :last-child ) > a {
+        > li:not( :last-child ) > a,
+        > li:not( :last-child ) > q {
             border-right: 1px solid @shaded-color;
         }
         > li:hover > a,
-        &:not ( :hover ) > li.active > a {
+        &:not ( :hover ) > li.active > a,
+        > li:hover > q,
+        &:not ( :hover ) > li.active > q {
             background-color: @shaded-color;
         }
     }
@@ -353,7 +365,7 @@ html body.splash {
         width: 100%;
         background-color: @shaded-color;
 
-        a {
+        a,q {
             font-size: 1.25em;
             border-top: 1px solid @bg-color;
             padding: 0.75em;

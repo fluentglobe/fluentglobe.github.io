@@ -24,10 +24,15 @@ function updateConnected() {
 		return;
 	}
 
-	var url = "http://fluentglobe.createsend.com";
 	//var url = "http://localhost:3000";
+
+	// var url = "http://api.learnrighthere.com"; // support OPTIONS
+	// var xhr = XMLHttpRequest();
+	// xhr.open("OPTIONS",url,true);
+
+	var url = "https://fluentglobe.createsend.com/t/i/s/pdtdj/";
 	var xhr = XMLHttpRequest();
-	xhr.open("OPTIONS",url,true);
+	xhr.open("GET",url,true);
 	xhr.onreadystatechange = function(ready) {
 	    if (xhr.readyState == 4 /* complete */) {
 	        if (xhr.status == 200 || xhr.status == 304) {
@@ -42,7 +47,7 @@ function updateConnected() {
 	};
 	xhr.send("");
 }
-setTimeout(updateConnected,100); //TODO configurable with algorithm
+// setTimeout(updateConnected,100); //TODO configurable with algorithm
 
 
 function EnhancedForm(el,config) {

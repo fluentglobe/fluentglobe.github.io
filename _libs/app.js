@@ -1,6 +1,10 @@
 !function() {
 
-var StatefulResolver = Resolver("essential")("StatefulResolver"),
+var essential = Resolver("essential"),
+    StatefulResolver = essential("StatefulResolver"),
+    addEventListeners = essential("addEventListeners"),
+    MutableEvent = essential("MutableEvent"),
+    EnhancedDescriptor = essential("EnhancedDescriptor"),
 	DialogAction = Resolver("essential")("DialogAction");
 
 if (! /PhantomJS\//.test(navigator.userAgent)) {
@@ -9,6 +13,62 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
     Resolver("page").set("map.class.notstate.connected","disconnected");
 }
 
+function Navigation(el,config) {
+
+    addEventListeners(el, {
+        // "change": form_input_change,
+        "click": dialog_button_click
+    },false);
+
+}
+
+Navigation.prototype.destroy = function() {
+
+};
+
+Navigation.prototype.click = function(ev) {
+
+    if (ev.commandRole == "menuitem") {
+        ev.commandElement.stateful.set("state.selected",true);
+    }
+};
+
+function dialog_button_click(ev) {
+    ev = MutableEvent(ev).withActionInfo();
+
+    if (ev.commandRole == "button") return; // skip the show-menu
+
+    if (ev.commandElement) {
+        if (ev.stateful && ev.stateful("state.disabled")) return; // disable
+        if (ev.ariaDisabled) return; //TODO fold into stateful
+
+        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
+        ev.stopPropagation();
+    }
+
+    if (ev.defaultPrevented) return false;
+}
+
+
+function enhance_navigation(el,role,config) {
+    var navigation = new Navigation(el,config);
+    return navigation;
+}
+
+function layout_navigation(el,layout,instance) {
+
+}
+
+function discard_navigation(el,role,instance) {
+    if (instance) instance.destroy(el);
+}
+
+Resolver("page").set("handlers.enhance.navigation", enhance_navigation);
+Resolver("page").set("handlers.layout.navigation", layout_navigation);
+Resolver("page").set("handlers.discard.navigation", discard_navigation);
+
+
+// --
 
 var FormAction = Generator(function(action) {
 },DialogAction);

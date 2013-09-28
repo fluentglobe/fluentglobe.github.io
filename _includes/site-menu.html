@@ -1,45 +1,46 @@
-      <div class="menu" role="navigation" data-state="'parent.menu-expanded':'state.expanded'">
-        <nav class="flag">
-        <button class="show-menu" role="button" name="parent.toggle-expanded">
-          &#x2630;
-        </button>
-        <label role="button" name="parent.toggle-expanded">
-          English
-        </label>
-        </nav>
+<div class="menu" role="navigation" data-state="'parent.menu-expanded':'state.expanded'">
+<nav class="flag">
+    <button class="show-menu" role="button" name="parent.toggle-expanded">
+      &#x2630;
+    </button>
+    <label role="button" name="parent.toggle-expanded">
+      <output data-role="'prefix':'model.language'">English</output>
+    </label>
+</nav>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li>
+        <a href="/">Shop</a>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li>
-                <a href="/">Shop</a>
-                <ul>
-                    <li><a href="/">iBooks for iPad</a></li>
-                    <li><a href="/">Pocket Size app</a></li>
-                    <li><a href="/">10 benefits</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/">Blog</a>
-                <ul>
-                    <li><a href="/">Design</a></li>
-                    <li><a href="/">HTML</a></li>
-                    <li><a href="/">CSS</a></li>
-                    <li><a href="/">JavaScript</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/">Language</a>
-                <ul onchange="Resolver('page').set('state.lang',this.value);">
-                    <li value="en"><a>English</a></li>
-                    <li value="fr"><a>Francais</a></li>
-                    <li value="de"><a>Deutch</a></li>
-                    <li value="es"><a>Espaniol</a></li>
-                    <li value="pt"><a>Portuguese</a></li>
-                    <li value="it"><a>Italiano</a></li>
-                    <li value="pl"><a>Polish</a></li>
-                    <li value="cs"><a>Czech</a></li>
-                    <li value="ch"><a>Chinese</a></li>
-                    <li value="jp"><a>Japanese</a></li>
-                </ul>
-            </li>
+            <li><a href="/">iBooks for iPad</a></li>
+            <li><a href="/">Pocket Size app</a></li>
+            <li><a href="/">10 benefits</a></li>
         </ul>
-      </div>
+    </li>
+    <li>
+        <a href="/">Blog</a>
+        <ul>
+            <li><a href="/">Design</a></li>
+            <li><a href="/">HTML</a></li>
+            <li><a href="/">CSS</a></li>
+            <li><a href="/">JavaScript</a></li>
+        </ul>
+    </li>
+    <li>
+        <q>Language</q>
+        <ul onchange="Resolver('page').set('state.lang',this.value);">
+            <li role="menuitem" data-role="'select':'model.language','value':'en'"><q>English</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'fr'"><q>Francais</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'de'"><q>Deutch</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'es'"><q>Espaniol</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'pt'"><q>Portuguese</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'it'"><q>Italiano</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'pl'"><q>Polski</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'cs'"><q>Čeština</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'ru'"><q>Русский</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'ch'"><q>中国的</q></li>
+            <li role="menuitem" data-role="'select':'model.language','value':'jp'"><q>日本人</q></li>
+        </ul>
+    </li>
+</ul>
+</div>
