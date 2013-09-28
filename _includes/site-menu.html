@@ -1,0 +1,45 @@
+      <div class="menu" role="navigation" data-state="'parent.menu-expanded':'state.expanded'">
+        <nav class="flag">
+        <button class="show-menu" role="button" name="parent.toggle-expanded">
+          &#x2630;
+        </button>
+        <label role="button" name="parent.toggle-expanded">
+          English
+        </label>
+        </nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li>
+                <a href="/">Shop</a>
+                <ul>
+                    <li><a href="/">iBooks for iPad</a></li>
+                    <li><a href="/">Pocket Size app</a></li>
+                    <li><a href="/">10 benefits</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/">Blog</a>
+                <ul>
+                    <li><a href="/">Design</a></li>
+                    <li><a href="/">HTML</a></li>
+                    <li><a href="/">CSS</a></li>
+                    <li><a href="/">JavaScript</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/">Language</a>
+                <ul onchange="Resolver('page').set('state.lang',this.value);">
+                    <li value="en"><a>English</a></li>
+                    <li value="fr"><a>Francais</a></li>
+                    <li value="de"><a>Deutch</a></li>
+                    <li value="es"><a>Espaniol</a></li>
+                    <li value="pt"><a>Portuguese</a></li>
+                    <li value="it"><a>Italiano</a></li>
+                    <li value="pl"><a>Polish</a></li>
+                    <li value="cs"><a>Czech</a></li>
+                    <li value="ch"><a>Chinese</a></li>
+                    <li value="jp"><a>Japanese</a></li>
+                </ul>
+            </li>
+        </ul>
+      </div>
