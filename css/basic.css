@@ -1830,18 +1830,6 @@ html body.splash #stuck .story {
   width: 340px;
   margin-left: -170px;
 }
-html body.splash #stuck .follow {
-  position: absolute;
-  left: 50%;
-  width: 340px;
-  margin-left: -170px;
-  text-align: center;
-  bottom: 60px;
-}
-html body.splash #stuck .follow h4 {
-  font-size: 15px;
-  padding: 15px 0 5px 0;
-}
 html body.splash #stuck form {
   position: absolute;
   left: 50%;
@@ -1888,13 +1876,6 @@ html body.splash #stuck .double-corner {
 }
 html body.splash #stuck .btn.primary {
   background: #fb441b;
-}
-html body.splash #stuck .social-icon {
-  font-family: "socialicoregular";
-  font-size: 40px;
-  color: #888;
-  text-decoration: none;
-  line-height: 1;
 }
 html body.splash #stuck .langChoice {
   position: absolute;
@@ -2239,6 +2220,32 @@ html body.splash-color article {
 .splash article > footer a {
   color: #fb441b;
   text-decoration: none;
+}
+.splash article .follow {
+  position: absolute;
+  top: 9px;
+  right: 20px;
+  text-align: right;
+}
+.splash article .follow h4 {
+  display: inline-block;
+  font-size: 15px;
+  padding: 10px 10px 5px 0;
+  vertical-align: top;
+  color: #888;
+}
+.splash article .follow nav {
+  display: inline-block;
+}
+.splash article .social-icon {
+  font-family: "socialicoregular";
+  font-size: 40px;
+  color: #888;
+  text-decoration: none;
+  line-height: 1;
+}
+.splash article .social-icon:hover {
+  color: #08C;
 }
 .constrained {
   overflow: visible;

@@ -141,16 +141,6 @@ html body.splash {
             margin-left: -0.5 * @center-width;
         }
 
-        .follow {
-            .center-box-horz(@center-width);
-            text-align: center;
-            bottom: 60px;
-
-            h4 {
-                font-size: 15px;
-                padding: 15px 0 5px 0;
-            }
-        }
         form {
             .center-box-horz(@center-width);
             top:50%; margin-top: -100px;
@@ -206,14 +196,6 @@ html body.splash {
             background: @fluent-red;
         }
         
-        .social-icon {
-            font-family: "socialicoregular";
-            font-size: 40px;
-            color: #888;
-            text-decoration: none;
-            line-height: 1;
-        }
-
         .langChoice {
             position: absolute;
             top: 50px;
@@ -360,10 +342,12 @@ html body.splash-color {
 
 
 .splash article {
+    @header-height: 60px;
+
     > header {
         position:absolute;
-        top: -60px;
-        height: 60px;
+        top: -(@header-height);
+        height: @header-height;
         left:0; right:0;
         background-color: rgb(40,40,40);
         background-color: rgba(0,0,0,.7);
@@ -408,6 +392,36 @@ html body.splash-color {
         a {
             color: @fluent-red;
             text-decoration: none;
+        }
+    }
+
+    .follow {
+        position: absolute;
+        top: (@header-height - 42px)/2; right:20px;
+        // .center-box-horz(@center-width);
+        text-align: right;
+        // bottom: 60px;
+
+        h4 {
+            display: inline-block;
+            font-size: 15px;
+            padding: 10px 10px 5px 0;
+            vertical-align: top;
+            color: #888;
+        }
+        nav {
+            display: inline-block;
+        }
+    }
+    .social-icon {
+        font-family: "socialicoregular";
+        font-size: 40px;
+        color: #888;
+        text-decoration: none;
+        line-height: 1;
+
+        &:hover {
+            color: #08C;
         }
     }
 
