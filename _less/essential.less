@@ -239,7 +239,9 @@
         [lang=pl],
         [lang=cs], // Czech
         [lang=ch],
-        [lang=jp]
+        [lang=jp],
+        [lang=ru],
+        [lang=ar]
          {
             display:none !important; 
         }
@@ -261,7 +263,9 @@
 	    [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -282,7 +286,9 @@
 	    [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -303,7 +309,9 @@
 	    [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -324,7 +332,9 @@
 	    [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -345,7 +355,9 @@
 	    [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -366,7 +378,9 @@
 	    // [lang=pl],
 	    [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -387,7 +401,9 @@
 	    [lang=pl],
 	    // [lang=cs], // Czech
 	    [lang=ch],
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -407,7 +423,9 @@
 	    [lang=it],
 	    [lang=pl],
 	    [lang=cs], // Czech
-	    [lang=jp]
+	    [lang=jp],
+        [lang=ru],
+        [lang=ar]
 	     {
 	        display:none !important; 
 	    }
@@ -427,8 +445,56 @@
 	    [lang=it],
 	    [lang=pl],
 	    [lang=cs], // Czech
-	    [lang=ch]
+	    [lang=ch],
+        [lang=ru],
+        [lang=ar]
 	    // [lang=jp]
+	     {
+	        display:none !important; 
+	    }
+	}
+}
+
+.supportLang(ru) {
+	[lang=ru] { 
+		*[lang=not-ru], 
+		.not-lang-ru { display:none !important; }
+
+	    [lang=en],
+	    [lang=fr],
+	    [lang=de],
+	    [lang=es],
+	    [lang=pt],
+	    [lang=it],
+	    [lang=pl],
+	    [lang=cs], // Czech
+	    [lang=ch],
+        [lang=jp],
+        [lang=ar]
+	    // [lang=ru]
+	     {
+	        display:none !important; 
+	    }
+	}
+}
+
+.supportLang(ar) {
+	[lang=ar] { 
+		*[lang=not-ar], 
+		.not-lang-ar { display:none !important; }
+
+	    [lang=en],
+	    [lang=fr],
+	    [lang=de],
+	    [lang=es],
+	    [lang=pt],
+	    [lang=it],
+	    [lang=pl],
+	    [lang=cs], // Czech
+	    [lang=jp],
+        [lang=ru],
+        [lang=ch]
+	    // [lang=ar]
 	     {
 	        display:none !important; 
 	    }

@@ -1487,7 +1487,9 @@ html[lang=en] body [lang=it],
 html[lang=en] body [lang=pl],
 html[lang=en] body [lang=cs],
 html[lang=en] body [lang=ch],
-html[lang=en] body [lang=jp] {
+html[lang=en] body [lang=jp],
+html[lang=en] body [lang=ru],
+html[lang=en] body [lang=ar] {
   display: none !important;
 }
 html[lang=fr] body *[lang=not-fr],
@@ -1502,7 +1504,9 @@ html[lang=fr] body [lang=it],
 html[lang=fr] body [lang=pl],
 html[lang=fr] body [lang=cs],
 html[lang=fr] body [lang=ch],
-html[lang=fr] body [lang=jp] {
+html[lang=fr] body [lang=jp],
+html[lang=fr] body [lang=ru],
+html[lang=fr] body [lang=ar] {
   display: none !important;
 }
 html[lang=de] body *[lang=not-de],
@@ -1517,7 +1521,9 @@ html[lang=de] body [lang=it],
 html[lang=de] body [lang=pl],
 html[lang=de] body [lang=cs],
 html[lang=de] body [lang=ch],
-html[lang=de] body [lang=jp] {
+html[lang=de] body [lang=jp],
+html[lang=de] body [lang=ru],
+html[lang=de] body [lang=ar] {
   display: none !important;
 }
 html[lang=es] body *[lang=not-es],
@@ -1532,7 +1538,9 @@ html[lang=es] body [lang=it],
 html[lang=es] body [lang=pl],
 html[lang=es] body [lang=cs],
 html[lang=es] body [lang=ch],
-html[lang=es] body [lang=jp] {
+html[lang=es] body [lang=jp],
+html[lang=es] body [lang=ru],
+html[lang=es] body [lang=ar] {
   display: none !important;
 }
 html[lang=pt] body *[lang=not-pt],
@@ -1547,7 +1555,9 @@ html[lang=pt] body [lang=it],
 html[lang=pt] body [lang=pl],
 html[lang=pt] body [lang=cs],
 html[lang=pt] body [lang=ch],
-html[lang=pt] body [lang=jp] {
+html[lang=pt] body [lang=jp],
+html[lang=pt] body [lang=ru],
+html[lang=pt] body [lang=ar] {
   display: none !important;
 }
 html[lang=it] body *[lang=not-it],
@@ -1562,7 +1572,9 @@ html[lang=it] body [lang=pt],
 html[lang=it] body [lang=pl],
 html[lang=it] body [lang=cs],
 html[lang=it] body [lang=ch],
-html[lang=it] body [lang=jp] {
+html[lang=it] body [lang=jp],
+html[lang=it] body [lang=ru],
+html[lang=it] body [lang=ar] {
   display: none !important;
 }
 html[lang=pl] body *[lang=not-pl],
@@ -1577,7 +1589,9 @@ html[lang=pl] body [lang=pt],
 html[lang=pl] body [lang=it],
 html[lang=pl] body [lang=cs],
 html[lang=pl] body [lang=ch],
-html[lang=pl] body [lang=jp] {
+html[lang=pl] body [lang=jp],
+html[lang=pl] body [lang=ru],
+html[lang=pl] body [lang=ar] {
   display: none !important;
 }
 html[lang=cs] body *[lang=not-cs],
@@ -1592,7 +1606,9 @@ html[lang=cs] body [lang=pt],
 html[lang=cs] body [lang=it],
 html[lang=cs] body [lang=pl],
 html[lang=cs] body [lang=ch],
-html[lang=cs] body [lang=jp] {
+html[lang=cs] body [lang=jp],
+html[lang=cs] body [lang=ru],
+html[lang=cs] body [lang=ar] {
   display: none !important;
 }
 html[lang=ch] body *[lang=not-ch],
@@ -1607,7 +1623,9 @@ html[lang=ch] body [lang=pt],
 html[lang=ch] body [lang=it],
 html[lang=ch] body [lang=pl],
 html[lang=ch] body [lang=cs],
-html[lang=ch] body [lang=jp] {
+html[lang=ch] body [lang=jp],
+html[lang=ch] body [lang=ru],
+html[lang=ch] body [lang=ar] {
   display: none !important;
 }
 [lang=jp] *[lang=not-jp],
@@ -1622,7 +1640,43 @@ html[lang=ch] body [lang=jp] {
 [lang=jp] [lang=it],
 [lang=jp] [lang=pl],
 [lang=jp] [lang=cs],
-[lang=jp] [lang=ch] {
+[lang=jp] [lang=ch],
+[lang=jp] [lang=ru],
+[lang=jp] [lang=ar] {
+  display: none !important;
+}
+[lang=ru] *[lang=not-ru],
+[lang=ru] .not-lang-ru {
+  display: none !important;
+}
+[lang=ru] [lang=en],
+[lang=ru] [lang=fr],
+[lang=ru] [lang=de],
+[lang=ru] [lang=es],
+[lang=ru] [lang=pt],
+[lang=ru] [lang=it],
+[lang=ru] [lang=pl],
+[lang=ru] [lang=cs],
+[lang=ru] [lang=ch],
+[lang=ru] [lang=jp],
+[lang=ru] [lang=ar] {
+  display: none !important;
+}
+[lang=ar] *[lang=not-ar],
+[lang=ar] .not-lang-ar {
+  display: none !important;
+}
+[lang=ar] [lang=en],
+[lang=ar] [lang=fr],
+[lang=ar] [lang=de],
+[lang=ar] [lang=es],
+[lang=ar] [lang=pt],
+[lang=ar] [lang=it],
+[lang=ar] [lang=pl],
+[lang=ar] [lang=cs],
+[lang=ar] [lang=jp],
+[lang=ar] [lang=ru],
+[lang=ar] [lang=ch] {
   display: none !important;
 }
 ::selection {
