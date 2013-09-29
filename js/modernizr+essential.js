@@ -215,12 +215,13 @@ function Resolver(name_andor_expr,ns,options)
     	e.callback = callback;
         e.inTrigger = 0;
 
-    	function trigger(base,symbol,value) {
+    	function trigger(base,symbol,value,oldValue) {
             if (this.inTrigger) return;
             ++this.inTrigger;
             this.base = base;
     		this.symbol = symbol;
     		this.value = value;
+            this.oldValue = oldValue;
     		this.callback.call(resolver,this);
             --this.inTrigger;
     	}
@@ -253,6 +254,9 @@ function Resolver(name_andor_expr,ns,options)
     resolver.references = { };
 
     var VALID_LISTENERS = {
+        "true": true, // change to true value
+        "false": true, // change to false value
+        "reflect": true, // allows forcing reflection of current value
     	"get": true, // allows for switching in alternate lookups
     	"change": true, // allows reflecting changes elsewhere
     	"undefined": true // allow filling in unfound entries
@@ -302,23 +306,26 @@ function Resolver(name_andor_expr,ns,options)
                 var combined = names.concat(subnames);
                 var parentName = combined.join(".");
                 subnames.push(symbol);
-                value = !arguments[1]; //TODO configurable toggle
+                var oldValue = arguments[1];
+                value = !oldValue; //TODO configurable toggle
 
                 if (_setValue(value,combined,base,symbol)) {
                     var childRef = resolver.references[parentName + "." + symbol];
-                    if (childRef) childRef._callListener("change",combined,base,symbol,value);
+                    if (childRef) childRef._callListener("change",combined,base,symbol,value,oldValue);
                     var parentRef = resolver.references[parentName];
-                    if (parentRef) parentRef._callListener("change",combined,base,symbol,value);
+                    if (parentRef) parentRef._callListener("change",combined,base,symbol,value,oldValue);
                 }
             } else {
-                var base = _resolve(baseNames,null,onundefinedSet);
+                var base = _resolve(baseNames,null,onundefinedSet),
+                    oldValue = arguments[0];
+                value = !oldValue; //TODO configurable toggle
 
                 if (_setValue(value,baseNames,base,leafName)) {
-                    this._callListener("change",baseNames,base,leafName,value);
+                    this._callListener("change",baseNames,base,leafName,value,oldValue);
                     //TODO test for triggering specific listeners
                     if (baseRefName) {
                         var parentRef = resolver.references[baseRefName];
-                        if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value);
+                        if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value,oldValue);
                     }
                 }
             }
@@ -333,22 +340,24 @@ function Resolver(name_andor_expr,ns,options)
                 var parentName = combined.join(".");
                 subnames.push(symbol);
 	        	value = arguments[1];
+                var oldValue = base[symbol];
 
                 if (_setValue(value,combined,base,symbol)) {
                     var childRef = resolver.references[parentName + "." + symbol];
-                    if (childRef) childRef._callListener("change",combined,base,symbol,value);
+                    if (childRef) childRef._callListener("change",combined,base,symbol,value,oldValue);
                     var parentRef = resolver.references[parentName];
-                    if (parentRef) parentRef._callListener("change",combined,base,symbol,value);
+                    if (parentRef) parentRef._callListener("change",combined,base,symbol,value,oldValue);
                 }
         	} else {
 				var base = _resolve(baseNames,null,onundefinedSet);
+                var oldValue = base[symbol];
 
                 if (_setValue(value,baseNames,base,leafName)) {
-                    this._callListener("change",baseNames,base,leafName,value);
+                    this._callListener("change",baseNames,base,leafName,value,oldValue);
                     //TODO test for triggering specific listeners
                     if (baseRefName) {
                         var parentRef = resolver.references[baseRefName];
-                        if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value);
+                        if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value,oldValue);
                     }
                 }
         	}
@@ -363,26 +372,28 @@ function Resolver(name_andor_expr,ns,options)
                 var parentName = combined.join(".");
                 subnames.push(symbol);
                 value = arguments[1];
+                var oldValue = base[symbol];
 
                 if (base[symbol] === undefined) {
                     if (_setValue(value,combined,base,symbol)) {
                         var childRef = resolver.references[parentName + "." + symbol];
-                        if (childRef) childRef._callListener("change",combined,base,symbol,value);
+                        if (childRef) childRef._callListener("change",combined,base,symbol,value,oldValue);
                         var parentRef = resolver.references[parentName];
-                        if (parentRef) parentRef._callListener("change",combined,base,symbol,value);
+                        if (parentRef) parentRef._callListener("change",combined,base,symbol,value,oldValue);
                     }
                 }
                 return base[symbol];
         	} else {
                 var base = _resolve(baseNames,null,onundefinedSet);
+                var oldValue = base[symbol];
 
                 if (base[leafName] === undefined) {
                     if (_setValue(value,baseNames,base,leafName)) {
-                        this._callListener("change",baseNames,base,leafName,value);
+                        this._callListener("change",baseNames,base,leafName,value,oldValue);
                         //TODO test for triggering specific listeners
                         if (baseRefName) {
                             var parentRef = resolver.references[baseRefName];
-                            if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value);
+                            if (parentRef) parentRef._callListener("change",baseNames,base,leafName,value,oldValue);
                         }
                     }
                 }
@@ -397,13 +408,14 @@ function Resolver(name_andor_expr,ns,options)
         function declareEntry(key,value) {
             var symbol = names.pop();
         	var base = _resolve(names,null,onundefined);
+            var oldValue = base[symbol];
         	names.push(symbol);
         	if (base[symbol] === undefined) _setValue({},names,base,symbol);
         	
         	if (base[symbol][key] === undefined) {
         		names.push(key);
         		if (_setValue(value,names,base[symbol],key)) {
-			    	this._callListener("change",names,key,value);
+			    	this._callListener("change",names,base,key,value,oldValue);
 	    	//TODO parent listeners
         		}
 	    		names.pop(); // return names to unchanged
@@ -412,12 +424,13 @@ function Resolver(name_andor_expr,ns,options)
         function setEntry(key,value) {
             var symbol = names.pop();
         	var base = _resolve(names,null,onundefined);
+            var oldValue = base[symbol];
         	names.push(symbol);
         	if (base[symbol] === undefined) _setValue({},names,base,symbol);
         	
     		names.push(key);
     		if (_setValue(value,names,base[symbol],key)) {
-		    	this._callListener("change",names,key,value);
+		    	this._callListener("change",names,base,key,value,oldValue);
 	    	//TODO parent listeners
     		}
     		names.pop(); // return names to unchanged
@@ -436,7 +449,7 @@ function Resolver(name_andor_expr,ns,options)
         		}
         	}
         	names.pop(); // return names to unchanged
-	    	this._callListener("change",names,null,mods);
+	    	this._callListener("change",names,base[symbol],null,mods);
 	    	//TODO parent listeners
         }
         function unmix(map) {
@@ -456,7 +469,7 @@ function Resolver(name_andor_expr,ns,options)
             }
 
             names.pop(); // return names to unchanged
-            this._callListener("change",names,null,mods);
+            this._callListener("change",names,base[symbol],null,mods);
         }
         function mixinto(target) {
             var base = _resolve(names,null,onundefined);
@@ -465,8 +478,6 @@ function Resolver(name_andor_expr,ns,options)
             }
         }
 	    function on(type,data,callback) {
-	    	if (! type in VALID_LISTENERS) return;//fail
-
 	    	switch(arguments.length) {
 	    		case 2: this._addListener(type,name,null,arguments[1]); break;
 	    		case 3: this._addListener(type,name,data,callback); break;
@@ -479,7 +490,7 @@ function Resolver(name_andor_expr,ns,options)
 
 	    	this._callListener(type,baseNames,base,leafName,value);
 			var parentRef = resolver.references[baseRefName];
-			if (parentRef) parentRef._callListener("change",baseNames,_resolve(baseNames,null),leafName,value);
+			if (parentRef) parentRef._callListener(type,baseNames,_resolve(baseNames,null),leafName,value);
 	    }
 
         function read_session(ref) {
@@ -653,9 +664,19 @@ function Resolver(name_andor_expr,ns,options)
 
         get.listeners = listeners || _makeListeners();
 
-	    function _callListener(type,names,base,symbol,value) {
+	    function _callListener(type,names,base,symbol,value,oldValue) {
+            if (type == "change" && value === false) {
+                for(var i=0,event; event = this.listeners["false"][i]; ++i) {
+                    event.trigger(base,symbol,value,oldValue);
+                }
+            }
+            if (type == "change" && value === true) {
+                for(var i=0,event; event = this.listeners["true"][i]; ++i) {
+                    event.trigger(base,symbol,value,oldValue);
+                }
+            }
 	    	for(var i=0,event; event = this.listeners[type][i]; ++i) {
-	    		event.trigger(base,symbol,value);
+	    		event.trigger(base,symbol,value,oldValue);
 	    	}
             if (this.storechanges && type == "change") {
                 for(var n in this.storechanges) this.storechanges[n].call(this);
@@ -671,17 +692,18 @@ function Resolver(name_andor_expr,ns,options)
 	    		a.b
 	    		a.b.c
 	    	*/
-            var ev = _makeResolverEvent(resolver,type,selector,data,callback);
-
             if (/^bind | bind | bind$|^bind$/.test(type)) {
-                type = type.replace(" bind ","").replace("bind ","").replace(" bind","");
-                this.listeners[type].push(ev);
+                type = type.replace(" bind "," ").replace("bind ","").replace(" bind","");
 
                 var baseNames = selector.split(".");
                 var leafName = baseNames.pop();
                 var base = _resolve(baseNames,null,"undefined");
+                var ev = _makeResolverEvent(resolver,type,selector,data,callback);
                 ev.trigger(base,leafName,base == undefined? undefined : base[leafName]);
-            } else {
+            }
+            var types = type.split(" ");
+            for(var i=0,type; type = types[i]; ++i) {
+                var ev = _makeResolverEvent(resolver,type,selector,data,callback);
                 this.listeners[type].push(ev);
             }
 	    }
@@ -695,16 +717,17 @@ function Resolver(name_andor_expr,ns,options)
 
     resolver.on = function(type,selector,data,callback) 
     {
-    	if (! type in VALID_LISTENERS) return;//fail
     	switch(arguments.length) {
     		case 2: break; //TODO
     		case 3: if (typeof arguments[1] == "string") {
+                    //TODO reference "undefined" ?
 			    	this.reference(selector).on(type,null,arguments[2]);
     			} else { // middle param is data
 			    	//TODO this.reference("*").on(type,arguments[1],arguments[2]);
     			}
     			break;
     		case 4:
+                    //TODO reference "undefined" ?
 		    	this.reference(selector).on(type,data,callback);
     			break;
     	}
@@ -1615,6 +1638,24 @@ Generator.ObjectGenerator = Generator(Object);
 
 	}
 
+	function discardQuery() {
+		for(var i=0,desc; desc = this[i]; ++i) {
+			if (desc) {
+				desc.discardNow();
+				desc._unlist();
+			}
+		}
+	}
+
+	function queueQuery() {
+		for(var i=0,desc; desc = this[i]; ++i) {
+			if (desc) {
+				EnhancedDescriptor.unfinished[desc.uniqueID] = desc;
+			}
+		}
+	}
+
+
 	function DescriptorQuery(sel,el) {
 		var q = [], context = { list:q };
 
@@ -1641,16 +1682,23 @@ Generator.ObjectGenerator = Generator(Object);
 					} 
 				}
 			} else {
+				//TODO third param context ? integrate with desc.context
+				//TODO identify existing descriptors
+
 				//TODO if the el is a layouter, pass that in conf
 				ac._prep(el,context);
 				//TODO push those matched descriptors into q
 			}
 		}
 		q.el = el;
+		q.queue = queueQuery;
 		q.enhance = enhanceQuery;
+		q.discard = discardQuery;
 		return q;
 	}
 	essential.declare("DescriptorQuery",DescriptorQuery);
+
+
 	function EnhancedContext() {
 	}
 	// EnhancedContext.prototype.??
@@ -1865,12 +1913,12 @@ Generator.ObjectGenerator = Generator(Object);
 		this.layout.enable = false;					
 	};
 
-	_EnhancedDescriptor.prototype._unlist = function() {
+	_EnhancedDescriptor.prototype._unlist = function(forget) {
 		this.state.discarded = true;					
 		if (this.layout.enable) delete maintainedElements[this.uniqueID];
 		if (sizingElements[this.uniqueID]) delete sizingElements[this.uniqueID];
 		if (unfinishedElements[this.uniqueID]) delete unfinishedElements[this.uniqueID];
-		delete enhancedElements[this.uniqueID];
+		if (forget) delete enhancedElements[this.uniqueID];
 	};
 
 	_EnhancedDescriptor.prototype._queueLayout = function() {
@@ -1922,6 +1970,11 @@ Generator.ObjectGenerator = Generator(Object);
 		if (uniqueID == undefined) uniqueID = el.uniqueID = ++lastUniqueID;
 		var desc = enhancedElements[uniqueID];
 		if (desc && !force) return desc;
+
+		if (page == undefined) {
+			var pageResolver = Resolver("page");
+			page = pageResolver(["pagesById",el.ownerDocument.uniqueID],"null");
+		}
 		desc = new _EnhancedDescriptor(el,role,conf,page,uniqueID);
 		enhancedElements[uniqueID] = desc;
 		var descriptors = page.resolver("descriptors");
@@ -1942,7 +1995,7 @@ Generator.ObjectGenerator = Generator(Object);
 			var desc = enhancedElements[n];
 
 			desc.discardNow();
-			desc._unlist();
+			desc._unlist(true);
 			// delete enhancedElements[n];
 		}
 		enhancedElements = EnhancedDescriptor.all = essential.set("enhancedElements",{});
@@ -1978,9 +2031,59 @@ Generator.ObjectGenerator = Generator(Object);
 
 			desc.liveCheck();
 			//TODO if destroyed, in round 2 discard & move out of maintained 
-			if (desc.state.discarded) desc._unlist();
+			if (desc.state.discarded) desc._unlist(); // leave it in .all
 		}
 	};
+
+/* was _resize_descs
+	EnhancedDescriptor._resizeAll = function() {
+		//TODO migrate to desc.refresh
+		for(var n in maintainedElements) { //TODO maintainedElements
+			var desc = maintainedElements[n];
+
+			if (desc.layout.enable) {
+				var ow = desc.el.offsetWidth, oh  = desc.el.offsetHeight;
+				if (desc.layout.width != ow || desc.layout.height != oh) {
+					desc.layout.width = ow;
+					desc.layout.height = oh;
+					var now = (new Date()).getTime();
+					var throttle = desc.layout.throttle;
+					if (desc.layout.delayed) {
+						// set dimensions and let delayed do it
+					} else if (typeof throttle != "number" || (desc.layout.lastDirectCall + throttle < now)) {
+						// call now
+						desc.refresh();
+						desc.layout.lastDirectCall = now;
+						if (desc.layouterParent) desc.layouterParent.layout.queued = true;
+					} else {
+						// call in a bit
+						var delay = now + throttle - desc.layout.lastDirectCall;
+						// console.log("resizing in",delay);
+						(function(desc){
+							desc.layout.delayed = true;
+							setTimeout(function(){
+								desc.refresh();
+								desc.layout.lastDirectCall = now;
+								desc.layout.delayed = false;
+								if (desc.layouterParent) desc.layouterParent.layout.queued = true;
+							},delay);
+						})(desc);
+					}
+				}
+			}
+		}
+	};
+
+	// refreshAll
+	function _area_changed_descs() {
+		//TODO only active pages
+		for(var n in maintainedElements) {
+			var desc = maintainedElements[n];
+
+			if (desc.layout.enable) desc.refresh();
+		}
+	};
+*/
 
 	function branchDescs(el) {
 		var descs = [];
@@ -1995,14 +2098,19 @@ Generator.ObjectGenerator = Generator(Object);
 		return descs;
 	}
 
-	function discardEnhancedWindows() {
+	enhancedWindows.notifyAll = function() {
+		for(var i=0,w; w = enhancedWindows[i]; ++i) {
+			w.notify(ev);
+		}
+	};
+	enhancedWindows.discardAll = function() {
 		for(var i=0,w; w = enhancedWindows[i]; ++i) {
 			if (w.window) w.window.close();
 		}
 		enhancedWindows = null;
-		essential.set("enhancedWindows",[]);
+		essential.set("enhancedWindows.length",0);
 		//TODO clearInterval(placement.broadcaster) ?
-	}
+	};
 
 	function instantiatePageSingletons()
 	{
@@ -2017,7 +2125,7 @@ Generator.ObjectGenerator = Generator(Object);
 	function discardRestricted()
 	{
 		for(var i=Generator.restricted-1,g; g = Generator.restricted[i]; --i) {
-			var discarded = g.info.constructors[-1].state.discarded;
+			var discarded = g.info.constructors[-1].discarded;
 			for(var n in g.info.existing) {
 				var instance = g.info.existing[n];
 				if (discarded) {
@@ -2038,6 +2146,15 @@ Generator.ObjectGenerator = Generator(Object);
 	{
 		if (_readyFired) return;
 		_readyFired = true;
+
+		var liveTimeout = Resolver("page::liveTimeout","null");
+		if (liveTimeout) {
+			// Allow the browser to render the page, preventing initial transitions
+			setTimeout(function() {
+				Resolver("page").set("state.livepage",true);
+			},liveTimeout);
+		}
+		else if (liveTimeout == 0) Resolver("page").set("state.livepage",true);
 
 		//TODO derive state.lang and locale from html.lang
 		
@@ -2069,13 +2186,15 @@ Generator.ObjectGenerator = Generator(Object);
 		if (EnhancedDescriptor.maintainer) clearInterval(EnhancedDescriptor.maintainer);
 		EnhancedDescriptor.maintainer = null;
 		discardEnhancedElements();
-		discardEnhancedWindows();
+		enhancedWindows.discardAll();
 
 		for(var n in Resolver) {
 			if (typeof Resolver[n].destroy == "function") Resolver[n].destroy();
 		}
 		Resolver("page").set("state.launched",false);
 		Resolver("page").set("state.livepage",false);
+		Resolver("page").set("pages",null);
+		Resolver("page").set("pagesById",null);
 	}
 
 	// iBooks HTML widget
@@ -2541,6 +2660,8 @@ Generator.ObjectGenerator = Generator(Object);
 		return markup;
 	}
 
+	var documentId = 444;
+
 	/**
 	 * (html) or (head,body) rename to importHTMLDocument ?
 
@@ -2569,6 +2690,7 @@ Generator.ObjectGenerator = Generator(Object);
 			ext.write(markup);
 			if (ext.head === undefined) ext.head = ext.body.previousSibling;
 
+			doc.uniqueID = ext.uniqueID;
 			doc.head = ext.head;
 			doc.body = _importNode(document,ext.body,true);
 
@@ -2577,6 +2699,7 @@ Generator.ObjectGenerator = Generator(Object);
 			// markup = markup.replace("<body",'<wasbody').replace("</body>","</wasbody>");
 			// markup = markup.replace("<BODY",'<wasbody').replace("</BODY>","</wasbody>");
 		}
+		if (!doc.uniqueID) doc.uniqueID = documentId++;
 
 		return doc;
 	}
@@ -2608,6 +2731,7 @@ Generator.ObjectGenerator = Generator(Object);
 				// var __body = _body.getElementsByTagName("wasbody");
 			}
 		}
+		if (!doc.uniqueID) doc.uniqueID = documentId++;
 
 		return doc;
 	}
@@ -3447,6 +3571,22 @@ Generator.ObjectGenerator = Generator(Object);
 		return null;
 	};
 
+	/*
+		Discard the element call handlers & cleaners, unlist it if enhanced, remove from DOM
+	*/
+	HTMLElement.discard = function(el,leaveInDom) {
+
+		this.query(el).discard();
+		// var desc = EnhancedDescriptor.all[el.uniqueID];
+		// if (desc) {
+		// 	desc.discardNow();
+		// 	desc._unlist();
+		// }
+		essential("cleanRecursively")(el);
+
+		if (!leaveInDom) el.parentNode.removeChild(el);
+	};
+
 	
 	//TODO element cleaner must remove .el references from listeners
 
@@ -4020,7 +4160,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		//TODO consider when to clean body element
 		if (!arrayContains(el._cleaners,statefulCleaner)) el._cleaners.push(statefulCleaner); 
 		if (useAsSource != false) readElementState(el,stateful("state"));
-		stateful.on("change","state",el,reflectElementState); //TODO "livechange", queues up calls while not live
+		stateful.on("change reflect","state",el,reflectElementState); //TODO "livechange", queues up calls while not live
 		if (!nativeClassList) {
 			el.classList = DOMTokenList();
 			DOMTokenList_mixin(el.classList,el.className);
@@ -4150,7 +4290,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		for(var n in stateful("map.class.state")) triggers[n] = true;
 		for(var n in stateful("map.class.notstate")) triggers[n] = true;
 		for(var n in triggers) {
-			stateful.reference("state."+n,"null").trigger("change");
+			stateful.reference("state."+n,"null").trigger("reflect");
 		}
 	};
 
@@ -4168,10 +4308,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 	/*
 		Area Activation
 	*/
-	var _activeAreaName,_liveAreas=false;
+	var _activeAreaName;
 
 	function activateArea(areaName) {
-		if (! _liveAreas) { //TODO switch to pageResolver("livepage")
+		if (! pageResolver("state.livepage")) { //TODO switch to pageResolver("livepage")
 			_activeAreaName = areaName;
 			return;
 		}
@@ -4191,11 +4331,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 	essential.set("getActiveArea",getActiveArea);
 
-	var _essentialTesting = !!document.documentElement.getAttribute("essential-testing");
-
-	function bringLive() {
-		// var ap = ApplicationConfig(); //TODO factor this and possibly _liveAreas out
-
+	function launchWindows() {
 		for(var i=0,w; w = enhancedWindows[i]; ++i) if (w.openWhenReady) {
 			w.openNow();
 			delete w.openWhenReady;
@@ -4203,25 +4339,12 @@ _ElementPlacement.prototype._computeIE = function(style)
 		EnhancedWindow.prototype.open = EnhancedWindow.prototype.openNow;
 
 		//TODO if waiting for initial page src postpone this
-
-		// Allow the browser to render the page, preventing initial transitions
-		_liveAreas = true;
-		pageResolver.set("state.livepage",true);
-
 	}
-
-	function onPageLoad(ev) {
-		_liveAreas = true;
-		pageResolver.set("state.livepage",true);
-	}
-
-	if (!_essentialTesting) {
-		if (window.addEventListener) window.addEventListener("load",onPageLoad,false);
-		else if (window.attachEvent) window.attachEvent("onload",onPageLoad);
-	}
+	essential.set("launchWindows",launchWindows);
 
 	// page state & sub pages instances of _Scripted indexed by logical URL / id
 	Resolver("page").declare("pages",{});
+	Resolver("page").declare("pagesById",{});
 	Resolver("page").declare("state.requiredPages",0);
 
 	function _Scripted() {
@@ -4345,6 +4468,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		this.context["this"] = undefined;
 	};
 
+	//TODO move to DescriptorQuery, move when improving scroller
 	_Scripted.prototype._prep = function(el,context) {
 
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
@@ -4493,6 +4617,9 @@ _ElementPlacement.prototype._computeIE = function(style)
 		if (this.url) {
 			delete Resolver("page::pages::")[this.url];
 		}
+		if (this.uniqueID) {
+			delete Resolver("page::pagesById::")[this.uniqueID];
+		}
 	};
 
 	SubPage.prototype.page = function(url) {
@@ -4551,6 +4678,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	SubPage.prototype.loadedPageDone = function(text,lastModified) {
 		var doc = this.document = importHTMLDocument(text);
+		this.uniqueID = doc.uniqueID;
+		Resolver("page").set(["pagesById",this.uniqueID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
@@ -4575,6 +4704,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 	SubPage.prototype.parseHTML = function(text,text2) {
 		var head = (this.options && this.options["track main"])? '<meta name="track main" content="true">' : text2||'';
 		var doc = this.document = importHTMLDocument(head,text);
+		this.uniqueID = doc.uniqueID;
+		Resolver("page").set(["pagesById",this.uniqueID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
@@ -4614,11 +4745,12 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 		this.doInitScripts();
 
+		//TODO put descriptors in reheating them
 		var descs = this.resolver("descriptors");
 		for(var n in descs) {
 			EnhancedDescriptor.unfinished[n] = descs[n];
 		}
-		enhanceUnhandledElements();
+		enhanceUnfinishedElements();
 	};
 
 	SubPage.prototype.unapplyBody = function() {
@@ -4630,11 +4762,12 @@ _ElementPlacement.prototype._computeIE = function(style)
 		var applied = this.applied;
 		this.applied = null;
 
+		//TODO pull the descriptors out, freeze them
 		var descs = this.resolver("descriptors");
 		for(var n in descs) {
 			EnhancedDescriptor.unfinished[n] = descs[n];
 		}
-		enhanceUnhandledElements();
+		enhanceUnfinishedElements();
 		//TODO move descriptors out
 
 		// move out of main page body into subpage body
@@ -4707,27 +4840,16 @@ _ElementPlacement.prototype._computeIE = function(style)
 			pageResolver.set(["state","online"],online);	
 		}
 	}
-	pageResolver.updateOnlineStatus = updateOnlineStatus;
-
+	essential.set("updateOnlineStatus",updateOnlineStatus);
 
 	function _ApplicationConfig() {
 		this.resolver = pageResolver;
+		this.uniqueID = document.uniqueID || "main";
+		Resolver("page").set(["pagesById",this.uniqueID],this);
 		this.document = document;
 		this.head = this.document.head || this.document.body.previousSibling;
 		this.body = this.document.body;
 		_Scripted.call(this);
-
-		updateOnlineStatus();
-		if (this.body.addEventListener) {
-			this.body.addEventListener("online",updateOnlineStatus);
-			this.body.addEventListener("offline",updateOnlineStatus);
-		
-			if (window.applicationCache) applicationCache.addEventListener("error", updateOnlineStatus);
-		} else if (this.body.attachEvent) {
-			// IE8
-			this.body.attachEvent("online",updateOnlineStatus);
-			this.body.attachEvent("offline",updateOnlineStatus);
-		}
 
 		// copy state presets for backwards compatibility
 		var state = this.resolver.reference("state","undefined");
@@ -4756,8 +4878,6 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 		var bodySrc = document.body.getAttribute("data-src") || document.body.getAttribute("src");
 		if (bodySrc) this._requiredPage(bodySrc);
-
-		if (!_essentialTesting) setTimeout(bringLive,60); 
 	}
 
 	var ApplicationConfig = essential.set("ApplicationConfig", Generator(_ApplicationConfig,{"prototype":_Scripted.prototype}) );
@@ -4838,7 +4958,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		return page;
 	};
 
-	function enhanceUnhandledElements() {
+	function enhanceUnfinishedElements() {
 		var handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
 
 		for(var n in EnhancedDescriptor.unfinished) {
@@ -4864,31 +4984,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 			}
 		}
 	}
-	EnhancedDescriptor.enhanceUnfinished = enhanceUnhandledElements;
-
-	function old_enhanceUnhandledElements() {
-		var statefuls = ApplicationConfig(); // Ensure that config is present
-		//var handlers = DocumentRoles.presets("handlers");
-		//TODO listener to presets -> Doc Roles additional handlers
-		var dr = essential("DocumentRoles")()
-		var descs = statefuls.resolver("descriptors");
-		dr._enhance_descs(descs);
-		dr._enhance_descs(descs);
-		
-		//TODO pendingDescriptors and descriptors
-
-		//TODO time to default_enhance yet?
-
-		//TODO enhance active page
-		var pages = pageResolver("pages");
-		for(var n in pages) {
-			var page = pages[n];
-			if (page.applied) {
-				var descs = page.resolver("descriptors");
-				dr._enhance_descs(descs);
-			}
-		}
-	}
+	EnhancedDescriptor.enhanceUnfinished = enhanceUnfinishedElements;
 
 	ApplicationConfig.prototype.onStateChange = function(ev) {
 		switch(ev.symbol) {
@@ -4896,6 +4992,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 				var ap = ev.data;
 				//if (ev.value == true) ap.reflectState();
 				ev.data.doInitScripts();
+				enhanceUnfinishedElements();
 				if (_activeAreaName) {
 					activateArea(_activeAreaName);
 				} else {
@@ -4929,14 +5026,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if (ev.value == false) {
 					if (document.body) essential("instantiatePageSingletons")();
 					ev.data.doInitScripts();	
-					enhanceUnhandledElements();
+					enhanceUnfinishedElements();
 					if (window.widget) widget.notifyContentIsReady(); // iBooks widget support
 					if (ev.base.configured == true && ev.base.authenticated == true 
 						&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
 						this.set("state.launching",true);
 						// do the below as recursion is prohibited
 						if (document.body) essential("instantiatePageSingletons")();
-						enhanceUnhandledElements();
+						enhanceUnfinishedElements();
 					}
 				} 
 				break;
@@ -4953,7 +5050,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 					// do the below as recursion is prohibited
 					if (document.body) essential("instantiatePageSingletons")();
 					ev.data.doInitScripts();	
-					enhanceUnhandledElements();
+					enhanceUnfinishedElements();
 				}
 				break;			
 			case "launching":
@@ -4961,7 +5058,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if (ev.value == true) {
 					if (document.body) essential("instantiatePageSingletons")();
 					ev.data.doInitScripts();	
-					enhanceUnhandledElements();
+					enhanceUnfinishedElements();
 					if (ev.symbol == "launched" && ev.base.requiredPages == 0) this.set("state.launching",false);
 				}
 				break;
@@ -5880,12 +5977,10 @@ function(scripts) {
 		StatefulResolver = essential("StatefulResolver"),
 		ApplicationConfig = essential("ApplicationConfig"),
 		pageResolver = Resolver("page"),
-		statefulCleaner = essential("statefulCleaner"),
 		HTMLElement = essential("HTMLElement"),
 		callCleaners = essential("callCleaners"),
-		addEventListeners = essential("addEventListeners"),
-		maintainedElements = essential("maintainedElements"),
-		enhancedWindows = essential("enhancedWindows");
+		cleanRecursively = essential("cleanRecursively"),
+		addEventListeners = essential("addEventListeners");
 
 
 
@@ -6493,14 +6588,6 @@ function(scripts) {
 	var DialogAction = essential.set("DialogAction",Generator(_DialogAction));
 
 
-	function resizeTriggersReflow(ev) {
-		// debugger;
-		DocumentRoles()._resize_descs();
-		for(var i=0,w; w = enhancedWindows[i]; ++i) {
-			w.notify(ev);
-		}
-	}
-
 	/*
 		action buttons not caught by enhanced dialogs/navigations
 	*/
@@ -6514,6 +6601,7 @@ function(scripts) {
 			if (ev.isDefaultPrevented()) return false;
 		}
 	}
+	essential.declare("defaultButtonClick",defaultButtonClick);
 
 	function fireAction(ev) 
 	{
@@ -6554,10 +6642,7 @@ function(scripts) {
 
 			case "close":
 				//TODO close up shop
-				if (ev.submitElement) {
-					callCleaners(ev.submitElement);
-					ev.submitElement.parentNode.removeChild(ev.submitElement);
-				}
+				if (ev.submitElement) HTMLElement.discard(ev.submitElement);
 				break;
 			}
 		}
@@ -6623,152 +6708,6 @@ function(scripts) {
 		}
 	}
 	essential.declare("enhanceStatefulFields",enhanceStatefulFields);
-
-	function _DocumentRoles(handlers,page) {
-		this.handlers = handlers || this.handlers || { enhance:{}, discard:{}, layout:{} };
-		this._on_event = [];
-		this.page = page || ApplicationConfig(); // Ensure that config is present
-		
-		//TODO configure reference as DI arg
-
-		if (window.addEventListener) {
-			window.addEventListener("resize",resizeTriggersReflow,false);
-			this.page.body.addEventListener("orientationchange",resizeTriggersReflow,false);
-			this.page.body.addEventListener("click",defaultButtonClick,false);
-		} else {
-			window.attachEvent("onresize",resizeTriggersReflow);
-			this.page.body.attachEvent("onclick",defaultButtonClick);
-		}
-	}
-	var DocumentRoles = essential.set("DocumentRoles",Generator(_DocumentRoles));
-	
-	_DocumentRoles.args = [
-		ObjectType({ name:"handlers" })
-	];
-
-/*
-	_DocumentRoles.prototype.enhanceBranch = function(el) {
-		var descs;
-		if (el.querySelectorAll) {
-			descs = this._role_descs(el.querySelectorAll("*[role]"));
-		} else {
-			descs = this._role_descs(el.getElementsByTagName("*"));
-		}
-		this._enhance_descs(descs);
-		//TODO reflow on resize etc
-	};
-
-	_DocumentRoles.prototype.discardBranch = function(el) {
-		//TODO
-	};
-*/
-
-	_DocumentRoles.prototype._enhance_descs = function(descs) 
-	{
-		var sizingElements = essential("sizingElements");
-		var incomplete = false, enhancedCount = 0;
-
-		for(var n in descs) {
-			var desc = descs[n];
-
-			//TODO speed up outstanding enhance check
-
-			desc.ensureStateful();
-
-			if (!desc.state.enhanced) { //TODO flag needEnhance
-				desc._tryEnhance(this.handlers);
-				++enhancedCount;	//TODO only increase if enhance handler?
-			} 
-			if (! desc.state.enhanced) incomplete = true;
-
-			desc._tryMakeLayouter(""); //TODO key?
-			desc._tryMakeLaidout(""); //TODO key?
-
-			if (desc.conf.sizingElement) sizingElements[desc.uniqueID] = desc;
-		}
-
-		//TODO enhance additional descriptors created during this instead of double call on loading = false
-
-
-		// notify enhanced listeners
-		if (! incomplete && enhancedCount > 0) {
-			for(var i=0,oe; oe = this._on_event[i]; ++i) {
-				if (oe.type == "enhanced") {
-					var descs2 = [];
-
-					// list of relevant descs
-					for(var n in descs) {
-						var desc = descs[n];
-						if (desc.role) if (oe.role== null || oe.role==desc.role) descs2.push(desc);
-					}
-
-					oe.func.call(this, this, descs2);
-				}
-			}
-		} 
-	};
-
-	_DocumentRoles.prototype._resize_descs = function() {
-		//TODO migrate to desc.refresh
-		for(var n in maintainedElements) { //TODO maintainedElements
-			var desc = maintainedElements[n];
-
-			if (desc.layout.enable) {
-				var ow = desc.el.offsetWidth, oh  = desc.el.offsetHeight;
-				if (desc.layout.width != ow || desc.layout.height != oh) {
-					desc.layout.width = ow;
-					desc.layout.height = oh;
-					var now = (new Date()).getTime();
-					var throttle = desc.layout.throttle;
-					if (desc.layout.delayed) {
-						// set dimensions and let delayed do it
-					} else if (typeof throttle != "number" || (desc.layout.lastDirectCall + throttle < now)) {
-						// call now
-						desc.refresh();
-						desc.layout.lastDirectCall = now;
-						if (desc.layouterParent) desc.layouterParent.layout.queued = true;
-					} else {
-						// call in a bit
-						var delay = now + throttle - desc.layout.lastDirectCall;
-						// console.log("resizing in",delay);
-						(function(desc){
-							desc.layout.delayed = true;
-							setTimeout(function(){
-								desc.refresh();
-								desc.layout.lastDirectCall = now;
-								desc.layout.delayed = false;
-								if (desc.layouterParent) desc.layouterParent.layout.queued = true;
-							},delay);
-						})(desc);
-					}
-				}
-			}
-		}
-	};
-
-	_DocumentRoles.prototype._area_changed_descs = function() {
-		//TODO only active pages
-		for(var n in maintainedElements) {
-			var desc = maintainedElements[n];
-
-			if (desc.layout.enable) {
-				desc.refresh();
-				// if (desc.layouterParent) desc.layouterParent.layout.queued = true;
-				// this.handlers.layout[desc.role].call(this,desc.el,desc.layout,desc.instance);
-			}
-		}
-	};
-
-	_DocumentRoles.prototype.on = function(name,role,func) {
-		if (arguments.length == 2) func = role;
-		
-		//TODO
-		this._on_event.push({ "type":name,"func":func,"name":name,"role":role });
-	};
-	
-	// Element specific handlers
-	DocumentRoles.presets.declare("handlers", pageResolver("handlers"));
-
 
 	function useBuiltins(list) {
 		for(var i=0,r; r = list[i]; ++i) pageResolver.set(["enabledRoles",r],true);
@@ -6934,8 +6873,9 @@ function(scripts) {
 		if (activeMovement != null) return;
 		if (ev.target.tagName == "BUTTON") return; // don't drag on close button
 		var dialog = this.parentNode;
-		Resolver("page").set("activeElement",dialog);
 		if (ev.button > 0 || ev.ctrlKey || ev.altKey || ev.shiftKey || ev.metaKey) return;
+		Resolver("page").set("activeElement",dialog);
+		dialog.parentNode.appendChild(dialog);
 
 		if (ev.preventDefault) ev.preventDefault();
 
@@ -7020,7 +6960,10 @@ function(scripts) {
 				wrap.setAttribute("data-role",contentConfig);
 			}
 		} 
-		if (wrap) wrap.className = ((wrap.className||"") + " "+contentClass).replace("  "," ");
+		if (wrap) {
+			wrap.className = ((wrap.className||"") + " "+contentClass).replace("  "," ");
+			essential("DescriptorQuery")(wrap).enhance();
+		}
 
 		// restrict height to body (TODO use layouter to restrict this on page resize)
 		if (el.offsetHeight > document.body.offsetHeight) {
@@ -7029,7 +6972,6 @@ function(scripts) {
 			if (footer) height -= footer.offsetHeight;
 			wrap.style.maxHeight = height + "px";
 		}
-		//("essential::DescriptorQuery::")(el).enhance();
 
 		// position the dialog
 		if (config.placement) { // explicit position
@@ -7278,6 +7220,10 @@ function(scripts) {
 		this.tagName = el.tagName;
 		this.dataRole = JSON2Attr(config,{id:true});
 
+		this.id = config.id || el.id;
+		this.selector = config.selector || (this.id? ("#"+this.id) : null);
+		// TODO class support, looking up on main document by querySelector
+
 		// HTML5 template tag support
 		if ('content' in el) {
 			this.content = el.content;
@@ -7335,12 +7281,10 @@ function(scripts) {
 	//TODO TemplateContent.prototype.clone = function(config,model) {}
 
 	function enhance_template(el,role,config,context) {
-		var id = config.id || el.id;
 		var template = new Template(el,config);
 
 		// template can be anonymouse
-		if (id) pageResolver.set(["templates","#"+id],template);
-		// TODO class support, looking up on main document by querySelector
+		if (template.selector) pageResolver.set(["templates",template.selector],template);
 
 		return template;
 	}
@@ -7356,22 +7300,6 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.init.templated",init_templated);
 
-/* TODO support on EnhancedDescriptor
-function enhance_templated(el,role,config) {
-	if (config.template && templates.getEntry(config.template)) {
-		var template = templates.getEntry(config.template);
-		//TODO replace element with template.tagName, mixed attributes and template.html
-		el.innerHTML = template.html; //TODO better
-		var context = { layouter: this.parentLayouter };
-		if (config.layouter) context.layouter = this; //TODO temp fix, move _prep to descriptor
-		ApplicationConfig()._prep(el,context); //TODO prepAncestors
-		// var descs = branchDescs(el); //TODO manage descriptors as separate branch?
-		// DocumentRoles()._enhance_descs(descs);
-	}
-}
-
-pageResolver.set("handlers.enhance.templated",enhance_templated);
-*/
 
 	// Scrolled
 
@@ -7504,6 +7432,10 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 
 	};
 
+	//TODO support fixed position offsetTop/Bottom in IE, kinda crap negative offsets
+
+	//TODO support bottom/right positioning
+	
 	ElementMovement.prototype.start = function(el,event) {
 		var movement = this;
 		this.el = el;
@@ -7886,6 +7818,7 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 			el.appendChild(content);
 			var context = { layouter: this.parentLayouter };
 			if (config.layouter) context.layouter = this; //TODO temp fix, move _prep to descriptor
+			// essential("DescriptorQuery")(wrap).enhance();
 			ApplicationConfig()._prep(el,context); //TODO prepAncestors
 		}
 
@@ -7910,14 +7843,35 @@ pageResolver.set("handlers.enhance.templated",enhance_templated);
 	
 }();
 Resolver("essential::ApplicationConfig::").restrict({ "singleton":true, "lifecycle":"page" });
-Resolver("essential::DocumentRoles::").restrict({ singleton: true, lifecycle: "page" });
 
+Resolver("page").set("liveTimeout",60);
 //TODO clearInterval on unload
+
+!function() {
+	function onPageLoad(ev) {
+		Resolver("page").set("state.livepage",true);
+	}
+	if (window.addEventListener) window.addEventListener("load",onPageLoad,false);
+	else if (window.attachEvent) window.attachEvent("onload",onPageLoad);
+}();
+
 
 Resolver("page::state.livepage").on("change",function(ev) {
 	var EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
+		enhancedWindows = Resolver("essential::enhancedWindows::"),
 		placement = Resolver("essential::placement::"),
-		pageResolver = Resolver("page");
+		defaultButtonClick = Resolver("essential::defaultButtonClick::"),
+		pageResolver = Resolver("page"),
+		updateOnlineStatus = Resolver("essential::updateOnlineStatus::");
+
+	function resizeTriggersReflow(ev) {
+		EnhancedDescriptor.refreshAll();
+		enhancedWindows.notifyAll(ev);
+		for(var i=0,w; w = enhancedWindows[i]; ++i) {
+			w.notify(ev);
+		}
+	}
+
 
 	if (ev.value) { // bring live
 		
@@ -7927,7 +7881,40 @@ Resolver("page::state.livepage").on("change",function(ev) {
 
 		EnhancedDescriptor.maintainer = setInterval(EnhancedDescriptor.maintainAll,330); // minimum frequency 3 per sec
 		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 3 per sec
+
+		updateOnlineStatus();
+
+		if (window.addEventListener) {
+			document.body.addEventListener("online",updateOnlineStatus);
+			document.body.addEventListener("offline",updateOnlineStatus);
+		
+			if (window.applicationCache) applicationCache.addEventListener("error", updateOnlineStatus);
+
+			window.addEventListener("resize",resizeTriggersReflow,false);
+			document.body.addEventListener("orientationchange",resizeTriggersReflow,false);
+			document.body.addEventListener("click",defaultButtonClick,false);
+		} else {
+			// IE8
+			window.attachEvent("onresize",resizeTriggersReflow);
+			document.body.attachEvent("onclick",defaultButtonClick);
+
+			document.body.attachEvent("online",updateOnlineStatus);
+			document.body.attachEvent("offline",updateOnlineStatus);
+		}
+
+		Resolver("essential")("launchWindows")();
+
 	} else { // unload
+
+		if (window.removeEventListener) {
+			window.removeEventListener("resize",resizeTriggersReflow);
+			document.body.removeEventListener("orientationchange",resizeTriggersReflow);
+			document.body.removeEventListener("click",defaultButtonClick);
+		} else {
+			window.detachEvent("onresize",resizeTriggersReflow);
+			document.body.detachEvent("onclick",defaultButtonClick);
+		}
+
 		clearInterval(pageResolver.uosInterval);
 		pageResolver.uosInterval = null;
 		clearInterval(EnhancedDescriptor.maintainer);
