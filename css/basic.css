@@ -1746,11 +1746,15 @@ html body.splash #stuck .menu nav.flag label {
 html body.splash #stuck .menu ul li {
   height: 2.5em;
 }
+html body.splash #stuck .menu ul li > ul {
+  border-top: 1px solid #f83104;
+}
 html body.splash #stuck .menu ul li > ul > li a,
 html body.splash #stuck .menu ul li > ul > li q {
   padding-left: 2em;
   background-color: #fb441b;
   border-color: #f83104;
+  border-top: none;
 }
 html body.splash #stuck .menu ul a,
 html body.splash #stuck .menu ul q {
@@ -2223,7 +2227,7 @@ html body.splash-color article {
 }
 .splash article .follow {
   position: absolute;
-  top: 9px;
+  top: 12px;
   right: 20px;
   text-align: right;
 }

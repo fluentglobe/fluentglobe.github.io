@@ -222,12 +222,16 @@
         li {
             // position: relative;
             height: 2.5em;
+            > ul {
+                border-top: 1px solid @shaded-color;
+            }
 
             > ul > li a, 
             > ul > li q {
                 padding-left: 2em;
                 background-color: @bg-color;
                 border-color: @shaded-color;
+                border-top: none;
             }
         }
 
