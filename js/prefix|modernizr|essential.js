@@ -1860,7 +1860,13 @@ function Resolver(name_andor_expr,ns,options)
         if (typeof name == "object" && name.join) {
             names = name;
             name = name.join(".");
-        } else names = name.split(".");
+        } else {
+            names = name.split("::");
+            if (names.length > 1) {
+                return Resolver(names.shift()).declare(names,value,onundefined);
+            }
+            names = name.split(".");
+        }
         var symbol = names.pop();
     	var base = _resolve(names,null,onundefined);
     	if (base[symbol] === undefined) { 
@@ -1884,7 +1890,13 @@ function Resolver(name_andor_expr,ns,options)
         if (typeof name == "object" && name.join) {
             names = name;
             name = name.join(".");
-        } else names = name.split(".");
+        } else {
+            names = name.split("::");
+            if (names.length > 1) {
+                return Resolver(names.shift()).set(names,value,onundefined);
+            }
+            names = name.split(".");
+        }
 		var symbol = names.pop();
 		var base = _resolve(names,null,onundefined);
 		if (_setValue(value,names,base,symbol)) {
@@ -1903,7 +1915,13 @@ function Resolver(name_andor_expr,ns,options)
         if (typeof name == "object" && name.join) {
             names = name;
             name = name.join(".");
-        } else names = name.split(".");
+        } else {
+            names = name.split("::");
+            if (names.length > 1) {
+                return Resolver(names.shift()).toggle(names,value,onundefined);
+            }
+            names = name.split(".");
+        }
         var symbol = names.pop();
         var base = _resolve(names,null,onundefined);
         var value = ! base[symbol]; //TODO configurable toggle
@@ -1940,7 +1958,9 @@ function Resolver(name_andor_expr,ns,options)
     	if (typeof name == "object") {
             onundefined = name.onundefined;
             name = name.name;
-    	}
+        } else {
+            if (name.indexOf("::") >= 0) return Resolver(name,onundefined);
+        }
     	var ref = onundefined? name+":"+onundefined : name;
     	var entry = this.references[ref];
     	if (entry) return entry;

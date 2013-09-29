@@ -35,7 +35,7 @@ function Navigation(el,config) {
                         ev.data.el.stateful.set("state.selected",false);
                     }
                 });
-            if (item.stateful(config.select,"false")) item.stateful.set("state.selected",true);
+            if (item.stateful(config.select,"false") == config.value) item.stateful.set("state.selected",true);
         }        
     }
 }
