@@ -2233,6 +2233,8 @@ Resolver("page").declare("handlers.discard.form", discard_form);
 !function() {
 
 var essential = Resolver("essential"),
+    ApplicationConfig = essential("ApplicationConfig"),
+
     StatefulResolver = essential("StatefulResolver"),
     addEventListeners = essential("addEventListeners"),
     MutableEvent = essential("MutableEvent"),
@@ -2246,12 +2248,28 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
 }
 
 function Navigation(el,config) {
+    this.stateful = el.stateful;
 
     addEventListeners(el, {
         // "change": form_input_change,
         "click": dialog_button_click
     },false);
 
+    var items = el.querySelectorAll("[role=menuitem]");
+    for(var i=0,item; item = items[i]; ++i) {
+        var config = ApplicationConfig().getConfig(item);
+        if (config.select) {
+            this.stateful.on("change",config.select,{config:config,el:item},
+                function(ev) {
+                    if (ev.value == ev.data.config.value) {
+                        ev.data.el.stateful.set("state.selected",true);
+                    } else {
+                        ev.data.el.stateful.set("state.selected",false);
+                    }
+                });
+            if (item.stateful(config.select,"false")) item.stateful.set("state.selected",true);
+        }        
+    }
 }
 
 Navigation.prototype.destroy = function() {
@@ -2261,7 +2279,13 @@ Navigation.prototype.destroy = function() {
 Navigation.prototype.click = function(ev) {
 
     if (ev.commandRole == "menuitem") {
-        ev.commandElement.stateful.set("state.selected",true);
+        var config = ApplicationConfig().getConfig(ev.commandElement);
+        if (config.select) {
+            this.stateful.set(config.select,config.value);
+        }
+        
+        // model.language
+        // ev.commandElement.stateful.set("state.selected",true);
     }
 };
 
