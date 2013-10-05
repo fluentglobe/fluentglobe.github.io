@@ -45,6 +45,27 @@
 @portrait-bg-width: 360px; // import from javascript
 @portrait-bg-height: 920px;
 
+.intro-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
+
+    #intro {
+
+        width:100%; 
+        min-height: @landscape-bg-height;
+        // height: @landscape-bg-height;
+        z-index: -9999;
+
+        //padding-top: 200px;
+        color: white;
+
+        background-image: @image-portrait;
+        background-position: top left;
+        background-repeat: no-repeat; 
+        // background-size: auto 100%;
+        background-size: 100% auto;
+    }
+    #tracer { position:fixed; visibility: hidden; width: @landscape-bg-width; height: @landscape-bg-height;}
+}
+
 .stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
 
     // default until 960px
@@ -68,11 +89,8 @@
     #tracer { position:fixed; visibility: hidden; width: @landscape-bg-width; height: @landscape-bg-height;}
 
     article {
-        position:relative; //absolute
-        width: 100%;
         margin-top: @top-splash-room; // will be overridden by struck measurement
         // min-width: 980px;
-        overflow: visible;
     }
 
     // past 960px width
@@ -274,5 +292,66 @@
             content: "\2713";
         }
     }
+}
+
+.outhangingHeader(@header-height: 60px, @bg-color: rgba(0,0,0,.7),@bg-color-ie:rgb(40,40,40)) {
+
+    > header {
+        position:absolute;
+        top: -(@header-height);
+        height: @header-height;
+        left:0; right:0;
+        background-color: @bg-color-ie;
+        background-color: @bg-color;
+    }
+
+}
+
+.articleSections(@white-bg-color: white, @shaded-bg-color: rgb(243,243,243), @border-top-color: rgb(236,236,236),@border-bottom-color: rgb(236,236,236)) {
+
+    section {
+        padding-top: 3em;
+        padding-bottom: 3em;
+        width: 100%;
+        margin: 0 auto;
+        background-color: @white-bg-color;
+        box-shadow: 0 5px 5px #454545;
+        color: #474747;
+
+        h3 {
+            text-align: center;
+            font-size: 2em;
+        }
+        p {
+            //width: 680px;
+            // margin: 0 auto;
+            word-wrap: normal;
+            overflow-wrap: break-word; 
+        }
+    }
+
+    section.even {
+        background-color: @shaded-bg-color;
+        border-top: 1px solid @border-top-color;
+        border-bottom: 1px solid @border-bottom-color;
+    }
+
+}
+
+.articleFooter(@bg-color: @footer-bg-color,@color: #888, @link-color: @fluent-red) {
+
+    > footer {
+        position: relative;
+        padding: 75px 0 25px 0;
+        background-color: @bg-color;
+        color: @color;
+        line-height: 1.5;
+
+        a {
+            color: @link-color;
+            text-decoration: none;
+        }
+    }
+
 }
 

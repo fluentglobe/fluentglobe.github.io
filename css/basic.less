@@ -73,15 +73,191 @@ input {
     color: white;
 }
 
+.splash #intro {
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+
+    h3 {
+        position: relative;
+        // left: 700px;
+        margin-bottom: 10px;
+        //text-align: center;
+        font-size: 1.6em;
+        text-shadow: 0px 1px 1px black;
+        font-weight: 300;
+        color: @fluent-red;
+    }
+    p {
+        position: relative;
+        // left: 700px;
+        // font-size: 1.2em;
+        // width: 680px;
+        //margin: 0 auto;
+        text-shadow: 0px 1px 1px black;
+    }
+
+    fieldset {
+        position: relative;
+    }
+
+    input,textarea {
+        // padding: 3px 6px;
+    }
+
+}
+
+
+
+.splash article {
+    position:relative; //absolute
+    width: 100%;
+    overflow: visible;
+
+    .outhangingHeader();
+
+    @header-height: 60px;
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+
+    .articleSections();
+
+    .articleFooter();
+
+    > header {
+        .follow {
+            position: absolute;
+            top: (@header-height - 40px)/2 + 2px; right:20px;
+            // .center-box-horz(@center-width);
+            text-align: right;
+            // bottom: 60px;
+
+            h4 {
+                display: inline-block;
+                font-size: 15px;
+                padding: 10px 10px 5px 0;
+                vertical-align: top;
+                color: #888;
+            }
+            nav {
+                display: inline-block;
+            }
+        }
+        .social-icon {
+            font-family: "socialicoregular";
+            font-size: 40px;
+            color: #888;
+            text-decoration: none;
+            line-height: 1;
+
+            &:hover {
+                color: #08C;
+            }
+        }
+    }
+}
+
+
 @menu-width: 160px;
 @center-width: 340px;
 
+@we-love-width: 383px;
+@we-love-height: 431px;
+
 html body.splash { 
+
+    #intro {
+        position: relative;
+        @col1-left: 3%;
+        @col1-width: 94%;
+        @col-max-width: 360px;
+
+        &.state-expanded {
+            left: @menu-width;
+        }
+
+        .menu {
+            .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+
+            nav.flag {
+                width: 12em;
+
+                label {
+                    border-radius: 15px;
+                    border: 2px solid @fluent-red;
+                    padding: 6px;
+                    width: 5em;
+                }
+            }
+        }
+
+        .we-love {
+            // position: absolute; top:0px; 
+            position: relative;
+            // height: @we-love-height;
+            height: @we-love-height - 150px;
+            margin-left: @col1-left;
+
+            figure {
+                position: absolute;
+                top: -50px; 
+                left: -100px; 
+                z-index: -9999;
+                width: @we-love-width;
+                height: @we-love-height;
+                // width: (@we-love-width / 2);
+                // height: (@we-love-height / 2);
+                margin: 0;
+                //zoom: .5; TODO do this for IE
+                .scale(.5);
+
+                background-image: url(../images/around-globe.png);
+                background-repeat: no-repeat;
+            }
+            h3 {
+                padding-top: 80px;
+                padding-left: 100px;
+            }
+            p {
+                padding-left: 100px;
+            }
+        }
+        .benefits {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+
+            // position: absolute;
+            // left: 50px;
+            // top: 80px;
+            // width: 30%;
+        }
+
+        .story {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+        }
+
+
+        .signup {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+        }
+
+
+    }
 
     #stuck-below-image {
         position:absolute;
         left:0; right:0; top:200px;
     }
+
+
+
     #stuck {
         // .lines { .extraBackground(url(../images/line.png)); }
 
@@ -104,34 +280,11 @@ html body.splash {
             }
         }
 
-        .we-love {
-            position: absolute;
-            top:0px; left:50px;
-            width: 450px;
-
-            img {
-                float: left;
-            }
-        }
-
         p em {
             font-style: normal; 
             color: @fluent-red;
         }
 
-        .benefits {
-            position: absolute;
-            left: 50px;
-            top: 80px;
-            width: 30%;
-        }
-        .forward-looking {
-            display: block;
-            font-family: "rocksalt";
-            font-size: 24px;
-            color: @fluent-red;
-            margin-top: 16px;
-        }
 
         .story {
             position: absolute;
@@ -146,35 +299,6 @@ html body.splash {
             top:50%; margin-top: -100px;
 
             // margin-top: 20%;
-        }
-
-        h1, h2, h3, h4, h5, h6 { font-weight: 300; }
-
-        h3 {
-            position: relative;
-            // left: 700px;
-            margin-bottom: 10px;
-            //text-align: center;
-            font-size: 2.4em;
-            text-shadow: 0px 1px 1px black;
-            font-weight: 300;
-            color: @fluent-red;
-        }
-        p {
-            position: relative;
-            // left: 700px;
-            // font-size: 1.2em;
-            // width: 680px;
-            //margin: 0 auto;
-            text-shadow: 0px 1px 1px black;
-        }
-
-        fieldset {
-            position: relative;
-        }
-
-        input,textarea {
-            // padding: 3px 6px;
         }
 
         input[type=email],
@@ -312,7 +436,7 @@ html body.splash {
 @media screen and (device-aspect-ratio: 40/71) and (orientation:landscape),
         only screen and (max-height:321px) {
     html body.splash {
-        #stuck {
+        #intro {
             height:100%;
             min-height: initial;
             max-height: initial;
@@ -329,99 +453,29 @@ html body.splash {
 
 html body.splash-garden {
 
-    .stuck-on-body(url(../images/garden-reading-ipad.jpg),url(../images/garden-reading-ipad.jpg));
+    .intro-on-body(url(../images/garden-reading-ipad.jpg),url(../images/garden-reading-ipad.jpg));
 
 }
 html body.splash-color {
 
-    .stuck-on-body(url(../images/color-960-hq.jpg),url(../images/color-360-hq.jpg));
+    .intro-on-body(url(../images/color-1024-bare.jpg),url(../images/color-360-bare.jpg));
 
 }    
 
+.splash {
+
+    // general
+    .benefits .forward-looking {
+        display: block;
+        font-family: "rocksalt";
+        font-size: 24px;
+        color: @fluent-red;
+        // margin-top: 16px;
+    }
+
+}
 
 .splash article {
-    @header-height: 60px;
-
-    > header {
-        position:absolute;
-        top: -(@header-height);
-        height: @header-height;
-        left:0; right:0;
-        background-color: rgb(40,40,40);
-        background-color: rgba(0,0,0,.7);
-    }
-
-    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
-
-    section {
-        padding-top: 3em;
-        padding-bottom: 3em;
-        width: 100%;
-        margin: 0 auto;
-        background-color: white;
-        box-shadow: 0 5px 5px #454545;
-        color: #474747;
-
-        h3 {
-            text-align: center;
-            font-size: 2em;
-        }
-        p {
-            //width: 680px;
-            // margin: 0 auto;
-            word-wrap: normal;
-            overflow-wrap: break-word; 
-        }
-    }
-
-    section.even {
-        background-color: rgb(243,243,243);
-        border-top: 1px solid rgb(236,236,236);
-        border-bottom: 1px solid rgb(236,236,236);
-    }
-
-    > footer {
-        position: relative;
-        padding: 75px 0 25px 0;
-        background-color: @footer-bg-color;
-        color: #888;
-        line-height: 1.5;
-
-        a {
-            color: @fluent-red;
-            text-decoration: none;
-        }
-    }
-
-    .follow {
-        position: absolute;
-        top: (@header-height - 40px)/2 + 2px; right:20px;
-        // .center-box-horz(@center-width);
-        text-align: right;
-        // bottom: 60px;
-
-        h4 {
-            display: inline-block;
-            font-size: 15px;
-            padding: 10px 10px 5px 0;
-            vertical-align: top;
-            color: #888;
-        }
-        nav {
-            display: inline-block;
-        }
-    }
-    .social-icon {
-        font-family: "socialicoregular";
-        font-size: 40px;
-        color: #888;
-        text-decoration: none;
-        line-height: 1;
-
-        &:hover {
-            color: #08C;
-        }
-    }
 
 }
 
