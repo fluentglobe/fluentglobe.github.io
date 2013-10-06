@@ -33,5 +33,6 @@ lessc: lessc
 concatenate:
 - js/prefix|modernizr|essential.js
 - js/uri|impl|form|app.js
+- js/uri+impl+form+app.js
 # - js/memory.js
 #- js/prefix+modernizr+essential.min.js
