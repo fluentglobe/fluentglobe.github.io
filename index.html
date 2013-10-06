@@ -25,25 +25,11 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
       <aside class="we-love">
         <figure></figure>
-        <h3 lang="en">We love languages</h3>
-        <h3 lang="es">Nos encantan los idiomas</h3>
-        <h3 lang="de">Wir lieben Sprachen</h3>
-
-        <p lang="en">- We'll mail you ideas and help you make a plan for free.</p>
-        <p lang="es">- Te enviamos las ideas y te ayudamos a hacer un plan de forma gratuita.</p>
-        <p lang="de">- Wir senden Ihnen Ideen und helfen Ihnen, einen Plan kostenlos zu machen.</p>
+        {% include we-love.html %}
       </aside>
 
       <section class="benefits">
-        <ul>
-          <li>Study every day for a month or twice a week for a year.</li>
-          <li>Get reminders for your daily studying</li>
-          <li>Hundreds of free videos.</li>
-          <li>Learn the real spoken language</li>
-          <li>Test your language progress</li>
-        </ul>
-
-        <a class="forward-looking">Tell me more <figure class="down"></figure></a>
+        {% include benefits.html %}
       </section>
 
       <!--
@@ -79,9 +65,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         <input placeholder="Your Name" name="name" type="text" size="15">
         <input placeholder="e-mail" name="email" type="email" size="15">
         <button class="btn primary double-corner">
-          <span lang="en">Get Free Plan for Learning</span>
-          <span lang="es">Obtenga un plan de aprendizaje gratis</span>
-          <span lang="de">Holen Sie sich einen Gratis-Plan für das Lernen</span>
+        {% include plan-button.html %}
         </button>
         </fieldset>
 
@@ -93,15 +77,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
 
       <section class="story">
-        <p>We have lived in 7 different countries,
-        and haven't settled yet.
-        </p>
-        <p>We want <em>you</em> to enjoy the places you
-        visit and experience "<em>The Real Thing</em>".
-        To be an insider not an outsider.
-        </p>
-        <p>It starts with a few words in a strange language.</p>
-        <p style="text-align:right;">- Henrik &amp; Katty</p>
+        {% include story.html %}
       </section>
 
     </div>
