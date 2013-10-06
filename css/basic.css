@@ -1909,8 +1909,8 @@ html body.splash #intro .we-love {
 }
 html body.splash #intro .we-love figure {
   position: absolute;
-  top: -50px;
-  left: -100px;
+  top: 50px;
+  left: 0;
   z-index: -9999;
   width: 383px;
   height: 431px;
@@ -1920,6 +1920,8 @@ html body.splash #intro .we-love figure {
   -ms-transform: scale(0.5);
   -o-transform: scale(0.5);
   transform: scale(0.5);
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
   background-image: url(../images/around-globe.png);
   background-repeat: no-repeat;
 }

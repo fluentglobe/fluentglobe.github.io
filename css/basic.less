@@ -199,8 +199,8 @@ html body.splash {
 
             figure {
                 position: absolute;
-                top: -50px; 
-                left: -100px; 
+                top: 50px; 
+                left: 0; //-100px; 
                 z-index: -9999;
                 width: @we-love-width;
                 height: @we-love-height;
@@ -209,6 +209,8 @@ html body.splash {
                 margin: 0;
                 //zoom: .5; TODO do this for IE
                 .scale(.5);
+                -webkit-transform-origin: left top;
+                transform-origin: left top;
 
                 background-image: url(../images/around-globe.png);
                 background-repeat: no-repeat;
