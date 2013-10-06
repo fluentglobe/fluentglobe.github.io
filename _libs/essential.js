@@ -743,7 +743,7 @@ function Resolver(name_andor_expr,ns,options)
         } else {
             names = name.split("::");
             if (names.length > 1) {
-                return Resolver(names.shift()).declare(names,value,onundefined);
+                return Resolver(names.shift()).declare(names[0],value,onundefined);
             }
             names = name.split(".");
         }
@@ -773,18 +773,19 @@ function Resolver(name_andor_expr,ns,options)
         } else {
             names = name.split("::");
             if (names.length > 1) {
-                return Resolver(names.shift()).set(names,value,onundefined);
+                return Resolver(names.shift()).set(names[0],value,onundefined);
             }
             names = name.split(".");
         }
 		var symbol = names.pop();
 		var base = _resolve(names,null,onundefined);
+        var oldValue = base[symbol];
 		if (_setValue(value,names,base,symbol)) {
 			var ref = resolver.references[name];
-			if (ref) ref._callListener("change",names,base,symbol,value);
+			if (ref) ref._callListener("change",names,base,symbol,value,oldValue);
 			var parentName = names.join(".");
 			var parentRef = resolver.references[parentName];
-			if (parentRef) parentRef._callListener("change",names,base,symbol,value);
+			if (parentRef) parentRef._callListener("change",names,base,symbol,value,oldValue);
 		}
 		return value;
     };
@@ -798,7 +799,7 @@ function Resolver(name_andor_expr,ns,options)
         } else {
             names = name.split("::");
             if (names.length > 1) {
-                return Resolver(names.shift()).toggle(names,value,onundefined);
+                return Resolver(names.shift()).toggle(names[0],value,onundefined);
             }
             names = name.split(".");
         }
@@ -807,10 +808,10 @@ function Resolver(name_andor_expr,ns,options)
         var value = ! base[symbol]; //TODO configurable toggle
         if (_setValue(value,names,base,symbol)) {
             var ref = resolver.references[name];
-            if (ref) ref._callListener("change",names,base,symbol,value);
+            if (ref) ref._callListener("change",names,base,symbol,value,!value);
             var parentName = names.join(".");
             var parentRef = resolver.references[parentName];
-            if (parentRef) parentRef._callListener("change",names,base,symbol,value);
+            if (parentRef) parentRef._callListener("change",names,base,symbol,value,!value);
         }
         return value;
     };
@@ -4874,7 +4875,6 @@ _ElementPlacement.prototype._computeIE = function(style)
 		for(var n in this.state) state.set(n,this.state[n]);
 		this.state = state;
 		document.documentElement.lang = this.state("lang");
-		state.on("change",this,this.onStateChange);
 		this.resolver.on("change","state.loadingScriptsUrl",this,this.onLoadingScripts);
 		this.resolver.on("change","state.loadingConfigUrl",this,this.onLoadingConfig);
 
@@ -5004,18 +5004,28 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 	EnhancedDescriptor.enhanceUnfinished = enhanceUnfinishedElements;
 
-	ApplicationConfig.prototype.onStateChange = function(ev) {
+	pageResolver.on("change","state", onStateChange);
+
+	function onStateChange(ev) {
 		switch(ev.symbol) {
-			case "livepage":
-				var ap = ev.data;
-				//if (ev.value == true) ap.reflectState();
-				ev.data.doInitScripts();
-				enhanceUnfinishedElements();
-				if (_activeAreaName) {
-					activateArea(_activeAreaName);
-				} else {
-					if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
-					else activateArea(ap.getIntroductionArea());
+			case "livepage": 
+				if (ev.value) {
+					var ap = ApplicationConfig();
+
+					if (!ev.base.loadingScripts && !ev.base.loadingConfig) {
+						--ev.inTrigger;
+						this.set("state.loading",false);
+						++ev.inTrigger;
+					} else {
+						ap.doInitScripts();
+						enhanceUnfinishedElements();
+					}
+					if (_activeAreaName) {
+						activateArea(_activeAreaName);
+					} else {
+						if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
+						else activateArea(ap.getIntroductionArea());
+					}
 				}
 				break;
 			case "loadingScripts":
@@ -5042,8 +5052,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 			case "loading":
 				if (ev.value == false) {
+					var ap = ApplicationConfig();
+
 					if (document.body) essential("instantiatePageSingletons")();
-					ev.data.doInitScripts();	
+					ap.doInitScripts();	
 					enhanceUnfinishedElements();
 					if (window.widget) widget.notifyContentIsReady(); // iBooks widget support
 					if (ev.base.configured == true && ev.base.authenticated == true 
@@ -5056,26 +5068,34 @@ _ElementPlacement.prototype._computeIE = function(style)
 				} 
 				break;
 			case "authenticated":
-				var ap = ev.data;
-				if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
-				else activateArea(ap.getIntroductionArea());
+				if (ev.base.livepage) {
+					var ap = ApplicationConfig();
+
+					if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
+					else activateArea(ap.getIntroductionArea());
+				}
 				// no break
 			case "authorised":
 			case "configured":
 				if (ev.base.loading == false && ev.base.configured == true && ev.base.authenticated == true 
 					&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
 					this.set("state.launching",true);
+
+					var ap = ApplicationConfig();
+
 					// do the below as recursion is prohibited
 					if (document.body) essential("instantiatePageSingletons")();
-					ev.data.doInitScripts();	
+					ap.doInitScripts();	
 					enhanceUnfinishedElements();
 				}
 				break;			
 			case "launching":
 			case "launched":
 				if (ev.value == true) {
+					var ap = ApplicationConfig();
+
 					if (document.body) essential("instantiatePageSingletons")();
-					ev.data.doInitScripts();	
+					ap.doInitScripts();	
 					enhanceUnfinishedElements();
 					if (ev.symbol == "launched" && ev.base.requiredPages == 0) this.set("state.launching",false);
 				}
@@ -7895,7 +7915,7 @@ Resolver("page::state.livepage").on("change",function(ev) {
 		
 		//TODO manage interval in configured.js, and space it out consistent results
 		// for browsers that don't support events
-		pageResolver.uosInterval = setInterval(pageResolver.updateOnlineStatus,5000);
+		pageResolver.uosInterval = setInterval(Resolver("essential::updateOnlineStatus::"),5000);
 
 		EnhancedDescriptor.maintainer = setInterval(EnhancedDescriptor.maintainAll,330); // minimum frequency 3 per sec
 		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 3 per sec
