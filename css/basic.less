@@ -73,7 +73,29 @@ input {
     color: white;
 }
 
+@menu-width: 160px;
+
 .splash #intro {
+
+    .menu {
+        .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+
+        nav.flag {
+            width: 12em;
+
+            label {
+                border-radius: 15px;
+                border: 2px solid @fluent-red;
+                padding: 6px;
+                width: 5em;
+            }
+        }
+    }
+
+    padding-top: 50px; // room for the menu
+    padding-bottom: 20px; // room for the article header
+
+    .benefits ul { padding-bottom: 1em; }
 
     h1, h2, h3, h4, h5, h6 { font-weight: 300; }
 
@@ -105,7 +127,6 @@ input {
     }
 
 }
-
 
 
 .splash article {
@@ -157,11 +178,11 @@ input {
 }
 
 
-@menu-width: 160px;
 @center-width: 340px;
 
 @we-love-width: 383px;
 @we-love-height: 431px;
+
 
 html body.splash { 
 
@@ -175,33 +196,18 @@ html body.splash {
             left: @menu-width;
         }
 
-        .menu {
-            .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
-
-            nav.flag {
-                width: 12em;
-
-                label {
-                    border-radius: 15px;
-                    border: 2px solid @fluent-red;
-                    padding: 6px;
-                    width: 5em;
-                }
-            }
-        }
-
         .we-love {
             // position: absolute; top:0px; 
             position: relative;
             // height: @we-love-height;
-            height: @we-love-height - 150px;
+            height: @we-love-height / 2;
             margin-left: @col1-left;
 
             figure {
                 position: absolute;
-                top: 50px; 
+                top: 0; 
                 left: 0; //-100px; 
-                z-index: -9999;
+                // z-index: -9999;
                 width: @we-love-width;
                 height: @we-love-height;
                 // width: (@we-love-width / 2);
@@ -216,7 +222,7 @@ html body.splash {
                 background-repeat: no-repeat;
             }
             h3 {
-                padding-top: 80px;
+                padding-top: 30px;
                 padding-left: 100px;
             }
             p {
