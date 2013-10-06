@@ -34,9 +34,11 @@ body-class: splash splash-color
             window.addEventListener("resize",placeParts,true);
         }
 
-        setTimeout(function(){
-            scrollTo(0,1);
-        },0);
+        Resolver("page").on("true","state.launching",function(){
+            // scrollTo(0,1);
+            // document.body.scrollTop = 25;
+        });
+
         }();
     </script>
     <!--
