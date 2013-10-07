@@ -1799,6 +1799,9 @@ html[lang=ch] body [lang=ar] {
 .splash #intro .benefits ul {
   padding-bottom: 1em;
 }
+.splash #intro .story {
+  margin-bottom: 3em;
+}
 .splash #intro h1,
 .splash #intro h2,
 .splash #intro h3,
@@ -1819,8 +1822,37 @@ html[lang=ch] body [lang=ar] {
   position: relative;
   text-shadow: 0px 1px 1px black;
 }
+.splash #intro p em {
+  font-style: normal;
+  color: #fb441b;
+}
 .splash #intro fieldset {
   position: relative;
+  text-align: center;
+}
+.splash #intro fieldset input[type=email],
+.splash #intro fieldset input[type=text] {
+  width: 220px;
+  height: 28px;
+  vertical-align: baseline;
+  padding: 1px 10px;
+}
+.splash #intro .btn.primary {
+  background: #fb441b;
+}
+.splash .we-love .forward-looking {
+  display: block;
+  font-family: "rocksalt";
+  font-size: 24px;
+  color: #fb441b;
+  margin-left: 9em;
+  margin-top: 1.5em;
+}
+.splash .benefits .forward-looking {
+  display: block;
+  font-family: "rocksalt";
+  font-size: 24px;
+  color: #fb441b;
 }
 .splash article {
   position: relative;
@@ -1905,6 +1937,7 @@ html[lang=ch] body [lang=ar] {
 }
 html body.splash #intro {
   position: relative;
+  min-height: 50em;
 }
 html body.splash #intro.state-expanded {
   left: 160px;
@@ -1913,6 +1946,7 @@ html body.splash #intro .we-love {
   position: relative;
   height: 215.5px;
   margin-left: 3%;
+  width: 94%;
 }
 html body.splash #intro .we-love figure {
   position: absolute;
@@ -1932,7 +1966,7 @@ html body.splash #intro .we-love figure {
   background-repeat: no-repeat;
 }
 html body.splash #intro .we-love h3 {
-  padding-top: 30px;
+  padding-top: 1em;
   padding-left: 100px;
 }
 html body.splash #intro .we-love p {
@@ -1942,19 +1976,19 @@ html body.splash #intro .benefits {
   position: relative;
   margin-left: 3%;
   width: 94%;
-  max-width: 360px;
+  max-width: 400px;
 }
 html body.splash #intro .story {
   position: relative;
   margin-left: 3%;
   width: 94%;
-  max-width: 360px;
+  max-width: 400px;
 }
 html body.splash #intro .signup {
   position: relative;
   margin-left: 3%;
   width: 94%;
-  max-width: 360px;
+  max-width: 400px;
 }
 html body.splash #stuck-below-image {
   position: absolute;
@@ -2074,10 +2108,6 @@ html body.splash #stuck .menu nav.flag label {
   padding: 6px;
   width: 5em;
 }
-html body.splash #stuck p em {
-  font-style: normal;
-  color: #fb441b;
-}
 html body.splash #stuck .story {
   position: absolute;
   top: 50px;
@@ -2093,21 +2123,11 @@ html body.splash #stuck form {
   top: 50%;
   margin-top: -100px;
 }
-html body.splash #stuck input[type=email],
-html body.splash #stuck input[type=text] {
-  width: 220px;
-  height: 28px;
-  vertical-align: baseline;
-  padding: 1px 10px;
-}
 html body.splash #stuck .double-corner {
   position: absolute;
   bottom: 10px;
   right: 0;
   width: 100px;
-}
-html body.splash #stuck .btn.primary {
-  background: #fb441b;
 }
 html body.splash #stuck .langChoice {
   position: absolute;
@@ -2143,7 +2163,6 @@ html body.splash #stuck .langChoice select {
   height: 2.75em;
   /* 60 */
 
-  border: 1px solid #e15a1f;
 }
 #main-menu > ul > li {
   width: 25%;
@@ -2159,32 +2178,16 @@ html body.splash #stuck .langChoice select {
 
   text-align: center;
 }
-#main-menu > ul > li:not( :last-child ) > a,
-#main-menu > ul > li:not( :last-child ) > q {
-  border-right: 1px solid #cc470d;
-}
-#main-menu > ul > li:hover > a,
-#main-menu > ul:not ( :hover ) > li.active > a,
-#main-menu > ul > li:hover > q,
-#main-menu > ul:not ( :hover ) > li.active > q {
-  background-color: #cc470d;
-}
 #main-menu li ul {
   display: none;
   position: absolute;
   top: 100%;
   width: 100%;
-  background-color: #cc470d;
 }
 #main-menu li ul a,
 #main-menu li ul q {
   font-size: 1.25em;
-  border-top: 1px solid #e15a1f;
   padding: 0.75em;
-}
-#main-menu li ul li a:hover,
-#main-menu li ul:not( :hover ) li.active a {
-  background-color: #e15a1f;
 }
 #main-menu li:hover ul {
   display: block;
@@ -2206,6 +2209,30 @@ html body.splash #stuck .langChoice select {
   right: -0.313em;
   /* 5 */
 
+}
+#main-menu > ul {
+  border: 1px solid #e15a1f;
+}
+#main-menu > ul > li:not( :last-child ) > a,
+#main-menu > ul > li:not( :last-child ) > q {
+  border-right: 1px solid #cc470d;
+}
+#main-menu > ul > li:hover > a,
+#main-menu > ul:not ( :hover ) > li.active > a,
+#main-menu > ul > li:hover > q,
+#main-menu > ul:not ( :hover ) > li.active > q {
+  background-color: #cc470d;
+}
+#main-menu li ul {
+  background-color: #cc470d;
+}
+#main-menu li ul a,
+#main-menu li ul q {
+  border-top: 1px solid #e15a1f;
+}
+#main-menu li ul li a:hover,
+#main-menu li ul:not( :hover ) li.active a {
+  background-color: #e15a1f;
 }
 @media screen and (device-aspect-ratio: 2/3) {
   
@@ -2252,12 +2279,6 @@ html body.splash-color #tracer {
   visibility: hidden;
   width: 960px;
   height: 548px;
-}
-.splash .benefits .forward-looking {
-  display: block;
-  font-family: "rocksalt";
-  font-size: 24px;
-  color: #fb441b;
 }
 .constrained {
   overflow: visible;

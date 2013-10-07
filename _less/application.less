@@ -294,6 +294,42 @@
     }
 }
 
+.side-menu-color(@bg-color,@shaded-color) {
+    //@border-color: darken(@bg-color,5%);
+
+    // first level
+    > ul {
+        // background-color: @bg-color;
+        border: 1px solid @bg-color;
+
+        > li:not( :last-child ) > a,
+        > li:not( :last-child ) > q {
+            border-right: 1px solid @shaded-color;
+        }
+        > li:hover > a,
+        &:not ( :hover ) > li.active > a,
+        > li:hover > q,
+        &:not ( :hover ) > li.active > q {
+            background-color: @shaded-color;
+        }        
+    }
+
+    // second level
+    li ul {
+
+        background-color: @shaded-color;
+        a,q {
+            border-top: 1px solid @bg-color;
+        }
+
+        li a:hover,
+        &:not( :hover ) li.active a {
+            background-color: @bg-color;
+        }
+    }
+}
+
+
 .outhangingHeader(@header-height: 60px, @bg-color: rgba(0,0,0,.7),@bg-color-ie:rgb(40,40,40)) {
 
     > header {

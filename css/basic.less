@@ -96,6 +96,7 @@ input {
     padding-bottom: 20px; // room for the article header
 
     .benefits ul { padding-bottom: 1em; }
+    .story { margin-bottom: 3em; }
 
     h1, h2, h3, h4, h5, h6 { font-weight: 300; }
 
@@ -117,13 +118,54 @@ input {
         //margin: 0 auto;
         text-shadow: 0px 1px 1px black;
     }
+    p em {
+        font-style: normal; 
+        color: @fluent-red;
+    }
+
 
     fieldset {
         position: relative;
+        text-align: center;
+
+        input[type=email],
+        input[type=text] {
+            width: 220px;
+            height: 28px;
+            vertical-align: baseline;
+            padding: 1px 10px;
+        }
     }
+
 
     input,textarea {
         // padding: 3px 6px;
+    }
+
+    .btn.primary {
+        background: @fluent-red;
+    }
+    
+}
+
+.splash {
+
+    // general
+    .we-love .forward-looking {
+        display: block;
+        font-family: "rocksalt";
+        font-size: 24px;
+        color: @fluent-red;
+        margin-left: 9em;
+        margin-top: 1.5em;
+    }
+
+    .benefits .forward-looking {
+        display: block;
+        font-family: "rocksalt";
+        font-size: 24px;
+        color: @fluent-red;
+        // margin-top: 16px;
     }
 
 }
@@ -183,14 +225,18 @@ input {
 @we-love-width: 383px;
 @we-love-height: 431px;
 
+@min-height-intro: 50em;
+
 
 html body.splash { 
 
     #intro {
         position: relative;
+        min-height: @min-height-intro;
+
         @col1-left: 3%;
         @col1-width: 94%;
-        @col-max-width: 360px;
+        @col-max-width: 400px;
 
         &.state-expanded {
             left: @menu-width;
@@ -202,6 +248,7 @@ html body.splash {
             // height: @we-love-height;
             height: @we-love-height / 2;
             margin-left: @col1-left;
+            width: 100% - (2*@col1-left);
 
             figure {
                 position: absolute;
@@ -222,7 +269,7 @@ html body.splash {
                 background-repeat: no-repeat;
             }
             h3 {
-                padding-top: 30px;
+                padding-top: 1em;
                 padding-left: 100px;
             }
             p {
@@ -288,11 +335,6 @@ html body.splash {
             }
         }
 
-        p em {
-            font-style: normal; 
-            color: @fluent-red;
-        }
-
 
         .story {
             position: absolute;
@@ -309,14 +351,6 @@ html body.splash {
             // margin-top: 20%;
         }
 
-        input[type=email],
-        input[type=text] {
-            width: 220px;
-            height: 28px;
-            vertical-align: baseline;
-            padding: 1px 10px;
-        }
-
         .double-corner {
             position: absolute;
             bottom: 10px;
@@ -324,10 +358,6 @@ html body.splash {
             width: 100px;
         }
 
-        .btn.primary {
-            background: @fluent-red;
-        }
-        
         .langChoice {
             position: absolute;
             top: 50px;
@@ -343,10 +373,6 @@ html body.splash {
 
 #main-menu
 {
-    @bg-color: @fluent-orange;
-    @shaded-color: @fluent-dark-orange;
-    //@border-color: darken(@bg-color,5%);
-
     width: 40em;
     position: absolute;
     left: 50%; top: 1em;
@@ -355,12 +381,9 @@ html body.splash {
 
     .list-as-menu();
 
- 
     /* first level */
     > ul {
         height: 2.75em; /* 60 */
-        // background-color: @bg-color;
-        border: 1px solid @bg-color;
 
         > li
         {
@@ -375,17 +398,6 @@ html body.splash {
                 text-align: center;
             }
         }
-
-        > li:not( :last-child ) > a,
-        > li:not( :last-child ) > q {
-            border-right: 1px solid @shaded-color;
-        }
-        > li:hover > a,
-        &:not ( :hover ) > li.active > a,
-        > li:hover > q,
-        &:not ( :hover ) > li.active > q {
-            background-color: @shaded-color;
-        }
     }
  
     /* second level */
@@ -394,17 +406,10 @@ html body.splash {
         position: absolute;
         top: 100%;
         width: 100%;
-        background-color: @shaded-color;
 
         a,q {
             font-size: 1.25em;
-            border-top: 1px solid @bg-color;
             padding: 0.75em;
-        }
-
-        li a:hover,
-        &:not( :hover ) li.active a {
-            background-color: @bg-color;
         }
     }
     li:hover ul {
@@ -425,6 +430,9 @@ html body.splash {
         position: relative;
         right: -0.313em; /* 5 */
     }
+
+    .side-menu-color(@fluent-orange,@fluent-dark-orange);
+ 
 }
 
 @top-splash-room: 650px;
@@ -469,23 +477,6 @@ html body.splash-color {
     .intro-on-body(url(../images/color-1024-bare.jpg),url(../images/color-360-bare.jpg));
 
 }    
-
-.splash {
-
-    // general
-    .benefits .forward-looking {
-        display: block;
-        font-family: "rocksalt";
-        font-size: 24px;
-        color: @fluent-red;
-        // margin-top: 16px;
-    }
-
-}
-
-.splash article {
-
-}
 
 //@import "animated";
 //@import "keyframes";
