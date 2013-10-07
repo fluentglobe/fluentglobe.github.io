@@ -77,6 +77,10 @@ input {
 
 .splash #intro {
 
+    &.state-expanded {
+        left: @menu-width;
+    }
+
     .menu {
         .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
 
@@ -136,7 +140,6 @@ input {
             padding: 1px 10px;
         }
     }
-
 
     input,textarea {
         // padding: 3px 6px;
@@ -227,20 +230,17 @@ input {
 
 @min-height-intro: 50em;
 
+@col1-left: 3%;
+@col1-width: 94%;
+@col-max-width: 400px;
+
+
 
 html body.splash { 
 
     #intro {
         position: relative;
         min-height: @min-height-intro;
-
-        @col1-left: 3%;
-        @col1-width: 94%;
-        @col-max-width: 400px;
-
-        &.state-expanded {
-            left: @menu-width;
-        }
 
         .we-love {
             // position: absolute; top:0px; 
@@ -306,134 +306,8 @@ html body.splash {
 
     }
 
-    #stuck-below-image {
-        position:absolute;
-        left:0; right:0; top:200px;
-    }
-
-
-
-    #stuck {
-        // .lines { .extraBackground(url(../images/line.png)); }
-
-        &.state-expanded {
-            left: @menu-width;
-        }
-
-        .menu {
-            .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
-
-            nav.flag {
-                width: 12em;
-
-                label {
-                    border-radius: 15px;
-                    border: 2px solid @fluent-red;
-                    padding: 6px;
-                    width: 5em;
-                }
-            }
-        }
-
-
-        .story {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            width: @center-width;
-            margin-left: -0.5 * @center-width;
-        }
-
-        form {
-            .center-box-horz(@center-width);
-            top:50%; margin-top: -100px;
-
-            // margin-top: 20%;
-        }
-
-        .double-corner {
-            position: absolute;
-            bottom: 10px;
-            right: 0;
-            width: 100px;
-        }
-
-        .langChoice {
-            position: absolute;
-            top: 50px;
-            right: 20px;
-
-            select {
-                background: @fluent-red;
-            }
-        }
-
-    }
 }
 
-#main-menu
-{
-    width: 40em;
-    position: absolute;
-    left: 50%; top: 1em;
-    margin-left: -20em;
-
-
-    .list-as-menu();
-
-    /* first level */
-    > ul {
-        height: 2.75em; /* 60 */
-
-        > li
-        {
-            width: 25%;
-            height: 100%;
-            float: left;
-
-            > a, > q {
-                height: 100%;
-                font-size: 1.2em;
-                line-height: 2.4em; /* 60 (24) */
-                text-align: center;
-            }
-        }
-    }
- 
-    /* second level */
-    li ul {
-        display: none;
-        position: absolute;
-        top: 100%;
-        width: 100%;
-
-        a,q {
-            font-size: 1.25em;
-            padding: 0.75em;
-        }
-    }
-    li:hover ul {
-        display: block;
-        left: 0; right: 0;
-    }
-    li:not ( :first-child ):hover ul {
-        left: -1px;
-    }
-
-    span:after {
-        width:0; height: 0;
-        border: 0.313em solid transparent; /* 5 */
-        border-top-color: #efa585;
-        content: '';
-        vertical-align: middle;
-        display: inline-block;
-        position: relative;
-        right: -0.313em; /* 5 */
-    }
-
-    .side-menu-color(@fluent-orange,@fluent-dark-orange);
- 
-}
 
 @top-splash-room: 650px;
 @top-splash-room-640: 560px;
