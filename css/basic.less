@@ -365,8 +365,12 @@ html body.splash {
     }
 }
 
-@media only screen and (min-height: 800px) and (max-height: 1024px) {
-
+@media only screen and (min-width: 800px) and (max-width: 1024px) {
+    .form-and-story {
+        position: absolute;
+        top: @intro-top-gap + 175px;
+        left: 50%;
+    }
 }
 
 @top-splash-room: 650px;
