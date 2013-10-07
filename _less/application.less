@@ -50,20 +50,82 @@
     #intro {
 
         width:100%; 
-        min-height: @landscape-bg-height;
+        //min-height: @landscape-bg-height;
         // height: @landscape-bg-height;
         //TODO z-index: -9999;
 
         //padding-top: 200px;
         color: white;
 
-        background-image: @image-portrait;
+        background-image: @image;
         background-position: top left;
         background-repeat: no-repeat; 
         // background-size: auto 100%;
         background-size: 100% auto;
     }
     #tracer { position:fixed; visibility: hidden; width: @landscape-bg-width; height: @landscape-bg-height;}
+
+    @media only screen and {
+        
+    }
+
+    // Narrow browser
+    @media only screen 
+    and (min-width : 320px) 
+    and (max-width : 360px) 
+     {
+
+        #intro {
+            background-image: @image-portrait;
+            background-position: top center;
+            background-size: 360px auto;
+        }
+        #tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+    // Narrow browser
+    @media only screen 
+    and (min-width : 361px) 
+    and (max-width : 800px) 
+     {
+
+        #intro {
+            background-image: @image-portrait;
+            background-position: top center;
+            background-size: 100% auto;
+        }
+        #tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+
+    //TODO fixed width 320-360, scale after
+
+    //and (orientation : portrait)
+
+    // iPhone portrait and landscape
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 568px) 
+     {
+
+        #intro {
+            background-image: @image-portrait;
+            background-position: top center;
+            background-size: 360px auto;
+        }
+        #tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+    // iPad:
+    // not sure about this
+    @media screen and (device-aspect-ratio: 3/4) and (orientation:portrait) {
+
+        #stuck {
+            background-position: bottom center;
+            background-size: auto 100%;
+        }
+    }
+
 }
 
 .stuck-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {

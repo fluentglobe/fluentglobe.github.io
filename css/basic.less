@@ -74,6 +74,8 @@ input {
 }
 
 @menu-width: 160px;
+@intro-top-gap: 50px;
+@intro-bottom-gap: 50px;
 
 .splash #intro {
 
@@ -96,8 +98,8 @@ input {
         }
     }
 
-    padding-top: 50px; // room for the menu
-    padding-bottom: 20px; // room for the article header
+    padding-top: @intro-top-gap; // room for the menu
+    padding-bottom: @intro-bottom-gap; // room for the article header
 
     .benefits ul { padding-bottom: 1em; }
     .story { margin-bottom: 3em; }
@@ -303,11 +305,69 @@ html body.splash {
             max-width: @col-max-width;
         }
 
-
+        // the footer is used to set start of article when intro is fixed
+        > footer {
+            position: absolute;
+            top: 0;
+        }
     }
 
 }
 
+
+// tablets and desktop heights
+@media only screen and (min-height : 720px) 
+{
+    html body.splash {
+        #intro {
+            position: fixed;
+            top: 0;
+
+            // the footer is used to set start of article when intro is fixed
+            > footer {
+                position:relative;
+                margin-top: @intro-bottom-gap;
+            }
+        }
+        article {
+            margin-top: 100%;
+            z-index: 100;
+        }
+    }
+}
+
+
+@media only screen and (min-width: 400px) and (max-width: 800px) {
+
+    html body.splash {
+
+        #intro {
+
+            .we-love {
+
+            }
+            .benefits {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+            .story {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+            .signup {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+        }
+    }
+}
+
+@media only screen and (min-height: 800px) and (max-height: 1024px) {
+
+}
 
 @top-splash-room: 650px;
 @top-splash-room-640: 560px;
