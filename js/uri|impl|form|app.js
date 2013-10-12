@@ -2239,6 +2239,10 @@ var essential = Resolver("essential"),
     addEventListeners = essential("addEventListeners"),
     MutableEvent = essential("MutableEvent"),
     EnhancedDescriptor = essential("EnhancedDescriptor"),
+    DescriptorQuery = essential("DescriptorQuery"),
+    Layouter = essential("Layouter"),
+    Laidout = essential("Laidout"),
+    HTMLElement = essential("HTMLElement"),
 	DialogAction = Resolver("essential")("DialogAction");
 
 if (! /PhantomJS\//.test(navigator.userAgent)) {
@@ -2432,5 +2436,69 @@ FormAction.prototype["start-over"] = function(el,ev) {
 
 */
 
+Laidout.variant("paged-section",Generator(
+    function(key,el,conf) {
+        this.el = el;
+        this.maxHeight = el.parentNode.offsetHeight; // layouter el (article) has correct height, section is infinite
+        this.usedHeight = 0; // on last page
+        this.pages = [];
+
+        while(el.firstChild && el.firstChild.laidoutPage == undefined) {
+            this.moveToLastPage(el.firstChild);
+        }
+    }, 
+    Laidout,
+    {"prototype":{
+        
+        "moveToLastPage": function(el) {
+            var elHeight = el.offsetHeight || 0;
+            console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
+
+            if (this.pages.length == 0 || (this.usedHeight + elHeight > this.maxHeight)) {
+                var pageEl = HTMLElement("div", { "class": "page p"+(this.pages.length+1) });
+                pageEl.laidoutPage = true;
+                this.el.appendChild(pageEl);
+                this.pages.push(pageEl);
+                this.usedHeight = 0;
+            }
+            this.pages[this.pages.length-1].appendChild(el);
+            this.usedHeight += elHeight;
+        },
+
+        "layout": function(el,layout) {
+
+        }
+
+    }}
+    ));
+
+Layouter.variant("paged",Generator(function(key,el,conf) {
+    this.el = el;
+    this.sizing = el.stateful("sizing");
+
+    // split into sections
+    var sections = this.el.getElementsByTagName("section");
+    for(var i = 0,s; s = sections[i]; ++i) {
+        s.setAttribute("data-role","'laidout':'paged-section'");
+    }
+
+    var descs = DescriptorQuery(sections);
+    descs.enhance();
+
+},Layouter,{ prototype: {
+
+    //TODO "destroy" destroy paged sections
+
+    "sizing":function(el,layout,sizingEls) {
+        
+    },
+    "layout":function(el,layout,sizingEls) {
+
+        for(var i = 0, c; c = sizingEls[i]; ++i) {
+            var sizing = c.stateful("sizing");
+            // switch()
+        }
+    }
+}}));
 
 }();

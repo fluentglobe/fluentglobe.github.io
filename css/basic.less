@@ -80,6 +80,12 @@ input {
 @intro-bottom-gap: 50px;
 @min-height-intro: 50em;
 
+@col1-left: 3%;
+@col1-right: 3%;
+@col1-width: 94%;
+@col-max-width: 400px;
+
+
 
 #intro {
 
@@ -112,6 +118,58 @@ input {
 
 .lesson #intro {
     min-height: 10em;
+}
+
+.lesson article {
+
+    position: absolute;
+    top: 0;
+    height: 95%;
+     
+    section {
+        position: relative;
+        left: 240px;
+        // height: 100%;
+        width: @col-max-width;
+        overflow: visible;
+    }
+    div.page {
+        position:absolute;
+        width: 100%;
+    }
+    .p1 {
+        left:0;
+    }
+    .p2 {
+        left:100%;
+    }
+    .p3 {
+        left:200%;
+    }
+    .p4 {
+        left:300%;
+    }
+    .p5 {
+        left:400%;
+    }
+    .p6 {
+        left:500%;
+    }
+    .p7 {
+        left:600%;
+    }
+    .p8 {
+        left:700%;
+    }
+    .p9 {
+        left:800%;
+    }
+
+    p {
+    }
+
+    .mejs-container {
+    }
 }
 
 .splash #intro {
@@ -190,14 +248,17 @@ input {
 
 }
 
+article {
 
-.splash article {
     position:relative; //absolute
     width: 100%;
     overflow: visible;
 
     .outhangingHeader();
 
+}
+
+.splash article {
     @header-height: 60px;
 
     h1, h2, h3, h4, h5, h6 { font-weight: 300; }
@@ -244,11 +305,6 @@ input {
 
 @we-love-width: 383px;
 @we-love-height: 431px;
-
-@col1-left: 3%;
-@col1-right: 3%;
-@col1-width: 94%;
-@col-max-width: 400px;
 
 
 

@@ -9,7 +9,6 @@ body-class: lesson lesson-color
 
       <aside class="we-love">
         <figure></figure>
-        {% include we-love.html %}
       </aside>
 
       {% include lesson-menu.html %}
@@ -17,9 +16,11 @@ body-class: lesson lesson-color
     </div>
 
 
-    <article>
+    <article role="application" data-role="'layouter':'paged'">
         <header></header>
+        <section>
 {{ content }}
+        </section>
         <footer></footer>
     </article>
     <div id="tracer"></div>
@@ -46,8 +47,8 @@ body-class: lesson lesson-color
         var article = document.querySelector('article');
         var tracer = document.getElementById("tracer");
 
-        article.style.marginTop = "200px";
-        
+        // article.style.marginTop = "200px";
+
         // if (intro && introFooter) {
         //     placeParts();
         //     window.addEventListener("resize",placeParts,true);

@@ -1806,6 +1806,48 @@ html[lang=ch] body [lang=ar] {
 .lesson #intro {
   min-height: 10em;
 }
+.lesson article {
+  position: absolute;
+  top: 0;
+  height: 95%;
+}
+.lesson article section {
+  position: relative;
+  left: 240px;
+  width: 400px;
+  overflow: visible;
+}
+.lesson article div.page {
+  position: absolute;
+  width: 100%;
+}
+.lesson article .p1 {
+  left: 0;
+}
+.lesson article .p2 {
+  left: 100%;
+}
+.lesson article .p3 {
+  left: 200%;
+}
+.lesson article .p4 {
+  left: 300%;
+}
+.lesson article .p5 {
+  left: 400%;
+}
+.lesson article .p6 {
+  left: 500%;
+}
+.lesson article .p7 {
+  left: 600%;
+}
+.lesson article .p8 {
+  left: 700%;
+}
+.lesson article .p9 {
+  left: 800%;
+}
 .splash #intro .benefits ul {
   padding-bottom: 1em;
 }
@@ -1864,12 +1906,12 @@ html[lang=ch] body [lang=ar] {
   font-size: 24px;
   color: #fb441b;
 }
-.splash article {
+article {
   position: relative;
   width: 100%;
   overflow: visible;
 }
-.splash article > header {
+article > header {
   position: absolute;
   top: -60px;
   height: 60px;
