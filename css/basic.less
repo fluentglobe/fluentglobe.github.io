@@ -233,6 +233,7 @@ input {
 @min-height-intro: 50em;
 
 @col1-left: 3%;
+@col1-right: 3%;
 @col1-width: 94%;
 @col-max-width: 400px;
 
@@ -351,12 +352,14 @@ html body.splash {
                 margin-left: -.5 * @col-max-width;
                 width: @col-max-width;
             }
-            .story {
+
+            .signup {
                 left: 50%;
                 margin-left: -.5 * @col-max-width;
                 width: @col-max-width;
             }
-            .signup {
+
+            .story {
                 left: 50%;
                 margin-left: -.5 * @col-max-width;
                 width: @col-max-width;
@@ -365,11 +368,41 @@ html body.splash {
     }
 }
 
-@media only screen and (min-width: 800px) and (max-width: 1024px) {
-    .form-and-story {
-        position: absolute;
-        top: @intro-top-gap + 175px;
-        left: 50%;
+@media only screen and (min-width: 800px) and (max-width: 1099px) {
+    html body.splash #intro {
+        .form-and-story {
+            position: absolute;
+            top: @intro-top-gap + 175px;
+            left: 50%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1100px) and (max-width: 2048px) {
+    html body.splash #intro {
+        @signup-height: 175px;
+
+        .we-love {
+            width: 32%;
+        }
+        .benefits {
+            width: 32%;
+        }
+        .signup {
+            position: absolute;
+            width: @col-max-width;
+            top: 50%;
+            left: 50%;
+            margin-top: -0.5 * @signup-height;
+            margin-left: -.5 * @col-max-width;
+        }
+
+        .story {
+            position: absolute;
+            right: @col1-right;
+            width: 32%;
+            bottom: @intro-top-gap;
+        }
     }
 }
 

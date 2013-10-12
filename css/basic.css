@@ -2014,22 +2014,44 @@ html body.splash #intro > footer {
     margin-left: -200px;
     width: 400px;
   }
-  html body.splash #intro .story {
-    left: 50%;
-    margin-left: -200px;
-    width: 400px;
-  }
   html body.splash #intro .signup {
     left: 50%;
     margin-left: -200px;
     width: 400px;
   }
+  html body.splash #intro .story {
+    left: 50%;
+    margin-left: -200px;
+    width: 400px;
+  }
 }
-@media only screen and (min-width: 800px) and (max-width: 1024px) {
-  .form-and-story {
+@media only screen and (min-width: 800px) and (max-width: 1099px) {
+  html body.splash #intro .form-and-story {
     position: absolute;
     top: 225px;
     left: 50%;
+  }
+}
+@media only screen and (min-width: 1100px) and (max-width: 2048px) {
+  html body.splash #intro .we-love {
+    width: 32%;
+  }
+  html body.splash #intro .benefits {
+    width: 32%;
+  }
+  html body.splash #intro .signup {
+    position: absolute;
+    width: 400px;
+    top: 50%;
+    left: 50%;
+    margin-top: -87.5px;
+    margin-left: -200px;
+  }
+  html body.splash #intro .story {
+    position: absolute;
+    right: 3%;
+    width: 32%;
+    bottom: 50px;
   }
 }
 @media screen and (device-aspect-ratio: 2/3) {
