@@ -2294,10 +2294,10 @@ html body.splash-color #tracer {
   width: 100px;
   height: 100px;
   margin: -50px 0 0 -50px;
-  background: url(images/bigplay.svg) no-repeat;
+  background: url(../images/bigplay.svg) no-repeat;
 }
 .no-svg .mejs-overlay-button {
-  background-image: url(images/bigplay.png);
+  background-image: url(../images/bigplay.png);
 }
 .mejs-overlay:hover .mejs-overlay-button {
   background-position: 0 -100px;
@@ -2310,7 +2310,7 @@ html body.splash-color #tracer {
   height: 80px;
   margin: -40px 0 0 -40px;
   background: #333;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(0, 0, 0, 0.9);
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50, 50, 50, 0.9)), to(rgba(0, 0, 0, 0.9)));
   background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.9), rgba(0, 0, 0, 0.9));
@@ -2323,7 +2323,7 @@ html body.splash-color #tracer {
   display: block;
   width: 80px;
   height: 80px;
-  background: transparent url(images/loading.gif) 50% 50% no-repeat;
+  background: transparent url(../images/loading.gif) 50% 50% no-repeat;
 }
 /* End: LAYERS */
 /* Start: CONTROL BAR */
@@ -2334,7 +2334,7 @@ html body.splash-color #tracer {
   padding: 0;
   bottom: 0;
   left: 0;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(0, 0, 0, 0.7);
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50, 50, 50, 0.7)), to(rgba(0, 0, 0, 0.7)));
   background: -webkit-linear-gradient(top, rgba(50, 50, 50, 0.7), rgba(0, 0, 0, 0.7));
@@ -2371,10 +2371,10 @@ html body.splash-color #tracer {
   height: 16px;
   width: 16px;
   border: 0;
-  background: transparent url(images/controls.svg) no-repeat;
+  background: transparent url(../images/controls.svg) no-repeat;
 }
 .no-svg .mejs-controls .mejs-button button {
-  background-image: url(images/controls.png);
+  background-image: url(../images/controls.png);
 }
 /* :focus for accessibility */
 .mejs-controls .mejs-button button:focus {
@@ -2606,7 +2606,7 @@ html body.splash-color #tracer {
   display: none;
   height: 115px;
   width: 25px;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(50, 50, 50, 0.7);
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -2727,7 +2727,7 @@ html body.splash-color #tracer {
   right: -10px;
   width: 130px;
   height: 100px;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(50, 50, 50, 0.7);
   border: solid 1px transparent;
   padding: 10px;
@@ -2864,7 +2864,7 @@ html body.splash-color #tracer {
 }
 .mejs-captions-text {
   padding: 3px 5px;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(20, 20, 20, 0.8);
 }
 /* End: Track (Captions and Chapters) */
@@ -2989,7 +2989,7 @@ html body.splash-color #tracer {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(50, 50, 50, 0.7);
   z-index: 1000;
   overflow: hidden;
@@ -3002,7 +3002,7 @@ html body.splash-color #tracer {
   position: absolute;
   right: 0;
   top: 0;
-  background: url(images/background.png);
+  background: url(../images/background.png);
   background: rgba(50, 50, 50, 0.7);
   color: #fff;
   padding: 4px;
