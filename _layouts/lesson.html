@@ -1,0 +1,62 @@
+---
+layout: master
+theme: main
+blog-link: no
+body-class: lesson lesson-color
+---
+
+    <div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+
+      <aside class="we-love">
+        <figure></figure>
+        {% include we-love.html %}
+      </aside>
+
+      {% include lesson-menu.html %}
+
+    </div>
+
+
+    <article>
+        <header></header>
+{{ content }}
+        <footer></footer>
+    </article>
+    <div id="tracer"></div>
+    <script>
+        !function() {
+            var afterImageOffset = 180;
+
+        function placeParts() {
+            var contentHeight = introFooter.offsetTop, afterContent = 100,
+                bgWidth = tracer.offsetWidth, bgHeight = tracer.offsetHeight;
+            var maxHeight = bgHeight;
+            if (bgHeight < bgWidth) Math.floor(Math.max(bgHeight,(intro.offsetWidth * bgHeight / bgWidth)));
+            maxHeight = Math.min(maxHeight, contentHeight + afterContent)
+            intro.style.maxHeight = maxHeight + "px";
+
+            if (contentHeight) article.style.marginTop = intro.offsetHeight+"px";
+            // var scaledImage = (afterImageOffset * intro.offsetWidth / bgWidth);
+
+            //console.log("height <=",maxHeight,"article free",intro.offsetHeight,bgWidth,bgHeight,introFooter.offsetTop); //,"scaled",scaledImage);
+        }
+
+        var intro = document.getElementById("intro"),
+            introFooter = document.querySelector("#intro > footer");
+        var article = document.querySelector('article');
+        var tracer = document.getElementById("tracer");
+
+        article.style.marginTop = "200px";
+        
+        // if (intro && introFooter) {
+        //     placeParts();
+        //     window.addEventListener("resize",placeParts,true);
+        // }
+
+        Resolver("page").on("true","state.launching",function(){
+            // scrollTo(0,1);
+            // document.body.scrollTop = 25;
+        });
+
+        }();
+    </script>

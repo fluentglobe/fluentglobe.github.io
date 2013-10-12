@@ -78,8 +78,16 @@ input {
 @menu-width: 160px;
 @intro-top-gap: 50px;
 @intro-bottom-gap: 50px;
+@min-height-intro: 50em;
 
-.splash #intro {
+
+#intro {
+
+    position: relative;
+    padding-top: @intro-top-gap; // room for the menu
+    padding-bottom: @intro-bottom-gap; // room for the article header
+    min-height: @min-height-intro;
+
 
     &.state-expanded {
         left: @menu-width;
@@ -100,8 +108,13 @@ input {
         }
     }
 
-    padding-top: @intro-top-gap; // room for the menu
-    padding-bottom: @intro-bottom-gap; // room for the article header
+}
+
+.lesson #intro {
+    min-height: 10em;
+}
+
+.splash #intro {
 
     .benefits ul { padding-bottom: 1em; }
     .story { margin-bottom: 3em; }
@@ -232,8 +245,6 @@ input {
 @we-love-width: 383px;
 @we-love-height: 431px;
 
-@min-height-intro: 50em;
-
 @col1-left: 3%;
 @col1-right: 3%;
 @col1-width: 94%;
@@ -244,8 +255,6 @@ input {
 html body.splash { 
 
     #intro {
-        position: relative;
-        min-height: @min-height-intro;
 
         .we-love {
             // position: absolute; top:0px; 
@@ -424,6 +433,13 @@ html body.splash {
 // iPhone 5 landscape and squashed browser:
 @media screen and (device-aspect-ratio: 40/71) and (orientation:landscape),
         only screen and (max-height:321px) {
+
+    #intro {
+        height:100%;
+        min-height: initial;
+        max-height: initial;
+    }
+
     html body.splash {
         #intro {
             height:100%;
@@ -451,6 +467,11 @@ html body.splash-color {
 
 }    
 
+html body.lesson-color {
+
+    .intro-on-body(url(../images/color-1024-bare.jpg),url(../images/color-360-bare.jpg));
+
+}    
 //@import "animated";
 //@import "keyframes";
 
