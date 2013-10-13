@@ -6,17 +6,18 @@ layout: lesson
 
 Today I want you to learn some of the following vocabulary:
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
+* What
+* Where
+* When
+* How
+* Have you...?
+* What is...?
+* Surname
+* Telephone number 
+* Address
+* What do you do?
+* Where do you live?
 
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
 
 ….
 
@@ -24,7 +25,7 @@ Today I want you to learn some of the following vocabulary:
 ![Visit to London](/images/v2l-wide.jpg)
 #### Visit to London chapter 1
 
-In chapter one we cover greetings and introductions. 
+In chapter one we cover asking questions with what, when, how and where.
 You can read the book on your iPad.
 
 For more information visit the [iBook Store](https://itunes.apple.com/us/book/portuguese-for-travelers/id568515833).
@@ -38,32 +39,31 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=FxVK4XGuxRw&list=FLLWtwPlc7oWphbETPsP7oDg&index=404" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* What's your name?
+* How old are you?
+* Where are you from?
+* Have you got any brothers or sisters?
+* What do you do?
 
 <hr>
 ### Greeting Friends
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=d4xHaGUx3c0" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* What's your name?
+* How old are you?
+* What's your job? 
+* What's your occupation?
+ 
 
 <hr>
 
@@ -71,16 +71,16 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=flni4Ci0mto" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Are you married?
+* No I am not 
+* Yes I am
+* I am separated/ divorced
+* What is your favorite color?
 
 
 <hr style="page-break-before:always;height:0;">
