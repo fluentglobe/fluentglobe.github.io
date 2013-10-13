@@ -255,14 +255,15 @@
 
 .side-menu(@width: 200px, @bg-color: @fluent-orange, @shaded-color: @fluent-dark-orange, @active-color: #c00, @color: #c0c0c0, @hover-color: white) {
 
-    position: absolute;
+    position: fixed;
     top: 0; bottom: 0;
     left: -(@width);
     width: @width + 3px;
     .list-as-menu();
     border-right: 3px solid @bg-color;
-    background-color: @bg-color;
+    z-index: 100;
 
+    background-color: @bg-color;
     color: @color;
 
     

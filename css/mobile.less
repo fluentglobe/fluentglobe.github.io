@@ -86,17 +86,15 @@ input {
 @col-max-width: 400px;
 
 
-
-#intro {
-
-    position: relative;
-    padding-top: @intro-top-gap; // room for the menu
-    padding-bottom: @intro-bottom-gap; // room for the article header
-    min-height: @min-height-intro;
-
+body {
 
     &.state-expanded {
-        left: @menu-width;
+        #intro {
+            left: @menu-width;
+        }
+        article {
+            left: @menu-width;
+        }
     }
 
     .menu {
@@ -116,11 +114,21 @@ input {
 
 }
 
+#intro {
+    position: relative;
+    padding-top: @intro-top-gap; // room for the menu
+    padding-bottom: @intro-bottom-gap; // room for the article header
+    min-height: @min-height-intro;
+}
+
 .lesson #intro {
     height: 100%;
     min-height: 10em;
 
-    .menu nav.flag {
+}
+
+body.lesson .menu {
+    nav.flag {
         label {
             display: none;
         }
