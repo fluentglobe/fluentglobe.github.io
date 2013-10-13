@@ -207,7 +207,8 @@ FormAction.prototype["start-over"] = function(el,ev) {
 Laidout.variant("paged-section",Generator(
     function(key,el,conf) {
         this.el = el;
-        this.maxHeight = el.parentNode.offsetHeight; // layouter el (article) has correct height, section is infinite
+        var marginY = 30;
+        this.maxHeight = el.parentNode.offsetHeight - marginY; // layouter el (article) has correct height, section is infinite
         this.usedHeight = 0; // on last page
         this.pages = [];
 
@@ -220,9 +221,14 @@ Laidout.variant("paged-section",Generator(
         
         "moveToLastPage": function(el) {
             var elHeight = el.offsetHeight || 0;
-            console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
+            // console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
+            var breakBefore, breakAfter;
+            if (el.style) {
+                breakBefore = el.style["pageBreakBefore"]; //TODO computed style
+                breakAfter = el.style["pageBreakAfter"];
+            }
 
-            if (this.pages.length == 0 || (this.usedHeight + elHeight > this.maxHeight)) {
+            if (breakBefore || this.pages.length == 0 || (this.usedHeight + elHeight > this.maxHeight)) {
                 var pageEl = HTMLElement("div", { "class": "page p"+(this.pages.length+1) });
                 pageEl.laidoutPage = true;
                 this.el.appendChild(pageEl);

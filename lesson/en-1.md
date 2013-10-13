@@ -20,6 +20,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
     <source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
 </video>
 
+<hr style="page-break-before:always;">
 
 In the next video pay attention to the following words
 
@@ -32,6 +33,8 @@ In the next video pay attention to the following words
     <source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
 </video>
 
+<hr style="page-break-before:always;">
+
 In the next video pay attention to the following words
 
 Pan
@@ -42,6 +45,8 @@ Bottle
 <video width="320" height="180" preload="none">
     <source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
 </video>
+
+<hr style="page-break-before:always;">
 
 In the next video pay attention to the following words
 
