@@ -1684,13 +1684,72 @@ html[lang=ch] body [lang=ar] {
   background: rgba(255, 0, 70, 0.8);
   color: white;
 }
-body.state-expanded #intro {
-  left: 160px;
+#intro {
+  position: relative;
+  border-left: 4px solid #fb441b;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  min-height: 50em;
+  -webkit-transition: 0.3s ease-in-out left;
+  -moz-transition: 0.3s ease-in-out left;
+  -ms-transition: 0.3s ease-in-out left;
+  -o-transition: 0.3s ease-in-out left;
+  transition: 0.3s ease-in-out left;
 }
-body.state-expanded article {
-  left: 160px;
+article {
+  position: relative;
+  width: 100%;
+  border-left: 4px solid #fb441b;
+  overflow: visible;
+  -webkit-transition: 0.3s ease-in-out left;
+  -moz-transition: 0.3s ease-in-out left;
+  -ms-transition: 0.3s ease-in-out left;
+  -o-transition: 0.3s ease-in-out left;
+  transition: 0.3s ease-in-out left;
 }
-body.state-expanded .menu {
+article section {
+  padding-top: 3em;
+  padding-bottom: 3em;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 5px 5px #454545;
+  color: #474747;
+}
+article section h3 {
+  text-align: center;
+  font-size: 2em;
+}
+article section p {
+  word-wrap: normal;
+  overflow-wrap: break-word;
+}
+article section.even {
+  background-color: #f3f3f3;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+}
+article > header {
+  position: absolute;
+  top: -60px;
+  height: 60px;
+  left: 0;
+  right: 0;
+  background-color: #282828;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+body.splash.state-expanded #intro,
+body.lesson.state-expanded #intro {
+  left: 160px;
+  margin-right: -160px;
+}
+body.splash.state-expanded article,
+body.lesson.state-expanded article {
+  left: 160px;
+  margin-right: -160px;
+}
+body.splash.state-expanded .menu,
+body.lesson.state-expanded .menu {
   left: 0;
 }
 body .menu {
@@ -1705,6 +1764,11 @@ body .menu {
   color: #c0c0c0;
   /* container */
 
+  -webkit-transition: 0.3s ease-in-out left;
+  -moz-transition: 0.3s ease-in-out left;
+  -ms-transition: 0.3s ease-in-out left;
+  -o-transition: 0.3s ease-in-out left;
+  transition: 0.3s ease-in-out left;
 }
 body .menu ol,
 body .menu ul {
@@ -1802,13 +1866,6 @@ body .menu nav.flag label {
   border: 2px solid #fb441b;
   padding: 6px;
   width: 5em;
-}
-#intro {
-  position: relative;
-  margin-left: 4px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  min-height: 50em;
 }
 .lesson #intro {
   height: 100%;
@@ -1925,43 +1982,6 @@ body.lesson .menu nav.flag label {
   font-size: 24px;
   color: #fb441b;
 }
-article {
-  position: relative;
-  width: 100%;
-  margin-left: 4px;
-  overflow: visible;
-}
-article section {
-  padding-top: 3em;
-  padding-bottom: 3em;
-  width: 100%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  box-shadow: 0 5px 5px #454545;
-  color: #474747;
-}
-article section h3 {
-  text-align: center;
-  font-size: 2em;
-}
-article section p {
-  word-wrap: normal;
-  overflow-wrap: break-word;
-}
-article section.even {
-  background-color: #f3f3f3;
-  border-top: 1px solid #ececec;
-  border-bottom: 1px solid #ececec;
-}
-article > header {
-  position: absolute;
-  top: -60px;
-  height: 60px;
-  left: 0;
-  right: 0;
-  background-color: #282828;
-  background-color: rgba(0, 0, 0, 0.7);
-}
 .splash article {
   z-index: 100;
 }
@@ -2067,6 +2087,11 @@ html body.splash #intro > footer {
     height: 0 !important;
   }
 }
+@media only screen and (max-width: 799px) and (max-height: 719px) {
+  #intro {
+    min-height: 64em;
+  }
+}
 @media only screen and (min-height: 720px) {
   html body .menu {
     position: fixed;
@@ -2084,7 +2109,7 @@ html body.splash #intro > footer {
     z-index: 100;
   }
 }
-@media only screen and (min-width: 400px) and (max-width: 800px) {
+@media only screen and (min-width: 400px) and (max-width: 799px) {
   html body.splash #intro .benefits {
     left: 50%;
     margin-left: -200px;
@@ -2152,7 +2177,8 @@ html body.splash #intro > footer {
   
 }
 html body.splash-garden #intro {
-  width: 100%;
+  left: 0;
+  right: 0;
   color: white;
   background-image: url(../images/garden-reading-ipad.jpg);
   background-position: top left;
@@ -2197,7 +2223,7 @@ html body.splash-garden #tracer {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
   html body.splash-garden #intro {
     background-image: url(../images/garden-reading-ipad.jpg);
-    background-position: top center;
+    background-position: top left;
     background-size: 360px auto;
   }
   html body.splash-garden #tracer {
@@ -2214,7 +2240,8 @@ html body.splash-garden #tracer {
   }
 }
 html body.splash-color #intro {
-  width: 100%;
+  left: 0;
+  right: 0;
   color: white;
   background-image: url(../images/color-1024-bare.jpg);
   background-position: top left;
@@ -2259,7 +2286,7 @@ html body.splash-color #tracer {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
   html body.splash-color #intro {
     background-image: url(../images/color-360-bare.jpg);
-    background-position: top center;
+    background-position: top left;
     background-size: 360px auto;
   }
   html body.splash-color #tracer {
@@ -2276,7 +2303,8 @@ html body.splash-color #tracer {
   }
 }
 html body.lesson-color #intro {
-  width: 100%;
+  left: 0;
+  right: 0;
   color: white;
   background-image: url(../images/color-1024-bare.jpg);
   background-position: top left;
@@ -2321,7 +2349,7 @@ html body.lesson-color #tracer {
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
   html body.lesson-color #intro {
     background-image: url(../images/color-360-bare.jpg);
-    background-position: top center;
+    background-position: top left;
     background-size: 360px auto;
   }
   html body.lesson-color #tracer {

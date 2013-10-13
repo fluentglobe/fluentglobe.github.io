@@ -86,14 +86,42 @@ input {
 @col-max-width: 400px;
 
 
+#intro {
+    position: relative;
+    border-left: @menu-edge-width solid @fluent-red;
+    padding-top: @intro-top-gap; // room for the menu
+    padding-bottom: @intro-bottom-gap; // room for the article header
+    min-height: @min-height-intro;
+
+    .transition(.3s ease-in-out left);
+}
+
+article {
+
+    position:relative; //absolute
+    width: 100%;
+    border-left: @menu-edge-width solid @fluent-red;
+    overflow: visible;
+
+    .transition(.3s ease-in-out left);
+
+    .articleSections();
+
+    .outhangingHeader();
+
+}
+
 body {
 
-    &.state-expanded {
+    &.splash.state-expanded,
+    &.lesson.state-expanded {
         #intro {
             left: @menu-width;
+            margin-right: -@menu-width;
         }
         article {
             left: @menu-width;
+            margin-right: -@menu-width;
         }
         .menu {
             left: 0;
@@ -102,6 +130,7 @@ body {
 
     .menu {
         .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+        .transition(.3s ease-in-out left);
 
         nav.flag {
             width: 12em;
@@ -115,14 +144,6 @@ body {
         }
     }
 
-}
-
-#intro {
-    position: relative;
-    margin-left: @menu-edge-width;
-    padding-top: @intro-top-gap; // room for the menu
-    padding-bottom: @intro-bottom-gap; // room for the article header
-    min-height: @min-height-intro;
 }
 
 .lesson #intro {
@@ -276,19 +297,6 @@ body.lesson .menu {
 
 }
 
-article {
-
-    position:relative; //absolute
-    width: 100%;
-    margin-left: @menu-edge-width;
-    overflow: visible;
-
-    .articleSections();
-
-    .outhangingHeader();
-
-}
-
 .splash article {
 
     z-index: 100;
@@ -422,6 +430,12 @@ html body.splash {
     }
 }
 
+@media only screen and (max-width: 799px) and (max-height : 719px) {
+    #intro {
+        min-height: 64em;
+    }
+}
+
 // tablets and desktop heights
 @media only screen and (min-height : 720px) 
 {
@@ -450,7 +464,7 @@ html body.splash {
 }
 
 
-@media only screen and (min-width: 400px) and (max-width: 800px) {
+@media only screen and (min-width: 400px) and (max-width: 799px) {
 
     html body.splash {
 
