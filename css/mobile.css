@@ -1691,13 +1691,13 @@ body.state-expanded article {
   left: 160px;
 }
 body .menu {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: -160px;
   width: 163px;
   border-right: 3px solid #fb441b;
-  z-index: 100;
+  z-index: 10;
   background-color: #fb441b;
   color: #c0c0c0;
   /* container */
@@ -1956,6 +1956,9 @@ article > header {
   right: 0;
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
+}
+.splash article {
+  z-index: 100;
 }
 .splash article h1,
 .splash article h2,
