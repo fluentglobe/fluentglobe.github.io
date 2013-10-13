@@ -1,7 +1,7 @@
 ---
 layout: lesson
 ---
-## Eating out - Restaurant (Lesson 3)
+## Greetings and Introductions (Lesson 1)
 
 
 Today I want you to learn some of the following vocabulary:
@@ -100,22 +100,22 @@ Listen to the sounds and don't worry if you do not understand everything.
 ### More words
 
 
-* I'd like to see the menu please.
-* Can I take your order now?
-* Yes, I'd like mashed potatoes and a steak.
-* How would you like your steak? Rare, medium or well done?
-* What's the soup of the day?
-* Where would you like to sit? Inside or outside?
-* Would you like to sit by the window?
-* We ran out of mashed potatoes, I am afraid.
-* I'd like some spinach as a side dish.
-* No thank you, I am quite full!
-* What are you having?
-* Could you take these dishes away?
-* Would you like a desert?
-* Enjoy your meal!
-* Are you having a starter?
-* Is it spicy?
+* How do you do?
+* How's it going?
+* I'll see you soon.
+* Bye for now.
+* How's life treating you?
+* I enjoyed talking to you.
+* Good luck and safe travels.
+* Have a safe trip.
+* Happy birthday.
+* Have a good one.
+* Bless you.
+* Get well soon.
+* Cheers
+* Many happy returns
+* Well done on passing your examn.
+* Congratulations on getting the job.
 
 
 

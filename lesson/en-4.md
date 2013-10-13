@@ -120,16 +120,3 @@ Listen to the sounds and don't worry if you do not understand everything.
 
 
 
-
-
-
-In the next video pay attention to the following words
-
-Pan
-Knife
-Cooking
-Bottle
-
-<video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=nOEw9iiopwI" />
-</video>
