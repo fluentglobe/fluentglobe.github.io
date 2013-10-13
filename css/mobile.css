@@ -1690,12 +1690,15 @@ body.state-expanded #intro {
 body.state-expanded article {
   left: 160px;
 }
+body.state-expanded .menu {
+  left: 0;
+}
 body .menu {
   position: absolute;
   top: 0;
   bottom: 0;
   left: -160px;
-  width: 163px;
+  width: 164px;
   border-right: 3px solid #fb441b;
   z-index: 10;
   background-color: #fb441b;
@@ -1802,6 +1805,7 @@ body .menu nav.flag label {
 }
 #intro {
   position: relative;
+  margin-left: 4px;
   padding-top: 50px;
   padding-bottom: 50px;
   min-height: 50em;
@@ -1924,6 +1928,7 @@ body.lesson .menu nav.flag label {
 article {
   position: relative;
   width: 100%;
+  margin-left: 4px;
   overflow: visible;
 }
 article section {
@@ -2057,7 +2062,15 @@ html body.splash #intro > footer {
   position: absolute;
   top: 0;
 }
+@media only screen and (max-height: 719px) {
+  #tracer {
+    height: 0 !important;
+  }
+}
 @media only screen and (min-height: 720px) {
+  html body .menu {
+    position: fixed;
+  }
   html body.splash #intro {
     position: fixed;
     top: 0;

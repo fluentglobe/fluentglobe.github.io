@@ -75,6 +75,7 @@ input {
 }
 
 @menu-width: 160px;
+@menu-edge-width: 4px;
 @intro-top-gap: 50px;
 @intro-bottom-gap: 50px;
 @min-height-intro: 50em;
@@ -94,10 +95,13 @@ body {
         article {
             left: @menu-width;
         }
+        .menu {
+            left: 0;
+        }
     }
 
     .menu {
-        .side-menu(@width: @menu-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+        .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
 
         nav.flag {
             width: 12em;
@@ -115,6 +119,7 @@ body {
 
 #intro {
     position: relative;
+    margin-left: @menu-edge-width;
     padding-top: @intro-top-gap; // room for the menu
     padding-bottom: @intro-bottom-gap; // room for the article header
     min-height: @min-height-intro;
@@ -275,6 +280,7 @@ article {
 
     position:relative; //absolute
     width: 100%;
+    margin-left: @menu-edge-width;
     overflow: visible;
 
     .articleSections();
@@ -408,10 +414,23 @@ html body.splash {
 
 }
 
+// tablets and desktop heights
+@media only screen and (max-height : 719px) 
+{
+    #tracer {
+        height: 0 !important;
+    }
+}
 
 // tablets and desktop heights
 @media only screen and (min-height : 720px) 
 {
+    html body {
+        .menu {
+            position: fixed;
+        }
+    }
+
     html body.splash {
         #intro {
             position: fixed;
