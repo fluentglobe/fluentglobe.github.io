@@ -2143,11 +2143,11 @@ html body.splash #intro > footer {
   }
   html body.splash #intro .signup {
     position: absolute;
-    width: 400px;
+    width: 380px;
     top: 50%;
     left: 50%;
     margin-top: -87.5px;
-    margin-left: -200px;
+    margin-left: -190px;
   }
   html body.splash #intro .story {
     position: absolute;
