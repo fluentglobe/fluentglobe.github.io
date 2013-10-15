@@ -1,22 +1,33 @@
 ---
 layout: lesson
 ---
-## Eating out - Restaurant (Lesson 3)
+## Food and Eating out - Restaurant (Lesson 3)
 
 
 Today I want you to learn some of the following vocabulary:
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
+* Tea 
+* Coffee 
+* Milk 
+* Sugar
+* What would you like to eat?
+* Cheese
+* What would you like to drink?
+* Orange juice
+* a cup
+* a glass
+* a bottle
+* Water
+* Sandwich
+* Chicken
+* Steak
+* Dessert 
+* Menu
+* Bill
+* Bread
+* Meat
+* Soup
 
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
 
 ….
 
@@ -32,38 +43,48 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Food Expressions
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="http://www.youtube.com/watch?v=pfmqGMrcvgI&list=FLLWtwPlc7oWphbETPsP7oDg&index=288" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Can I have the menu, please?
+* Can I have the bill, please?
+* What would you like to drink?
+* A bottle of mineral water, please!
+* What would you like for dessert?
+* Cake 
+* Steak 
+* Chips
+* Strawberry cake 
+* Lettuce
+
 
 <hr>
-### Greeting Friends
+### Ordering Food
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=b8xeCTDGmi8" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* Are you ready to order?
+* Breakfast
+* an omelet
+* Do you have pancakes?
+* Bacon
+* Would you like toast?
+* Would you like anything else?
+* I would like...
+* Ice cream
+* I am hungry! 
 
 <hr>
 
@@ -71,16 +92,26 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=USJDd2J_2yY" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* I am hungry! 
+* What will you have?
+* I'll have...
+* Fish
+* Fries
+* a hamburger
+* Pancakes
+* a salad
+* a sandwich
+* Soup
+* Spaghetti
+* a steak
+* a piece of pie
+* Here you are!
+
 
 
 <hr style="page-break-before:always;height:0;">
@@ -91,7 +122,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=Oy--DSsdiKE&list=FLLWtwPlc7oWphbETPsP7oDg&index=409" />
 </video>
 
 
@@ -101,11 +132,11 @@ Listen to the sounds and don't worry if you do not understand everything.
 
 
 * I'd like to see the menu please.
+* To eat out 
 * Can I take your order now?
 * Yes, I'd like mashed potatoes and a steak.
 * How would you like your steak? Rare, medium or well done?
 * What's the soup of the day?
-* Where would you like to sit? Inside or outside?
 * Would you like to sit by the window?
 * We ran out of mashed potatoes, I am afraid.
 * I'd like some spinach as a side dish.

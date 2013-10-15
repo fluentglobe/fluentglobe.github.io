@@ -1,22 +1,21 @@
 ---
 layout: lesson
 ---
-## Greetings and Introductions (Lesson 1)
+## Giving and Understanding Directions (Lesson 7)
 
 
 Today I want you to learn some of the following vocabulary:
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
-
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
+* Turn Right
+* Turn left
+* Around the corner
+* Go straight ahead
+* How do I get to...?
+* Traffic lights
+* Excuse me. Could you tell me where the... is?
+* Could you tell me the way to...?
+* Road 
+* Street
 
 ….
 
@@ -32,38 +31,44 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Giving Directions
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=yZD9lLv3WXE&list=FLLWtwPlc7oWphbETPsP7oDg&index=486" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Excuse me. Could you tell me the way to...
+* Straight up to the traffic lights
+* Turn left
+* Go down to...then turn left
+* Straight down 
 
 <hr>
-### Greeting Friends
+### Asking and Understanding Directions
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=esmQ9nysj6g" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* Where is the...?
+* I'm a little lost
+* Could you help me out?
+* I'm looking for...
+* Is it far?
+* Map
+* Turn Right 
+* Turn left 
+* Go straight 
+* Walk for two blocks
+* Excuse me? 
+
 
 <hr>
 
@@ -71,16 +76,19 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=0LkOgyhKVBs" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Excuse me, I'm lost
+* I'm sorry to interrupt you but I was wondering...
+* How do I get to... from here?
+* Could you repeat it again please?
+* Is it far?
+* No, it will take you about...
+* It's pretty far
+
 
 
 <hr style="page-break-before:always;height:0;">

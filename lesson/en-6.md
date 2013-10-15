@@ -1,22 +1,32 @@
 ---
 layout: lesson
 ---
-## Greetings and Introductions (Lesson 1)
+## Describing People (Lesson 6)
 
 
 Today I want you to learn some of the following vocabulary:
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
-
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
+* How would you describe your...?
+* Intelligent
+* Funny
+* Easy- going
+* Handsome
+* Tall
+* Beautiful
+* Lovely
+* Generous
+* Cute
+* Smart
+* Kind
+* Hard- working
+* Gorgeous
+* Nice
+* Charming 
+* Polite
+* Loud
+* Annoying
+* Ugly
+* Fat
 
 ….
 
@@ -32,38 +42,56 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Describing People
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=8nIeL3JsFko&list=FLLWtwPlc7oWphbETPsP7oDg&index=487" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* How would you describe your partner?
+* How long have you been together? 
+* Easy
+* Tall 
+* Dark
+* Handsome
+* Beautiful
+* Lovely
+* Embarassing 
+* Annoying
+* Smart 
+* Hard- working
+* Determined
+* Crazy
+* Sweet 
+
 
 <hr>
-### Greeting Friends
+### Physical Description
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=QDeZGtpSsMU" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* Is Bob tall or short?
+* He is tall
+* He is short 
+* Young 
+* Old
+* Heavy
+* Thin
+* Handsome
+* Ugly
+* Rich
+* Poor
+* Noisy
+* Quiet
 
 <hr>
 
@@ -71,16 +99,22 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=OcuCCV9rpXg" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Stunning 
+* Gorgeous
+* Hot
+* Cute
+* Attractive
+* Good- looking
+* All right 
+* Pretty 
+* Ugly
+* Not my cup of tea
+
 
 
 <hr style="page-break-before:always;height:0;">
@@ -91,7 +125,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=mI15ewNwv9c" />
 </video>
 
 
@@ -100,23 +134,18 @@ Listen to the sounds and don't worry if you do not understand everything.
 ### More words
 
 
-* How do you do?
-* How's it going?
-* I'll see you soon.
-* Bye for now.
-* How's life treating you?
-* I enjoyed talking to you.
-* Good luck and safe travels.
-* Have a safe trip.
-* Happy birthday.
-* Have a good one.
-* Bless you.
-* Get well soon.
-* Cheers
-* Many happy returns
-* Well done on passing your examn.
-* Congratulations on getting the job.
-
+* What is she like?  
+* She is lovely
+* What are they like?
+* They are friendly
+* They are very welcoming
+* Serious
+* Posh
+* Organized
+* Proud
+* Emotive 
+* Excited 
+* Temperamental
 
 
 

@@ -1,22 +1,33 @@
 ---
 layout: lesson
 ---
-## Greetings and Introductions (Lesson 1)
+## Countries and Nationalities (Lesson 4)
 
 
 Today I want you to learn some of the following vocabulary:
+* Country
+* What nationality are you?
+* Where are you from?
+* Where do you come from?
+* Are you (nationality)? 
+* India / Indian
+* Spain / Spanish
+* Denmark / Danish
+* Germany / German
+* Brazil / Brazilian
+* The Netherlands / Dutch
+* France / French
+* Switzerland / Swiss
+* Poland / Polish
+* USA / American
+* Great Britain / British
+* Argentina / Argentinian
+* Peru / Peruvian
+* Turkey / Turkish 
+* Portugal / Portuguese
+* Italy / Italian
+* Scotland / Scottish
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
-
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
 
 ….
 
@@ -24,7 +35,7 @@ Today I want you to learn some of the following vocabulary:
 ![Visit to London](/images/v2l-wide.jpg)
 #### Visit to London chapter 1
 
-In chapter one we cover greetings and introductions. 
+In chapter one we cover Countries and Nationalities
 You can read the book on your iPad.
 
 For more information visit the [iBook Store](https://itunes.apple.com/us/book/portuguese-for-travelers/id568515833).
@@ -32,38 +43,47 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Where are you from? 
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=-9PsgBhtsnE" />
+    
+    
+   
 </video>
 
 #### Vocabulary
-
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Where are you from? 
+* I am from...
+* We're from...
+* I am originally from...
+* Iran
+* Romania
+* France 
+* New Zealand
+* Canada
+* Could you spell your name?
 
 <hr>
-### Greeting Friends
+### Nationalties with verb "To Be"
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=IZa3_J5QsqY" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* Are you English?
+* No, I'm Scotiish
+* Where's she from? 
+* Is she Spanish?
+* No, she isn't. 
+* She's Argentinian
+* Is it German?
+* No, it isn't. It is French
 
 <hr>
 
@@ -71,16 +91,31 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=vxj8CtcquPk" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* The world
+* England 
+* Japan 
+* France
+* Italy
+* The United States 
+* China 
+* Germany
+* I'm from the United States 
+* Pasta is from Italy
+* Buses 
+* Umbrella
+* Taxi 
+* Beer
+* Apple pie
+* The policemen 
+* Hat 
+* Would you like to visit another country? 
+* I want to visit...
+* Where do you want to go? 
 
 
 <hr style="page-break-before:always;height:0;">
@@ -91,7 +126,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=0VIzQEBVmNI" />
 </video>
 
 
@@ -100,22 +135,23 @@ Listen to the sounds and don't worry if you do not understand everything.
 ### More words
 
 
-* How do you do?
-* How's it going?
-* I'll see you soon.
-* Bye for now.
-* How's life treating you?
-* I enjoyed talking to you.
-* Good luck and safe travels.
-* Have a safe trip.
-* Happy birthday.
-* Have a good one.
-* Bless you.
-* Get well soon.
-* Cheers
-* Many happy returns
-* Well done on passing your examn.
-* Congratulations on getting the job.
+* How long have you been in...?
+* what's the best thing about...?
+* What's the worst thing about...?
+* What brings you to...?
+* What do you think about...?
+* What do you like about the city? 
+* What's London like? 
+* It's a great city to live
+* There's lots to do
+* The people are nice
+* The people are friendly
+* Nightlife 
+* It's multicultural 
+* It's expensive
+* It's congested 
+
+
 
 
 

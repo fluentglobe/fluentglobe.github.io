@@ -10,7 +10,7 @@ Today I want you to learn some of the following vocabulary:
 * Where
 * When
 * How
-* Have you...?
+* Have you got...?
 * What is...?
 * Surname
 * Telephone number 
@@ -33,7 +33,7 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Questions and Aswers
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
@@ -51,7 +51,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 * What do you do?
 
 <hr>
-### Greeting Friends
+### Asking Personal Questions
 
 <video width="320" height="240" preload="none">
     <source type="video/youtube" src="http://www.youtube.com/watch?v=d4xHaGUx3c0" />
@@ -91,7 +91,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=pEa-qDxhQ9w" />
 </video>
 
 
@@ -101,17 +101,33 @@ Listen to the sounds and don't worry if you do not understand everything.
 
 
 * What's your name?
+* My name is...
 * Where do you come from?
-* Whereabouts do you live?
+* I come from...
+* Whereabouts / where do you live?
+* I live in...
+* What do you do with your free time?
+* I like to...  
 * What is your e-mail address?
+* My e-mail address is...
 * What is your telephone number?
+* My telephone number is...
 * What do you do for a living?
+* I am a...
 * How old are you?
+* I am...years old
 * What is your surname?
-* What's your date of birth?
+* My surname is...
+* When is your birthday?
+* My birthday is on...
 * Are you married?
 * No, I am single.
 * No, I am divorced.
 * I am engaged.
+* Yes, I am married
+* Have you got any brothers or sisters? 
+* Yes, I have
+* No, I haven't 
+
 
 

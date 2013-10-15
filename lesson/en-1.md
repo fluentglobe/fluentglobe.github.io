@@ -10,7 +10,6 @@ Today I want you to learn some of the following vocabulary:
 * Good Afternoon
 * Good Evening
 * Good Night
-
 * My name is ....
 * How are you ?
 * Thank You.
