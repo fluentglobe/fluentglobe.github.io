@@ -1,22 +1,37 @@
 ---
 layout: lesson
 ---
-## Greetings and Introductions (Lesson 1)
+## Professions (Lesson 9)
 
 
 Today I want you to learn some of the following vocabulary:
 
-* Good Morning
-* Good Afternoon
-* Good Evening
-* Good Night
+* Job 
+* Work
+* What do you do for a living?
+* What's your job?
+* I work at...
+* I am a...
+* Student 
+* Lawyer
+* Teacher
+* Engineer
+* Nurse
+* Hairdresser
+* Police officer
+* Doctor 
+* Housewife
+* Driver
+* Salesman
+* Unemployed
+* Waiter / waitress 
+* Cashier
+* Cleaner 
+* Plumber 
+* Dentist
+* Fireman
+* Receptionist 
 
-* My name is ....
-* How are you ?
-* Thank You.
-* Hello & Goodbye
-* Nice to meet you
-* Take care.
 
 ….
 
@@ -32,38 +47,61 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 <hr>
 
 <hr style="page-break-before:always;height:0;">
-### Hello
+### Professions- Listen and Repeat
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=PTKAwEWn9Ys" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* Doctor 
+* Cook
+* Cleaning lady
+* Engineer
+* Mechanic
+* Artist
+* Secretary
+* Manager
+* Salesman
+* Policeman
+
 
 <hr>
-### Greeting Friends
+### What do you do for a living?
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=wL3CFtW8WE0" />
 </video>
 
 #### Vocabulary
 
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello) is for everyone.
-* Hi (for friends)
-* And you?
-* Fine thanks
-* Pretty good
-* Not bad
+* What do you do for a living?
+* I am a...
+* I work as a...
+* Customer service 
+* Nurse
+* Pilot
+* Chef
+* Project manager
+* Company
+* Football player
+* I run projects 
+* Organization
+* To own 
+* I really enjoy it 
+* It is pretty cool 
+* It's tough 
+* Volunteer
+* Tour guide
+* Bartender
+* Entrepreneur
+* Side jobs 
+* Journalist
+* Dream job
 
 <hr>
 
@@ -71,16 +109,18 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=a7-ml8ULeBM&list=FLLWtwPlc7oWphbETPsP7oDg&index=467" />
 </video>
 
 #### Vocabulary
 
-* Is from
-* [Hello](http://oxforddictionaries.com/definition/english/hello?q=hello)
-* How *are* you ?
-* Fine, [thank you](http://oxforddictionaries.com/definition/english/thank-you?q=thank+you)
-* Good, thank you
+* To work full- time
+* Unemployed
+* Office
+* Computer
+* Retailing
+* Bank holidays
+* To work from home 
 
 
 <hr style="page-break-before:always;height:0;">
@@ -91,7 +131,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=DWrT3CSx1AA" />
 </video>
 
 
@@ -100,22 +140,20 @@ Listen to the sounds and don't worry if you do not understand everything.
 ### More words
 
 
-* How do you do?
-* How's it going?
-* I'll see you soon.
-* Bye for now.
-* How's life treating you?
-* I enjoyed talking to you.
-* Good luck and safe travels.
-* Have a safe trip.
-* Happy birthday.
-* Have a good one.
-* Bless you.
-* Get well soon.
-* Cheers
-* Many happy returns
-* Well done on passing your examn.
-* Congratulations on getting the job.
+* What is your job / occupation?
+* Flight attendant 
+* Boss 
+* Writer
+* Graphic designer
+* Photographer
+* Musician
+* I don't have a job at the moment
+* I am unemployed
+* I am looking for work
+* Freelancer 
+* Experience / background 
+* Interview
+ 
 
 
 

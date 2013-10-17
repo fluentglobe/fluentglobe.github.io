@@ -16,6 +16,16 @@ Today I want you to learn some of the following vocabulary:
 * Could you tell me the way to...?
 * Road 
 * Street
+* Intersection
+* Bridge
+* Is it far?
+* Is it near? 
+* Sorry, i don't know
+* I'm lost
+* Could you help me?
+* Take the bus 
+* Take the underground
+* Walk 
 
 ….
 
@@ -99,7 +109,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=OGFcI2CXn5s" />
 </video>
 
 
@@ -108,22 +118,26 @@ Listen to the sounds and don't worry if you do not understand everything.
 ### More words
 
 
-* How do you do?
-* How's it going?
-* I'll see you soon.
-* Bye for now.
-* How's life treating you?
-* I enjoyed talking to you.
-* Good luck and safe travels.
-* Have a safe trip.
-* Happy birthday.
-* Have a good one.
-* Bless you.
-* Get well soon.
-* Cheers
-* Many happy returns
-* Well done on passing your examn.
-* Congratulations on getting the job.
+* Take the underground to...
+* Go down the street. 
+* It will be on you left 
+* It will be on your right 
+* Follow the signs 
+* Can you show me on the map?
+* It's this way
+* It's that way
+* I am sorry, I am not from here
+* Keep going 
+* It will be ahead of you
+* Cross the street 
+* Go over the bridge 
+* It is on the corner 
+* It's about a five minute walk
+* It's a very busy road
+* At the next traffic lights turn...
+* I am afraid I can't help you
+* When you get to...go...
+* It's pretty far from here. You'd better take the bus
 
 
 
