@@ -9,27 +9,27 @@ Today I want you to learn some of the following vocabulary:
 * What nationality are you?
 * Where are you from?
 * Where do you come from?
-* Are you (nationality)? 
-* India / Indian
-* Spain / Spanish
-* Denmark / Danish
-* Germany / German
-* Brazil / Brazilian
-* The Netherlands / Dutch
-* France / French
-* Switzerland / Swiss
-* Poland / Polish
-* USA / American
-* Great Britain / British
-* Argentina / Argentinian
-* Peru / Peruvian
-* Turkey / Turkish 
-* Portugal / Portuguese
-* Italy / Italian
-* Scotland / Scottish
 
+| Are you (nationality)?  |  |
+| ---- | ---- |
+| India | Indian |
+| Spain | Spanish |
+| Denmark | Danish |
+| Germany | German |
+| Brazil | Brazilian |
+| The Netherlands | Dutch |
+| France | French |
+| Switzerland | Swiss |
+| Poland | Polish |
+| USA | American
+| Great Britain | British |
+| Argentina | Argentinian |
+| Peru | Peruvian |
+| Turkey | Turkish |
+| Portugal | Portuguese |
+| Italy | Italian |
+| Scotland | Scottish |
 
-….
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)

@@ -31,6 +31,15 @@ maruku:
 safe: false
 lessc: lessc
 
+redcarpet:
+  extensions: 
+  - no_intra_emphasis
+  - fenced_code_blocks
+  - autolink
+  - tables
+  - quote
+  - with_toc_data
+
 concatenate:
 - js/prefix|modernizr|essential.js
 - js/uri|impl|form|app.js
