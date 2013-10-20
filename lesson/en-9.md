@@ -134,6 +134,8 @@ Listen to the sounds and don't worry if you do not understand everything.
     <source type="video/youtube" src="http://www.youtube.com/watch?v=DWrT3CSx1AA" />
 </video>
 
+Dialect: Australian
+
 
 <hr style="page-break-before:always;height:0;">
 
