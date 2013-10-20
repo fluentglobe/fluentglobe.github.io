@@ -2436,6 +2436,95 @@ FormAction.prototype["start-over"] = function(el,ev) {
 
 */
 
+// section level
+Layouter.variant("paged-section",Generator(function(key,el,conf) {
+    this.el = el;
+    this.sizing = el.stateful("sizing");
+
+    var p1 = this.addPage(1);
+    while(el.firstChild && el.firstChild.laidoutPage == undefined) p1.appendChild(el.firstChild);
+
+    var descs = DescriptorQuery(p1);
+    descs.enhance();
+
+},Layouter,{ prototype: {
+
+    //TODO "destroy" destroy paged sections
+
+    "addPage": function(no) {
+        var pageEl = HTMLElement("div", { "class": "page p"+no });
+        pageEl.laidoutPage = true;
+        pageEl.setAttribute("data-role","'laidout':'section-page','no':"+no);
+        this.el.appendChild(pageEl);
+
+        return pageEl;
+    },
+
+    "getPage": function(no) {
+
+        return this.addPage(no);
+    },
+
+    "layout":function(el,layout,sizingEls) {
+
+        for(var i = 0, c; c = sizingEls[i]; ++i) {
+            var sizing = c.stateful("sizing");
+            // switch()
+        }
+    }
+}}));
+
+
+Laidout.variant("section-page",Generator(
+    function(key,el,conf,layouter) {
+        this.layouter = layouter;
+        this.no = conf.no;
+        this.marginY = 30;
+    },
+    Laidout,
+    {"prototype":{
+
+        "calcSizing":function(el,sizing) {
+            //TODO could sum up the heights of the content
+        },
+
+        "layout": function(el,layout) {
+            var toMove = [], breakNow = false;
+            var usedHeight = 0, maxCH = layout.height - this.marginY;
+
+            for(var cn=el.childNodes, i=0,c; c = cn[i]; ++i) {
+
+                var elHeight = c.offsetHeight || 0;
+                // console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
+                var breakBefore, breakAfter;
+                if (c.style) {
+                    breakBefore = c.style["pageBreakBefore"]; //TODO computed style
+                    breakAfter = c.style["pageBreakAfter"];
+                }
+                if (usedHeight + elHeight > maxCH) breakNow = true;
+
+                if (!breakNow) {
+                    usedHeight += elHeight;
+
+                } else {
+                    toMove.push(c);
+
+                }
+            }
+
+            if (toMove.length) {
+
+                var nextPage = this.layouter.getPage(this.no + 1);
+                //TODO add page if last
+
+                while(toMove.length) nextPage.insertBeforeChild(toMove.pop(),nextPage.firstChild);
+            }
+        }
+
+    }}
+));
+
+// section level
 Laidout.variant("paged-section",Generator(
     function(key,el,conf) {
         this.el = el;
@@ -2471,6 +2560,10 @@ Laidout.variant("paged-section",Generator(
             this.usedHeight += elHeight;
         },
 
+        "calcSizing":function(el,sizing) {
+            
+        },
+
         "layout": function(el,layout) {
 
         }
@@ -2478,6 +2571,7 @@ Laidout.variant("paged-section",Generator(
     }}
     ));
 
+// article level
 Layouter.variant("paged",Generator(function(key,el,conf) {
     this.el = el;
     this.sizing = el.stateful("sizing");
@@ -2495,9 +2589,6 @@ Layouter.variant("paged",Generator(function(key,el,conf) {
 
     //TODO "destroy" destroy paged sections
 
-    "sizing":function(el,layout,sizingEls) {
-        
-    },
     "layout":function(el,layout,sizingEls) {
 
         for(var i = 0, c; c = sizingEls[i]; ++i) {
