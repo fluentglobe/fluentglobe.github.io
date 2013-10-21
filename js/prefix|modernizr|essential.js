@@ -2420,6 +2420,24 @@ function Generator(mainConstr,options)
 	}
 	generator.restrict = restrict;
 
+	function destroy() {
+
+	}
+	generator.destroy = destroy;
+	
+	function discard() {
+		var discarded = this.info.constructors[-1].discarded;
+		for(var n in this.info.existing) {
+			var instance = this.info.existing[n];
+			if (discarded) discarded.call(this,instance);
+			if (this.discarded) this.discarded.call(this,instance);
+			if (this.info.options.discarded) this.info.options.discarded.call(this,instance);
+		}
+
+		this.info.existing = {};
+	}
+	generator.discard = discard; //TODO { destroy and then discard existing }
+
 	// Future calls will return this generator
 	mainConstr.__generator__ = generator;
 		
@@ -2430,6 +2448,15 @@ function Generator(mainConstr,options)
 Generator.restricted = [];
 Generator.ObjectGenerator = Generator(Object);
 
+Generator.discardRestricted = function()
+{
+	for(var i=Generator.restricted.length-1,g; g = Generator.restricted[i]; --i) g.destroy();
+	for(var i=Generator.restricted.length-1,g; g = Generator.restricted[i]; --i) {
+		g.discard();
+		g.info.constructors[-1].__generator__ = undefined;
+		g.__generator__ = undefined;
+	}
+};
 
 
 /*jslint white: true */
@@ -2623,13 +2650,18 @@ Generator.ObjectGenerator = Generator(Object);
 		}
 	};
 
+	function fixClass(cls) {
+		cls = cls.replace(/   /g," ").replace(/  /g," ").replace(/ $/,'').replace(/^ /,'');
+		return cls;
+	}
+
 	DOMTokenList.mixin = function(dtl,mix) {
 		if (mix.split) { // string
-			var toset = mix.split(" ");
+			var toset = fixClass(mix).split(" ");
 			for(var i=0,entry; entry = toset[i]; ++i) dtl.add(entry);
 			return;
 		}
-		if (mix.length) {
+		if (typeof mix.length == "number") {
 			for(var i=0,entry; entry = mix[i]; ++i) dtl.add(entry);
 			return;
 		}
@@ -2710,7 +2742,7 @@ Generator.ObjectGenerator = Generator(Object);
 			if (se) {
 				// set { sizingElement:true } on conf?
 				var desc = EnhancedDescriptor(c,role,conf,false,appConfig);
-				desc.layouterParent = layouterDesc;
+				desc.context.layouterParent = layouterDesc;
 				sizingElements[desc.uniqueID] = desc;
 			}
 		}
@@ -2765,9 +2797,10 @@ Generator.ObjectGenerator = Generator(Object);
 	function enhanceQuery() {
 		var pageResolver = Resolver("page"),
 			handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
+
 		for(var i=0,desc; desc = this[i]; ++i) {
 
-			desc.ensureStateful();
+			//already done: desc.ensureStateful();
 			desc._tryEnhance(handlers,enabledRoles);
 			desc._tryMakeLayouter(""); //TODO key?
 			desc._tryMakeLaidout(""); //TODO key?
@@ -2794,7 +2827,45 @@ Generator.ObjectGenerator = Generator(Object);
 		}
 	}
 
+	function findChildrenToEnhance(el,context) {
 
+		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
+		while(e) {
+			if (e.attributes) {
+				var conf = essential("ApplicationConfig")().getConfig(e), role = e.getAttribute("role");
+				// var sizingElement = false;
+				// if (context.layouter) sizingElement = context.layouter.sizingElement(el,e,role,conf);
+				var desc = EnhancedDescriptor(e,role,conf);
+				if (desc) {
+					if (context.list) context.list.push(desc);
+				} else {
+
+				}
+				if (desc==null || !desc.state.contentManaged) findChildrenToEnhance(e,{layouter:context.layouter,list:context.list});
+			}
+			e = e.nextElementSibling!==undefined? e.nextElementSibling : e.nextSibling;
+		}
+	};
+
+	function queueOnlyBranch() {
+		if (this.el == undefined) throw new Error('Branch of undefined element'); // not sure what to do
+		var context = { list:this };
+		this.length = 0;
+		//TODO if the el is a layouter, pass that in conf
+		findChildrenToEnhance(this.el,context);
+		//TODO push those matched descriptors into q
+		return this;
+	}
+
+	function queueWithBranch() {
+		this.onlyBranch();
+
+		var conf = essential("ApplicationConfig")().getConfig(this.el), role = this.el.getAttribute("role");
+		var desc = EnhancedDescriptor(this.el,role,conf);
+		if (desc) this.shift(desc);
+		return this;
+	}
+ 
 	function DescriptorQuery(sel,el) {
 		var q = [], context = { list:q };
 
@@ -2806,30 +2877,25 @@ Generator.ObjectGenerator = Generator(Object);
 		} else {
 			var ac = essential("ApplicationConfig")();
 			el=sel; sel=undefined;
-            if (typeof el.length == "number") {
+			if (typeof el.length == "number") {
 				for(var i=0,e; e = el[i]; ++i) {
 
 					var conf = ac.getConfig(e), role = e.getAttribute("role");
 					var desc = EnhancedDescriptor(e,role,conf,false,ac);
-					if (desc) {
-						q.push(desc);
-						// if (sizingElement) sizingElements[desc.uniqueID] = desc;
-						desc.layouterParent = context.layouter;
-						if (desc.conf.layouter) {
-							context.layouter = desc;
-						}
-					} 
+					if (desc) q.push(desc);
 				}
 			} else {
 				//TODO third param context ? integrate with desc.context
 				//TODO identify existing descriptors
 
-				//TODO if the el is a layouter, pass that in conf
-				ac._prep(el,context);
-				//TODO push those matched descriptors into q
+				var conf = essential("ApplicationConfig")().getConfig(el), role = el.getAttribute("role");
+				var desc = EnhancedDescriptor(el,role,conf);
+				if (desc) q.push(desc);
 			}
 		}
 		q.el = el;
+		q.onlyBranch = queueOnlyBranch;
+		q.withBranch = queueWithBranch;
 		q.queue = queueQuery;
 		q.enhance = enhanceQuery;
 		q.discard = discardQuery;
@@ -2858,6 +2924,7 @@ Generator.ObjectGenerator = Generator(Object);
 		this.conf = conf || {};
 		this.context = new EnhancedContext();
 		this.instance = null;
+		this.controller = null; // Enhanced Controller can be separate from instance
 
 		// sizingHandler
 		this.layout = {
@@ -2879,13 +2946,31 @@ Generator.ObjectGenerator = Generator(Object);
 	}
 
 	_EnhancedDescriptor.prototype._updateContext = function() {
+		this.context.el = null;
+		this.context.controller = null;
 		for(var el = this.el.parentNode; el; el = el.parentNode) {
 			if (el.uniqueID) {
 				var desc = enhancedElements[el.uniqueID];
 				if (desc) {
-					this.context.el = el;
-					this.context.uniqueID = el.uniqueID;
-					this.context.instance = desc.instance;
+
+					// in case it wasn't set by the layouter constructor
+					if (this.context.layouterParent == null && desc.layouter) {
+						this.context.layouterParent = desc.layouter;
+						this.context.layouterEl = desc.el;
+					}
+					if (this.context.el == null) {
+						this.context.el = el;
+						this.context.uniqueID = el.uniqueID;
+						this.context.instance = desc.instance;
+						this.context.stateful = desc.stateful;
+					}
+					if (this.context.controller == null && desc.conf.controller) {
+						// make controller ? looking up generator/function
+						this.context.controllerID = desc.uniqueID;
+						this.context.controller = desc.controller || desc.instance;
+						this.context.controllerStateful = desc.stateful;
+					}
+
 				}
 			}
 		}
@@ -2931,8 +3016,17 @@ Generator.ObjectGenerator = Generator(Object);
 		return function() {
 			//TODO destroy
 			//TODO discard/destroy for layouter and laidout
+
+			var controller = desc.getController();
+			if (controller && controller.destroyed) controller.destroyed(desc.el,desc.instance);
+
 			// if (desc.discardHandler) 
-			return desc.discardHandler(desc.el,desc.role,desc.instance);
+			var r = desc.discardHandler(desc.el,desc.role,desc.instance);
+			desc._unlist(); // make sure that sizing stops
+
+			if (controller && controller.discarded) controller.discarded(desc.el,desc.instance);
+
+			return r;
 		};
 	};
 
@@ -2950,6 +3044,9 @@ Generator.ObjectGenerator = Generator(Object);
 			this.state.needEnhance = !this.state.enhanced;
 		}
 		if (this.state.enhanced) {
+			var controller = this.getController();
+			if (controller && controller.enhanced) controller.enhanced(this.el,this.instance);
+
 			this.sizingHandler = handlers.sizing[this.role];
 			this.layoutHandler = handlers.layout[this.role];
 			if (this.layoutHandler && this.layoutHandler.throttle) this.layout.throttle = this.layoutHandler.throttle;
@@ -2969,8 +3066,8 @@ Generator.ObjectGenerator = Generator(Object);
 		if (this.conf.layouter && this.layouter==undefined) {
 			var varLayouter = Layouter.variants[this.conf.layouter];
 			if (varLayouter) {
-				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.layouterParent);
-				if (this.layouterParent) sizingElements[this.uniqueID] = this;
+				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.context.layouterParent);
+				if (this.context.layouterParent) sizingElements[this.uniqueID] = this;
 				if (varLayouter.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
 	                this.layout.queued = true;
@@ -2985,7 +3082,7 @@ Generator.ObjectGenerator = Generator(Object);
 		if (this.conf.laidout && this.laidout==undefined) {
 			var varLaidout = Laidout.variants[this.conf.laidout];
 			if (varLaidout) {
-				this.laidout = this.el.laidout = varLaidout.generator(key,this.el,this.conf,this.layouterParent);
+				this.laidout = this.el.laidout = varLaidout.generator(key,this.el,this.conf,this.context.layouterParent);
 				sizingElements[this.uniqueID] = this;
 				if (varLaidout.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
@@ -3023,7 +3120,7 @@ Generator.ObjectGenerator = Generator(Object);
 		var laidouts = []; // laidouts and layouter
         for(var n in sizingElements) {
             var desc = sizingElements[n];
-            if (desc.layouterParent == this) laidouts.push(desc.el);
+            if (desc.context.layouterParent == this) laidouts.push(desc.el);
         }        
 		// for(var c = this.el.firstElementChild!==undefined? this.el.firstElementChild : this.el.firstChild; c; 
 		// 				c = c.nextElementSibling!==undefined? c.nextElementSibling : c.nextSibling) {
@@ -3090,12 +3187,18 @@ Generator.ObjectGenerator = Generator(Object);
 
 		if (this.sizingHandler) this.sizingHandler(this.el,this.sizing,this.instance);
 		if (this.laidout) this.laidout.calcSizing(this.el,this.sizing);
-		if (this.layouterParent) this.layouterParent.layouter.calcSizing(this.el,this.sizing,this.laidout);
+		if (this.context.layouterParent && this.context.layouterParent.layouter) this.context.layouterParent.layouter.calcSizing(this.el,this.sizing,this.laidout);
 
 		this._queueLayout();
 		if (this.layout.queued) {
-			if (this.layouterParent) this.layouterParent.layout.queued = true;
+			if (this.context.layouterParent) this.context.layouterParent.layout.queued = true;
 		}
+	};
+
+	_EnhancedDescriptor.prototype.getController = function() {
+		// _updateContext
+
+		return this.context.controller;
 	};
 
 	// used to emulate IE uniqueID property
@@ -3112,7 +3215,8 @@ Generator.ObjectGenerator = Generator(Object);
 
 		if (page == undefined) {
 			var pageResolver = Resolver("page");
-			page = pageResolver(["pagesById",el.ownerDocument.uniqueID],"null");
+			page = pageResolver(["pagesById",(el.ownerDocument || document).uniquePageID || "main"],"null");
+			if (page == null) page = Resolver("essential::ApplicationConfig::")();
 		}
 		desc = new _EnhancedDescriptor(el,role,conf,page,uniqueID);
 		enhancedElements[uniqueID] = desc;
@@ -3261,20 +3365,7 @@ Generator.ObjectGenerator = Generator(Object);
 	}
 	essential.set("instantiatePageSingletons",instantiatePageSingletons);
 
-	function discardRestricted()
-	{
-		for(var i=Generator.restricted-1,g; g = Generator.restricted[i]; --i) {
-			var discarded = g.info.constructors[-1].discarded;
-			for(var n in g.info.existing) {
-				var instance = g.info.existing[n];
-				if (discarded) {
-					discarded.call(g,instance);
-				}
-			}
-			g.info.constructors[-1].__generator__ = undefined;
-			g.__generator__ = undefined;
-		}
-	}
+
 
 	essential.set("_queueDelayedAssets",function(){});
 
@@ -3319,7 +3410,7 @@ Generator.ObjectGenerator = Generator(Object);
 
 		Resolver.unloadWriteStored();
 
-		discardRestricted();
+		Generator.discardRestricted();
 
 		//TODO move to configured
 		if (EnhancedDescriptor.maintainer) clearInterval(EnhancedDescriptor.maintainer);
@@ -3488,12 +3579,6 @@ Generator.ObjectGenerator = Generator(Object);
 	var defaultLocale = window.navigator.userLanguage || window.navigator.language || "en"
 	translations.declare("defaultLocale",defaultLocale);
 	translations.declare("locale",defaultLocale);
-
-	translations.on("change","locale",function(ev) {
-		var s = ev.value.split("-");
-		if (s.length == 1) s = ev.value.split("_");
-		if (Resolver.exists("page")) Resolver("page").set("state.lang",s[0]);
-	});
 
 	/*
 		locales.de = { chain:"en" }
@@ -3716,7 +3801,8 @@ Generator.ObjectGenerator = Generator(Object);
 		_body.innerHTML = str;
 
 		var src = _body.firstChild;
-		for(var i=0,a; !!(a = src.attributes[0]); ++i) if (a.name != "was") _body.appendChild(a);
+		//TODO attributes[0] changed to attributes[i], check that it fixes stuff
+		for(var i=0,a; !!(a = src.attributes[i]); ++i) if (a.name != "was") _body.appendChild(a);
 		_body.innerHTML = src.innerHTML;
 
 	}
@@ -4619,7 +4705,7 @@ Generator.ObjectGenerator = Generator(Object);
 			_from = __from;
 		}
 		
-		var e = _doc.createElement(_tagName), enhanced = false;
+		var e = _doc.createElement(_tagName), enhanced = false, enhance = false, appendTo;
 		for(var n in _from) {
 			switch(n) {
 				case "tagName": break; // already used
@@ -4660,8 +4746,14 @@ Generator.ObjectGenerator = Generator(Object);
 					if (_from[n]) e.impl = HTMLElement.impl(e);
 					break;
 
-				case "enhanced":
+				case "append to":
+					appendTo = _from[n];
+					break;
+				case "enhanced element":
 					enhanced = _from[n];
+					break;
+				case "enhance element":
+					enhance = _from[n];
 					break;
 
 				// "type" IE9 el.type is readonly:
@@ -4693,8 +4785,10 @@ Generator.ObjectGenerator = Generator(Object);
 		} 
 		
 		//TODO .appendTo function
-		
-		if (enhanced) HTMLElement.query([e]); //TODO call enhance?
+
+		if (appendTo) appendTo.appendChild(e);
+		if (enhanced) HTMLElement.query([e]).queue();
+		if (enhance) HTMLElement.query([e]).enhance();
 		
 		return e;
 	}
@@ -5123,10 +5217,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 		} 
 
 		if (value) {
-			el.setAttribute("aria-"+key,this["true"] || "true");
+			if (this.aria) el.setAttribute("aria-"+key,this["true"] || "true");
 			el.setAttribute(this.html5,this["true"] || "true");
 		} else {
-			el.removeAttribute("aria-"+key);
+			if (this.aria) el.removeAttribute("aria-"+key);
 			el.removeAttribute(this.html5);
 		}
 	}
@@ -5198,7 +5292,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		hidden: { index: 2, reflect: reflectBoolean, read: readBoolean, aria:"ariaHidden", html5:"hidden" }, // Aria all elements
 		required: { index: 3, reflect: reflectBoolean, read: readBoolean, aria:"ariaRequired", html5:"required" },
 		invalid: { index: 4, reflect: reflectBoolean, read: readBoolean, aria:"ariaInvalid", html5:false },
-		expanded: { index: 5, reflect: reflectAttributeAria, read: readAria, property:"ariaExpanded" }, //TODO ariaExpanded
+		expanded: { index: 5, reflect: reflectBoolean, read: readBoolean, aria:"ariaExpanded" }, //TODO ariaExpanded
 		checked: { index: 6, reflect:reflectProperty, read: readPropertyAria, property:"ariaChecked" }, //TODO ariaChecked ?
 		pressed: { index: 7, reflect: reflectBoolean, read: readBoolean, aria:"ariaPressed", html5:false },
 		selected: { index: 8, reflect: reflectBoolean, read: readBoolean, "default":false, aria:"ariaSelected", html5:"selected" },
@@ -5376,6 +5470,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 		"loadingScriptsUrl": {},
 		"loadingConfigUrl": {}
 		});
+
+	Resolver("translations").on("change bind","locale",function(ev) {
+		var s = ev.value.split("-");
+		if (s.length == 1) s = ev.value.split("_");
+		if (Resolver.exists("page")) Resolver("page").set("state.lang",s[0]);
+	});
+
+
 	pageResolver.reference("connection").mixin({
 		"loadingProgress": "",
 		"status": "connected",
@@ -5422,6 +5524,15 @@ _ElementPlacement.prototype._computeIE = function(style)
 	pageResolver.reference("map.class.notstate").mixin({
 		authenticated: "login"
 	});
+
+    var NEXT_PAGE_ID = 1;
+    function getUniquePageID(doc) {
+    	if (doc.uniquePageID==undefined) {
+    		doc.uniquePageID = NEXT_PAGE_ID++;
+    	}
+    	return doc.uniquePageID;
+    }
+    getUniquePageID(document);
 
 	StatefulResolver.updateClass = function(stateful,el) {
 		var triggers = {};
@@ -5756,8 +5867,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 		if (this.url) {
 			delete Resolver("page::pages::")[this.url];
 		}
-		if (this.uniqueID) {
-			delete Resolver("page::pagesById::")[this.uniqueID];
+		if (this.uniquePageID) {
+			delete Resolver("page::pagesById::")[this.uniquePageID];
 		}
 	};
 
@@ -5817,8 +5928,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	SubPage.prototype.loadedPageDone = function(text,lastModified) {
 		var doc = this.document = importHTMLDocument(text);
-		this.uniqueID = doc.uniqueID;
-		Resolver("page").set(["pagesById",this.uniqueID],this);
+		this.uniquePageID = getUniquePageID(doc);
+		Resolver("page").set(["pagesById",this.uniquePageID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
@@ -5843,8 +5954,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 	SubPage.prototype.parseHTML = function(text,text2) {
 		var head = (this.options && this.options["track main"])? '<meta name="track main" content="true">' : text2||'';
 		var doc = this.document = importHTMLDocument(head,text);
-		this.uniqueID = doc.uniqueID;
-		Resolver("page").set(["pagesById",this.uniqueID],this);
+		this.uniquePageID = getUniquePageID(doc);
+		Resolver("page").set(["pagesById",this.uniquePageID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
@@ -5983,8 +6094,9 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	function _ApplicationConfig() {
 		this.resolver = pageResolver;
-		this.uniqueID = document.uniqueID || "main";
-		Resolver("page").set(["pagesById",this.uniqueID],this);
+		//TODO kill it on document, it's a generator not a fixed number, pagesByName
+		this.uniquePageID = getUniquePageID(document);
+		Resolver("page").set(["pagesById",this.uniquePageID],this);
 		this.document = document;
 		this.head = this.document.head || this.document.body.previousSibling;
 		this.body = this.document.body;
@@ -5998,7 +6110,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		this.resolver.on("change","state.loadingScriptsUrl",this,this.onLoadingScripts);
 		this.resolver.on("change","state.loadingConfigUrl",this,this.onLoadingConfig);
 
-		this.pages = this.resolver.reference("pages",{ generator:SubPage});
+		this.pages = this.resolver.reference("pages",{ generator:SubPage });
 		SubPage.prototype.appConfig = this;
 
 		pageResolver.reflectStateOn(document.body,false);
@@ -6018,7 +6130,24 @@ _ElementPlacement.prototype._computeIE = function(style)
 		if (bodySrc) this._requiredPage(bodySrc);
 	}
 
-	var ApplicationConfig = essential.set("ApplicationConfig", Generator(_ApplicationConfig,{"prototype":_Scripted.prototype}) );
+	var ApplicationConfig = essential.set("ApplicationConfig", Generator(_ApplicationConfig,{
+		"prototype": _Scripted.prototype,
+		"discarded": function(ac) {
+
+			delete Resolver("page::pagesById::")[ac.uniquePageID];
+
+			//TODO blank member vars config on generator
+			ac.document = null;
+			ac.head = null;
+			ac.body = null;
+			ac.resolver = null;
+			ac.config = null;
+			ac.resources = null;
+			ac.inits = null;
+			// ac.pages = null;
+			// ac.state = null;
+		}
+	}) );
 	
 	// preset on instance (old api)
 	ApplicationConfig.presets.declare("state", { });
@@ -7318,19 +7447,27 @@ function(scripts) {
 	 */
 	HTMLElement.fn.copyAttributes = function(src,dst,attrs)
 	{
-		if (!attrs) attrs = this.CLONED_ATTRIBUTES;
-
-		if (attrs["class"] !== undefined) {
+		if (!attrs || attrs["class"] !== undefined) {
 		 	dst.className = dst.className? dst.className + " " + src.className : src.className;
 		}
-		if (attrs["style"] !== undefined && src.style.cssText != "") {
+		if (!attrs || attrs["style"] !== undefined && src.style.cssText != "") {
 			dst.style.cssText = src.style.cssText;
 		}
-		for(var n in attrs) {
-			if (n == "class" || n == "style") continue;
-			var value = src.getAttribute(n);
-			if (value != null && value !== attrs[n]) {
-				dst.setAttribute(n,value);
+		if (!attrs) {
+			for(var i=0,a; a = src.attributes[i]; ++i) {
+				var n = a.name;
+				if (n == "class" || n == "style") continue;
+				var value = src.getAttribute(n);
+				if (value != null) dst.setAttribute(n,value);
+				else dst.removeAttribute(n);	
+			}
+		} else {
+			for(var n in attrs) {
+				if (n == "class" || n == "style") continue;
+				var value = src.getAttribute(n);
+				if (value != null && value !== attrs[n]) {
+					dst.setAttribute(n,value);
+				}
 			}
 		}
 	};
@@ -7343,6 +7480,7 @@ function(scripts) {
 		"rows": 0,
 		// not supported properly by IE, "type": true,
 		"role": "",
+		"data-role":"",
 		"name": "",
 		"id": "",
 		"title": "",
@@ -7686,7 +7824,7 @@ function(scripts) {
 	            } 
 	        }
 	    }
-	    this.copyAttributes(stream.root,top,this.CLONED_ATTRIBUTES);
+	    this.copyAttributes(stream.root,top);
 	    (top.impl || this).enhance(top);
 	};
 
@@ -8120,7 +8258,7 @@ function(scripts) {
 		} 
 		if (wrap) {
 			wrap.className = ((wrap.className||"") + " "+contentClass).replace("  "," ");
-			essential("DescriptorQuery")(wrap).enhance();
+			essential("DescriptorQuery")(wrap).withBranch().enhance();
 		}
 
 		// restrict height to body (TODO use layouter to restrict this on page resize)
@@ -8579,6 +8717,7 @@ function(scripts) {
 
 	// Current active Movement activity
 	var activeMovement = null;
+	Resolver("page").set("activeMovement",null);
 
 	/*
 		The user operation of moving an element within the existing parent element.
@@ -8646,6 +8785,7 @@ function(scripts) {
 		addEventListeners(this.target,this.drag_events);
 
 		activeMovement = this;
+		Resolver("page").set("activeMovement",this);
 
 		return this;
 	};
@@ -8659,6 +8799,7 @@ function(scripts) {
 		delete document.onselectstart ;
 
 		activeMovement = null;
+		Resolver("page").set("activeMovement",null);
 
 		return this;
 	};
