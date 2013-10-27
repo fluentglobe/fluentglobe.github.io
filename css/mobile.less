@@ -109,6 +109,12 @@ article {
 
     .outhangingHeader();
 
+    .left-col {
+		padding: 30px;
+    }
+    .right-col {
+		padding: 30px;
+    }
 }
 
 body {
@@ -493,6 +499,17 @@ html body.splash {
                 width: @col-max-width;
             }
         }
+    }
+    
+    article {
+		.left-col {
+			position: absolute;
+			left: 0; width: 50%;
+		}
+		.right-col {
+			position: relative;
+			left: 50%; width: 50%;
+		}
     }
 }
 

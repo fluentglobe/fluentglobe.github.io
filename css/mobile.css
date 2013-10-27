@@ -1738,6 +1738,12 @@ article > header {
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
 }
+article .left-col {
+  padding: 30px;
+}
+article .right-col {
+  padding: 30px;
+}
 body.splash.state-expanded #intro,
 body.lesson.state-expanded #intro {
   left: 160px;
@@ -2133,6 +2139,16 @@ html body.splash #intro > footer {
     left: 50%;
     margin-left: -200px;
     width: 400px;
+  }
+  article .left-col {
+    position: absolute;
+    left: 0;
+    width: 50%;
+  }
+  article .right-col {
+    position: relative;
+    left: 50%;
+    width: 50%;
   }
 }
 @media only screen and (min-width: 800px) and (max-width: 1099px) {
