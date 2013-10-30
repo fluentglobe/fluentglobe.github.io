@@ -2235,11 +2235,13 @@ Resolver("page").declare("handlers.discard.form", discard_form);
 var essential = Resolver("essential"),
     ApplicationConfig = essential("ApplicationConfig"),
 
+    console = essential("console"),
     StatefulResolver = essential("StatefulResolver"),
     addEventListeners = essential("addEventListeners"),
     MutableEvent = essential("MutableEvent"),
     EnhancedDescriptor = essential("EnhancedDescriptor"),
     DescriptorQuery = essential("DescriptorQuery"),
+    ElementPlacement = essential("ElementPlacement"),
     Layouter = essential("Layouter"),
     Laidout = essential("Laidout"),
     HTMLElement = essential("HTMLElement"),
@@ -2436,33 +2438,87 @@ FormAction.prototype["start-over"] = function(el,ev) {
 
 */
 
+
+
 // section level
 Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.el = el;
     this.sizing = el.stateful("sizing");
-
-    var p1 = this.addPage(1);
-    while(el.firstChild && el.firstChild.laidoutPage == undefined) p1.appendChild(el.firstChild);
-
-    var descs = DescriptorQuery(p1);
-    descs.enhance();
+    this.columns = [];
 
 },Layouter,{ prototype: {
 
+    "init": function(el,conf,sizing,layout) {
+        var col = 0, existing = false, column, columns = [], 
+            placement = ElementPlacement(el.firstChild,["breakBefore","breakAfter"],false);
+
+        while(el.firstChild && el.firstChild.laidoutPage == undefined) {
+        	var fc = el.firstChild;
+        	
+            if (fc.tagName !== undefined) {
+                placement.compute(fc);
+                var breaks = placement.style["breakBefore"] || placement.style["breakAfter"];
+
+            	if (breaks == "auto" && fc.firstChild && fc.firstChild == fc.lastChild && fc.firstChild.tagName == "BR") {
+            		breaks = fc.firstChild.className;
+            		fc.parentNode.removeChild(fc);
+					fc = fc.firstChild;           		
+            	}
+            	switch (breaks) {
+	            	case "column":
+	            	case "page":
+	            	case "always":
+	            		existing = false;
+	            		column.appendChild(fc);
+	            		fc = null;
+	            		break;
+            	}
+            }
+
+            if (!existing) {
+	            if (column) column.hardEnd = true;
+                column = this.getColumn(++col);
+                columns.push(column);
+                existing = true;
+            }
+
+            if (fc) column.appendChild(fc);
+        }
+
+        var descs = DescriptorQuery(columns);
+        descs.enhance();
+
+    },
+
     //TODO "destroy" destroy paged sections
 
-    "addPage": function(no) {
-        var pageEl = HTMLElement("div", { "class": "page p"+no });
+    "_addColumn": function(no) {
+        var pageEl = HTMLElement("div", { 
+            "class": "column c"+no,
+            "data-role": { 'laidout':'section-column','no':no },
+            "append to": this.el,
+            "enhance element": true
+        });
         pageEl.laidoutPage = true;
-        pageEl.setAttribute("data-role","'laidout':'section-page','no':"+no);
-        this.el.appendChild(pageEl);
 
         return pageEl;
     },
+    
+    "insertColumn": function(no) {
+    	var next = this._addColumn(no);
+		this.columns.splice(no-1, 1, next);
+		for(var i=no,c; c = this.columns[i]; ++i) {
+			c.laidout.updateNo(i+1);
+		}    
 
-    "getPage": function(no) {
+        return this.columns[no];
+    },
 
-        return this.addPage(no);
+    "getColumn": function(no) {
+        if (this.columns[no] == undefined) {
+            this.columns[no] = this._addColumn(no);
+        } 
+        return this.columns[no];
     },
 
     "layout":function(el,layout,sizingEls) {
@@ -2475,33 +2531,85 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
 }}));
 
 
-Laidout.variant("section-page",Generator(
+Laidout.variant("section-column",Generator(
     function(key,el,conf,layouter) {
         this.layouter = layouter;
         this.no = conf.no;
         this.marginY = 30;
+        this.hardEnd = false;
+        this.placement = ElementPlacement(null,["breakBefore","breakAfter"],false);
     },
     Laidout,
     {"prototype":{
 
         "calcSizing":function(el,sizing) {
+            // contentHeight should be the sum heights by auto
+
             //TODO could sum up the heights of the content
         },
 
         "layout": function(el,layout) {
+            if (layout.contentHeight > layout.height) {
+                // spill to next
+                this._spillOverLinear(el,layout);
+            }
+            else {
+                if (! this.hardEnd) {
+                    this._pullIn(el,layout);
+                }   
+            }
+
+        },
+        
+        "updateNo": function(no) {
+			this.no = no;
+			this.className = "column c"+this.no;	    	    
+        },
+        
+        "_breakRules": function(el) {
+	        
+            this.placement.compute(el);
+            var breaks = {
+            	before: this.placement.style["breakBefore"],
+            	after: this.placement.style["breakAfter"]
+            };
+            if (el.tagName == "BR" && breaks.after == "always") switch(el.className) {
+	            case "page":
+	            case "column":
+	            	breaks.after = el.className;
+	            	break;
+            }
+            
+            return breaks;
+        },
+        
+        "_pullIn": function(el,layout) {
+            // look forward to see if there is a block to pull in
+            
+        },
+        
+        "_spillOverBisec": function(el,layout) {
+
+	        
+        },
+        
+        "_spillOverLinear": function(el,layout) {
+            console.debug("layout column",this.no,layout);
+
             var toMove = [], breakNow = false;
             var usedHeight = 0, maxCH = layout.height - this.marginY;
+
+            this.hardEnd = false;
 
             for(var cn=el.childNodes, i=0,c; c = cn[i]; ++i) {
 
                 var elHeight = c.offsetHeight || 0;
-                // console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
-                var breakBefore, breakAfter;
-                if (c.style) {
-                    breakBefore = c.style["pageBreakBefore"]; //TODO computed style
-                    breakAfter = c.style["pageBreakAfter"];
+                var breaks = this._breakRules(c), breakNow = breaks.after != "auto";
+
+                if (usedHeight + elHeight > maxCH) {
+                    breakNow = true;
+                    this.hardEnd = true;
                 }
-                if (usedHeight + elHeight > maxCH) breakNow = true;
 
                 if (!breakNow) {
                     usedHeight += elHeight;
@@ -2514,88 +2622,19 @@ Laidout.variant("section-page",Generator(
 
             if (toMove.length) {
 
-                var nextPage = this.layouter.getPage(this.no + 1);
+                var nextColumn = this.layouter.getColumn(this.no + 1);
                 //TODO add page if last
+                if (nextColumn.hardEnd) {
+	                nextColumn = this.layouter.insertColumn(this.no + 1);
+                }
 
-                while(toMove.length) nextPage.insertBeforeChild(toMove.pop(),nextPage.firstChild);
+                while(toMove.length) nextColumn.insertBefore(toMove.pop(),nextColumn.firstChild);
             }
         }
 
     }}
 ));
 
-// section level
-Laidout.variant("paged-section",Generator(
-    function(key,el,conf) {
-        this.el = el;
-        var marginY = 30;
-        this.maxHeight = el.parentNode.offsetHeight - marginY; // layouter el (article) has correct height, section is infinite
-        this.usedHeight = 0; // on last page
-        this.pages = [];
 
-        while(el.firstChild && el.firstChild.laidoutPage == undefined) {
-            this.moveToLastPage(el.firstChild);
-        }
-    }, 
-    Laidout,
-    {"prototype":{
-        
-        "moveToLastPage": function(el) {
-            var elHeight = el.offsetHeight || 0;
-            // console.log("moving el",elHeight,"+",this.usedHeight,"of",this.maxHeight);
-            var breakBefore, breakAfter;
-            if (el.style) {
-                breakBefore = el.style["pageBreakBefore"]; //TODO computed style
-                breakAfter = el.style["pageBreakAfter"];
-            }
-
-            if (breakBefore || this.pages.length == 0 || (this.usedHeight + elHeight > this.maxHeight)) {
-                var pageEl = HTMLElement("div", { "class": "page p"+(this.pages.length+1) });
-                pageEl.laidoutPage = true;
-                this.el.appendChild(pageEl);
-                this.pages.push(pageEl);
-                this.usedHeight = 0;
-            }
-            this.pages[this.pages.length-1].appendChild(el);
-            this.usedHeight += elHeight;
-        },
-
-        "calcSizing":function(el,sizing) {
-            
-        },
-
-        "layout": function(el,layout) {
-
-        }
-
-    }}
-    ));
-
-// article level
-Layouter.variant("paged",Generator(function(key,el,conf) {
-    this.el = el;
-    this.sizing = el.stateful("sizing");
-
-    // split into sections
-    var sections = this.el.getElementsByTagName("section");
-    for(var i = 0,s; s = sections[i]; ++i) {
-        s.setAttribute("data-role","'laidout':'paged-section'");
-    }
-
-    var descs = DescriptorQuery(sections);
-    descs.enhance();
-
-},Layouter,{ prototype: {
-
-    //TODO "destroy" destroy paged sections
-
-    "layout":function(el,layout,sizingEls) {
-
-        for(var i = 0, c; c = sizingEls[i]; ++i) {
-            var sizing = c.stateful("sizing");
-            // switch()
-        }
-    }
-}}));
 
 }();

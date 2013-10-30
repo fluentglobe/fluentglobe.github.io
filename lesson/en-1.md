@@ -30,7 +30,7 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 
 <hr>
 
-<hr style="page-break-before:always;height:0;">
+<br class="column">
 ### Hello
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
@@ -82,7 +82,7 @@ In the next video pay attention to the following words
 * Good, thank you
 
 
-<hr style="page-break-before:always;height:0;">
+<br class="column">
 
 ### Feel the Language
 
@@ -94,7 +94,7 @@ Listen to the sounds and don't worry if you do not understand everything.
 </video>
 
 
-<hr style="page-break-before:always;height:0;">
+<br class="column">
 
 ### More words
 
