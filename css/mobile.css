@@ -1901,7 +1901,7 @@ body.lesson .menu nav.flag label {
   padding: 0;
   height: 100%;
 }
-.lesson article div.page {
+.lesson article div.column {
   position: absolute;
   top: 0;
   margin-left: 40px;
@@ -1911,31 +1911,31 @@ body.lesson .menu nav.flag label {
   background-color: white;
   overflow: hidden;
 }
-.lesson article .p1 {
+.lesson article .c1 {
   left: 0;
 }
-.lesson article .p2 {
+.lesson article .c2 {
   left: 100%;
 }
-.lesson article .p3 {
+.lesson article .c3 {
   left: 200%;
 }
-.lesson article .p4 {
+.lesson article .c4 {
   left: 300%;
 }
-.lesson article .p5 {
+.lesson article .c5 {
   left: 400%;
 }
-.lesson article .p6 {
+.lesson article .c6 {
   left: 500%;
 }
-.lesson article .p7 {
+.lesson article .c7 {
   left: 600%;
 }
-.lesson article .p8 {
+.lesson article .c8 {
   left: 700%;
 }
-.lesson article .p9 {
+.lesson article .c9 {
   left: 800%;
 }
 .splash #intro .benefits ul {
@@ -2402,6 +2402,16 @@ html body.lesson-color #tracer {
 .centerContainer {
   width: 300px;
   margin: 0 auto;
+}
+p br.page,
+br.page {
+  display: none;
+  page-break-after: always;
+}
+p br.column,
+br.column {
+  display: none;
+  page-break-after: always;
 }
 .mejs-container {
   position: relative;
