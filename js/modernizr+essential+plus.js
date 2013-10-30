@@ -589,7 +589,7 @@ function Resolver(name_andor_expr,ns,options)
                 //TODO swap script with the id. If cachebuster param update timestamp
                 var script = document.getElementById(this.options.touchScript);
                 if (script) {
-                    var newScript = Resolver("essential::HTMLScriptElement")(script);
+                    var newScript = Resolver("essential::HTMLScriptElement::")(script);
                     try {
                         //TODO if (! state.unloading)
                     script.parentNode.replaceChild(newScript,script);
@@ -1630,12 +1630,14 @@ Generator.discardRestricted = function()
 			if (se) {
 				// set { sizingElement:true } on conf?
 				var desc = EnhancedDescriptor(c,role,conf,false,appConfig);
-				desc.context.layouterParent = layouterDesc;
+				desc.context.layouterParent = layouterDesc.layouter;
 				sizingElements[desc.uniqueID] = desc;
 			}
 		}
 	}
 	var Layouter = essential.declare("Layouter",Generator(_Layouter));
+
+	_Layouter.prototype.init = function(el,conf,sizing,layout) {};
 
 	/*
 		Called for descendants of the layouter to allow forcing sizing, return true to force
@@ -1664,6 +1666,7 @@ Generator.discardRestricted = function()
 	}
 	var Laidout = essential.declare("Laidout",Generator(_Laidout));
 
+	_Laidout.prototype.init = function(el,conf,sizing,layout) {};
 	_Laidout.prototype.layout = function(el,layout) {};
 	_Laidout.prototype.calcSizing = function(el,sizing) {};
 
@@ -1685,6 +1688,8 @@ Generator.discardRestricted = function()
 	function enhanceQuery() {
 		var pageResolver = Resolver("page"),
 			handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
+
+		for(var i=0,desc; desc = this[i]; ++i) if (desc.inits.length>0) desc._init();
 
 		for(var i=0,desc; desc = this[i]; ++i) {
 
@@ -1801,8 +1806,15 @@ Generator.discardRestricted = function()
 		var roles = role? role.split(" ") : [];
 
 		this.el = el;
+		// sizingHandler
 		this.sizing = {
 			"contentWidth":0,"contentHeight":0
+		};
+		this.layout = {
+			"displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
+			"lastDirectCall": 0,
+			"enable": false,
+			"throttle": null //TODO throttle by default?
 		};
 		this.ensureStateful();
 		this.stateful.set("state.needEnhance", roles.length > 0);
@@ -1814,14 +1826,8 @@ Generator.discardRestricted = function()
 		this.instance = null;
 		this.controller = null; // Enhanced Controller can be separate from instance
 
-		// sizingHandler
-		this.layout = {
-			"displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
-			"lastDirectCall": 0,
-			"enable": false,
-			"throttle": null //TODO throttle by default?
-		};
-		// layoutHandler
+		// layoutHandler / maintained
+		this.state.initDone = false; // might change to reconfigured=true
 		this.state.enhanced = false;
 		this.state.discarded = false;
 		this.state.contentManaged = false; // The content HTML is managed by the enhanced element the content will not be enhanced automatically
@@ -1829,9 +1835,30 @@ Generator.discardRestricted = function()
 		this.page = page;
 		this.handlers = page.resolver("handlers");
 		this.enabledRoles = page.resolver("enabledRoles");
+		this.inits = [];
+
+		if (this.role) this.inits.push(this._roleInit);
+
 		this._updateContext();
-		this._init();
 	}
+
+	_EnhancedDescriptor.prototype._init = function() {
+		this._updateContext();
+		for(var i=0,c; c = this.inits[i]; ++i) c.call(this);
+		this.inits.length = 0;
+	};
+
+	_EnhancedDescriptor.prototype._roleInit = function() {
+		if (this.handlers.init[this.role]) {
+			this.handlers.init[this.role].call(this,this.el,this.role,this.conf,this.context);
+		}
+	};
+	_EnhancedDescriptor.prototype._layouterInit = function() {
+		if (this.layouter) this.layouter.init(this.el,this.conf,this.sizing,this.layout);
+	};
+	_EnhancedDescriptor.prototype._laidoutInit = function() {
+		if (this.laidout) this.laidout.init(this.el,this.conf,this.sizing,this.layout);
+	};
 
 	_EnhancedDescriptor.prototype._updateContext = function() {
 		this.context.el = null;
@@ -1846,7 +1873,7 @@ Generator.discardRestricted = function()
 						this.context.layouterParent = desc.layouter;
 						this.context.layouterEl = desc.el;
 					}
-					if (this.context.el == null) {
+					if (this.context.el == null && (this.state.enhanced || this.state.needEnhance)) { // skip non-enhanced
 						this.context.el = el;
 						this.context.uniqueID = el.uniqueID;
 						this.context.instance = desc.instance;
@@ -1864,9 +1891,21 @@ Generator.discardRestricted = function()
 		}
 	};
 
-	_EnhancedDescriptor.prototype._init = function() {
-		if (this.role && this.handlers.init[this.role]) {
-			this.handlers.init[this.role].call(this,this.el,this.role,this.conf,this.context);
+	_EnhancedDescriptor.prototype._updateLayouterContext = function() {
+		this.context.el = null;
+		this.context.controller = null;
+		for(var el = this.el.parentNode; el; el = el.parentNode) {
+			if (el.uniqueID) {
+				var desc = enhancedElements[el.uniqueID];
+				if (desc) {
+
+					// in case it wasn't set by the layouter constructor
+					if (this.context.layouterParent == null && desc.layouter) {
+						this.context.layouterParent = desc.layouter;
+						this.context.layouterEl = desc.el;
+					}
+				}
+			}
 		}
 	};
 
@@ -1880,6 +1919,7 @@ Generator.discardRestricted = function()
 		var stateful = this.stateful = essential("StatefulResolver")(this.el,true);
 		this.state = stateful("state");
 		stateful.set("sizing",this.sizing);
+		stateful.set("layout",this.layout);
 		stateful.on("change","state",this,this.onStateChange); //TODO remove on discard
 	};	
 
@@ -1952,15 +1992,17 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype._tryMakeLayouter = function(key) {
 
 		if (this.conf.layouter && this.layouter==undefined) {
+			this._updateLayouterContext();
 			var varLayouter = Layouter.variants[this.conf.layouter];
 			if (varLayouter) {
 				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.context.layouterParent);
-				if (this.context.layouterParent) sizingElements[this.uniqueID] = this;
+				if (this.context.layouterParent) sizingElements[this.uniqueID] = this; //TODO not sure this is needed, adds overhead
 				if (varLayouter.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
-	                this.layout.queued = true;
+	                // this.layout.queued = true; laidout will queue it
 	                maintainedElements[this.uniqueID] = this;
 				}
+				this.inits.push(this._layouterInit);
 			}
 		}
 	};
@@ -1968,6 +2010,7 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype._tryMakeLaidout = function(key) {
 
 		if (this.conf.laidout && this.laidout==undefined) {
+			this._updateLayouterContext();
 			var varLaidout = Laidout.variants[this.conf.laidout];
 			if (varLaidout) {
 				this.laidout = this.el.laidout = varLaidout.generator(key,this.el,this.conf,this.context.layouterParent);
@@ -1977,6 +2020,7 @@ Generator.discardRestricted = function()
 	                this.layout.queued = true;
 	                maintainedElements[this.uniqueID] = this;
 				}
+				this.inits.push(this._laidoutInit);
 			}
 		}
 
@@ -1998,7 +2042,10 @@ Generator.discardRestricted = function()
 			if (this.layoutHandler) this.layoutHandler(this.el,this.layout,this.instance);
 			var layouter = this.layouter, laidout = this.laidout;
 			if (layouter) layouter.layout(this.el,this.layout,this.laidouts()); //TODO pass instance
-			if (laidout) laidout.layout(this.el,this.layout); //TODO pass instance
+			if (laidout) {
+				laidout.layout(this.el,this.layout); //TODO pass instance
+				if (this.context.layouterEl) this.context.layouterEl.stateful.set("layout.queued",true);
+			}
 
             this.layout.queued = false;
 		}	
@@ -2008,7 +2055,7 @@ Generator.discardRestricted = function()
 		var laidouts = []; // laidouts and layouter
         for(var n in sizingElements) {
             var desc = sizingElements[n];
-            if (desc.context.layouterParent == this) laidouts.push(desc.el);
+            if (desc.context.layouterParent == this.layouter && desc.laidout) laidouts.push(desc.el);
         }        
 		// for(var c = this.el.firstElementChild!==undefined? this.el.firstElementChild : this.el.firstChild; c; 
 		// 				c = c.nextElementSibling!==undefined? c.nextElementSibling : c.nextSibling) {
@@ -2035,6 +2082,7 @@ Generator.discardRestricted = function()
 		this.el = undefined;
 		this.state.discarded = true;					
 		this.layout.enable = false;					
+		this._updateContext = function() {}; //TODO why is this called after discard, fix that
 	};
 
 	_EnhancedDescriptor.prototype._unlist = function(forget) {
@@ -2070,19 +2118,35 @@ Generator.discardRestricted = function()
 		var ow = this.sizing.width = this.el.offsetWidth;
 		var oh = this.sizing.height = this.el.offsetHeight;
 		this.sizing.displayed = !(ow == 0 && oh == 0);
-		this.sizing.contentWidth = this.el.scrollWidth;
-		this.sizing.contentHeight = this.el.scrollHeight;
 
-		if (this.sizingHandler) this.sizingHandler(this.el,this.sizing,this.instance);
-		if (this.laidout) this.laidout.calcSizing(this.el,this.sizing);
-		if (this.context.layouterParent && this.context.layouterParent.layouter) this.context.layouterParent.layouter.calcSizing(this.el,this.sizing,this.laidout);
+		// seems to be displayed
+		if (this.sizing.displayed) {
+			this.sizing.contentWidth = this.el.scrollWidth;
+			this.sizing.contentHeight = this.el.scrollHeight;
 
-		this._queueLayout();
-		if (this.layout.queued) {
-			if (this.context.layouterParent) this.context.layouterParent.layout.queued = true;
+			if (this.sizingHandler) this.sizingHandler(this.el,this.sizing,this.instance);
+			if (this.laidout) this.laidout.calcSizing(this.el,this.sizing);
+			if (this.context.layouterParent) this.context.layouterParent.calcSizing(this.el,this.sizing,this.laidout);
+
+			if (this.sizing.forceLayout) {
+				this.sizing.forceLayout = false;
+				this.sizing.queued = true;
+			}
+			this._queueLayout();
+
+		// not displayed, and was last time			
+		} else if (this.layout.displayed) {
+			this.layout.displayed = false;
+			this.layout.queued = true;
 		}
 	};
 
+    _EnhancedDescriptor.prototype.applyStyle = function() {
+        for(var n in this.layout.style) {
+            this.el.style[n] = this.layout.style[n];
+        }
+    };
+ 
 	_EnhancedDescriptor.prototype.getController = function() {
 		// _updateContext
 
@@ -2136,20 +2200,37 @@ Generator.discardRestricted = function()
 	EnhancedDescriptor.refreshAll = function() {
 		if (document.body == undefined) return;
 
+		for(var n in maintainedElements) {
+			var desc = maintainedElements[n];
+
+			if (desc.inits.length>0) desc._init();
+		}
+
 		for(var n in sizingElements) {
 			var desc = sizingElements[n];
 			desc.checkSizing();
 		}
 
+        for(var n in maintainedElements) {
+            var desc = maintainedElements[n];
+ 
+            if (desc.laidout && desc.layout.enable && !desc.state.discarded) {
+                desc.refresh();
+            }
+        }
 		for(var n in maintainedElements) {
 			var desc = maintainedElements[n];
 
-			if (desc.layout.enable && !desc.state.discarded) {
+			if (!desc.laidout && desc.layout.enable && !desc.state.discarded) {
 				desc.refresh();
 			}
 		}
 		for(var n in sizingElements) {
 			var desc = sizingElements[n];
+            if (desc.layout.style) {
+                desc.applyStyle();
+                desc.layout.style = undefined;
+            }
 			desc.layout.queued = false;
 		}
 	};
@@ -3736,27 +3817,57 @@ Generator.discardRestricted = function()
 	essential.set("HTMLScriptElement",HTMLScriptElement);
 
 
-	function _ElementPlacement(el,track) {
-		this.el = el;
+	function _ElementPlacement(el,track,calcBounds) {
 		this.bounds = {};
 		this.style = {};
-		this.track = track || ["visibility","marginLeft","marginRight","marginTop","marginBottom"];
+		this.track = track || ["display","visibility","marginLeft","marginRight","marginTop","marginBottom"];
+		this.calcBounds = calcBounds;
 
-		if (el.currentStyle &&(document.defaultView == undefined || document.defaultView.getComputedStyle == undefined)) {
+		this.compute(el || null);
+	}
+	var ElementPlacement = essential.declare("ElementPlacement",Generator(_ElementPlacement));
+
+	_ElementPlacement.prototype.setElement = function(newEl) {
+		this.el = newEl;
+		this.computes = [];
+
+		//TODO dedicated compute functions
+		if (this.el && this.el.currentStyle &&(document.defaultView == undefined || document.defaultView.getComputedStyle == undefined)) {
+			this._setComputed = this._setComputedIE;
 			this._compute = this._computeIE;
 		}
 		if (document.body.getBoundingClientRect().width == undefined) {
 			this._bounds = this._boundsIE;
 		}
 
-		this.compute();
-	}
-	var ElementPlacement = essential.declare("ElementPlacement",Generator(_ElementPlacement));
+		if (this.calcBounds === false) this._bounds = function() {};
 
-	_ElementPlacement.prototype.compute = function() {
-		this._bounds();
-		for(var i=0,s; !!(s = this.track[i]); ++i) {
-			this.style[s] = this._compute(s);
+		this.doCompute = !(this.el == null || this.el.nodeType !== 1);
+
+		for(var i=0,s; this.doCompute && !!(s = this.track[i]); ++i) {
+			switch(s) {
+				case "display":
+				case "visibility":
+				// case "zIndex":
+				case "breakBefore":
+				case "breakAfter":
+					this.computes.push(this._compute_simple);
+					break;
+				default:
+					this.computes.push(this._compute);
+					break;
+			}
+		}
+	};
+
+	_ElementPlacement.prototype.compute = function(newEl) {
+		if (newEl !== undefined) this.setElement(newEl);
+
+		if (this.doCompute && this.calcBounds !== false) this._bounds();
+		if (this.doCompute) this._setComputed();
+
+		for(var i=0,fn; !!(fn = this.computes[i]); ++i) {
+			this.style[this.track[i]] = fn.call(this,this.track[i]);
 		}
 	};
 
@@ -3771,8 +3882,6 @@ Generator.discardRestricted = function()
 			left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom
 		};
 	};
-
-	_ElementPlacement.prototype.PIXEL = /^\d+(px)?$/i;
 
 	_ElementPlacement.prototype.KEYWORDS = {
 		'medium':"2px"	
@@ -3817,7 +3926,7 @@ Generator.discardRestricted = function()
 		'lineHeight': 'top', 
 		'text-indent': 'size',
 		'textIndent': 'size',
-		
+
 		'width': 'size',
 		'height': 'top',
 		'max-width': 'size',
@@ -3841,6 +3950,7 @@ Generator.discardRestricted = function()
 		"height":"offsetHeight"
 	};
 
+	//TODO generate based on currentStyle
 	_ElementPlacement.prototype.CSS_NAME = {
 		'backgroundColor':'background-color',
 		'backgroundImage':'background-image',
@@ -3866,6 +3976,9 @@ Generator.discardRestricted = function()
 		'marginRight': 'margin-right',
 		'marginTop': 'margin-top',
 		'marginBottom': 'margin-bottom',
+
+		'breakBefore': 'break-before',
+		'breakAfter': 'break-after',
 		
 		'fontSize': 'font-size',
 		'lineHeight': 'line-height',
@@ -3873,6 +3986,7 @@ Generator.discardRestricted = function()
 		
 	};
 
+	//TODO inverted CSS_NAME
 	_ElementPlacement.prototype.JS_NAME = {
 		'background-color':'backgroundColor',
 		'background-image':'backgroundImage',
@@ -3898,6 +4012,11 @@ Generator.discardRestricted = function()
 		'margin-right':'marginRight',
 		'margin-top':'marginTop',
 		'margin-bottom':'marginBottom',
+
+		'break-before': 'breakBefore',
+		'break-after': 'breakAfter',
+		'alt breakBefore': 'pageBreakBefore',
+		'alt breakAfter': 'pageBreakAfter',
 		
 		'font-size':'fontSize',
 		'line-height':'lineHeight',
@@ -3918,8 +4037,8 @@ function _makeToPixelsIE(sProp)
 	var sPixelProp = "pixel" + sProp.substring(0,1).toUpperCase() + sProp.substring(1);
 
 	return function(eElement,sValue) {
-		var sInlineStyle = eElement.style[sProp];
-		var sRuntimeStyle = eElement.runtimeStyle[sProp];
+		var inlineStyle = eElement.style[sProp];
+		var runtimeStyle = eElement.runtimeStyle[sProp];
 		try
 		{
 			eElement.runtimeStyle[sProp] = eElement.currentStyle[sProp];
@@ -3930,8 +4049,8 @@ function _makeToPixelsIE(sProp)
 		{
 			
 		}
-		eElement.style[sProp] = sInlineStyle;
-		eElement.runtimeStyle[sProp] = sRuntimeStyle;
+		eElement.style[sProp] = inlineStyle;
+		eElement.runtimeStyle[sProp] = runtimeStyle;
 
 		return sValue;
 	};
@@ -3944,28 +4063,49 @@ _ElementPlacement.prototype.TO_PIXELS_IE = {
 	"size": _makeToPixelsIE("left")
 };
 
+_ElementPlacement.prototype._compute_simple = function(name) {
+	var altName = this.JS_NAME["alt "+name],
+		inlineStyle = this.el.style[name] || this.el.style[altName];
+	if (inlineStyle) return inlineStyle;
 
-_ElementPlacement.prototype._compute = function(style)
+	if (this.el.currentStyle) {
+		return this.el.currentStyle[name] || this.el.currentStyle[altName];
+	} else {
+		return this._computed[name] || this._computed[altName]
+	}
+};
+
+_ElementPlacement.prototype._setComputed = function()
 {
-	var value = document.defaultView.getComputedStyle(this.el, null)[style];
+	this._computed = document.defaultView.getComputedStyle(this.el, null);
+};
+
+_ElementPlacement.prototype._compute = function(name)
+{
+	var value = this._computed[name];
 	//TODO do this test at load to see if needed
 	if (typeof value == "string" && value.indexOf("%")>-1) {
-		value = this.el[this.OFFSET_NAME[style]] + "px";
+		value = this.el[this.OFFSET_NAME[name]] + "px";
 	}
 		
 	return value;
+};
+
+_ElementPlacement.prototype._setComputedIE = function()
+{
 };
 
 _ElementPlacement.prototype._computeIE = function(style)
 {
 	var value;
 	
+	//TODO prepare this when setting track
 	style = this.JS_NAME[style] || style;
 
 	var v = this.el.currentStyle[style];
 	var sPrecalc = this.KEYWORDS[v];
-	if (sPrecalc !== undefined) return sPrecalc; 
-	if (this.PIXEL.test(v)) return v;
+	if (sPrecalc !== undefined) return sPrecalc;
+	if (v == "0" || (v.substring(v.length-2) == "px")) return v; 
 
 	var fToPixels = this.TO_PIXELS_IE[this.CSS_TYPES[style]];
 		value = fToPixels? fToPixels(this.el, v) : v;
@@ -4322,7 +4462,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 		stateful.fireAction = make_Stateful_fireAction(el);
 		stateful.reflectStateOn = Stateful_reflectStateOn;
 
-		if (el) stateful.reflectStateOn(el);
+		if (el) {
+			stateful.reflectStateOn(el);
+			stateful.uniqueID = el.uniqueID;
+		}
 		
 		return stateful;
 	}
@@ -5118,6 +5261,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 		for(var n in EnhancedDescriptor.unfinished) {
 			var desc = EnhancedDescriptor.unfinished[n];
+			if (desc && !desc.state.initDone) desc._init();
+		}
+
+		for(var n in EnhancedDescriptor.unfinished) {
+			var desc = EnhancedDescriptor.unfinished[n];
 
 			//TODO speed up outstanding enhance check
 			if (desc) {
@@ -5144,12 +5292,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 	pageResolver.on("change","state", onStateChange);
 
 	function onStateChange(ev) {
+		var b = ev.base;
 		switch(ev.symbol) {
 			case "livepage": 
 				if (ev.value) {
 					var ap = ApplicationConfig();
 
-					if (!ev.base.loadingScripts && !ev.base.loadingConfig) {
+					if (!b.loadingScripts && !b.loadingConfig) {
 						--ev.inTrigger;
 						this.set("state.loading",false);
 						++ev.inTrigger;
@@ -5169,14 +5318,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 			case "loadingConfig":
 				//console.log("loading",this("state.loading"),this("state.loadingScripts"),this("state.loadingConfig"))
 				--ev.inTrigger;
-				this.set("state.loading",ev.base.loadingScripts || ev.base.loadingConfig);
+				this.set("state.loading",b.loadingScripts || b.loadingConfig);
 				++ev.inTrigger;
 				break;
 
 			case "preloading":
 				if (! ev.value) {
-					for(var n in ev.base.loadingScriptsUrl) {
-						var link = ev.base.loadingScriptsUrl[n];
+					for(var n in b.loadingScriptsUrl) {
+						var link = b.loadingScriptsUrl[n];
 						if (link.rel == "pastload" && !link.added) {
 							var langOk = true;
 							if (link.lang) langOk = (link.lang == pageResolver("state.lang"));
@@ -5195,8 +5344,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 					ap.doInitScripts();	
 					enhanceUnfinishedElements();
 					if (window.widget) widget.notifyContentIsReady(); // iBooks widget support
-					if (ev.base.configured == true && ev.base.authenticated == true 
-						&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
+					if (b.configured && b.authenticated 
+						&& b.authorised && b.connected && !b.launched) {
 						this.set("state.launching",true);
 						// do the below as recursion is prohibited
 						if (document.body) essential("instantiatePageSingletons")();
@@ -5208,14 +5357,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if (ev.base.livepage) {
 					var ap = ApplicationConfig();
 
-					if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
+					if (b.authenticated) activateArea(ap.getAuthenticatedArea());
 					else activateArea(ap.getIntroductionArea());
 				}
 				// no break
 			case "authorised":
 			case "configured":
-				if (ev.base.loading == false && ev.base.configured == true && ev.base.authenticated == true 
-					&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
+				if ( !b.loading && b.configured && b.authenticated 
+					&& b.authorised && b.connected && !b.launched) {
 					this.set("state.launching",true);
 
 					var ap = ApplicationConfig();
@@ -5234,11 +5383,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 					if (document.body) essential("instantiatePageSingletons")();
 					ap.doInitScripts();	
 					enhanceUnfinishedElements();
-					if (ev.symbol == "launched" && ev.base.requiredPages == 0) this.set("state.launching",false);
+					if (ev.symbol == "launched" && b.requiredPages == 0) this.set("state.launching",false);
 				}
 				break;
 			case "requiredPages":
-				if (ev.value == 0 && !ev.base.launching) {
+				if (ev.value == 0 && !b.launching) {
 					this.set("state.launching",false);
 				}
 				break
@@ -5247,10 +5396,15 @@ _ElementPlacement.prototype._computeIE = function(style)
 				break;
 			
 			default:
-				if (ev.base.loading==false && ev.base.launching==false && ev.base.launched==false) {
+				if (b.loading==false && b.launching==false && b.launched==false) {
 					if (document.body) essential("instantiatePageSingletons")();
 				}
 		}
+
+		// should this be configurable in the future?
+        if (b.launched && (!b.authorised || !b.authenticated) && b.autoUnlaunch !== false) {
+            this.set("state.launched",false);
+        }
 	};
 
 	ApplicationConfig.prototype.onLoadingScripts = function(ev) {
@@ -8067,7 +8221,7 @@ Resolver("page::state.livepage").on("change",function(ev) {
 		pageResolver.uosInterval = setInterval(Resolver("essential::updateOnlineStatus::"),5000);
 
 		EnhancedDescriptor.maintainer = setInterval(EnhancedDescriptor.maintainAll,330); // minimum frequency 3 per sec
-		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 3 per sec
+		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 6 per sec
 
 		updateOnlineStatus();
 
