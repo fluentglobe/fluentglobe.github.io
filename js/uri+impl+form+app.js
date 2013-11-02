@@ -2444,7 +2444,7 @@ FormAction.prototype["start-over"] = function(el,ev) {
 Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.el = el;
     this.sizing = el.stateful("sizing");
-    this.columns = [];
+    this.columns = []; // zero based, 1 less than .no
 
 },Layouter,{ prototype: {
 
@@ -2494,7 +2494,7 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
 
     "_addColumn": function(no) {
         var pageEl = HTMLElement("div", { 
-            "class": "column c"+no,
+            //"class": "column c"+no,
             "data-role": { 'laidout':'section-column','no':no },
             "append to": this.el,
             "enhance element": true
@@ -2506,19 +2506,20 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
     
     "insertColumn": function(no) {
     	var next = this._addColumn(no);
-		this.columns.splice(no-1, 1, next);
+    	this.el.insertBefore(next, this.columns[no-1]);
+		this.columns.splice(no-1, 0, next);
 		for(var i=no,c; c = this.columns[i]; ++i) {
-			c.laidout.updateNo(i+1);
+			c.laidout.updateNo(c,i+1);
 		}    
 
-        return this.columns[no];
+        return this.columns[no-1];
     },
 
     "getColumn": function(no) {
-        if (this.columns[no] == undefined) {
-            this.columns[no] = this._addColumn(no);
+        if (this.columns[no-1] == undefined) {
+            this.columns[no-1] = this._addColumn(no);
         } 
-        return this.columns[no];
+        return this.columns[no-1];
     },
 
     "layout":function(el,layout,sizingEls) {
@@ -2535,6 +2536,7 @@ Laidout.variant("section-column",Generator(
     function(key,el,conf,layouter) {
         this.layouter = layouter;
         this.no = conf.no;
+        this.updateNo(el,this.no);
         this.marginY = 30;
         this.hardEnd = false;
         this.placement = ElementPlacement(null,["breakBefore","breakAfter"],false);
@@ -2561,9 +2563,9 @@ Laidout.variant("section-column",Generator(
 
         },
         
-        "updateNo": function(no) {
+        "updateNo": function(el,no) {
 			this.no = no;
-			this.className = "column c"+this.no;	    	    
+			el.className = "column c"+this.no;	    	    
         },
         
         "_breakRules": function(el) {
@@ -2620,6 +2622,7 @@ Laidout.variant("section-column",Generator(
                 }
             }
 
+			// move overspill elements to next column, last-first
             if (toMove.length) {
 
                 var nextColumn = this.layouter.getColumn(this.no + 1);
