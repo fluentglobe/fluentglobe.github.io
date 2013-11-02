@@ -1707,28 +1707,6 @@ article {
   -o-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
 }
-article section {
-  padding-top: 3em;
-  padding-bottom: 3em;
-  width: 100%;
-  margin: 0 auto;
-  background-color: #ffffff;
-  box-shadow: 0 5px 5px #454545;
-  color: #474747;
-}
-article section h3 {
-  text-align: center;
-  font-size: 2em;
-}
-article section p {
-  word-wrap: normal;
-  overflow-wrap: break-word;
-}
-article section.even {
-  background-color: #f3f3f3;
-  border-top: 1px solid #ececec;
-  border-bottom: 1px solid #ececec;
-}
 article > header {
   position: absolute;
   top: -60px;
@@ -1737,12 +1715,6 @@ article > header {
   right: 0;
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
-}
-article .left-col {
-  padding: 30px;
-}
-article .right-col {
-  padding: 30px;
 }
 body.splash.state-expanded #intro,
 body.lesson.state-expanded #intro {
@@ -2033,6 +2005,34 @@ body.lesson .menu nav.flag label {
 .splash article > header .social-icon:hover {
   color: #08C;
 }
+.splash article section {
+  padding-top: 3em;
+  padding-bottom: 3em;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 5px 5px #454545;
+  color: #474747;
+}
+.splash article section h3 {
+  text-align: center;
+  font-size: 2em;
+}
+.splash article section p {
+  word-wrap: normal;
+  overflow-wrap: break-word;
+}
+.splash article section.even {
+  background-color: #f3f3f3;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
+}
+.splash article .left-col {
+  padding: 30px;
+}
+.splash article .right-col {
+  padding: 30px;
+}
 .splash article > footer {
   position: relative;
   padding: 75px 0 25px 0;
@@ -2125,13 +2125,13 @@ html body.splash #intro > footer {
   }
 }
 @media only screen and (min-width: 400px) {
-  article .left-col {
+  .splash article .left-col {
     position: absolute;
     right: 50%;
     width: 50%;
     max-width: 500px;
   }
-  article .right-col {
+  .splash article .right-col {
     position: relative;
     left: 50%;
     width: 50%;

@@ -383,7 +383,7 @@ Laidout.variant("section-column",Generator(
         
         "_pullIn": function(el,layout) {
             // look forward to see if there is a block to pull in
-            
+            //TODO find columns in bundle without hardEnds and re-split
         },
         
         "_spillOverBisect": function(el,layout) {
@@ -456,6 +456,8 @@ Laidout.variant("section-column",Generator(
 		            	break;
                 } 
             }
+            
+            //TODO split the spillover and flag the others as done.
 
 			// move overspill elements to next column, last-first
             if (toMove.length) {
