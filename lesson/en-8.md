@@ -49,9 +49,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="https://www.youtube.com/watch?v=5-XvcDBGYGA&list=FLLWtwPlc7oWphbETPsP7oDg&index=282" />
-</video>
-
+    <source type="video/youtube" src="https://www.youtube.com/watch?v=5-XvcDBGYGA
 #### Vocabulary
 
 * Is there a petrol station near here?
@@ -72,7 +70,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 ### Describing Places
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=dw84dkuKsqIhttp://www.youtube.com/watch?v=dw84dkuKs" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=dw84dkuKsqI" />
 </video>
 
 #### Vocabulary

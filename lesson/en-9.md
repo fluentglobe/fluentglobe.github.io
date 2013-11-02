@@ -109,7 +109,7 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=a7-ml8ULeBM&list=FLLWtwPlc7oWphbETPsP7oDg&index=467" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=a7-ml8ULeBM" />
 </video>
 
 #### Vocabulary

@@ -49,7 +49,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 
 
 <video width="320" height="240" preload="none">
-    <source type="http://www.youtube.com/watch?v=pfmqGMrcvgI&list=FLLWtwPlc7oWphbETPsP7oDg&index=288" />
+    <source type="video/youtube" type="http://www.youtube.com/watch?v=pfmqGMrcvgI" />
 </video>
 
 #### Vocabulary
@@ -122,7 +122,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=Oy--DSsdiKE&list=FLLWtwPlc7oWphbETPsP7oDg&index=409" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=Oy--DSsdiKE" />
 </video>
 
 
