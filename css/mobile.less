@@ -471,6 +471,21 @@ html body.splash {
     }
 }
 
+@media only screen and (min-width: 400px) {
+	
+    article {
+		.left-col {
+			position: absolute;
+			right: 50%; width: 50%;
+			max-width: 500px
+		}
+		.right-col {
+			position: relative;
+			left: 50%; width: 50%;
+			max-width: 500px
+		}
+    }
+}
 
 @media only screen and (min-width: 400px) and (max-width: 799px) {
 
@@ -499,17 +514,6 @@ html body.splash {
                 width: @col-max-width;
             }
         }
-    }
-    
-    article {
-		.left-col {
-			position: absolute;
-			left: 0; width: 50%;
-		}
-		.right-col {
-			position: relative;
-			left: 50%; width: 50%;
-		}
     }
 }
 

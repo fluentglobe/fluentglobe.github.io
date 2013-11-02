@@ -2124,6 +2124,20 @@ html body.splash #intro > footer {
     z-index: 100;
   }
 }
+@media only screen and (min-width: 400px) {
+  article .left-col {
+    position: absolute;
+    right: 50%;
+    width: 50%;
+    max-width: 500px;
+  }
+  article .right-col {
+    position: relative;
+    left: 50%;
+    width: 50%;
+    max-width: 500px;
+  }
+}
 @media only screen and (min-width: 400px) and (max-width: 799px) {
   html body.splash #intro .benefits {
     left: 50%;
@@ -2139,16 +2153,6 @@ html body.splash #intro > footer {
     left: 50%;
     margin-left: -200px;
     width: 400px;
-  }
-  article .left-col {
-    position: absolute;
-    left: 0;
-    width: 50%;
-  }
-  article .right-col {
-    position: relative;
-    left: 50%;
-    width: 50%;
   }
 }
 @media only screen and (min-width: 800px) and (max-width: 1099px) {
