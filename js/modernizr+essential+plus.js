@@ -1810,12 +1810,17 @@ Generator.discardRestricted = function()
 		this.sizing = {
 			"contentWidth":0,"contentHeight":0
 		};
+		this.placement = essential("ElementPlacement")(el,[]);
+		this.placement.manually(["overflow"]);
+		if (this.placement.style.overflow == "visible") this._updateDisplayed = this._updateDisplayedNotNone;
+
 		this.layout = {
-			"displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
+			// "displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
 			"lastDirectCall": 0,
 			"enable": false,
 			"throttle": null //TODO throttle by default?
 		};
+		this._updateDisplayed();
 		this.ensureStateful();
 		this.stateful.set("state.needEnhance", roles.length > 0);
 		this.uniqueID = uniqueID;
@@ -2032,6 +2037,8 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype.refresh = function() {
 		var getActiveArea = essential("getActiveArea"); //TODO switch to Resolver("page::activeArea")
 		var updateLayout = false;
+
+		if (this.el && this.el.stateful == null) this.liveCheck();
 		
 		if (this.layout.area != getActiveArea()) { 
 			this.layout.area = getActiveArea();
@@ -2039,6 +2046,7 @@ Generator.discardRestricted = function()
 		}
 
 		if (updateLayout || this.layout.queued) {
+			//proxyConsole.debug("Refresh element","w="+this.layout.width,"h="+this.layout.height, updateLayout?"updateLayout":"",this.layout.queued?"queued":"", this.role, this.uniqueID)
 			if (this.layoutHandler) this.layoutHandler(this.el,this.layout,this.instance);
 			var layouter = this.layouter, laidout = this.laidout;
 			if (layouter) layouter.layout(this.el,this.layout,this.laidouts()); //TODO pass instance
@@ -2112,12 +2120,22 @@ Generator.discardRestricted = function()
 		}
 	};
 
+	_EnhancedDescriptor.prototype._updateDisplayed = function() {
+		this.sizing.displayed = !(this.sizing.width == 0 && this.sizing.height == 0);
+	};
+
+	_EnhancedDescriptor.prototype._updateDisplayedNotNone = function() {
+		//TODO 
+		this.placement.manually(["display"])
+		this.sizing.displayed = this.placement.style.display != "none";
+	};
+
 	_EnhancedDescriptor.prototype.checkSizing = function() {
 
 		// update sizing with element state
-		var ow = this.sizing.width = this.el.offsetWidth;
-		var oh = this.sizing.height = this.el.offsetHeight;
-		this.sizing.displayed = !(ow == 0 && oh == 0);
+		this.sizing.width = this.el.offsetWidth;
+		this.sizing.height = this.el.offsetHeight;
+		this._updateDisplayed();
 
 		// seems to be displayed
 		if (this.sizing.displayed) {
@@ -2366,7 +2384,7 @@ Generator.discardRestricted = function()
 			instantiatePageSingletons();
 		}
 		catch(ex) {
-			essential("console").error("Failed to launch delayed assets and singletons",ex);
+			proxyConsole.error("Failed to launch delayed assets and singletons",ex);
 		}
 	}
 	function fireLoad()
@@ -2514,17 +2532,17 @@ Generator.discardRestricted = function()
 		if (window.console.debug == undefined) {
 			// IE8
 			proxyConsole["log"] = function(m) { 
-				window.console.log(m); };
+				window.console.log(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["trace"] = function(m) { 
 				window.console.trace(); };
 			proxyConsole["debug"] = function(m) { 
-				window.console.log(m); };
+				window.console.log(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["info"] = function(m) { 
-				window.console.info(m); };
+				window.console.info(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["warn"] = function(m) { 
-				window.console.warn(m); };
+				window.console.warn(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["error"] = function(m) { 
-				window.console.error(m); };
+				window.console.error(Array.prototype.join.call(arguments," ")); };
 		}
 	}
 	essential.declare("setWindowConsole",setWindowConsole);
@@ -3844,20 +3862,27 @@ Generator.discardRestricted = function()
 
 		this.doCompute = !(this.el == null || this.el.nodeType !== 1);
 
-		for(var i=0,s; this.doCompute && !!(s = this.track[i]); ++i) {
+		this.computes = this._getComputes(this.track);
+	};
+
+	_ElementPlacement.prototype._getComputes = function(names) {
+
+		var computes = [];
+		for(var i=0,s; this.doCompute && !!(s = names[i]); ++i) {
 			switch(s) {
 				case "display":
 				case "visibility":
 				// case "zIndex":
 				case "breakBefore":
 				case "breakAfter":
-					this.computes.push(this._compute_simple);
+					computes.push(this._compute_simple);
 					break;
 				default:
-					this.computes.push(this._compute);
+					computes.push(this._compute);
 					break;
 			}
 		}
+		return computes;
 	};
 
 	_ElementPlacement.prototype.compute = function(newEl) {
@@ -3868,6 +3893,14 @@ Generator.discardRestricted = function()
 
 		for(var i=0,fn; !!(fn = this.computes[i]); ++i) {
 			this.style[this.track[i]] = fn.call(this,this.track[i]);
+		}
+	};
+
+	_ElementPlacement.prototype.manually = function(names) {
+		var computes = this._getComputes(names);
+		this._setComputed();
+		for(var i=0,fn; fn = computes[i]; ++i) {
+			this.style[names[i]] = fn.call(this,names[i]);
 		}
 	};
 
