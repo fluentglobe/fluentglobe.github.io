@@ -2456,12 +2456,22 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
         while(el.firstChild && el.firstChild.laidoutPage == undefined) {
         	var fc = el.firstChild;
         	
+        	// only elements can break
             if (fc.tagName !== undefined) {
                 placement.compute(fc);
 	            var fcf = fc.firstChild, breaks = {
 	            	before: placement.style["breakBefore"],
 	            	after: placement.style["breakAfter"]
 	            };
+
+            	// forced break
+            	switch (breaks.before) {
+	            	case "column":
+	            	case "page":
+	            	case "always":
+	            		existing = false;
+	            		break;
+            	}
 
 				// single br tag nested in p tag
             	if (breaks.after == "auto" && fcf && fcf == fc.lastChild && fcf.tagName == "BR") {
@@ -2616,13 +2626,14 @@ Laidout.variant("section-column",Generator(
         "_spillOverLinear": function(el,layout) {
 
             var toMove = [], breakNow = false, avoidBreakNext = false,
-            	height = el.clientHeight;
+            	height = el.clientHeight, allowBreakBefore;
             var usedHeight = 0, maxCH = height - this.paddingY - this.gapY;
 
             //console.debug("layout column",this.no,layout,"h="+maxCH,"oh="+layout.height,"p="+this.paddingY);
 
             this.hardEnd = false;
 
+			// run to find the place to break
             for(var cn=el.childNodes, i=0,c; c = cn[i]; ++i) {
 
                 var elHeight = c.offsetHeight || this._guessTextHeight(c), 
@@ -2641,14 +2652,25 @@ Laidout.variant("section-column",Generator(
 						break;
 
 */
+					case "avoid":
+						//TODO
+						break;
+						
 					case "auto":
 						if (!avoidBreakNext && elBottom > maxCH) breakNow = true;
+						
+						// the one before and this one isn't disabling a break
+						if (!avoidBreakNext && !breakNow) allowBreakBefore = c;
 						break;
 				}
 				
 
                 if (!breakNow) usedHeight = elBottom;
-                else toMove.push(c);
+                else {
+	                for(var spill=allowBreakBefore; spill; spill = spill==c? null:spill.nextSibling) {
+		                toMove.push(spill);
+	                }
+                }
 
 				avoidBreakNext = false;
 				
