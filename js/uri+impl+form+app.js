@@ -2544,6 +2544,7 @@ Laidout.variant("section-column",Generator(
         this.placement.manually(["paddingTop","paddingBottom"]);
         this.paddingY = parseInt(this.placement.style.paddingTop) + parseInt(this.placement.style.paddingBottom);
         console.debug("col="+this.no,"padding="+this.paddingY);
+        this.lineHeight = 12; //TODO measure
     },
     Laidout,
     {"prototype":{
@@ -2589,6 +2590,13 @@ Laidout.variant("section-column",Generator(
             return breaks;
         },
         
+        "_whiteSpace": /^\s*$/,
+        
+        "_guessTextHeight": function(node) {
+        	var text = node.data || node.nodeValue;
+	    	return this._whiteSpace.test(text)? this.lineHeight : 0;    
+        },
+        
         "_pullIn": function(el,layout) {
             // look forward to see if there is a block to pull in
             
@@ -2604,26 +2612,32 @@ Laidout.variant("section-column",Generator(
             var toMove = [], breakNow = false, height = el.clientHeight;
             var usedHeight = 0, maxCH = height - this.paddingY - this.gapY;
 
-            console.debug("layout column",this.no,layout,"h="+maxCH,"oh="+layout.height,"p="+this.paddingY);
+            //console.debug("layout column",this.no,layout,"h="+maxCH,"oh="+layout.height,"p="+this.paddingY);
 
             this.hardEnd = false;
 
             for(var cn=el.childNodes, i=0,c; c = cn[i]; ++i) {
 
-                var elHeight = c.offsetHeight || 0;
-                var breaks = this._breakRules(c), breakNow = breaks.after != "auto";
+				//TODO judge text node height
+                var elHeight = c.offsetHeight || this._guessTextHeight(c), 
+                	elTop = c.offsetTop, 
+                	elBottom = (elTop? elTop : usedHeight) + elHeight;
+                var breaks = this._breakRules(c);
+                //console.debug("elh="+elHeight,"elb="+elBottom,"used="+usedHeight,breakNow?"break now":"",c);
 
-                if (usedHeight + elHeight > maxCH) {
-                    breakNow = true;
-                    this.hardEnd = true;
+                if (breaks.before != "auto") { 
+	                breakNow = true;
+	                this.hardEnd = true;
                 }
+				
+                if (elBottom > maxCH) breakNow = true;
 
-                if (!breakNow) {
-                    usedHeight += elHeight;
+                if (!breakNow) usedHeight = elBottom;
+                else toMove.push(c);
 
-                } else {
-                    toMove.push(c);
-
+                if (breaks.after != "auto") { 
+	                breakNow = true;
+	                this.hardEnd = true;
                 }
             }
 
