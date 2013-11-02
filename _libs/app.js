@@ -211,6 +211,7 @@ FormAction.prototype["start-over"] = function(el,ev) {
 // section level
 Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.el = el;
+    this.gapY = conf.gap || 0;
     this.sizing = el.stateful("sizing");
     this.columns = []; // zero based, 1 less than .no
 
@@ -305,9 +306,12 @@ Laidout.variant("section-column",Generator(
         this.layouter = layouter;
         this.no = conf.no;
         this.updateNo(el,this.no);
-        this.marginY = 30;
+        this.gapY = conf.gap || layouter.gapY || 0;
         this.hardEnd = false;
-        this.placement = ElementPlacement(null,["breakBefore","breakAfter"],false);
+        this.placement = ElementPlacement(el,["breakBefore","breakAfter"],false);
+        this.placement.manually(["paddingTop","paddingBottom"]);
+        this.paddingY = parseInt(this.placement.style.paddingTop) + parseInt(this.placement.style.paddingBottom);
+        console.debug("col="+this.no,"padding="+this.paddingY);
     },
     Laidout,
     {"prototype":{
@@ -358,16 +362,17 @@ Laidout.variant("section-column",Generator(
             
         },
         
-        "_spillOverBisec": function(el,layout) {
+        "_spillOverBisect": function(el,layout) {
 
 	        
         },
         
         "_spillOverLinear": function(el,layout) {
-            console.debug("layout column",this.no,layout);
 
-            var toMove = [], breakNow = false;
-            var usedHeight = 0, maxCH = layout.height - this.marginY;
+            var toMove = [], breakNow = false, height = el.clientHeight;
+            var usedHeight = 0, maxCH = height - this.paddingY - this.gapY;
+
+            console.debug("layout column",this.no,layout,"h="+maxCH,"oh="+layout.height,"p="+this.paddingY);
 
             this.hardEnd = false;
 
