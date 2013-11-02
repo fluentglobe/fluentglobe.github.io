@@ -214,8 +214,45 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.gapY = conf.gap || 0;
     this.sizing = el.stateful("sizing");
     this.columns = []; // zero based, 1 less than .no
+    
+    switch(navigator.platform) {
+	    case "iPad":
+	    case "iPhone":
+	    case "iPod":
+	    	this._iosNativeYoutube(el,el.querySelectorAll('video'));
+	    	break;
+	    default:
+	    	this._mediaElementPlayer($('video',el));
+	    	break;
+    }
 
 },Layouter,{ prototype: {
+
+	"_iosNativeYoutube": function(list) {
+		for(var i=0,c; c = list[i]; ++i) {
+			var srcEl = c.querySelector("source");
+			if (srcEl && srcEl.getAttribute("type") == "video/youtubeapp") {
+				
+				var obj = HTMLElement("object",
+					'<param name="movie" ',
+					'value="', c.getAttribute("src"),'"',
+					'></param>',
+					'<embed type="application/x-shockwave-flash" ',
+					'src="', c.getAttribute("src"),'"',
+					'></embed>'
+					);
+				c.parentNode.replaceChild(obj, c);
+			}
+		}	
+	},
+	
+	"_mediaElementPlayer": function(q) {
+		
+	    q.mediaelementplayer({
+		    iPhoneUseNativeControls:true,
+		    iPadUseNativeControls:true
+	    });
+	},
 
     "init": function(el,conf,sizing,layout) {
         var col = 0, existing = false, column, columns = [], 

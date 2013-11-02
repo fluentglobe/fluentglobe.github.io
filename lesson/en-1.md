@@ -35,9 +35,9 @@ For more information visit the [iBook Store](https://itunes.apple.com/us/book/po
 
 Watch this video to get a sense of how the language sounds. Don't worry too much about understanding every word, we will get back to that later.
 
-
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk&list=FLLWtwPlc7oWphbETPsP7oDg&index=396" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk" />
+    <source typexxx="video/youtubeapp" src="http://www.youtube.com/v/AzES-nhQFzk" />
 </video>
 
 #### Vocabulary
@@ -52,7 +52,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 ### Greeting Friends
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=395" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=uqgKvNxhCvQ" />
 </video>
 
 #### Vocabulary
@@ -70,7 +70,7 @@ In the next video pay attention to the following words
 
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc&list=FLLWtwPlc7oWphbETPsP7oDg&index=394" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc" />
 </video>
 
 #### Vocabulary
@@ -90,7 +90,7 @@ In this next video there is a lot of dialogue.
 Listen to the sounds and don't worry if you do not understand everything.
 
 <video width="320" height="180" preload="none">
-    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ&list=FLLWtwPlc7oWphbETPsP7oDg&index=1" />
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ" />
 </video>
 
 
