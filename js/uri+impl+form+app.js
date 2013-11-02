@@ -2458,14 +2458,20 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
         	
             if (fc.tagName !== undefined) {
                 placement.compute(fc);
-                var breaks = placement.style["breakBefore"] || placement.style["breakAfter"];
+	            var fcf = fc.firstChild, breaks = {
+	            	before: placement.style["breakBefore"],
+	            	after: placement.style["breakAfter"]
+	            };
 
-            	if (breaks == "auto" && fc.firstChild && fc.firstChild == fc.lastChild && fc.firstChild.tagName == "BR") {
-            		breaks = fc.firstChild.className;
+				// single br tag nested in p tag
+            	if (breaks.after == "auto" && fcf && fcf == fc.lastChild && fcf.tagName == "BR") {
+            		breaks.after = fcf.className;
             		fc.parentNode.removeChild(fc);
-					fc = fc.firstChild;           		
+					fc = fcf;           		
             	}
-            	switch (breaks) {
+            	
+            	// forced break
+            	switch (breaks.after) {
 	            	case "column":
 	            	case "page":
 	            	case "always":
@@ -2609,7 +2615,8 @@ Laidout.variant("section-column",Generator(
         
         "_spillOverLinear": function(el,layout) {
 
-            var toMove = [], breakNow = false, height = el.clientHeight;
+            var toMove = [], breakNow = false, avoidBreakNext = false,
+            	height = el.clientHeight;
             var usedHeight = 0, maxCH = height - this.paddingY - this.gapY;
 
             //console.debug("layout column",this.no,layout,"h="+maxCH,"oh="+layout.height,"p="+this.paddingY);
@@ -2618,27 +2625,46 @@ Laidout.variant("section-column",Generator(
 
             for(var cn=el.childNodes, i=0,c; c = cn[i]; ++i) {
 
-				//TODO judge text node height
                 var elHeight = c.offsetHeight || this._guessTextHeight(c), 
                 	elTop = c.offsetTop, 
                 	elBottom = (elTop? elTop : usedHeight) + elHeight;
                 var breaks = this._breakRules(c);
                 //console.debug("elh="+elHeight,"elb="+elBottom,"used="+usedHeight,breakNow?"break now":"",c);
 
-                if (breaks.before != "auto") { 
-	                breakNow = true;
-	                this.hardEnd = true;
-                }
+				switch(breaks.before) {
+/*
+					case "always":
+					case "page":
+					case "column":
+		                breakNow = true;
+		                this.hardEnd = true;
+						break;
+
+*/
+					case "auto":
+						if (!avoidBreakNext && elBottom > maxCH) breakNow = true;
+						break;
+				}
 				
-                if (elBottom > maxCH) breakNow = true;
 
                 if (!breakNow) usedHeight = elBottom;
                 else toMove.push(c);
 
-                if (breaks.after != "auto") { 
-	                breakNow = true;
-	                this.hardEnd = true;
-                }
+				avoidBreakNext = false;
+				
+                switch(breaks.after) { 
+/*
+					case "always":
+					case "page":
+					case "column":
+		                breakNow = true;
+		                this.hardEnd = true;
+		                break;
+*/
+		            case "avoid":
+						avoidBreakNext = true;
+		            	break;
+                } 
             }
 
 			// move overspill elements to next column, last-first

@@ -2417,6 +2417,14 @@ br.column {
   display: none;
   page-break-after: always;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  page-break-after: avoid;
+}
 .mejs-container {
   position: relative;
   background: #000;
