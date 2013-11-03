@@ -49,7 +49,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 
 
 <video width="320" height="240" preload="none">
-    <source type="video/youtube" src="https://www.youtube.com/watch?v=5-XvcDBGYGA
+    <source type="video/youtube" src="http://www.youtube.com/watch?v=5-XvcDBGYGA"/>
 #### Vocabulary
 
 * Is there a petrol station near here?
