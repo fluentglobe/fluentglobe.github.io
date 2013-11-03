@@ -68,7 +68,7 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 In the next video pay attention to the following words
 
 
-<video width="320" height="180" preload="none">
+<video width="320" height="240" preload="none">
     <source type="video/youtube" src="http://www.youtube.com/watch?v=bOD6iXEq0qc" />
 </video>
 
@@ -88,7 +88,7 @@ In the next video pay attention to the following words
 In this next video there is a lot of dialogue. 
 Listen to the sounds and don't worry if you do not understand everything.
 
-<video width="320" height="180" preload="none">
+<video width="320" height="240" preload="none">
     <source type="video/youtube" src="http://www.youtube.com/watch?v=C0eu8OQ-cfQ" />
 </video>
 
