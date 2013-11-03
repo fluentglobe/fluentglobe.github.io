@@ -28,7 +28,7 @@ Today I want you to learn some of the following vocabulary:
 * Ugly
 * Fat
 
-….
+
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)

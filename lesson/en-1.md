@@ -17,7 +17,7 @@ Today I want you to learn some of the following vocabulary:
 * Nice to meet you
 * Take care.
 
-….
+
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)

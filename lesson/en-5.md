@@ -17,7 +17,7 @@ Today I want you to learn some of the following vocabulary:
 * Who are you?
 * Who is he/ she?
 
-….
+
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)

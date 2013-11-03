@@ -29,7 +29,7 @@ Today I want you to learn some of the following vocabulary:
 * Building
 
 
-….
+
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)

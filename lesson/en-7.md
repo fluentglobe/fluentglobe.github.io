@@ -27,7 +27,7 @@ Today I want you to learn some of the following vocabulary:
 * Take the underground
 * Walk 
 
-….
+
 
 <hr>
 ![Visit to London](/images/v2l-wide.jpg)
