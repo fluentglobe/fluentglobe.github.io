@@ -1,7 +1,7 @@
 ---
 layout: lesson
 ---
-## Colors (Lesson 15)
+## Colors (Lesson 15a)
 
 
 Today I want you to learn some of the following vocabulary:
