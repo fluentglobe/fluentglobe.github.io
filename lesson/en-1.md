@@ -37,7 +37,6 @@ Watch this video to get a sense of how the language sounds. Don't worry too much
 
 <video width="320" height="240" preload="none">
     <source type="video/youtube" src="http://www.youtube.com/watch?v=AzES-nhQFzk" />
-    <source typexxx="video/youtubeapp" src="http://www.youtube.com/v/AzES-nhQFzk" />
 </video>
 
 #### Vocabulary

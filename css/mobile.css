@@ -1910,6 +1910,11 @@ body.lesson .menu nav.flag label {
 .lesson article .c9 {
   left: 800%;
 }
+.lesson article .videoapp {
+  display: block;
+  width: 320px;
+  height: 240px;
+}
 .splash #intro .benefits ul {
   padding-bottom: 1em;
 }

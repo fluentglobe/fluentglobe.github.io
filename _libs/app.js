@@ -231,8 +231,12 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
 	"_iosNativeYoutube": function(list) {
 		for(var i=0,c; c = list[i]; ++i) {
 			var srcEl = c.querySelector("source");
-			if (srcEl && srcEl.getAttribute("type") == "video/youtubeapp") {
-				
+			if (srcEl && srcEl.getAttribute("type") == "video/youtube") {
+
+				//TODO make this inserting work!!!
+				var shim = HTMLElement("div",{ "class":"videoapp" });
+				c.parentNode.insertBefore(shim, c);
+/*
 				var obj = HTMLElement("object",
 					'<param name="movie" ',
 					'value="', c.getAttribute("src"),'"',
@@ -242,6 +246,7 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
 					'></embed>'
 					);
 				c.parentNode.replaceChild(obj, c);
+*/
 			}
 		}	
 	},
