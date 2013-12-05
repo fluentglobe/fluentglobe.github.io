@@ -1,0 +1,17 @@
+  <div class="follow">
+    <h4>Follow {{site.title}}</h4>
+    <nav>
+    {% if site.facebook_page %}
+    <a class="social-icon" href="https://www.facebook.com/{{site.facebook_page}}" target="_blank">f</a>
+    {% endif %}
+    {% if site.twitter_id %}
+    <a class="social-icon" href="https://twitter.com/{{site.twitter_id}}" target="_blank">l</a>
+    {% endif %}
+    <!--
+    <a class="social-icon" href="https://twitter.com/henrikvendelbo" target="_blank">l</a>
+    -->
+    <a class="social-icon" href="https://www.linkedin.com/company/{{site.linkedin_company_id}}" target="_blank">i</a>
+    <a class="social-icon" href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher" target="_blank">g</a>
+    <span style="display:none"><a href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher">Google+</a></span>
+    </nav>
+  </div>

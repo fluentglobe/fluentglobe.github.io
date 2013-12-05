@@ -6,7 +6,11 @@ title: Fluent Globe
 description: A world vibrant with people learning languages and culture.
 email: people@fluentglobe.com
 domain: fluentglobe.com
-analytics_id: 22749258-6
+analytics_id: UA-22749258-6
+# facebook_page: fluentglobe
+twitter_id: fluentglobe
+gplus_page_id: 104383519689106528970
+linkedin_company_id: 4998340
 
 exclude:
 - fluent-globe-4461545
