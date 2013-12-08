@@ -35,7 +35,13 @@
   box-sizing: border-box;
 }
 @media only screen and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-  
+  .center-piece .us,
+  .center-piece .story {
+    position: absolute;
+    top: 0%;
+    height: 150px;
+    margin-top: 125px;
+  }
 }
 @media only screen and (device-width: 768px) {
   

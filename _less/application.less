@@ -45,6 +45,18 @@
 @portrait-bg-width: 360px; // import from javascript
 @portrait-bg-height: 920px;
 
+@menu-width: 160px;
+@menu-edge-width: 4px;
+@intro-top-gap: 50px;
+@intro-bottom-gap: 50px;
+@min-height-intro: 50em;
+
+@col1-left: 3%;
+@col1-right: 3%;
+@col1-width: 94%;
+@col-max-width: 400px;
+
+
 .intro-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
 
     #intro {
@@ -115,6 +127,116 @@
             background-size: 360px auto;
         }
         #tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+    // iPad:
+    // not sure about this
+    @media screen and (device-aspect-ratio: 3/4) and (orientation:portrait) {
+
+        #stuck {
+            background-position: bottom center;
+            background-size: auto 100%;
+        }
+    }
+
+}
+
+.centered-bg-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@bg-width: 1136px,@bg-height: 768px,@min-height: @top-splash-room, @max-height: @top-splash-max) {
+
+    // 1136px width landscape iphone5 (x 640px)
+    @bg-from-width: (@bg-width + 1px);
+    // 768px height portrait iPad
+    @bg-from-height: (@bg-height + 1px);
+
+    #intro {
+
+        left:0;
+        right:0; 
+        //min-height: @landscape-bg-height;
+        // height: @landscape-bg-height;
+        //TODO z-index: -9999;
+
+        //padding-top: 200px;
+        color: white;
+
+        background-image: @image;
+        background-position: bottom center;
+        background-repeat: no-repeat; 
+        background-size: auto;
+        //background-size: 100% auto;
+    }
+    #tracer { position:fixed; visibility: hidden; width: @bg-width; height: @bg-height;}
+
+    // no bigger than image
+    @media only screen and (max-width:@bg-width) and (min-height: @bg-height) {
+        #intro {
+            background-size: cover;
+        }
+    }
+
+    @media only screen and (min-width: @bg-from-width ){
+        #intro {
+            background-size: 100% auto;
+        }
+    }
+
+    @media only screen and (min-height: @bg-from-height) {
+        #intro {
+            background-size: auto 100%;
+        }
+    }
+
+    // bigger than both width and height
+    @media only screen and (min-width: @bg-from-width ) and (min-height: @bg-from-height) {
+
+    }
+
+    // Narrow browser
+    @media only screen 
+    and (min-width : 320px) 
+    and (max-width : 360px) 
+     {
+
+        #intro {
+            // background-image: @image-portrait;
+            // background-position: bottom center;
+            // background-size: auto auto;
+        }
+        //#tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+    // Narrow browser
+    @media only screen 
+    and (min-width : 361px) 
+    and (max-width : 800px) 
+     {
+
+        #intro {
+            // background-image: @image-portrait;
+            background-position: bottom center;
+            //background-size: 100% auto;
+            // background-size: auto auto;
+        }
+        //#tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
+    }
+
+
+    //TODO fixed width 320-360, scale after
+
+    //and (orientation : portrait)
+
+    // iPhone portrait and landscape
+    @media only screen 
+    and (min-device-width : 320px) 
+    and (max-device-width : 568px) 
+     {
+
+        #intro {
+            // background-image: @image-portrait;
+            // background-position: top left;
+            // background-size: 360px auto;
+        }
+        //#tracer { position:fixed; visibility: hidden; width: @portrait-bg-width; height: @portrait-bg-height;}
     }
 
     // iPad:

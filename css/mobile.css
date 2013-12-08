@@ -1845,6 +1845,34 @@ body .menu nav.flag label {
   padding: 6px;
   width: 5em;
 }
+.center-piece {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -160px;
+  width: 320px;
+  color: #666;
+}
+.center-piece h1 {
+  font-size: 28px;
+  text-align: center;
+}
+.center-piece h2 {
+  font-size: 22px;
+  text-align: center;
+}
+.center-piece h3 {
+  font-size: 18px;
+  text-align: center;
+}
+.center-piece .us,
+.center-piece .story {
+  position: absolute;
+  top: 50%;
+  height: 150px;
+  margin-top: -175px;
+}
 .lesson #intro {
   position: absolute;
   top: 0;
