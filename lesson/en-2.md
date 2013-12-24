@@ -19,16 +19,8 @@ Today I want you to learn some of the following vocabulary:
 * Where do you live?
 
 
-
-
 <hr>
-![Visit to London](/images/v2l-wide.jpg)
-#### Visit to London chapter 1
-
-In chapter one we cover asking questions with what, when, how and where.
-You can read the book on your iPad.
-
-For more information visit the [iBook Store](https://itunes.apple.com/us/book/portuguese-for-travelers/id568515833).
+<div class="our-book">{% include seil.html %}</div>
 
 <hr>
 
