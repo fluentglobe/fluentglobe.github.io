@@ -17,10 +17,18 @@ seil-ibook-url: portuguese-for-travelers/id568515833
 exclude:
 - fluent-globe-4461545
 - _site
+- test.html
+- _site
 - Jakefile
 - test.html
 - README.mdown
-- Rakefile
+- Gruntfile.js
+- bower.json
+- package.json
+- .bowerrc
+- node_modules
+- bower_components
+
 
 #- images 
 #- fonts

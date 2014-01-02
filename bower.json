@@ -1,0 +1,16 @@
+{
+  "name": "digital-adventurer",
+  "version": "0.0.1",
+  "main": "assets/styles.css",
+  "dependencies": {
+    "jquery": "latest",
+  	"normalize-css": "latest",
+
+  	"bootstrap": "latest",
+  	"turnjs": "latest",
+    "mediaelement": "latest",
+  	"snapjs": "latest",
+  	"hammerjs": "latest",
+  	"togetherjs": "latest"
+  }
+}
