@@ -1,11 +1,12 @@
 /*
-	Global variables and mixins for common Essential Elements
-
-	Import this at the beginning of your stylesheets and override global variables with 
-	values specific to the application.
+	Style radio and checkbox
 */
 /*
-	Style radio and checkbox
+    File: lch-checkbox.less
+    Desccription: This is a very simple mixin allowing you to style checkboxes with pure CSS.
+    Author: Boyan `netoholic` Yordanov
+    Date: 07.02.2013
+    Licence: You may use this mixin in any way you might want.
 */
 @font-face {
   font-family: 'socialicoregular';
@@ -1195,38 +1196,6 @@ textarea.input-lg {
     text-align: right;
   }
 }
-/*
-    File: lch-checkbox.less
-    Desccription: This is a very simple mixin allowing you to style checkboxes with pure CSS.
-    Author: Boyan `netoholic` Yordanov
-    Date: 07.02.2013
-    Licence: You may use this mixin in any way you might want.
-*/
-.demo-checkbox {
-  position: absolute;
-  top: -9999em;
-}
-.demo-checkbox + label {
-  background: #ffffff;
-  color: #333333;
-  font-size: 13px;
-  width: 50px;
-  height: 20px;
-  line-height: 20px;
-  text-align: center;
-  display: block;
-  border: 1px solid #cccccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.demo-checkbox + label:hover {
-  color: #666666;
-  background: #efefef;
-}
-.demo-checkbox:checked + label {
-  background: #27b4ff;
-  color: #ffffff;
-}
 input[type=checkbox],
 input[type=radio] {
   display: inline-block;
@@ -1487,16 +1456,19 @@ article > header {
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
 }
+body.screen.state-expanded #intro,
 body.splash.state-expanded #intro,
 body.lesson.state-expanded #intro {
   left: 160px;
   margin-right: -160px;
 }
+body.screen.state-expanded article,
 body.splash.state-expanded article,
 body.lesson.state-expanded article {
   left: 160px;
   margin-right: -160px;
 }
+body.screen.state-expanded .menu,
 body.splash.state-expanded .menu,
 body.lesson.state-expanded .menu {
   left: 0;
@@ -1507,11 +1479,11 @@ body .menu {
   bottom: 0;
   left: -160px;
   width: 164px;
-  border-right: 3px solid #fb441b;
+  border-right: 3px solid transparent;
   z-index: 10;
+  border-color: #fb441b;
   background-color: #fb441b;
   color: #c0c0c0;
-  /* container */
   -webkit-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
 }
@@ -1534,47 +1506,43 @@ body .menu nav.flag {
 body .menu nav.flag button.show-menu {
   border: 0;
   display: inline-block;
-  background-color: #fb441b;
-  color: #c0c0c0;
-  font-size: 19px;
   padding: 6px 8px;
   -webkit-appearance: none;
-  margin-top: -4px;
 }
 body .menu nav.flag button.show-menu:focus {
   outline: none;
 }
-body .menu nav.flag button.show-menu:hover {
-  color: #ffffff;
-}
 body .menu nav.flag label {
   display: inline-block;
   margin-left: 8px;
-  color: #c0c0c0;
-  font-size: 1.2em;
   text-align: center;
 }
+body .menu nav.flag output {
+  padding-top: 0;
+  color: #aaa;
+}
+body .menu ul {
+  padding: 0;
+}
 body .menu ul li {
-  height: 2.5em;
+  min-height: 2.5em;
 }
 body .menu ul li > ul {
-  border-top: 1px solid #f83104;
+  border-top: 1px solid transparent;
 }
 body .menu ul li > ul > li a,
 body .menu ul li > ul > li q {
   padding-left: 2em;
-  background-color: #fb441b;
-  border-color: #f83104;
-  border-top: none;
 }
 body .menu ul a,
 body .menu ul q {
   display: block;
   height: 100%;
-  background-color: #f83104;
-  border: 1px solid #fb441b;
-  color: #c0c0c0;
+  border: 1px solid transparent;
   padding: .5em 1em;
+}
+body .menu > ul {
+  padding: 1em 0 0 1em;
 }
 body .menu > a,
 body .menu > q {
@@ -1603,6 +1571,58 @@ body .menu li[selected=true] q:after {
   top: 0.6em;
   content: "\2713";
 }
+body .menu nav.flag button.show-menu {
+  background-color: #fb441b;
+  color: #c0c0c0;
+  font-size: 19px;
+  vertical-align: top;
+}
+body .menu nav.flag button.show-menu:hover {
+  color: #ffffff;
+}
+body .menu nav.flag button.show-menu label {
+  color: #c0c0c0;
+  font-size: 1.2em;
+}
+body .menu ul li > ul {
+  border-top: 1px solid #f83104;
+}
+body .menu ul li > ul > li a,
+body .menu ul li > ul > li q {
+  background-color: #fb441b;
+  border-color: #f83104;
+  border-top: none;
+}
+body .menu ul a,
+body .menu ul q {
+  background-color: #f83104;
+  border: 1px solid #fb441b;
+  color: #c0c0c0;
+}
+body .menu > ul {
+  border: 1px solid #fb441b;
+}
+body .menu > ul > li:not( :last-child ) > a,
+body .menu > ul > li:not( :last-child ) > q {
+  border-right: 1px solid #f83104;
+}
+body .menu > ul > li:hover > a,
+body .menu > ul:not ( :hover ) > li.active > a,
+body .menu > ul > li:hover > q,
+body .menu > ul:not ( :hover ) > li.active > q {
+  background-color: #f83104;
+}
+body .menu li ul {
+  background-color: #f83104;
+}
+body .menu li ul a,
+body .menu li ul q {
+  border-top: 1px solid #fb441b;
+}
+body .menu li ul li a:hover,
+body .menu li ul:not( :hover ) li.active a {
+  background-color: #fb441b;
+}
 body .menu nav.flag {
   width: 12em;
 }
@@ -1610,7 +1630,7 @@ body .menu nav.flag label {
   border-radius: 15px;
   border: 2px solid #fb441b;
   padding: 6px;
-  width: 5em;
+  min-width: 5em;
 }
 .center-piece {
   position: absolute;
@@ -1726,6 +1746,7 @@ body.lesson .menu nav.flag label {
 }
 .splash #intro h3 {
   position: relative;
+  margin-top: 0;
   margin-bottom: 10px;
   font-size: 1.6em;
   text-shadow: 0px 1px 1px black;
@@ -1789,6 +1810,7 @@ body.lesson .menu nav.flag label {
   display: inline-block;
   font-size: 15px;
   padding: 10px 10px 5px 0;
+  margin-top: 0;
   vertical-align: top;
   color: #888;
 }
@@ -1890,6 +1912,9 @@ html body.splash #intro .signup {
   margin-left: 3%;
   width: 94%;
   max-width: 400px;
+}
+html body.splash #intro .signup .btn {
+  margin: 1em;
 }
 html body.splash #intro > footer {
   position: absolute;

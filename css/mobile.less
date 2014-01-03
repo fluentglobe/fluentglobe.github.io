@@ -1,8 +1,9 @@
-//  
-@import "essential";
+@import "essentialjs/essential";
 @import "bootstrap/less/variables";
 @import "common/variables";
+@import "fresh/less/side-menu";
 @import "application"; // Modify this for custom colors, font-sizes, etc
+@import "fresh/less/all";
 @import "common/mixins";
 @import "bootstrap/less/mixins";
 
@@ -29,28 +30,6 @@ body {
 
 @import "bootstrap/less/forms";
 
-
-//@import "inputs.less";
-@import "lch-checkbox.less";
-
-.demo-checkbox{
-    //    @background - Checkbox background
-    //    @color - Text color
-    //    @fontSize - Font size
-    //    @width - Width of the checkbox
-    //    @height - Height of the checkbox
-    //    @lineHeight - Line height for the checkbox
-    //    @textAlign - Text align for the text 
-    //    @display - Display type
-    //    @border - Border style/color/size
-    //    @borderRadius - Border radius
-    //    @hoverColor - Text color for hover state
-    //    @hoverBackground - Background for hover state
-    //    @activeColor - Text colro for active state
-    //    @activeBackground - Background for active state
-
-    .lch-checkbox(#fff, #333, 13px, 50px, 20px, 20px, center, block, 1px solid #ccc, 5px, #666, #efefef, #fff, #27b4ff);
-}
 
 input {
   .neatTick();
@@ -101,6 +80,7 @@ article {
 
 body {
 
+    &.screen.state-expanded,
     &.splash.state-expanded,
     &.lesson.state-expanded {
         #intro {
@@ -118,6 +98,7 @@ body {
 
     .menu {
         .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+        .side-menu-color(@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
         .transition(.3s ease-in-out left);
 
         nav.flag {
@@ -127,7 +108,7 @@ body {
                 border-radius: 15px;
                 border: 2px solid @fluent-red;
                 padding: 6px;
-                width: 5em;
+                min-width: 5em;
             }
         }
     }
@@ -256,6 +237,7 @@ body.lesson .menu {
     h3 {
         position: relative;
         // left: 700px;
+        margin-top: 0;
         margin-bottom: 10px;
         //text-align: center;
         font-size: 1.6em;
@@ -342,6 +324,7 @@ body.lesson .menu {
                 display: inline-block;
                 font-size: 15px;
                 padding: 10px 10px 5px 0;
+                margin-top: 0;
                 vertical-align: top;
                 color: #888;
             }
@@ -446,6 +429,10 @@ html body.splash {
             margin-left: @col1-left;
             width: @col1-width;
             max-width: @col-max-width;
+
+            .btn {
+                margin: 1em;
+            }
         }
 
         // the footer is used to set start of article when intro is fixed
@@ -659,4 +646,5 @@ html body.lesson-color {
 
 @import "paging";
 
-@import "common/mediaelementplayer";
+@import "fresh/less/mediaelementplayer";
+
