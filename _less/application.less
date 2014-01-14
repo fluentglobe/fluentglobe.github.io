@@ -375,6 +375,52 @@
     // }
 }
 
+.social-icon-bar(@icon-size: 40px,@color: #888, @hover-color: #08C) {
+    h4 {
+        display: inline-block;
+        font-size: 15px;
+        margin: 0;
+        padding: (@icon-size/4) (@icon-size/4) 5px 0;
+        vertical-align: top;
+        color: @color;
+    }
+    .social-icon {
+        font-family: "socialicoregular";
+        font-size: @icon-size;
+        color: #888;
+        text-decoration: none;
+        line-height: 1;
+
+        &:hover {
+            color: @hover-color;
+        }
+    }
+}
+
+.fixedBackground(@bottom-gap: 30px) {
+
+    .menu {
+        position: fixed;
+    }
+
+    #intro {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+
+        // the footer is used to set start of article when intro is fixed
+        > footer {
+            position:relative;
+            margin-top: @bottom-gap;
+        }
+    }
+    article {
+        margin-top: 100%;
+        z-index: 100;
+    }
+}
+
+
 .outhangingHeader(@header-height: 60px, @bg-color: rgba(0,0,0,.7),@bg-color-ie:rgb(40,40,40)) {
 
     > header {

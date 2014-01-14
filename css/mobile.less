@@ -88,8 +88,15 @@ body {
             margin-right: -@menu-width;
         }
         article {
-            left: @menu-width;
-            margin-right: -@menu-width;
+            padding-left: @menu-width;
+
+            > header {
+                left: @menu-width;
+            }
+            > section {
+                position: relative;
+                margin-right: -@menu-width;
+            }
         }
         .menu {
             left: 0;
@@ -331,18 +338,20 @@ body.lesson .menu {
             nav {
                 display: inline-block;
             }
-        }
-        .social-icon {
-            font-family: "socialicoregular";
-            font-size: 40px;
-            color: #888;
-            text-decoration: none;
-            line-height: 1;
 
-            &:hover {
-                color: #08C;
-            }
+            .social-icon-bar();
         }
+        // .social-icon {
+        //     font-family: "socialicoregular";
+        //     font-size: 40px;
+        //     color: #888;
+        //     text-decoration: none;
+        //     line-height: 1;
+
+        //     &:hover {
+        //         color: #08C;
+        //     }
+        // }
     }
 
     .articleSections();

@@ -1465,7 +1465,17 @@ body.lesson.state-expanded #intro {
 body.screen.state-expanded article,
 body.splash.state-expanded article,
 body.lesson.state-expanded article {
+  padding-left: 160px;
+}
+body.screen.state-expanded article > header,
+body.splash.state-expanded article > header,
+body.lesson.state-expanded article > header {
   left: 160px;
+}
+body.screen.state-expanded article > section,
+body.splash.state-expanded article > section,
+body.lesson.state-expanded article > section {
+  position: relative;
   margin-right: -160px;
 }
 body.screen.state-expanded .menu,
@@ -1542,7 +1552,7 @@ body .menu ul q {
   padding: .5em 1em;
 }
 body .menu > ul {
-  padding: 1em 0 0 1em;
+  padding: 1em 0 0 0;
 }
 body .menu > a,
 body .menu > q {
@@ -1817,15 +1827,23 @@ body.lesson .menu nav.flag label {
 .splash article > header .follow nav {
   display: inline-block;
 }
-.splash article > header .social-icon {
+.splash article > header .follow h4 {
+  display: inline-block;
+  font-size: 15px;
+  margin: 0;
+  padding: 10px 10px 5px 0;
+  vertical-align: top;
+  color: #888888;
+}
+.splash article > header .follow .social-icon {
   font-family: "socialicoregular";
   font-size: 40px;
   color: #888;
   text-decoration: none;
   line-height: 1;
 }
-.splash article > header .social-icon:hover {
-  color: #08C;
+.splash article > header .follow .social-icon:hover {
+  color: #0088cc;
 }
 .splash article section {
   padding-top: 3em;
