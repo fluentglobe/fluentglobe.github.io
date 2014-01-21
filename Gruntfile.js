@@ -182,7 +182,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['_libs/*.js', 'assets/lib/**/*.js'],
-        tasks: ['jshint','concat:essential'],
+        tasks: ['jshint','concat:essential','concat:app'],
         options: {
           spawn: false
         }
@@ -296,7 +296,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   // Default Task
-  grunt.registerTask('default', ['concurrent']);
+  grunt.registerTask('default', ['less:dev','concat:essential','concat:app','concurrent']);
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
     'qunit','concat','uglify']);

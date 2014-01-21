@@ -1,3 +1,6 @@
+/*! Fluent Globe - v0.1.0 - 2014-01-21
+* http://fluentglobe.com
+* Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
 
 /*!
@@ -1935,8 +1938,6 @@ function roleAccessor(role) {
 essential.set("roleAccessor",roleAccessor);
 
 }();
-/*
-*/
 !function() {
 
 var essential = Resolver("essential"),
