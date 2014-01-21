@@ -28,7 +28,9 @@ body-class: lesson lesson-color
 
 
     <article>
-        <header></header>
+        <header>
+            <audio id="page-audio" src="/assets/i-dont-eat-nuts.mp3"></audio>
+        </header>
         <section data-role="'layouter':'paged-section'">
 {{ content }}
         </section>
@@ -68,6 +70,14 @@ body-class: lesson lesson-color
         Resolver("page").on("true","state.launching",function(){
             // scrollTo(0,1);
             // document.body.scrollTop = 25;
+
+            // var player = new MediaElementPlayer("page-audio", {
+            //     startVolume: 0.8
+            // }); 
+
+            var player = $("#page-audio").mediaelementplayer()[0].player;
+            // var player = $("#page-audio")[0];
+            Resolver("page").set("player",player);
         });
 
         }();
