@@ -1,33 +1,26 @@
 /*!
-    Essential JavaScript ❀ http://essentialjs.com
-    Copyright (C) 2011-2013 by Henrik Vendelbo
+    Essential JavaScript - v0.4.0 ❀ http://essentialjs.com
+    Copyright (c) 2011-2014 Henrik Vendelbo
 
     This program is free software: you can redistribute it and/or modify it under the terms of
     the GNU Affero General Public License version 3 as published by the Free Software Foundation.
 
     Additionally,
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
-    and associated documentation files (the "Software"), to deal in the Software without restriction, 
-    including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
-    and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+    and associated documentation files (the 'Software'), to deal in the Software without restriction,
+    including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
     subject to the following conditions:
 
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
+    THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
     BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
-/**
- *
- * options.name
- * options.generator
- * options.mixinto
- */
 function Resolver(name_andor_expr,ns,options)
 {
 	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
@@ -123,6 +116,7 @@ function Resolver(name_andor_expr,ns,options)
             if (top == undefined) { // catching null as well (not sure if it's desirable)
                 switch(onundefined) {
                 case undefined:
+                case "force":
                 case "generate":
                 	if (top === undefined) {
 	                    top = prev_top[n] = (options.generator || Generator.ObjectGenerator)();
@@ -581,7 +575,7 @@ function Resolver(name_andor_expr,ns,options)
                 //TODO swap script with the id. If cachebuster param update timestamp
                 var script = document.getElementById(this.options.touchScript);
                 if (script) {
-                    var newScript = Resolver("essential::HTMLScriptElement")(script);
+                    var newScript = Resolver("essential::HTMLScriptElement::")(script);
                     try {
                         //TODO if (! state.unloading)
                     script.parentNode.replaceChild(newScript,script);
@@ -697,7 +691,9 @@ function Resolver(name_andor_expr,ns,options)
                 var leafName = baseNames.pop();
                 var base = _resolve(baseNames,null,"undefined");
                 var ev = _makeResolverEvent(resolver,type,selector,data,callback);
+                ev.binding = true;
                 ev.trigger(base,leafName,base == undefined? undefined : base[leafName]);
+                ev.binding = false;
             }
             var types = type.split(" ");
             for(var i=0,type; type = types[i]; ++i) {
@@ -779,6 +775,12 @@ function Resolver(name_andor_expr,ns,options)
         }
 		var symbol = names.pop();
 		var base = _resolve(names,null,onundefined);
+        if (onundefined=="force" && (typeof base != "object" || typeof base != "function")) {
+            var leaf = names.pop();
+            _resolve(names,null,onundefined)[leaf] = {};
+            names.push(leaf);
+            base = _resolve(names,null,onundefined);
+        }
         var oldValue = base[symbol];
 		if (_setValue(value,names,base,symbol)) {
 			var ref = resolver.references[name];
@@ -928,14 +930,6 @@ Resolver.exists = function(name) {
 Resolver({},{ name:"default" });
 Resolver(window, {name:"window"});
 
-/**
- * Generator(constr) - get cached or new generator
- * Generator(constr,base1,base2) - define with bases
- * Generator(constr,base,options) - define with options 
- *
- * options { singleton: false, pool: undefined, allocate: true } 
- *
- */
 function Generator(mainConstr,options)
 {
 	//"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
@@ -1339,7 +1333,6 @@ Generator.discardRestricted = function()
 };
 
 
-/*jslint white: true */
 // types for describing generator arguments and generated properties
 !function (win) {
 	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
@@ -1579,8 +1572,16 @@ Generator.discardRestricted = function()
 		}
 	}
 	
+	function ensureCleaner(el,cleaner) {
+
+		if (el._cleaners == undefined) el._cleaners = [];
+		if (!arrayContains(el._cleaners,cleaner)) el._cleaners.push(cleaner); 
+	}
+	essential.declare("ensureCleaner",ensureCleaner);
+
 	/**
 	 * Cleans up registered event listeners and other references
+	 * LIFO call order
 	 * 
 	 * @param {Element} el
 	 */
@@ -1589,23 +1590,38 @@ Generator.discardRestricted = function()
 		if (typeof el == "object" && el) {
 			var _cleaners = el._cleaners, c;
 			if (_cleaners != undefined) {
+				_cleaners._incall = (_cleaners._incall || 0) + 1;
 				do {
 					c = _cleaners.pop();
 					if (c) c.call(el);
 				} while(c);
-				_cleaners = undefined;
+				el._cleaners = undefined;
 			}
 		} 
-	};
+	}
 	essential.declare("callCleaners",callCleaners);
 
-	//TODO recursive clean of element and children?
-	function cleanRecursively(el) {
-		callCleaners(el);
+	/*
+	 * Cleans up registered event listeners and other references
+	 * Children first.
+	 */
+	function cleanRecursively(el,unwind,nested) {
+		unwind = unwind || 0;
+		var cleaners = el._cleaners = el._cleaners || [];
+		var incall = cleaners._incall || 0;
+		var cleanMe = !nested && !cleaners._inrecurse;
+
+		if (incall > unwind) return; // if in the middle of cleaning leave branch alone
+
+		cleaners._inrecurse = (cleaners._inrecurse || 0) + 1;
+
 		for(var child=el.firstElementChild!==undefined? el.firstElementChild : el.firstChild; child; 
 			child = child.nextElementSibling!==undefined? child.nextElementSibling : child.nextSibling) {
-			cleanRecursively(child);
+			if (child.nodeType == 1) cleanRecursively(child,unwind,true); //TODO perhaps run through .children instead
 		}
+
+		if (cleanMe) callCleaners(el);
+		--cleaners._inrecurse;
 	}
 	essential.declare("cleanRecursively",cleanRecursively);
 
@@ -1622,12 +1638,15 @@ Generator.discardRestricted = function()
 			if (se) {
 				// set { sizingElement:true } on conf?
 				var desc = EnhancedDescriptor(c,role,conf,false,appConfig);
-				desc.context.layouterParent = layouterDesc;
+				desc.context.layouterParent = layouterDesc.layouter;
 				sizingElements[desc.uniqueID] = desc;
 			}
 		}
 	}
 	var Layouter = essential.declare("Layouter",Generator(_Layouter));
+
+	_Layouter.prototype.init = function(el,conf,sizing,layout) {};
+	_Layouter.prototype.destroy = function(el) {};
 
 	/*
 		Called for descendants of the layouter to allow forcing sizing, return true to force
@@ -1656,6 +1675,8 @@ Generator.discardRestricted = function()
 	}
 	var Laidout = essential.declare("Laidout",Generator(_Laidout));
 
+	_Laidout.prototype.init = function(el,conf,sizing,layout) {};
+	_Laidout.prototype.destroy = function(el) {};
 	_Laidout.prototype.layout = function(el,layout) {};
 	_Laidout.prototype.calcSizing = function(el,sizing) {};
 
@@ -1677,6 +1698,8 @@ Generator.discardRestricted = function()
 	function enhanceQuery() {
 		var pageResolver = Resolver("page"),
 			handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
+
+		for(var i=0,desc; desc = this[i]; ++i) if (desc.inits.length>0) desc._init();
 
 		for(var i=0,desc; desc = this[i]; ++i) {
 
@@ -1753,6 +1776,17 @@ Generator.discardRestricted = function()
 			//TODO
 			if (el) {
 
+			} else {
+				// "[role=dialog]"
+				if (sel.substring(0,6) == "[role=") {
+					var role = sel.substring(6,sel.length-1);
+					for(var id in enhancedElements) {
+						var desc = enhancedElements[id];
+						if (desc.role == role) {
+							q.push(desc);
+						}
+					}
+				}
 			}
 		} else {
 			var ac = essential("ApplicationConfig")();
@@ -1764,7 +1798,7 @@ Generator.discardRestricted = function()
 					var desc = EnhancedDescriptor(e,role,conf,false,ac);
 					if (desc) q.push(desc);
 				}
-			} else {
+			} else if (el.nodeType == 1) {
 				//TODO third param context ? integrate with desc.context
 				//TODO identify existing descriptors
 
@@ -1793,10 +1827,31 @@ Generator.discardRestricted = function()
 		var roles = role? role.split(" ") : [];
 
 		this.el = el;
+		// sizingHandler
 		this.sizing = {
-			"contentWidth":0,"contentHeight":0
+			"contentWidth":0,"contentHeight":0,
+
+			track: {
+				sizeBy: "offset",
+				contentBy: "scroll",
+				width:true, height:true,
+				contentWidth: true, contentHeight: true,
+				scrollLeft:false, scrollTop: false
+			}
 		};
+		this.placement = essential("ElementPlacement")(el,[]);
+		this.placement.manually(["overflow"]);
+		if (this.placement.style.overflow == "visible") this._updateDisplayed = this._updateDisplayedNotNone;
+
+		this.layout = {
+			// "displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
+			"lastDirectCall": 0,
+			"enable": false,
+			"throttle": null //TODO throttle by default?
+		};
+		this._updateDisplayed();
 		this.ensureStateful();
+		ensureCleaner(this.el,_roleEnhancedCleaner); //TODO either enhanced, layouter, or laidout
 		this.stateful.set("state.needEnhance", roles.length > 0);
 		this.uniqueID = uniqueID;
 		this.roles = roles;
@@ -1806,14 +1861,8 @@ Generator.discardRestricted = function()
 		this.instance = null;
 		this.controller = null; // Enhanced Controller can be separate from instance
 
-		// sizingHandler
-		this.layout = {
-			"displayed": !(el.offsetWidth == 0 && el.offsetHeight == 0),
-			"lastDirectCall": 0,
-			"enable": false,
-			"throttle": null //TODO throttle by default?
-		};
-		// layoutHandler
+		// layoutHandler / maintained
+		this.state.initDone = false; // might change to reconfigured=true
 		this.state.enhanced = false;
 		this.state.discarded = false;
 		this.state.contentManaged = false; // The content HTML is managed by the enhanced element the content will not be enhanced automatically
@@ -1821,9 +1870,30 @@ Generator.discardRestricted = function()
 		this.page = page;
 		this.handlers = page.resolver("handlers");
 		this.enabledRoles = page.resolver("enabledRoles");
+		this.inits = [];
+
+		if (this.role) this.inits.push(this._roleInit);
+
 		this._updateContext();
-		this._init();
 	}
+
+	_EnhancedDescriptor.prototype._init = function() {
+		this._updateContext();
+		for(var i=0,c; c = this.inits[i]; ++i) c.call(this);
+		this.inits.length = 0;
+	};
+
+	_EnhancedDescriptor.prototype._roleInit = function() {
+		if (this.handlers.init[this.role]) {
+			this.handlers.init[this.role].call(this,this.el,this.role,this.conf,this.context);
+		}
+	};
+	_EnhancedDescriptor.prototype._layouterInit = function() {
+		if (this.layouter) this.layouter.init(this.el,this.conf,this.sizing,this.layout);
+	};
+	_EnhancedDescriptor.prototype._laidoutInit = function() {
+		if (this.laidout) this.laidout.init(this.el,this.conf,this.sizing,this.layout);
+	};
 
 	_EnhancedDescriptor.prototype._updateContext = function() {
 		this.context.el = null;
@@ -1838,7 +1908,7 @@ Generator.discardRestricted = function()
 						this.context.layouterParent = desc.layouter;
 						this.context.layouterEl = desc.el;
 					}
-					if (this.context.el == null) {
+					if (this.context.el == null && (this.state.enhanced || this.state.needEnhance)) { // skip non-enhanced
 						this.context.el = el;
 						this.context.uniqueID = el.uniqueID;
 						this.context.instance = desc.instance;
@@ -1856,9 +1926,21 @@ Generator.discardRestricted = function()
 		}
 	};
 
-	_EnhancedDescriptor.prototype._init = function() {
-		if (this.role && this.handlers.init[this.role]) {
-			this.handlers.init[this.role].call(this,this.el,this.role,this.conf,this.context);
+	_EnhancedDescriptor.prototype._updateLayouterContext = function() {
+		this.context.el = null;
+		this.context.controller = null;
+		for(var el = this.el.parentNode; el; el = el.parentNode) {
+			if (el.uniqueID) {
+				var desc = enhancedElements[el.uniqueID];
+				if (desc) {
+
+					// in case it wasn't set by the layouter constructor
+					if (this.context.layouterParent == null && desc.layouter) {
+						this.context.layouterParent = desc.layouter;
+						this.context.layouterEl = desc.el;
+					}
+				}
+			}
 		}
 	};
 
@@ -1872,6 +1954,7 @@ Generator.discardRestricted = function()
 		var stateful = this.stateful = essential("StatefulResolver")(this.el,true);
 		this.state = stateful("state");
 		stateful.set("sizing",this.sizing);
+		stateful.set("layout",this.layout);
 		stateful.on("change","state",this,this.onStateChange); //TODO remove on discard
 	};	
 
@@ -1892,8 +1975,12 @@ Generator.discardRestricted = function()
 	};
 
 
-	function _roleEnhancedCleaner(desc) {
-		return function() {
+	function _roleEnhancedCleaner() {
+		if (this.uniqueID == null) return; // just in case, shouldn't happen
+		var desc = enhancedElements[this.uniqueID];
+		if (desc) {
+			if (desc.laidout) desc.laidout.destroy(desc.el);
+			if (desc.layouter) desc.layouter.destroy(desc.el);
 			//TODO destroy
 			//TODO discard/destroy for layouter and laidout
 
@@ -1902,13 +1989,16 @@ Generator.discardRestricted = function()
 
 			// if (desc.discardHandler) 
 			var r = desc.discardHandler(desc.el,desc.role,desc.instance);
-			desc._unlist(); // make sure that sizing stops
+			// desc._domCheck();
+			desc._unlist(true); // make sure that sizing stops
 
 			if (controller && controller.discarded) controller.discarded(desc.el,desc.instance);
 
+			//TODO discard queue for generator instances
+
 			return r;
-		};
-	};
+		}
+	}
 
 	//TODO keep params on page
 
@@ -1932,8 +2022,9 @@ Generator.discardRestricted = function()
 			if (this.layoutHandler && this.layoutHandler.throttle) this.layout.throttle = this.layoutHandler.throttle;
 			var discardHandler = handlers.discard[this.role];
 			if (discardHandler) this.discardHandler = discardHandler;
-			this.el._cleaners.push(_roleEnhancedCleaner(this)); //TODO either enhanced, layouter, or laidout
-			if (this.sizingHandler) sizingElements[this.uniqueID] = this;
+
+			// if (this.sizingHandler), enhanced will update layout even if no sizingHandler
+			if (this.sizingHandler !== false) sizingElements[this.uniqueID] = this;
 			if (this.layoutHandler) {
 				this.layout.enable = true;
 				maintainedElements[this.uniqueID] = this;
@@ -1944,15 +2035,17 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype._tryMakeLayouter = function(key) {
 
 		if (this.conf.layouter && this.layouter==undefined) {
+			this._updateLayouterContext();
 			var varLayouter = Layouter.variants[this.conf.layouter];
 			if (varLayouter) {
 				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.context.layouterParent);
-				if (this.context.layouterParent) sizingElements[this.uniqueID] = this;
+				if (this.context.layouterParent) sizingElements[this.uniqueID] = this; //TODO not sure this is needed, adds overhead
 				if (varLayouter.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
-	                this.layout.queued = true;
+	                // this.layout.queued = true; laidout will queue it
 	                maintainedElements[this.uniqueID] = this;
 				}
+				this.inits.push(this._layouterInit);
 			}
 		}
 	};
@@ -1960,6 +2053,7 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype._tryMakeLaidout = function(key) {
 
 		if (this.conf.laidout && this.laidout==undefined) {
+			this._updateLayouterContext();
 			var varLaidout = Laidout.variants[this.conf.laidout];
 			if (varLaidout) {
 				this.laidout = this.el.laidout = varLaidout.generator(key,this.el,this.conf,this.context.layouterParent);
@@ -1969,6 +2063,7 @@ Generator.discardRestricted = function()
 	                this.layout.queued = true;
 	                maintainedElements[this.uniqueID] = this;
 				}
+				this.inits.push(this._laidoutInit);
 			}
 		}
 
@@ -1980,6 +2075,8 @@ Generator.discardRestricted = function()
 	_EnhancedDescriptor.prototype.refresh = function() {
 		var getActiveArea = essential("getActiveArea"); //TODO switch to Resolver("page::activeArea")
 		var updateLayout = false;
+
+		if (this.el && this.el.stateful == null) this.liveCheck();
 		
 		if (this.layout.area != getActiveArea()) { 
 			this.layout.area = getActiveArea();
@@ -1987,10 +2084,14 @@ Generator.discardRestricted = function()
 		}
 
 		if (updateLayout || this.layout.queued) {
+			//proxyConsole.debug("Refresh element","w="+this.layout.width,"h="+this.layout.height, updateLayout?"updateLayout":"",this.layout.queued?"queued":"", this.role, this.uniqueID)
 			if (this.layoutHandler) this.layoutHandler(this.el,this.layout,this.instance);
 			var layouter = this.layouter, laidout = this.laidout;
 			if (layouter) layouter.layout(this.el,this.layout,this.laidouts()); //TODO pass instance
-			if (laidout) laidout.layout(this.el,this.layout); //TODO pass instance
+			if (laidout) {
+				laidout.layout(this.el,this.layout); //TODO pass instance
+				if (this.context.layouterEl) this.context.layouterEl.stateful.set("layout.queued",true);
+			}
 
             this.layout.queued = false;
 		}	
@@ -2000,7 +2101,7 @@ Generator.discardRestricted = function()
 		var laidouts = []; // laidouts and layouter
         for(var n in sizingElements) {
             var desc = sizingElements[n];
-            if (desc.context.layouterParent == this) laidouts.push(desc.el);
+            if (desc.context.layouterParent == this.layouter && desc.laidout) laidouts.push(desc.el);
         }        
 		// for(var c = this.el.firstElementChild!==undefined? this.el.firstElementChild : this.el.firstChild; c; 
 		// 				c = c.nextElementSibling!==undefined? c.nextElementSibling : c.nextSibling) {
@@ -2009,8 +2110,8 @@ Generator.discardRestricted = function()
 		return laidouts;
 	};
 
-	_EnhancedDescriptor.prototype.liveCheck = function() {
-		if (!this.state.enhanced || this.state.discarded) return;
+	_EnhancedDescriptor.prototype._domCheck = function() {
+
 		var inDom = document.body==this.el || essential("contains")(document.body,this.el); //TODO reorg import
 		//TODO handle subpages
 		if (!inDom) {
@@ -2019,22 +2120,38 @@ Generator.discardRestricted = function()
 		}
 	};
 
+	_EnhancedDescriptor.prototype.liveCheck = function() {
+		if (!this.state.enhanced || this.state.discarded) return;
+		this._domCheck();
+	};
+
+	_EnhancedDescriptor.prototype._null = function() {
+
+		this.sizingHandler = undefined;
+		this.layoutHandler = undefined;
+		this.layouter = undefined;
+		this.laidout = undefined;
+		this.layout.enable = false;					
+		this.context = undefined;
+		this._updateContext = function() {}; //TODO why is this called after discard, fix that
+	};
+
 	_EnhancedDescriptor.prototype.discardNow = function() {
 		if (this.state.discarded) return;
 
 		cleanRecursively(this.el);
-		this.context = undefined;
+		this._null();
 		this.el = undefined;
 		this.state.discarded = true;					
-		this.layout.enable = false;					
 	};
 
 	_EnhancedDescriptor.prototype._unlist = function(forget) {
-		this.state.discarded = true;					
+		this.state.discarded = true;	//TODO is this correct??? prevents discardNow				
 		if (this.layout.enable) delete maintainedElements[this.uniqueID];
 		if (sizingElements[this.uniqueID]) delete sizingElements[this.uniqueID];
 		if (unfinishedElements[this.uniqueID]) delete unfinishedElements[this.uniqueID];
 		if (forget) delete enhancedElements[this.uniqueID];
+		this._null();
 	};
 
 	_EnhancedDescriptor.prototype._queueLayout = function() {
@@ -2045,36 +2162,70 @@ Generator.discardRestricted = function()
 		}
 
 		if (this.layout.width != this.sizing.width || this.layout.height != this.sizing.height) {
+			this.layout.oldWidth = this.layout.width;
+			this.layout.oldHeight = this.layout.height;
 			this.layout.width = this.sizing.width;
 			this.layout.height = this.sizing.height;
 			this.layout.queued = true;
 		}
 		if (this.layout.contentWidth != this.sizing.contentWidth || this.layout.contentHeight != this.sizing.contentHeight) {
+			this.layout.oldContentWidth = this.layout.contentWidth;
+			this.layout.oldContentHeight = this.layout.contentHeight;
 			this.layout.contentWidth = this.sizing.contentWidth;
 			this.layout.contentHeight = this.sizing.contentHeight;
 			this.layout.queued = true;
 		}
 	};
 
+	_EnhancedDescriptor.prototype._updateDisplayed = function() {
+		this.sizing.displayed = !(this.sizing.width == 0 && this.sizing.height == 0);
+	};
+
+	_EnhancedDescriptor.prototype._updateDisplayedNotNone = function() {
+		//TODO 
+		this.placement.manually(["display"])
+		this.sizing.displayed = this.placement.style.display != "none";
+	};
+
 	_EnhancedDescriptor.prototype.checkSizing = function() {
 
+		var track = this.sizing.track;
+
 		// update sizing with element state
-		var ow = this.sizing.width = this.el.offsetWidth;
-		var oh = this.sizing.height = this.el.offsetHeight;
-		this.sizing.displayed = !(ow == 0 && oh == 0);
-		this.sizing.contentWidth = this.el.scrollWidth;
-		this.sizing.contentHeight = this.el.scrollHeight;
+		this.sizing.width = this.el[track.sizeBy+"Width"];
+		this.sizing.height = this.el[track.sizeBy+"Height"];
+		this._updateDisplayed();
 
-		if (this.sizingHandler) this.sizingHandler(this.el,this.sizing,this.instance);
-		if (this.laidout) this.laidout.calcSizing(this.el,this.sizing);
-		if (this.context.layouterParent && this.context.layouterParent.layouter) this.context.layouterParent.layouter.calcSizing(this.el,this.sizing,this.laidout);
+		// seems to be displayed
+		if (this.sizing.displayed) {
+			if (track.contentWidth) this.sizing.contentWidth = this.el[track.contentBy+"Width"];
+			if (track.contentHeight) this.sizing.contentHeight = this.el[track.contentBy+"Height"];
+			if (track.scrollTop) this.sizing.scrollTop = this.el.scrollTop;
+			if (track.scrollLeft) this.sizing.scrollLeft = this.el.scrollLeft;
 
-		this._queueLayout();
-		if (this.layout.queued) {
-			if (this.context.layouterParent) this.context.layouterParent.layout.queued = true;
+			if (this.sizingHandler) this.sizingHandler(this.el,this.sizing,this.instance);
+			if (this.laidout) this.laidout.calcSizing(this.el,this.sizing);
+			if (this.context.layouterParent) this.context.layouterParent.calcSizing(this.el,this.sizing,this.laidout);
+
+			if (this.sizing.forceLayout) {
+				this.sizing.forceLayout = false;
+				this.sizing.queued = true;
+			}
+			this._queueLayout();
+
+		// not displayed, and was last time			
+		} else if (this.layout.displayed) {
+			this.layout.displayed = false;
+			this.layout.queued = true;
 		}
 	};
 
+    _EnhancedDescriptor.prototype.applyStyle = function() {
+        for(var n in this.layout.style) {
+            this.el.style[n] = this.layout.style[n];
+        }
+    };
+ 
 	_EnhancedDescriptor.prototype.getController = function() {
 		// _updateContext
 
@@ -2102,7 +2253,6 @@ Generator.discardRestricted = function()
 		enhancedElements[uniqueID] = desc;
 		var descriptors = page.resolver("descriptors");
 		descriptors[uniqueID] = desc;
-		if (el._cleaners == undefined) el._cleaners = [];
 
 		return desc;
 	}
@@ -2128,20 +2278,37 @@ Generator.discardRestricted = function()
 	EnhancedDescriptor.refreshAll = function() {
 		if (document.body == undefined) return;
 
+		for(var n in maintainedElements) {
+			var desc = maintainedElements[n];
+
+			if (desc.inits.length>0) desc._init();
+		}
+
 		for(var n in sizingElements) {
 			var desc = sizingElements[n];
 			desc.checkSizing();
 		}
 
+        for(var n in maintainedElements) {
+            var desc = maintainedElements[n];
+ 
+            if (desc.laidout && desc.layout.enable && !desc.state.discarded) {
+                desc.refresh();
+            }
+        }
 		for(var n in maintainedElements) {
 			var desc = maintainedElements[n];
 
-			if (desc.layout.enable && !desc.state.discarded) {
+			if (!desc.laidout && desc.layout.enable && !desc.state.discarded) {
 				desc.refresh();
 			}
 		}
 		for(var n in sizingElements) {
 			var desc = sizingElements[n];
+            if (desc.layout.style) {
+                desc.applyStyle();
+                desc.layout.style = undefined;
+            }
 			desc.layout.queued = false;
 		}
 	};
@@ -2154,7 +2321,10 @@ Generator.discardRestricted = function()
 
 			desc.liveCheck();
 			//TODO if destroyed, in round 2 discard & move out of maintained 
-			if (desc.state.discarded) desc._unlist(); // leave it in .all
+			if (desc.state.discarded) {
+				if (desc.el) cleanRecursively(desc.el);
+				desc._unlist(); // leave it in .all}
+			}
 		}
 	};
 
@@ -2277,7 +2447,7 @@ Generator.discardRestricted = function()
 			instantiatePageSingletons();
 		}
 		catch(ex) {
-			essential("console").error("Failed to launch delayed assets and singletons",ex);
+			proxyConsole.error("Failed to launch delayed assets and singletons",ex);
 		}
 	}
 	function fireLoad()
@@ -2425,17 +2595,17 @@ Generator.discardRestricted = function()
 		if (window.console.debug == undefined) {
 			// IE8
 			proxyConsole["log"] = function(m) { 
-				window.console.log(m); };
+				window.console.log(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["trace"] = function(m) { 
 				window.console.trace(); };
 			proxyConsole["debug"] = function(m) { 
-				window.console.log(m); };
+				window.console.log(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["info"] = function(m) { 
-				window.console.info(m); };
+				window.console.info(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["warn"] = function(m) { 
-				window.console.warn(m); };
+				window.console.warn(Array.prototype.join.call(arguments," ")); };
 			proxyConsole["error"] = function(m) { 
-				window.console.error(m); };
+				window.console.error(Array.prototype.join.call(arguments," ")); };
 		}
 	}
 	essential.declare("setWindowConsole",setWindowConsole);
@@ -3622,7 +3792,7 @@ Generator.discardRestricted = function()
 					if (_from[n] !== undefined) e[n] = _from[n]; 
 					break;
 
-				case "impl":
+				case "set impl":
 					if (_from[n]) e.impl = HTMLElement.impl(e);
 					break;
 
@@ -3690,12 +3860,6 @@ Generator.discardRestricted = function()
 	HTMLElement.discard = function(el,leaveInDom) {
 
 		this.query(el).discard();
-		// var desc = EnhancedDescriptor.all[el.uniqueID];
-		// if (desc) {
-		// 	desc.discardNow();
-		// 	desc._unlist();
-		// }
-		essential("cleanRecursively")(el);
 
 		if (!leaveInDom) el.parentNode.removeChild(el);
 	};
@@ -3728,27 +3892,78 @@ Generator.discardRestricted = function()
 	essential.set("HTMLScriptElement",HTMLScriptElement);
 
 
-	function _ElementPlacement(el,track) {
-		this.el = el;
+	function _ElementPlacement(el,track,calcBounds) {
 		this.bounds = {};
 		this.style = {};
-		this.track = track || ["visibility","marginLeft","marginRight","marginTop","marginBottom"];
+		this.track = track || ["display","visibility","marginLeft","marginRight","marginTop","marginBottom"];
+		this.calcBounds = calcBounds;
 
-		if (el.currentStyle &&(document.defaultView == undefined || document.defaultView.getComputedStyle == undefined)) {
+		this.compute(el || null);
+	}
+	var ElementPlacement = essential.declare("ElementPlacement",Generator(_ElementPlacement));
+
+	_ElementPlacement.prototype.setElement = function(newEl) {
+		this.el = newEl;
+		this.computes = [];
+
+		//TODO dedicated compute functions
+		if (this.el && this.el.currentStyle &&(document.defaultView == undefined || document.defaultView.getComputedStyle == undefined)) {
+			this._setComputed = this._setComputedIE;
 			this._compute = this._computeIE;
 		}
 		if (document.body.getBoundingClientRect().width == undefined) {
 			this._bounds = this._boundsIE;
 		}
 
-		this.compute();
-	}
-	var ElementPlacement = essential.declare("ElementPlacement",Generator(_ElementPlacement));
+		if (this.calcBounds === false) this._bounds = function() {};
 
-	_ElementPlacement.prototype.compute = function() {
-		this._bounds();
-		for(var i=0,s; !!(s = this.track[i]); ++i) {
-			this.style[s] = this._compute(s);
+		this.doCompute = !(this.el == null || this.el.nodeType !== 1);
+
+		this.computes = this._getComputes(this.track);
+	};
+
+	_ElementPlacement.prototype._getComputes = function(names) {
+
+		var computes = [];
+		for(var i=0,s; this.doCompute && !!(s = names[i]); ++i) {
+			switch(s) {
+				case "display":
+				case "visibility":
+				// case "zIndex":
+				case "breakBefore":
+				case "breakAfter":
+					computes.push(this._compute_simple);
+					break;
+				default:
+					computes.push(this._compute);
+					break;
+			}
+		}
+		return computes;
+	};
+
+	_ElementPlacement.prototype.compute = function(newEl) {
+		if (newEl != undefined) this.setElement(newEl);
+
+		if (newEl == undefined || contains(document.body,newEl)) {
+
+			if (this.doCompute) {
+				if (this.calcBounds !== false) this._bounds();
+				this._setComputed();
+
+				for(var i=0,fn; !!(fn = this.computes[i]); ++i) {
+					this.style[this.track[i]] = fn.call(this,this.track[i]);
+				}
+			}
+		} 
+		// else ignore (could queue for compute)
+	};
+
+	_ElementPlacement.prototype.manually = function(names) {
+		var computes = this._getComputes(names);
+		this._setComputed();
+		for(var i=0,fn; fn = computes[i]; ++i) {
+			this.style[names[i]] = fn.call(this,names[i]);
 		}
 	};
 
@@ -3763,8 +3978,6 @@ Generator.discardRestricted = function()
 			left: bounds.left, right: bounds.right, top: bounds.top, bottom: bounds.bottom
 		};
 	};
-
-	_ElementPlacement.prototype.PIXEL = /^\d+(px)?$/i;
 
 	_ElementPlacement.prototype.KEYWORDS = {
 		'medium':"2px"	
@@ -3809,7 +4022,7 @@ Generator.discardRestricted = function()
 		'lineHeight': 'top', 
 		'text-indent': 'size',
 		'textIndent': 'size',
-		
+
 		'width': 'size',
 		'height': 'top',
 		'max-width': 'size',
@@ -3833,6 +4046,7 @@ Generator.discardRestricted = function()
 		"height":"offsetHeight"
 	};
 
+	//TODO generate based on currentStyle
 	_ElementPlacement.prototype.CSS_NAME = {
 		'backgroundColor':'background-color',
 		'backgroundImage':'background-image',
@@ -3858,6 +4072,9 @@ Generator.discardRestricted = function()
 		'marginRight': 'margin-right',
 		'marginTop': 'margin-top',
 		'marginBottom': 'margin-bottom',
+
+		'breakBefore': 'break-before',
+		'breakAfter': 'break-after',
 		
 		'fontSize': 'font-size',
 		'lineHeight': 'line-height',
@@ -3865,6 +4082,7 @@ Generator.discardRestricted = function()
 		
 	};
 
+	//TODO inverted CSS_NAME
 	_ElementPlacement.prototype.JS_NAME = {
 		'background-color':'backgroundColor',
 		'background-image':'backgroundImage',
@@ -3890,6 +4108,11 @@ Generator.discardRestricted = function()
 		'margin-right':'marginRight',
 		'margin-top':'marginTop',
 		'margin-bottom':'marginBottom',
+
+		'break-before': 'breakBefore',
+		'break-after': 'breakAfter',
+		'alt breakBefore': 'pageBreakBefore',
+		'alt breakAfter': 'pageBreakAfter',
 		
 		'font-size':'fontSize',
 		'line-height':'lineHeight',
@@ -3910,8 +4133,8 @@ function _makeToPixelsIE(sProp)
 	var sPixelProp = "pixel" + sProp.substring(0,1).toUpperCase() + sProp.substring(1);
 
 	return function(eElement,sValue) {
-		var sInlineStyle = eElement.style[sProp];
-		var sRuntimeStyle = eElement.runtimeStyle[sProp];
+		var inlineStyle = eElement.style[sProp];
+		var runtimeStyle = eElement.runtimeStyle[sProp];
 		try
 		{
 			eElement.runtimeStyle[sProp] = eElement.currentStyle[sProp];
@@ -3922,8 +4145,8 @@ function _makeToPixelsIE(sProp)
 		{
 			
 		}
-		eElement.style[sProp] = sInlineStyle;
-		eElement.runtimeStyle[sProp] = sRuntimeStyle;
+		eElement.style[sProp] = inlineStyle;
+		eElement.runtimeStyle[sProp] = runtimeStyle;
 
 		return sValue;
 	};
@@ -3936,28 +4159,49 @@ _ElementPlacement.prototype.TO_PIXELS_IE = {
 	"size": _makeToPixelsIE("left")
 };
 
+_ElementPlacement.prototype._compute_simple = function(name) {
+	var altName = this.JS_NAME["alt "+name],
+		inlineStyle = this.el.style[name] || this.el.style[altName];
+	if (inlineStyle) return inlineStyle;
 
-_ElementPlacement.prototype._compute = function(style)
+	if (this.el.currentStyle) {
+		return this.el.currentStyle[name] || this.el.currentStyle[altName];
+	} else {
+		return this._computed[name] || this._computed[altName]
+	}
+};
+
+_ElementPlacement.prototype._setComputed = function()
 {
-	var value = document.defaultView.getComputedStyle(this.el, null)[style];
+	this._computed = document.defaultView.getComputedStyle(this.el, null);
+};
+
+_ElementPlacement.prototype._compute = function(name)
+{
+	var value = this._computed[name];
 	//TODO do this test at load to see if needed
 	if (typeof value == "string" && value.indexOf("%")>-1) {
-		value = this.el[this.OFFSET_NAME[style]] + "px";
+		value = this.el[this.OFFSET_NAME[name]] + "px";
 	}
 		
 	return value;
+};
+
+_ElementPlacement.prototype._setComputedIE = function()
+{
 };
 
 _ElementPlacement.prototype._computeIE = function(style)
 {
 	var value;
 	
+	//TODO prepare this when setting track
 	style = this.JS_NAME[style] || style;
 
 	var v = this.el.currentStyle[style];
 	var sPrecalc = this.KEYWORDS[v];
-	if (sPrecalc !== undefined) return sPrecalc; 
-	if (this.PIXEL.test(v)) return v;
+	if (sPrecalc !== undefined) return sPrecalc;
+	if (v == "0" || (v.substring(v.length-2) == "px")) return v; 
 
 	var fToPixels = this.TO_PIXELS_IE[this.CSS_TYPES[style]];
 		value = fToPixels? fToPixels(this.el, v) : v;
@@ -3967,7 +4211,6 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 
 }();
-/*jslint white: true */
 /*
 	StatefulResolver and ApplicationConfig
 */
@@ -3977,7 +4220,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		console = essential("console"),
 		DOMTokenList = essential("DOMTokenList"),
 		MutableEvent = essential("MutableEvent"),
-		arrayContains = essential("arrayContains"),
+		ensureCleaner = essential("ensureCleaner"),
 		escapeJs = essential("escapeJs"),
 		HTMLElement = essential("HTMLElement"),
 		serverUrl = location.protocol + "//" + location.host,
@@ -4269,9 +4512,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	function Stateful_reflectStateOn(el,useAsSource) {
 		var stateful = el.stateful = this;
-		if (el._cleaners == undefined) el._cleaners = [];
 		//TODO consider when to clean body element
-		if (!arrayContains(el._cleaners,statefulCleaner)) el._cleaners.push(statefulCleaner); 
+		ensureCleaner(el,statefulCleaner);
 		if (useAsSource != false) readElementState(el,stateful("state"));
 		stateful.on("change reflect","state",el,reflectElementState); //TODO "livechange", queues up calls while not live
 		if (!nativeClassList) {
@@ -4314,7 +4556,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 		stateful.fireAction = make_Stateful_fireAction(el);
 		stateful.reflectStateOn = Stateful_reflectStateOn;
 
-		if (el) stateful.reflectStateOn(el);
+		if (el) {
+			stateful.reflectStateOn(el);
+			stateful.uniqueID = el.uniqueID;
+		}
 		
 		return stateful;
 	}
@@ -4569,7 +4814,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 		if (element.id) {
 			return this._getElementRoleConfig(element,element.id);
 		}
-		var name = element.getAttribute("name");
+		var name;
+		try {
+			name = element.getAttribute("name");
+		}
+		catch(ex) { // access denied
+			return null;
+		}
 		if (name) {
 			var p = element.parentNode;
 			while(p && p.tagName) {
@@ -5110,6 +5361,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 		for(var n in EnhancedDescriptor.unfinished) {
 			var desc = EnhancedDescriptor.unfinished[n];
+			if (desc && !desc.state.initDone) desc._init();
+		}
+
+		for(var n in EnhancedDescriptor.unfinished) {
+			var desc = EnhancedDescriptor.unfinished[n];
 
 			//TODO speed up outstanding enhance check
 			if (desc) {
@@ -5136,12 +5392,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 	pageResolver.on("change","state", onStateChange);
 
 	function onStateChange(ev) {
+		var b = ev.base;
 		switch(ev.symbol) {
 			case "livepage": 
 				if (ev.value) {
 					var ap = ApplicationConfig();
 
-					if (!ev.base.loadingScripts && !ev.base.loadingConfig) {
+					if (!b.loadingScripts && !b.loadingConfig) {
 						--ev.inTrigger;
 						this.set("state.loading",false);
 						++ev.inTrigger;
@@ -5161,14 +5418,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 			case "loadingConfig":
 				//console.log("loading",this("state.loading"),this("state.loadingScripts"),this("state.loadingConfig"))
 				--ev.inTrigger;
-				this.set("state.loading",ev.base.loadingScripts || ev.base.loadingConfig);
+				this.set("state.loading",b.loadingScripts || b.loadingConfig);
 				++ev.inTrigger;
 				break;
 
 			case "preloading":
 				if (! ev.value) {
-					for(var n in ev.base.loadingScriptsUrl) {
-						var link = ev.base.loadingScriptsUrl[n];
+					for(var n in b.loadingScriptsUrl) {
+						var link = b.loadingScriptsUrl[n];
 						if (link.rel == "pastload" && !link.added) {
 							var langOk = true;
 							if (link.lang) langOk = (link.lang == pageResolver("state.lang"));
@@ -5187,8 +5444,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 					ap.doInitScripts();	
 					enhanceUnfinishedElements();
 					if (window.widget) widget.notifyContentIsReady(); // iBooks widget support
-					if (ev.base.configured == true && ev.base.authenticated == true 
-						&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
+					if (b.configured && b.authenticated 
+						&& b.authorised && b.connected && !b.launched) {
 						this.set("state.launching",true);
 						// do the below as recursion is prohibited
 						if (document.body) essential("instantiatePageSingletons")();
@@ -5200,14 +5457,14 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if (ev.base.livepage) {
 					var ap = ApplicationConfig();
 
-					if (ev.base.authenticated) activateArea(ap.getAuthenticatedArea());
+					if (b.authenticated) activateArea(ap.getAuthenticatedArea());
 					else activateArea(ap.getIntroductionArea());
 				}
 				// no break
 			case "authorised":
 			case "configured":
-				if (ev.base.loading == false && ev.base.configured == true && ev.base.authenticated == true 
-					&& ev.base.authorised == true && ev.base.connected == true && ev.base.launched == false) {
+				if ( !b.loading && b.configured && b.authenticated 
+					&& b.authorised && b.connected && !b.launched) {
 					this.set("state.launching",true);
 
 					var ap = ApplicationConfig();
@@ -5226,11 +5483,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 					if (document.body) essential("instantiatePageSingletons")();
 					ap.doInitScripts();	
 					enhanceUnfinishedElements();
-					if (ev.symbol == "launched" && ev.base.requiredPages == 0) this.set("state.launching",false);
+					if (ev.symbol == "launched" && b.requiredPages == 0) this.set("state.launching",false);
 				}
 				break;
 			case "requiredPages":
-				if (ev.value == 0 && !ev.base.launching) {
+				if (ev.value == 0 && !b.launching) {
 					this.set("state.launching",false);
 				}
 				break
@@ -5239,10 +5496,15 @@ _ElementPlacement.prototype._computeIE = function(style)
 				break;
 			
 			default:
-				if (ev.base.loading==false && ev.base.launching==false && ev.base.launched==false) {
+				if (b.loading==false && b.launching==false && b.launched==false) {
 					if (document.body) essential("instantiatePageSingletons")();
 				}
 		}
+
+		// should this be configurable in the future?
+        if (b.launched && (!b.authorised || !b.authenticated) && b.autoUnlaunch !== false) {
+            this.set("state.launched",false);
+        }
 	};
 
 	ApplicationConfig.prototype.onLoadingScripts = function(ev) {
@@ -5588,7 +5850,7 @@ function(scripts) {
 }
 );
 
-/**
+/*!
 * XMLHttpRequest.js Copyright (C) 2011 Sergey Ilinsky (http://www.ilinsky.com)
 *
 * This work is free software; you can redistribute it and/or modify
@@ -6133,7 +6395,6 @@ function(scripts) {
 	Resolver("essential").set("XMLHttpRequest", cXMLHttpRequest); //TODO Generator(cXMLHttpRequest));
 
 }();
-/*jslint white: true */
 !function () {
 	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 
@@ -6336,7 +6597,7 @@ function(scripts) {
 		if (!attrs) {
 			for(var i=0,a; a = src.attributes[i]; ++i) {
 				var n = a.name;
-				if (n == "class" || n == "style") continue;
+				if (this.IGNORE_ATTRIBUTES[n]) continue;
 				var value = src.getAttribute(n);
 				if (value != null) dst.setAttribute(n,value);
 				else dst.removeAttribute(n);	
@@ -6369,6 +6630,17 @@ function(scripts) {
 		"language": "",
 		"accesskey": "",
 		"tabindex": 0
+	};
+
+	HTMLElement.fn.IGNORE_ATTRIBUTES = {
+		"class": true,
+		"classList": true,
+		"style": true,
+		"layouter": true,
+		"laidout": true,
+		"impl": true,
+		"stateful": true,
+		"_cleaners": true
 	};
 
 	// stream.cloneNode that can be copied to .content
@@ -6898,7 +7170,10 @@ function(scripts) {
 		addEventListeners(document.body, {
 			"selectstart": function(ev) {
 				ev = MutableEvent(ev);
-				var allow = pass[ev.target.tagName || ""] || false;
+				var allow = false;
+				for(var el = ev.target; el; el = el.parentNode) {
+					if (pass[el.tagName || ""]) allow = true;
+				} 
 				if (!allow) ev.preventDefault();
 				return allow;
 			}
@@ -6922,7 +7197,6 @@ function(scripts) {
 }();
 
 
-/*jshint forin:true, eqnull:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, unused:true, curly:true, browser:true, indent:4, maxerr:50, newcap:false, white:false, devel:true */
 !function () {
 	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 
@@ -6936,6 +7210,7 @@ function(scripts) {
 		HTMLScriptElement = essential("HTMLScriptElement"),
 		Layouter = essential("Layouter"),
 		Laidout = essential("Laidout"),
+		DescriptorQuery = essential("DescriptorQuery"),
 		EnhancedDescriptor = essential("EnhancedDescriptor"),
 		callCleaners = essential("callCleaners"),
 		addEventListeners = essential("addEventListeners"),
@@ -7138,7 +7413,7 @@ function(scripts) {
 		} 
 		if (wrap) {
 			wrap.className = ((wrap.className||"") + " "+contentClass).replace("  "," ");
-			essential("DescriptorQuery")(wrap).withBranch().enhance();
+			DescriptorQuery(wrap).withBranch().enhance();
 		}
 
 		// restrict height to body (TODO use layouter to restrict this on page resize)
@@ -7227,11 +7502,29 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.enhance.dialog",enhance_dialog);
 
-	function layout_dialog(el,layout,instance) {		
+	function layout_dialog(el,layout,instance) {
+
+		//TODO sizing if bodyHeight changed
+		var top = el.offsetTop, 
+			height = el.offsetHeight,
+			newTop = Math.max(0, Math.min(top,document.body.offsetHeight - height - 12)); 
+		if (top != newTop) {
+			el.style.top = newTop + "px";
+		}
+
 	}
 	pageResolver.set("handlers.layout.dialog",layout_dialog);
 
 	function discard_dialog(el,role,instance) {
+		var existing = 0, dialogs = DescriptorQuery("[role=dialog]");
+		for(var i=0,d; d = dialogs[i]; ++i) {
+			if (d.state.enhanced && !d.state.discarded) ++existing;
+		}
+
+		if (existing == 1) {
+			dialog_top = initial_top;
+			dialog_left = initial_left;
+		} 
 	}
 	pageResolver.set("handlers.discard.dialog",discard_dialog);
 
@@ -7471,6 +7764,8 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.init.template",init_template);
 
+	pageResolver.set("handlers.sizing.template",false);
+
 	function init_templated(el,role,config,context) {
 		this.state.contentManaged = true; // templated content skipped
 	}
@@ -7489,7 +7784,7 @@ function(scripts) {
 
 			if (this.stateful.movedOutInterval) clearTimeout(this.stateful.movedOutInterval);
 			this.stateful.movedOutInterval = null;
-			this.stateful.set("over",true);
+			this.stateful.set("state.over",true);
 			enhanced.vert.show();
 			enhanced.horz.show();
 		},
@@ -7499,8 +7794,8 @@ function(scripts) {
 			
 			if (this.stateful.movedOutInterval) clearTimeout(this.stateful.movedOutInterval);
 			this.stateful.movedOutInterval = setTimeout(function(){
-				sp.stateful.set("over",false);
-				if (sp.stateful("dragging") != true) {
+				sp.stateful.set("state.over",false);
+				if (sp.stateful("state.dragging") != true) {
 					enhanced.vert.hide();
 					enhanced.horz.hide();
 				}
@@ -7631,7 +7926,7 @@ function(scripts) {
 		//TODO capture in IE
 		//movement.track(event,0,0);
 
-		if (el.stateful) el.stateful.set("dragging",true);
+		if (el.stateful) el.stateful.set("state.dragging",true);
 		this.target = document.body;
 		if (document.body.setCapture) {
 			this.target = this.el;
@@ -7671,7 +7966,7 @@ function(scripts) {
 	};
 
 	ElementMovement.prototype.end = function() {
-		if (this.el.stateful) this.el.stateful.set("dragging",false);
+		if (this.el.stateful) this.el.stateful.set("state.dragging",false);
 		removeEventListeners(this.target,this.drag_events);
 		if (this.target.releaseCapture) this.target.releaseCapture();
 		this.target = null;
@@ -7764,20 +8059,26 @@ function(scripts) {
 
 
 	function EnhancedScrollbar(el,container,config,opts,mousedownEvent) {
+		this.enable = opts.enable !== false;
         var sbsc = scrollbarSize();
-		var lc = opts.horzvert.toLowerCase();
+		var lc = opts.horzvert.toLowerCase(), cn = lc+"-scroller";
+		if (config.obscured) cn += " obscured";
+		if (config.overhang) cn += " overhang";
 
 		this.scrolled = el;
-		var className = config.obscured? lc+"-scroller obscured" : lc+"-scroller";
+		var className = cn;
 		this.el = HTMLElement("div", { "class":className }, '<header></header><footer></footer><nav><header></header><footer></footer></nav>');
 		container.appendChild(this.el);
-		this.sizeName = opts.sizeName; this.posName = opts.posName;
-		this.sizeStyle = opts.sizeName.toLowerCase();
+		this.contentName = "content"+ opts.sizeName;
+		this.scrollName = "scroll"+ opts.sizeName; 
+		this.sizeName = this.sizeStyle = opts.sizeName.toLowerCase();
+		this.posName = opts.posName;
 		this.posStyle = opts.posName.toLowerCase();
 		this.autoHide = opts.autoHide;
 		this.trackScroll = opts.trackScroll == false? false : true;;
 
-		this.trackScrolled(el);
+		this.sizing = el.stateful("sizing");
+		// this.trackScrolled(el);
 
 		addEventListeners(el,ENHANCED_SCROLLED_EVENTS);
 		addEventListeners(this.el,{ "mousedown": mousedownEvent });
@@ -7787,34 +8088,34 @@ function(scripts) {
 				this.hiding = setTimeout(this.hide.bind(this), parseInt(opts.initialDisplay,10) || 3000);
 			}
 		}
-		if (config.obscured) this.el.style[opts.edgeName] = "-" + (config[lc+"Offset"]!=undefined? config[lc+"Offset"]:sbsc) + "px";
-        else this.el.style[opts.thicknessName] = sbsc + "px";
+		// if (config.overhang) this.el.style[opts.edgeName] = "-" + (config[lc+"Offset"]!=undefined? config[lc+"Offset"]:sbsc) + "px";
+  //       else this.el.style[opts.thicknessName] = sbsc + "px";
 	}
 
 	EnhancedScrollbar.prototype.trackScrolled = function(el) {
 		if (this.trackScroll) {
 			this.scrolledTo = el["scroll"+this.posName];
-			this.scrolledContentSize = el["scroll"+this.sizeName];
+			this.scrolledContentSize = this.sizing[this.contentName]; //TODO remove intermediate variable
 		}
 		else {
 			this.scrolledTo = this.scrolled.stateful("pos.scroll"+this.posName,"0");
-			this.scrolledContentSize = this.scrolled.stateful("pos.scroll"+this.sizeName,"0");
+			this.scrolledContentSize = this.scrolled.stateful("pos."+this.scrollName,"0");
 		}
-		this.scrolledSize = el["client"+this.sizeName]; //scrolled.offsetHeight - scrollbarSize();
 	};
 
 	EnhancedScrollbar.prototype.update = function(scrolled) {
 		if (this.scrolledContentSize) {
 			this.el.lastChild.style[this.posStyle] = (100 * this.scrolledTo / this.scrolledContentSize) + "%";
-			this.el.lastChild.style[this.sizeStyle] = (100 * this.scrolledSize / this.scrolledContentSize) + "%";
+			this.el.lastChild.style[this.sizeStyle] = (100 * this.sizing[this.sizeName] / this.scrolledContentSize) + "%";
 		} else {
 			this.el.lastChild.style[this.posStyle] = "0%";
 			this.el.lastChild.style[this.sizeStyle] = "0%";
 		}
+		if (!this.enable || !this.scrolledContentSize || this.scrolledContentSize <= this.sizing[this.sizeName]) this.hide();
 	};
 
 	EnhancedScrollbar.prototype.show = function() {
-		if (this.scrolledContentSize <= this.scrolledSize) return false;
+		if (!this.enable || !this.scrolledContentSize || this.scrolledContentSize <= this.sizing[this.sizeName]) return false;
 
 		if (!this.shown) {
 			this.update(this.scrolled);
@@ -7830,7 +8131,7 @@ function(scripts) {
 	};
 
 	EnhancedScrollbar.prototype.hide = function() {
-		if (this.autoHide !== false && this.shown) {
+		if (this.autoHide !== false && this.shown && this.enable) {
 			this.el.className = this.el.className.replace(" shown","");
 			if (this.hiding) {
 				clearTimeout(this.hiding);
@@ -7851,14 +8152,16 @@ function(scripts) {
 			if (this.el.parentNode) this.el.parentNode.removeChild(this.el);
 			callCleaners(this.el);
 			this.el = undefined;
+			this.shown = this.enable = false;
 		}
 	};
 
 	function EnhancedScrolled(el,config) {
 
+		if (config.overhang == undefined) config.overhang = !!config.obscured;
+		config.obscured = config.obscured !== false;
 		//? this.el = el
 		var container = this._getContainer(el,config);
-
 
 		var trackScrollVert = !(config.trackScrollVert==false || config.trackScroll == false),
 			trackScrollHorz = !(config.trackScrollHorz==false || config.trackScroll == false);
@@ -7868,9 +8171,13 @@ function(scripts) {
 		el.stateful.declare("pos.scrollTop",0);
 		el.stateful.declare("pos.scrollLeft",0);
 
+		//TODO sizing.track = {} width,height,content,scroll
+		el.stateful.set("sizing.track.sizeBy","client");
+
 		this.x = false !== config.x;
 		this.y = false !== config.y;
 		this.vert = new EnhancedScrollbar(el,container,config,{
+			enable: config.vert,
 			horzvert: "Vert", 
 			trackScroll: trackScrollVert,
 			sizeName: "Height", 
@@ -7879,7 +8186,8 @@ function(scripts) {
 			edgeName: "right" 
 			},trackScrollVert? mousedownVert : mousedownStatefulVert);
 
-		this.horz = new EnhancedScrollbar(el,container,config,{ 
+		this.horz = new EnhancedScrollbar(el,container,config,{
+			enable: config.horz, 
 			horzvert: "Horz",
 			trackScroll: trackScrollHorz,
 			sizeName: "Width", 
@@ -7893,7 +8201,7 @@ function(scripts) {
 		addEventListeners(container,ENHANCED_SCROLLED_PARENT_EVENTS);
 		container.scrollContainer = "top";
 
-		this.refresh(el);
+		// this.refresh(el);
 
 		el.stateful.on("change","pos.scrollTop",{el:el,es:this},this.scrollTopChanged);
 		el.stateful.on("change","pos.scrollLeft",{el:el,es:this},this.scrollLeftChanged);
@@ -7905,10 +8213,8 @@ function(scripts) {
 		// if not shown, show and if not entered and not dragging, hide after 1500 ms
 		if (!es.vert.shown) {
 			es.vert.show();
-			es.horz.show();
-			if (!ev.resolver("over") && !ev.resolver("dragging")) {
+			if (!ev.resolver("state.over") && !ev.resolver("state.dragging")) {
 				es.vert.delayedHide();
-				es.horz.delayedHide();
 			}
 		}
 
@@ -7920,17 +8226,19 @@ function(scripts) {
 		var el = ev.data.el, es = ev.data.es;
 
 		// if not shown, show and if not entered and not dragging, hide after 1500 ms
-		if (!es.vert.shown) {
-			es.vert.show();
+		if (!es.horz.shown) {
 			es.horz.show();
-			if (!el.stateful("over") && !el.stateful("dragging")) {
-				es.vert.delayedHide();
+			if (!el.stateful("state.over") && !el.stateful("state.dragging")) {
 				es.horz.delayedHide();
 			}
 		}
 		es.horz.trackScrolled(el);
 		es.horz.update(el);
 	};
+
+	// Define on browser type
+	var bGecko  = !!window.controllers;
+	var bIE     = window.document.all && !window.opera;
 
 	EnhancedScrolled.prototype._getContainer = function(el,config) {
 
@@ -7941,14 +8249,20 @@ function(scripts) {
 			if (! config.unstyledParent) el.parentNode.style.cssText = "position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;";
 			el.style.right = "-" + sbsc + "px";
 			el.style.bottom = "-" + sbsc + "px";
-			el.style.paddingRight = sbsc + "px";
-			el.style.paddingBottom = sbsc + "px";
+
+			if (!bGecko && !bIE) {
+				// fix incorrect width for children
+				el.style.paddingRight = sbsc + "px";
+				el.style.paddingBottom = sbsc + "px";
+			}
 			container = container.parentNode;
 		}
 		return container;
 	};
 
 	EnhancedScrolled.prototype.refresh = function(el) {
+
+		//TODO get the information via layout call
 		this.vert.trackScrolled(el);
 		this.vert.update(el);
 		this.horz.trackScrolled(el);
@@ -7957,12 +8271,16 @@ function(scripts) {
 
 	EnhancedScrolled.prototype.layout = function(el,layout) {
 
-		//TODO show scrollbars only if changed && in play
-		if (!this.vert.shown) {
-			this.vert.show();
-			this.horz.show();
-			if (!el.stateful("over") && !el.stateful("dragging")) {
+		if (layout.contentHeight != layout.oldContentHeight && !this.vert.shown) {
+			if (this.vert.show() === false) this.vert.hide(); // if content less/eq to space hide right now
+			if (!el.stateful("state.over") && !el.stateful("state.dragging")) {
 				this.vert.delayedHide(750);
+			}
+		}
+
+		if (layout.contentWidth != layout.oldContentWidth && !this.horz.shown) {
+			if (this.horz.show() === false) this.horz.hide(); // if content less/eq to space hide right now
+			if (!el.stateful("state.over") && !el.stateful("state.dragging")) {
 				this.horz.delayedHide(750);
 			}
 		}
@@ -7995,13 +8313,10 @@ function(scripts) {
 			var content = template.content.cloneNode(true);
 
 			el.appendChild(content);
-			var context = { layouter: this.parentLayouter };
-			if (config.layouter) context.layouter = this; //TODO temp fix, move _prep to descriptor
-			// essential("DescriptorQuery")(wrap).enhance();
-			ApplicationConfig()._prep(el,context); //TODO prepAncestors
+			DescriptorQuery(el).onlyBranch().enhance();
 		}
 
-		StatefulResolver(el,true);
+		// StatefulResolver(el,true);
 		el.style.cssText = 'position:absolute;left:0;right:0;top:0;bottom:0;overflow:scroll;';
 		var r = new EnhancedScrolled(el,config);
 
@@ -8059,7 +8374,7 @@ Resolver("page::state.livepage").on("change",function(ev) {
 		pageResolver.uosInterval = setInterval(Resolver("essential::updateOnlineStatus::"),5000);
 
 		EnhancedDescriptor.maintainer = setInterval(EnhancedDescriptor.maintainAll,330); // minimum frequency 3 per sec
-		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 3 per sec
+		EnhancedDescriptor.refresher = setInterval(EnhancedDescriptor.refreshAll,160); // minimum frequency 6 per sec
 
 		updateOnlineStatus();
 
