@@ -19,8 +19,7 @@ Before reviewing a section write down the words you remember from the section on
 When you review take extra time with the trouble words, and if you still don't know the meaning look it up in a dictionary. <link>
 Pay special attention to words that you didn't remember before you began.
 
-<img width="40" alt="Voice Memo" src="../../images/voice-memo.png" style="position:absolute;">
-[Voice Memo](../../images/voice-memo.png)
+<img width="40" alt="Voice Memo" src="../../images/voice-memo.png" style="float:left;padding: 5px;">
 You can also use the Voice Memo app  to record your pronunciation to check how you sound.
 
 
@@ -37,8 +36,7 @@ If you think of a word say it again.
 Go through the words and meanings several times before the next page.
 
 
-video
-
+<video width="360" height="203" id="player1" src="/assets/first-lessn.m4v" type="video/mp4" controls="controls"></video>
 
 “If you have trouble with a word mark it for later. Try to guess based on the surroundings and leave it at that.
 Whenever you have done 3 pages, go back and run through the previous two.
