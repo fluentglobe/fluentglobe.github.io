@@ -2231,7 +2231,108 @@ Resolver("page").declare("handlers.discard.form", discard_form);
 
 
 
+
+Generator(function() {
+
+	var transEndEventNames = {
+			'WebkitTransition' : 'webkitTransitionEnd',
+			'MozTransition' : 'transitionend',
+			'OTransition' : 'oTransitionEnd',
+			'msTransition' : 'MSTransitionEnd',
+			'transition' : 'transitionend'
+		},
+		that = this;
+
+	this.transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
+	this.books = $( '#bk-list > li > div.bk-book' );
+	this.currentbook = -1;
+
+
+	that.books.each( function( i ) { 
+		
+		var $book = $( this ),
+			$other = that.books.not( $book ),
+			$parent = $book.parent(),
+			$page = $book.children( 'div.bk-page' ),
+			$content = $page.children( 'div.bk-content' ), current = 0;
+
+		if( i < that.books.length / 2 ) {
+			$parent.css( 'z-index', i ).data( 'stackval', i );
+		}
+		else {
+			$parent.css( 'z-index', that.books.length - 1 - i ).data( 'stackval', that.books.length - 1 - i );	
+		}
+
+		$book.on( 'click', function() {
+			
+			if( that.currentbook !== -1 && that.currentbook !== $parent.index() ) {
+				that.closeCurrent();
+			}
+			
+			if( $book.data( 'opened' ) ) {
+				$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function() {
+					$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
+					$parent.css( 'z-index', $parent.data( 'stackval' ) );
+					that.currentbook = -1;
+				} );
+			}
+			else {
+				$book.data( 'opened', true ).addClass( 'bk-outside' ).on( this.transEndEventName, function() {
+					$( this ).off( this.transEndEventName ).addClass( 'bk-viewinside' );
+					$parent.css( 'z-index', that.books.length );
+					that.currentbook = $parent.index();
+				} );
+				current = 0;
+				$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
+			}
+
+		} );
+
+		if( $content.length > 1 ) {
+
+			var $navPrev = $( '<span class="bk-page-prev">&lt;</span>' ),
+				$navNext = $( '<span class="bk-page-next">&gt;</span>' );
+			
+			$page.append( $( '<nav></nav>' ).append( $navPrev, $navNext ) );
+
+			$navPrev.on( 'click', function() {
+				if( current > 0 ) {
+					--current;
+					$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
+				}
+				return false;
+			} );
+
+			$navNext.on( 'click', function() {
+				if( current < $content.length - 1 ) {
+					++current;
+					$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
+				}
+				return false;
+			} );
+
+		}
+		
+	} );
+
+},{prototype:{
+
+	closeCurrent: function() {
+
+		var $book = this.books.eq( this.currentbook ),
+			$parent = $book.parent();
+		
+		$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function(e) {
+			$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
+			$parent.css( 'z-index', $parent.data( 'stackval' ) );
+		} );
+
+	}
+
+}}).restrict({lifecycle:"page",singleton:true});
 !function() {
+
+/* jshint -W064: false */
 
 var essential = Resolver("essential"),
     ApplicationConfig = essential("ApplicationConfig"),
