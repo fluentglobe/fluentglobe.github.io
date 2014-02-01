@@ -1,5 +1,7 @@
 // https://github.com/medialize/URI.js
 
+/* jshint undef: false */
+
 /*!
  * URI.js - Mutating URLs
  *
@@ -50,7 +52,7 @@ function URI(url, base) {
     }
 
     return this;
-};
+}
 
 var p = URI.prototype;
 var hasOwn = Object.prototype.hasOwnProperty;
@@ -299,7 +301,7 @@ for (_part in _parts) {
 URI.encodeReserved = generateAccessor("reserved", "encode");
 
 URI.parse = function(string, parts) {
-    var pos, t;
+    var pos;
     if (!parts) {
         parts = {};
     }
@@ -658,7 +660,7 @@ URI.hasQuery = function(data, name, value, withinArray) {
 
         case 'Number':
             value = String(value);
-            // omit break;
+            /* falls through */
         case 'String':
             if (!isArray(data[name])) {
                 return data[name] === value;
@@ -1323,9 +1325,7 @@ p.segment = function(segment, v, build) {
     }
 
     if (v === undefined) {
-        return segment === undefined
-            ? segments
-            : segments[segment];
+        return segment === undefined? segments : segments[segment];
     } else if (segment === null || segments[segment] === undefined) {
         if (isArray(v)) {
             segments = v;

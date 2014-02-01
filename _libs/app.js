@@ -1,5 +1,7 @@
 !function() {
 
+/* jshint -W064: false */
+
 var essential = Resolver("essential"),
     ApplicationConfig = essential("ApplicationConfig"),
 
@@ -29,9 +31,9 @@ function Navigation(el,config) {
         "click": dialog_button_click
     },false);
 
-    var items = el.querySelectorAll("[role=menuitem]");
+    var config, items = el.querySelectorAll("[role=menuitem]");
     for(var i=0,item; item = items[i]; ++i) {
-        var config = ApplicationConfig().getConfig(item);
+        config = ApplicationConfig().getConfig(item);
         if (config.select) {
             this.stateful.on("change",config.select,{config:config,el:item},
                 function(ev) {

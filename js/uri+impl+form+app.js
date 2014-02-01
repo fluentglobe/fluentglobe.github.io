@@ -1,7 +1,9 @@
-/*! Fluent Globe - v0.1.0 - 2014-01-21
+/*! Fluent Globe - v0.1.0 - 2014-02-01
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
+
+/* jshint undef: false */
 
 /*!
  * URI.js - Mutating URLs
@@ -53,7 +55,7 @@ function URI(url, base) {
     }
 
     return this;
-};
+}
 
 var p = URI.prototype;
 var hasOwn = Object.prototype.hasOwnProperty;
@@ -302,7 +304,7 @@ for (_part in _parts) {
 URI.encodeReserved = generateAccessor("reserved", "encode");
 
 URI.parse = function(string, parts) {
-    var pos, t;
+    var pos;
     if (!parts) {
         parts = {};
     }
@@ -661,7 +663,7 @@ URI.hasQuery = function(data, name, value, withinArray) {
 
         case 'Number':
             value = String(value);
-            // omit break;
+            /* falls through */
         case 'String':
             if (!isArray(data[name])) {
                 return data[name] === value;
@@ -1326,9 +1328,7 @@ p.segment = function(segment, v, build) {
     }
 
     if (v === undefined) {
-        return segment === undefined
-            ? segments
-            : segments[segment];
+        return segment === undefined? segments : segments[segment];
     } else if (segment === null || segments[segment] === undefined) {
         if (isArray(v)) {
             segments = v;
@@ -2262,9 +2262,9 @@ function Navigation(el,config) {
         "click": dialog_button_click
     },false);
 
-    var items = el.querySelectorAll("[role=menuitem]");
+    var config, items = el.querySelectorAll("[role=menuitem]");
     for(var i=0,item; item = items[i]; ++i) {
-        var config = ApplicationConfig().getConfig(item);
+        config = ApplicationConfig().getConfig(item);
         if (config.select) {
             this.stateful.on("change",config.select,{config:config,el:item},
                 function(ev) {

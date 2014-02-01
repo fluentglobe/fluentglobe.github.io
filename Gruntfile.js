@@ -181,8 +181,10 @@ module.exports = function(grunt) {
         tasks: 'sass:dev'
       },
       scripts: {
-        files: ['_libs/*.js', 'assets/lib/**/*.js'],
-        tasks: ['jshint','concat:essential','concat:app'],
+        files: ['_libs/*.js', 'assets/lib/**/*.js','bower_components/**/*.js'],
+        tasks: [
+          //'jshint',
+          'concat:essential','concat:app'],
         options: {
           spawn: false
         }
