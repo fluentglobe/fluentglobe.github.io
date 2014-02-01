@@ -437,13 +437,23 @@
 .articleSections(@white-bg-color: white, @shaded-bg-color: rgb(243,243,243), @border-top-color: rgb(236,236,236),@border-bottom-color: rgb(236,236,236)) {
 
     section {
+        position: relative;
         padding-top: 3em;
         padding-bottom: 3em;
         width: 100%;
         margin: 0 auto;
-        background-color: @white-bg-color;
         box-shadow: 0 5px 5px #454545;
         color: #474747;
+
+        .bg,
+        > :first-child:before {
+            display: block;
+            position: absolute;
+            left:0; right:0; top:0; bottom: 0;
+            content:"";
+            background-color: @white-bg-color;
+            z-index: -1000;  
+        }
 
         h3 {
             text-align: center;
