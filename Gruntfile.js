@@ -66,17 +66,17 @@ module.exports = function(grunt) {
 
       jquery: {
         files: {
-          'js/jquery.min.js': '_components/jquery/jquery.js'
+          'js/jquery.min.js': 'bower_components/jquery/jquery.js'
         }
       },
 
       bootstrap: {
         files: {
           'js/bootstrap.min.js': [
-            '_components/bootstrap/js/collapse.js',
-            '_components/bootstrap/js/scrollspy.js',
-            '_components/bootstrap/js/button.js',
-            '_components/bootstrap/js/affix.js'
+            'bower_components/bootstrap/js/collapse.js',
+            'bower_components/bootstrap/js/scrollspy.js',
+            'bower_components/bootstrap/js/button.js',
+            'bower_components/bootstrap/js/affix.js'
           ]
         }
       }
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true, flatten: true,
-            cwd: '_components/mediaelement/build/',
+            cwd: 'bower_components/mediaelement/build/',
             src: ['*.swf','*.xap'],
             dest: 'js/'
           }
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           paths: [
-            "./_components",
+            "./bower_components",
             "./_less"],
           yuicompress: true
         },
