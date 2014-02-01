@@ -21,17 +21,19 @@ module.exports = function(grunt) {
 
       essential: {
         src: [
-          'js/modernizr-custom.js',
-          '_libs/essential.js'
+          'bower_components/essentialjs-future/js/modernizr-custom.js',
+          'bower_components/essentialjs-future/essential.js'
         ],
         dest: 'js/modernizr+essential.js'
       },
 
       app: {
         src: [
+          // 'bower_components/essentialjs-future/app/js/spin.min.js',
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
+          'bower_components/books/books.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
