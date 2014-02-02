@@ -3211,9 +3211,9 @@ h6 {
   width: 533px;
   /* 13 books * 40px + 13 books * margin (1px) */
   margin: 0 auto;
-  -webkit-perspective: 1800px;
-  -moz-perspective: 1800px;
-  perspective: 1800px;
+  -webkit-perspective: 800px;
+  -moz-perspective: 800px;
+  perspective: 800px;
   -webkit-perspective-origin: 50% 15%;
   -moz-perspective-origin: 50% 15%;
   perspective-origin: 50% 15%;
@@ -3228,6 +3228,16 @@ h6 {
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
+}
+.bk-list li.feature {
+  width: 220px;
+}
+.bk-list li.feature .bk-book {
+  left: -100px;
+  width: 200px;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
+  -moz-transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
+  transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
 }
 .bk-list li:last-child {
   margin-right: 0;
@@ -3251,6 +3261,11 @@ h6 {
   -webkit-transform: rotateY(90deg) rotateZ(-15deg) translate3d(-100px, 0, 0);
   -moz-transform: rotateY(90deg) rotateZ(-15deg) translate3d(-100px, 0, 0);
   transform: rotateY(90deg) rotateZ(-15deg) translate3d(-100px, 0, 0);
+}
+.bk-list li.feature .bk-book:hover {
+  -webkit-transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
+  -moz-transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
+  transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
 }
 .bk-list li .bk-book > div,
 .bk-list li .bk-front > div {
@@ -3474,7 +3489,6 @@ h6 {
   background-color: #ff924a;
 }
 .book-1 .bk-cover {
-  background-image: url(../images/1.png);
   background-repeat: no-repeat;
   background-position: 10px 40px;
 }
@@ -3527,7 +3541,6 @@ h6 {
   background-color: #222;
 }
 .book-2 .bk-cover {
-  background-image: url(../images/2.png);
   background-repeat: no-repeat;
   background-position: 98% 0%;
 }
@@ -3602,7 +3615,6 @@ h6 {
   background-color: #a4c19e;
 }
 .book-3 .bk-cover {
-  background-image: url(../images/3.png);
   background-repeat: no-repeat;
   background-position: 100% 95%;
 }
@@ -3726,7 +3738,7 @@ h6 {
   width: 100%;
   height: 63px;
   z-index: -1;
-  margin-top: -25px;
+  margin-top: -18px;
   background: transparent url(/images/shelf.png) no-repeat center center;
   position: relative;
 }
