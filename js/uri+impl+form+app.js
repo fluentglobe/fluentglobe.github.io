@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-02-01
+/*! Fluent Globe - v0.1.0 - 2014-02-02
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2246,6 +2246,7 @@ Generator(function() {
 	this.transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
 	this.books = $( '#bk-list > li > div.bk-book' );
 	this.currentbook = -1;
+	this.width = this.books.parent().parent().width();
 
 
 	that.books.each( function( i ) { 
@@ -2256,11 +2257,11 @@ Generator(function() {
 			$page = $book.children( 'div.bk-page' ),
 			$content = $page.children( 'div.bk-content' ), current = 0;
 
-		if( i < that.books.length / 2 ) {
-			$parent.css( 'z-index', i ).data( 'stackval', i );
+		if( this.parentNode.left < that.width / 2 ) {
+			$parent.css( 'z-index', i + 10).data( 'stackval', i );
 		}
 		else {
-			$parent.css( 'z-index', that.books.length - 1 - i ).data( 'stackval', that.books.length - 1 - i );	
+			$parent.css( 'z-index', that.books.length - 1 - i + 10 ).data( 'stackval', that.books.length - 1 - i );	
 		}
 
 		$book.on( 'click', function() {
@@ -2270,15 +2271,15 @@ Generator(function() {
 			}
 			
 			if( $book.data( 'opened' ) ) {
-				$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function() {
-					$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
+				$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( that.transEndEventName, function() {
+					$( this ).off( that.transEndEventName ).removeClass( 'bk-outside' );
 					$parent.css( 'z-index', $parent.data( 'stackval' ) );
 					that.currentbook = -1;
 				} );
 			}
 			else {
-				$book.data( 'opened', true ).addClass( 'bk-outside' ).on( this.transEndEventName, function() {
-					$( this ).off( this.transEndEventName ).addClass( 'bk-viewinside' );
+				$book.data( 'opened', true ).addClass( 'bk-outside' ).on( that.transEndEventName, function() {
+					$( this ).off( that.transEndEventName ).addClass( 'bk-viewinside' );
 					$parent.css( 'z-index', that.books.length );
 					that.currentbook = $parent.index();
 				} );
