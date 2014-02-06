@@ -3,7 +3,7 @@ layout: lesson
 theme: main
 blog-link: no
 body-class: lesson lesson-color
-
+permalink: speak-english-in-london.html
 ---
 
 English is a fantastic language. It is spoken in most parts for the world, even if it sounds very different.
