@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-02-02
+/*! Fluent Globe - v0.1.0 - 2014-02-06
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2230,6 +2230,101 @@ Resolver("page").declare("handlers.discard.form", discard_form);
 }();
 
 
+
+!function() {
+
+/* jshint -W064: false */
+
+var essential = Resolver("essential"),
+    ApplicationConfig = essential("ApplicationConfig"),
+
+    console = essential("console"),
+    StatefulResolver = essential("StatefulResolver"),
+    addEventListeners = essential("addEventListeners"),
+    MutableEvent = essential("MutableEvent"),
+    EnhancedDescriptor = essential("EnhancedDescriptor"),
+    DescriptorQuery = essential("DescriptorQuery"),
+    ElementPlacement = essential("ElementPlacement"),
+    Layouter = essential("Layouter"),
+    Laidout = essential("Laidout"),
+    HTMLElement = essential("HTMLElement"),
+	DialogAction = essential("DialogAction");
+
+function Book(el,config) {
+	this.el = el;
+    this.stateful = el.stateful;
+
+    var ac = ApplicationConfig();
+    var page = ac.loadPage(config.src,false,function(ev) { this.book.pageLoad({page:this,book:this.book}); }); //TODO ,false,this,this.pageLoad pass data,page in (event)
+	page.book = this;    
+}
+
+Book.prototype.destroy = function() {
+
+};
+
+Book.prototype.pageLoad = function(ev) {
+	var page = ev.page, book = ev.book,
+		article = ev.page.body.querySelector("article"),
+		newEl = HTMLElement("div",{"class":"bk-book"});
+	//debugger;
+	// ev.book.el.appendChild(article);
+
+	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
+		newEl.appendChild(c);
+	}
+
+	ev.book.el.appendChild(newEl);
+};
+
+Book.prototype.click = function(ev) {
+
+    if (ev.commandRole == "menuitem") {
+        var config = ApplicationConfig().getConfig(ev.commandElement);
+        if (config.select) {
+            this.stateful.set(config.select,config.value);
+        }
+        
+        // model.language
+        // ev.commandElement.stateful.set("state.selected",true);
+    }
+};
+
+function dialog_button_click(ev) {
+    ev = MutableEvent(ev).withActionInfo();
+
+    if (ev.commandRole == "button") return; // skip the show-menu
+
+    if (ev.commandElement) {
+        if (ev.stateful && ev.stateful("state.disabled")) return; // disable
+        if (ev.ariaDisabled) return; //TODO fold into stateful
+
+        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
+        ev.stopPropagation();
+    }
+
+    if (ev.defaultPrevented) return false;
+}
+
+
+function enhance_book(el,role,config) {
+    var book = new Book(el,config);
+    return book;
+}
+
+function layout_book(el,layout,instance) {
+
+}
+
+function discard_book(el,role,instance) {
+    if (instance) instance.destroy(el);
+}
+
+Resolver("page").set("handlers.enhance.book", enhance_book);
+Resolver("page").set("handlers.layout.book", layout_book);
+Resolver("page").set("handlers.discard.book", discard_book);
+
+}();
 
 
 Generator(function() {
