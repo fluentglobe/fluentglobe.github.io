@@ -4,6 +4,11 @@ theme: main
 blog-link: no
 body-class: lesson lesson-color
 permalink: world-cup-in-brazil-2014.html
+title: World Cup in Brazil 2014
+author: Caterine Apruzzese
+cover-heading: <span>Caterine Apruzzese</span><span>World Cup in Brazil 2014</span>
+back-side: >
+           <p>In this nightmare vision of cats in revolt, fifteen-year-old Alex and his friends set out on a diabolical orgy of robbery, rape, torture and murder. Alex is jailed for his teenage delinquency and the State tries to reform him - but at what cost?</p>
 ---
 
 English is a fantastic language. It is spoken in most parts for the world, even if it sounds very different.

@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-02-06
+/*! Fluent Globe - v0.1.0 - 2014-02-07
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2265,16 +2265,45 @@ Book.prototype.destroy = function() {
 
 Book.prototype.pageLoad = function(ev) {
 	var page = ev.page, book = ev.book,
+		header = ev.page.body.querySelector("body > header"),
+		footer = ev.page.body.querySelector("body > footer"),
 		article = ev.page.body.querySelector("article"),
-		newEl = HTMLElement("div",{"class":"bk-book"});
-	//debugger;
-	// ev.book.el.appendChild(article);
+		title = ev.page.head.querySelector("title"),
+		author = ev.page.head.querySelector("meta[name=author]");
+		bindingEl = HTMLElement("div",{"class":"bk-book"});
 
-	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
-		newEl.appendChild(c);
+	if (header) {
+		var frontEl = HTMLElement("div",{"class":"bk-front","append to":bindingEl},
+			'<div class="bk-cover">','</div>',
+			'<div class="bk-cover-back">','</div>');
+
+		for(var i=0,c; c = header.childNodes[i]; ++i) if (c.nodeType == 1) {
+			frontEl.firstChild.appendChild(c)
+		}		
 	}
 
-	ev.book.el.appendChild(newEl);
+	if (footer) {
+		var backEl = HTMLElement("div",{"class":"bk-back","append to":bindingEl});
+
+		for(var i=0,c; c = footer.childNodes[i]; ++i) if (c.nodeType == 1) {
+			backEl.appendChild(c)
+		}		
+	}
+
+	var contentEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
+	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
+		contentEl.appendChild(c);
+	}
+
+	bindingEl.appendChild( HTMLElement("div",{"class":"bk-top"}) );
+	bindingEl.appendChild( HTMLElement("div",{"class":"bk-bottom"}) );
+	bindingEl.appendChild( HTMLElement("div",{"class":"bk-right"}) );
+	HTMLElement("div",{"class":"bk-left", "append to":bindingEl},"<h2>",
+		"<span>", title? title.firstChild.nodeValue : "", "</span>",
+		"<span>", author? author.getAttribute("content") : "", "</span>",
+		"</h2>" );
+
+	ev.book.el.appendChild(bindingEl);
 };
 
 Book.prototype.click = function(ev) {

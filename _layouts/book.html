@@ -1,0 +1,25 @@
+---
+layout: master
+theme: main
+blog-link: no
+body-class: lesson lesson-color
+---
+    {% if page.cover-heading %}
+    <header> 
+        <h2>{{ page.cover-heading }}</h2>
+    </header>
+    {% endif %}
+
+    {% if page.back-side %}
+    <footer>
+    {{ page.back-side }}
+    </footer>
+    {% endif %}
+
+    <article>
+        <section data-role="'layouter':'paged-section'">
+{{ content }}
+        </section>
+    </article>
+
+    <footer></footer>
