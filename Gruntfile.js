@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
-          'bower_components/books/books.js',
+          'bower_components/fluent-books/books.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
