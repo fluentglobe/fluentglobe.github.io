@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
 
   // Project Config
-  grunt.initConfig({
+  var config = {
     pkg: grunt.file.readJSON('package.json'),
 
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
@@ -86,6 +86,29 @@ module.exports = function(grunt) {
 
     // --- COPY ---
     copy: {
+      fluent: {
+        files: [
+          {
+            expand: true, 
+            cwd: '../books/',
+            src: ['*.js','*.less','*.css'],
+            dest: 'bower_components/fluent-books/'
+          },
+          {
+            expand: true, 
+            cwd: '../books/css/',
+            src: ['*.less','*.css'],
+            dest: 'bower_components/fluent-books/css/'
+          },
+          {
+            expand: true, 
+            cwd: '../books/js/',
+            src: '*.js',
+            dest: 'bower_components/fluent-books/js/'
+          }
+        ]
+      },
+
       mediaelement: {
         files: [
           {
@@ -172,6 +195,11 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+
+      fluent: {
+        files: ['../books/**/*.js','../books/**/*.css','../books/**/*.less'],
+        tasks: 'copy:fluent'
       },
 
       less: {
@@ -283,7 +311,14 @@ module.exports = function(grunt) {
       }
     }
 
-  });
+  };
+
+  if (grunt.file.exists("../books/")) {
+    // grunt.log.writeln("fluent books found");
+    config.concurrent.tasks.push("watch:fluent");
+  }
+
+  grunt.initConfig(config);
 
   // Load Plugins
   grunt.loadNpmTasks('grunt-contrib-copy');
