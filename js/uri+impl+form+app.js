@@ -2355,7 +2355,7 @@ Book.prototype.pageLoad = function(ev) {
 	bindingEl.appendChild( HTMLElement("div",{"class":"bk-bottom"}) );
 	bindingEl.appendChild( HTMLElement("div",{"class":"bk-right"}) );
 	HTMLElement("div",{"class":"bk-left", "append to":bindingEl},"<h2>",
-		"<span>", title? title.firstChild.nodeValue : "", "</span>",
+		"<span>", title? title.firstChild.nodeValue.split("|")[0] : "", "</span>",
 		"<span>", author? author.getAttribute("content") : "", "</span>",
 		"</h2>" );
 

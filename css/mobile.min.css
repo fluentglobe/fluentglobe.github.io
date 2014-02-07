@@ -3420,7 +3420,7 @@ h6 {
   right: 10px;
 }
 .bk-left h2 {
-  width: 400px;
+  width: 350px;
   height: 40px;
   -webkit-transform-origin: 0 0;
   -moz-transform-origin: 0 0;
@@ -3610,55 +3610,6 @@ h6 {
   padding: 40px;
   text-align: center;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-/* Some color variation for the other books */
-.bk-list li:nth-child(4) .bk-book .bk-front > div,
-.bk-list li:nth-child(4) .bk-book .bk-back,
-.bk-list li:nth-child(4) .bk-book .bk-left,
-.bk-list li:nth-child(4) .bk-book .bk-front:after {
-  background-color: #cfa6ef;
-}
-.bk-list li:nth-child(5) .bk-book .bk-front > div,
-.bk-list li:nth-child(5) .bk-book .bk-back,
-.bk-list li:nth-child(5) .bk-book .bk-left,
-.bk-list li:nth-child(5) .bk-book .bk-front:after {
-  background-color: #FFC2CE;
-}
-.bk-list li:nth-child(6) .bk-book .bk-front > div,
-.bk-list li:nth-child(6) .bk-book .bk-back,
-.bk-list li:nth-child(6) .bk-book .bk-left,
-.bk-list li:nth-child(6) .bk-book .bk-front:after {
-  background-color: #80B3FF;
-}
-.bk-list li:nth-child(7) .bk-book .bk-front > div,
-.bk-list li:nth-child(7) .bk-book .bk-back,
-.bk-list li:nth-child(7) .bk-book .bk-left,
-.bk-list li:nth-child(7) .bk-book .bk-front:after {
-  background-color: #FD6E8A;
-}
-.bk-list li:nth-child(8) .bk-book .bk-front > div,
-.bk-list li:nth-child(8) .bk-book .bk-back,
-.bk-list li:nth-child(8) .bk-book .bk-left,
-.bk-list li:nth-child(8) .bk-book .bk-front:after {
-  background-color: #A2122F;
-}
-.bk-list li:nth-child(9) .bk-book .bk-front > div,
-.bk-list li:nth-child(9) .bk-book .bk-back,
-.bk-list li:nth-child(9) .bk-book .bk-left,
-.bk-list li:nth-child(9) .bk-book .bk-front:after {
-  background-color: #439877;
-}
-.bk-list li:nth-child(10) .bk-book .bk-front > div,
-.bk-list li:nth-child(10) .bk-book .bk-back,
-.bk-list li:nth-child(10) .bk-book .bk-left,
-.bk-list li:nth-child(10) .bk-book .bk-front:after {
-  background-color: #5E445D;
-}
-.bk-list li:nth-child(11) .bk-book .bk-front > div,
-.bk-list li:nth-child(11) .bk-book .bk-back,
-.bk-list li:nth-child(11) .bk-book .bk-left,
-.bk-list li:nth-child(11) .bk-book .bk-front:after {
-  background-color: #A8936D;
 }
 /* Fallbacks */
 .no-csstransforms3d .bk-list li .bk-book > div,
