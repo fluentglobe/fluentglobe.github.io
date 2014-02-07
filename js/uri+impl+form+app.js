@@ -2250,9 +2250,65 @@ var essential = Resolver("essential"),
     HTMLElement = essential("HTMLElement"),
 	DialogAction = essential("DialogAction");
 
+	var transEnd = {
+			'WebkitTransition' : 'webkitTransitionEnd',
+			'MozTransition' : 'transitionend',
+			'OTransition' : 'oTransitionEnd',
+			'msTransition' : 'MSTransitionEnd',
+			'transition' : 'transitionend'
+		}[ Modernizr.prefixed( 'transition' ) ];
+
+
+	var BOOK_EVENTS = {
+		click: function(ev) {
+			ev = MutableEvent(ev);
+	        if (this.stateful("state.disabled")) return; // disable
+
+	        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
+	        ev.stopPropagation();
+			return;
+
+
+
+			if( that.currentbook !== -1 && that.currentbook !== $parent.index() ) {
+				that.closeCurrent();
+			}
+			
+			if( this.stateful("state.expanded") ) {
+				$book.removeClass( 'bk-viewinside' ).on( transEnd, function() {
+					$( this ).off( transEnd ).removeClass( 'bk-outside' );
+					$parent.css( 'z-index', $parent.data( 'stackval' ) );
+					that.currentbook = -1;
+				} );
+			}
+			else {
+				$book.addClass( 'bk-outside' ).on( transEnd, function() {
+					$( this ).off( transEnd ).addClass( 'bk-viewinside' );
+					$parent.css( 'z-index', that.books.length );
+					that.currentbook = $parent.index();
+				} );
+				current = 0;
+				$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
+			}
+
+		}
+	};
+
+	BOOK_EVENTS[ transEnd ] = function(ev) {
+
+		//TODO
+	};
+
+var expandedBook;
+
 function Book(el,config) {
 	this.el = el;
     this.stateful = el.stateful;
+
+    this.stateful.set("state.flipped",false);
+    this.stateful.set("map.class.state.flipped","state-flipped");
+
+	addEventListeners(this.el,BOOK_EVENTS);
 
     var ac = ApplicationConfig();
     var page = ac.loadPage(config.src,false,function(ev) { this.book.pageLoad({page:this,book:this.book}); }); //TODO ,false,this,this.pageLoad pass data,page in (event)
@@ -2308,6 +2364,15 @@ Book.prototype.pageLoad = function(ev) {
 
 Book.prototype.click = function(ev) {
 
+	var v = this.stateful.toggle("state.expanded");
+	if (v) {
+		var eb = EnhancedDescriptor.all[expandedBook];
+		if (eb) eb.stateful.set("state.expanded",false);
+		expandedBook = this.el.uniqueID;
+	}
+
+			return;
+
     if (ev.commandRole == "menuitem") {
         var config = ApplicationConfig().getConfig(ev.commandElement);
         if (config.select) {
@@ -2319,21 +2384,19 @@ Book.prototype.click = function(ev) {
     }
 };
 
-function dialog_button_click(ev) {
-    ev = MutableEvent(ev).withActionInfo();
+Book.prototype.open = function() {
 
-    if (ev.commandRole == "button") return; // skip the show-menu
+};
 
-    if (ev.commandElement) {
-        if (ev.stateful && ev.stateful("state.disabled")) return; // disable
-        if (ev.ariaDisabled) return; //TODO fold into stateful
+Book.prototype.close = function() {
 
-        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
-        ev.stopPropagation();
-    }
+	return;
+	$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function(e) {
+		$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
+		$parent.css( 'z-index', $parent.data( 'stackval' ) );
+	} );
 
-    if (ev.defaultPrevented) return false;
-}
+};
 
 
 function enhance_book(el,role,config) {
@@ -2387,31 +2450,6 @@ Generator(function() {
 		else {
 			$parent.css( 'z-index', that.books.length - 1 - i + 10 ).data( 'stackval', that.books.length - 1 - i );	
 		}
-
-		$book.on( 'click', function() {
-			
-			if( that.currentbook !== -1 && that.currentbook !== $parent.index() ) {
-				that.closeCurrent();
-			}
-			
-			if( $book.data( 'opened' ) ) {
-				$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( that.transEndEventName, function() {
-					$( this ).off( that.transEndEventName ).removeClass( 'bk-outside' );
-					$parent.css( 'z-index', $parent.data( 'stackval' ) );
-					that.currentbook = -1;
-				} );
-			}
-			else {
-				$book.data( 'opened', true ).addClass( 'bk-outside' ).on( that.transEndEventName, function() {
-					$( this ).off( that.transEndEventName ).addClass( 'bk-viewinside' );
-					$parent.css( 'z-index', that.books.length );
-					that.currentbook = $parent.index();
-				} );
-				current = 0;
-				$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
-			}
-
-		} );
 
 		if( $content.length > 1 ) {
 
