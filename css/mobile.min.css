@@ -3481,58 +3481,6 @@ h6 {
   border-radius: 50%;
 }
 /* Individual style & artwork */
-/* Book 1 */
-.book-1 .bk-front > div,
-.book-1 .bk-back,
-.book-1 .bk-left,
-.book-1 .bk-front:after {
-  background-color: #ff924a;
-}
-.book-1 .bk-cover {
-  background-repeat: no-repeat;
-  background-position: 10px 40px;
-}
-.book-1 .bk-cover h2 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-.book-1 .bk-cover h2 span:first-child,
-.book-1 .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
-}
-.book-1 .bk-cover h2 span:first-child {
-  display: block;
-}
-.book-1 .bk-cover h2 span:last-child,
-.book-1 .bk-left h2 span:last-child {
-  font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
-}
-.book-1 .bk-content p {
-  font-family: Georgia, Times, "Times New Roman", serif;
-}
-.book-1 .bk-left h2 {
-  color: #fff;
-  font-size: 15px;
-  line-height: 40px;
-  padding-right: 10px;
-  text-align: right;
-}
-.book-1 .bk-back p {
-  color: #fff;
-  font-size: 13px;
-  padding: 40px;
-  text-align: center;
-  font-weight: 700;
-}
 /* Book 2 */
 .book-2 .bk-front > div,
 .book-2 .bk-back,
@@ -3741,4 +3689,175 @@ h6 {
   margin-top: -18px;
   background: transparent url(/images/shelf.png) no-repeat center center;
   position: relative;
+}
+.seil-book .bk-front > div,
+.seil-book .bk-back,
+.seil-book .bk-left,
+.seil-book .bk-front:after {
+  background-color: #000000;
+}
+.seil-book .bk-cover {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.seil-book .bk-cover h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  color: transparent;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.seil-book .bk-cover h2 span:first-child,
+.seil-book .bk-left h2 span:first-child {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  padding-right: 20px;
+}
+.seil-book .bk-cover h2 span:first-child {
+  display: block;
+}
+.seil-book .bk-left h2 {
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+.seil-book .bk-back {
+  color: #ffffff;
+  font-size: 13px;
+  padding: 40px;
+  text-align: center;
+  font-weight: 700;
+}
+.seil-book .bk-cover {
+  background-image: url(/images/seil-cover.jpg);
+}
+.sein-book .bk-front > div,
+.sein-book .bk-back,
+.sein-book .bk-left,
+.sein-book .bk-front:after {
+  background-color: #000000;
+}
+.sein-book .bk-cover {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.sein-book .bk-cover h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.sein-book .bk-cover h2 span:first-child,
+.sein-book .bk-left h2 span:first-child {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  padding-right: 20px;
+}
+.sein-book .bk-cover h2 span:first-child {
+  display: block;
+}
+.sein-book .bk-left h2 {
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+.sein-book .bk-back {
+  color: #ffffff;
+  font-size: 13px;
+  padding: 40px;
+  text-align: center;
+  font-weight: 700;
+}
+.wcib14-book .bk-front > div,
+.wcib14-book .bk-back,
+.wcib14-book .bk-left,
+.wcib14-book .bk-front:after {
+  background-color: #48711f;
+}
+.wcib14-book .bk-cover {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.wcib14-book .bk-cover h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.wcib14-book .bk-cover h2 span:first-child,
+.wcib14-book .bk-left h2 span:first-child {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  padding-right: 20px;
+}
+.wcib14-book .bk-cover h2 span:first-child {
+  display: block;
+}
+.wcib14-book .bk-left h2 {
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+.wcib14-book .bk-back {
+  color: #ffffff;
+  font-size: 13px;
+  padding: 40px;
+  text-align: center;
+  font-weight: 700;
+}
+.pft-book .bk-front > div,
+.pft-book .bk-back,
+.pft-book .bk-left,
+.pft-book .bk-front:after {
+  background-color: #d0161e;
+}
+.pft-book .bk-cover {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.pft-book .bk-cover h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.pft-book .bk-cover h2 span:first-child,
+.pft-book .bk-left h2 span:first-child {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  padding-right: 20px;
+}
+.pft-book .bk-cover h2 span:first-child {
+  display: block;
+}
+.pft-book .bk-left h2 {
+  color: #ffffff;
+  font-size: 15px;
+  line-height: 40px;
+  padding-right: 10px;
+  text-align: right;
+}
+.pft-book .bk-back {
+  color: #ffffff;
+  font-size: 13px;
+  padding: 40px;
+  text-align: center;
+  font-weight: 700;
 }
