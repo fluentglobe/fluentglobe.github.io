@@ -10,7 +10,7 @@
 
 	<title>{% if page.title %} {{ page.title }} | {% endif %} {{site.title}}</title>
 	<meta name="description" content="{{ site.description }}">
-	<meta name="author" content="Henrik Vendelbo">
+	<meta name="author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}">
 
     <link rel="apple-touch-icon" href="/touch-icon-iphone.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-ipad.png">
