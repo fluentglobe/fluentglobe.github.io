@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-02-07
+/*! Fluent Globe - v0.1.0 - 2014-02-09
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2266,36 +2266,12 @@ var essential = Resolver("essential"),
 
 	        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
 	        ev.stopPropagation();
-			return;
-
-
-
-			if( that.currentbook !== -1 && that.currentbook !== $parent.index() ) {
-				that.closeCurrent();
-			}
-			
-			if( this.stateful("state.expanded") ) {
-				$book.removeClass( 'bk-viewinside' ).on( transEnd, function() {
-					$( this ).off( transEnd ).removeClass( 'bk-outside' );
-					$parent.css( 'z-index', $parent.data( 'stackval' ) );
-					that.currentbook = -1;
-				} );
-			}
-			else {
-				$book.addClass( 'bk-outside' ).on( transEnd, function() {
-					$( this ).off( transEnd ).addClass( 'bk-viewinside' );
-					$parent.css( 'z-index', that.books.length );
-					that.currentbook = $parent.index();
-				} );
-				current = 0;
-				$content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
-			}
-
 		}
 	};
 
 	BOOK_EVENTS[ transEnd ] = function(ev) {
 
+        EnhancedDescriptor.all[this.uniqueID].instance.transEnd(ev);
 		//TODO
 	};
 
@@ -2307,6 +2283,10 @@ function Book(el,config) {
 
     this.stateful.set("state.flipped",false);
     this.stateful.set("map.class.state.flipped","state-flipped");
+    this.stateful.set("state.expanding",false);
+    this.stateful.set("map.class.state.expanding","state-expanding");
+    this.stateful.set("state.collapsing",false);
+    this.stateful.set("map.class.state.collapsing","state-collapsing");
 
 	addEventListeners(this.el,BOOK_EVENTS);
 
@@ -2364,38 +2344,64 @@ Book.prototype.pageLoad = function(ev) {
 
 Book.prototype.click = function(ev) {
 
-	var v = this.stateful.toggle("state.expanded");
-	if (v) {
+	// start close
+	if (this.stateful("state.expanded") || this.stateful("state.expanding")) {
+		this.stateful.set("state.expanded",false);
+		this.stateful.set("state.expanding",false);
+		this.stateful.set("state.collapsing",true);
+		this.browsing = "closing";
+
+	// start open
+	} else {
+		this.stateful.set("state.expanding",true); 
+		this.stateful.set("state.collapsing",false);
+
 		var eb = EnhancedDescriptor.all[expandedBook];
-		if (eb) eb.stateful.set("state.expanded",false);
+		if (eb) {
+			eb.stateful.set("state.expanded",false);
+		}
+
+		//TODO current = 0;
+		//TODO $content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
+		this.browsing = "opening";
+	}
+};
+
+Book.prototype.transEnd = function(ev) {
+	if (!this.browsing) return;
+
+	// finish close
+	if (this.browsing == "closing") {
+		this.stateful.set("state.expanded",false);
+		this.stateful.set("state.collapsing",false);
+		//TODO $parent.css( 'z-index', $parent.data( 'stackval' ) );
+		this.el.style.zIndex = "1000";
+		expandedBook = 0;
+	}
+
+	// finish open
+	else {
+		this.stateful.set("state.expanded",true);
+		this.stateful.set("state.expanding",false);
+		//TODO 					$parent.css( 'z-index', that.books.length );
+		this.el.style.zIndex = "";
 		expandedBook = this.el.uniqueID;
 	}
 
-			return;
-
-    if (ev.commandRole == "menuitem") {
-        var config = ApplicationConfig().getConfig(ev.commandElement);
-        if (config.select) {
-            this.stateful.set(config.select,config.value);
-        }
-        
-        // model.language
-        // ev.commandElement.stateful.set("state.selected",true);
-    }
+	this.browsing = null;
 };
 
-Book.prototype.open = function() {
+Book.prototype.layout = function(layout) {
+	var width = this.el.offsetParent.offsetWidth,
+		left = this.el.offsetLeft;
 
-};
+	// increasing z index up to middle then decreasing
 
-Book.prototype.close = function() {
-
-	return;
-	$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function(e) {
-		$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
-		$parent.css( 'z-index', $parent.data( 'stackval' ) );
-	} );
-
+	if (left < width / 2) {
+		this.el.style.zIndex = Math.floor(left/10) + "";
+	} else {
+		this.el.style.zIndex = Math.floor(width/10 - left/10) + "";
+	}
 };
 
 
@@ -2405,7 +2411,7 @@ function enhance_book(el,role,config) {
 }
 
 function layout_book(el,layout,instance) {
-
+	return instance.layout(layout);
 }
 
 function discard_book(el,role,instance) {
@@ -2421,18 +2427,7 @@ Resolver("page").set("handlers.discard.book", discard_book);
 
 Generator(function() {
 
-	var transEndEventNames = {
-			'WebkitTransition' : 'webkitTransitionEnd',
-			'MozTransition' : 'transitionend',
-			'OTransition' : 'oTransitionEnd',
-			'msTransition' : 'MSTransitionEnd',
-			'transition' : 'transitionend'
-		},
-		that = this;
-
-	this.transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
 	this.books = $( '#bk-list > li > div.bk-book' );
-	this.currentbook = -1;
 	this.width = this.books.parent().parent().width();
 
 
@@ -2444,12 +2439,6 @@ Generator(function() {
 			$page = $book.children( 'div.bk-page' ),
 			$content = $page.children( 'div.bk-content' ), current = 0;
 
-		if( this.parentNode.left < that.width / 2 ) {
-			$parent.css( 'z-index', i + 10).data( 'stackval', i );
-		}
-		else {
-			$parent.css( 'z-index', that.books.length - 1 - i + 10 ).data( 'stackval', that.books.length - 1 - i );	
-		}
 
 		if( $content.length > 1 ) {
 
@@ -2479,18 +2468,6 @@ Generator(function() {
 	} );
 
 },{prototype:{
-
-	closeCurrent: function() {
-
-		var $book = this.books.eq( this.currentbook ),
-			$parent = $book.parent();
-		
-		$book.data( 'opened', false ).removeClass( 'bk-viewinside' ).on( this.transEndEventName, function(e) {
-			$( this ).off( this.transEndEventName ).removeClass( 'bk-outside' );
-			$parent.css( 'z-index', $parent.data( 'stackval' ) );
-		} );
-
-	}
 
 }}).restrict({lifecycle:"page",singleton:true});
 !function() {
