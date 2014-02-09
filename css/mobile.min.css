@@ -3214,9 +3214,9 @@ h6 {
   -webkit-perspective: 800px;
   -moz-perspective: 800px;
   perspective: 800px;
-  -webkit-perspective-origin: 50% 15%;
-  -moz-perspective-origin: 50% 15%;
-  perspective-origin: 50% 15%;
+  -webkit-perspective-origin: 50% 40%;
+  -moz-perspective-origin: 50% 40%;
+  perspective-origin: 50% 40%;
 }
 .bk-list li {
   position: relative;
@@ -3228,19 +3228,6 @@ h6 {
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
-}
-.bk-list li.feature {
-  width: 220px;
-}
-.bk-list li.feature .bk-book {
-  left: -100px;
-  width: 200px;
-  -webkit-transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
-  -moz-transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
-  transform: rotate3d(0, 1, 0, 0deg) translate(0, 6px) rotateY(-3deg);
-}
-.bk-list li:last-child {
-  margin-right: 0;
 }
 .bk-list li .bk-book {
   cursor: pointer;
@@ -3263,15 +3250,27 @@ h6 {
   -moz-transform: rotateY(90deg) rotateZ(-15deg) translate3d(-100px, 0, 0);
   transform: rotateY(90deg) rotateZ(-15deg) translate3d(-100px, 0, 0);
 }
+.bk-list li .bk-book > div {
+  display: block;
+  position: absolute;
+}
+.bk-list li.feature {
+  width: 220px;
+}
+.bk-list li.feature .bk-book {
+  left: -100px;
+  width: 200px;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg) translate(0px, 0px) rotateY(-3deg);
+  -moz-transform: rotate3d(0, 1, 0, 0deg) translate(0px, 0px) rotateY(-3deg);
+  transform: rotate3d(0, 1, 0, 0deg) translate(0px, 0px) rotateY(-3deg);
+}
 .bk-list li.feature .bk-book:hover {
   -webkit-transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
   -moz-transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
   transform: rotateY(-2deg) rotateZ(-4deg) translate3d(-10px, 0, 0);
 }
-.bk-list li .bk-book > div,
-.bk-list li .bk-front > div {
-  display: block;
-  position: absolute;
+.bk-list li:last-child {
+  margin-right: 0;
 }
 .bk-list li .bk-front {
   -webkit-transform-style: preserve-3d;
@@ -3290,6 +3289,8 @@ h6 {
   transform: translate3d(0, 0, 20px);
 }
 .bk-list li .bk-front > div {
+  display: block;
+  position: absolute;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -3372,14 +3373,14 @@ h6 {
   transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
 }
 .bk-list li.state-expanded div.bk-book {
-  -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px) !important;
-  -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px) !important;
-  transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px) !important;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
+  -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
+  transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
 }
 .bk-list li.feature.state-expanded div.bk-book {
-  -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px) !important;
-  -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px) !important;
-  transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px) !important;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
+  -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
+  transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
 }
 .bk-list li.state-expanding .bk-book:hover,
 .bk-list li.state-expanding .bk-book {
@@ -3536,7 +3537,7 @@ h6 {
   width: 100%;
   height: 63px;
   z-index: -1;
-  margin-top: -18px;
+  margin-top: -22px;
   background: transparent url(/images/shelf.png) no-repeat center center;
   position: relative;
 }
