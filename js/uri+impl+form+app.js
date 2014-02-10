@@ -2288,6 +2288,9 @@ function Book(el,config) {
     this.stateful.set("state.collapsing",false);
     this.stateful.set("map.class.state.collapsing","state-collapsing");
 
+    this.stateful.set("state.reading",false);
+    this.stateful.set("map.class.state.reading","state-reading");
+
 	addEventListeners(this.el,BOOK_EVENTS);
 
     var ac = ApplicationConfig();
@@ -2297,6 +2300,18 @@ function Book(el,config) {
 
 Book.prototype.destroy = function() {
 
+};
+
+Book.prototype.getReader = function() {
+	var reader = document.getElementById("book-reader");
+	if (!reader) {
+		reader = HTMLElement("div",{
+			"append to": document.body,
+			"id":"book-reader",
+			"make stateful":true});
+	}
+
+	return reader;
 };
 
 Book.prototype.pageLoad = function(ev) {
@@ -2326,10 +2341,8 @@ Book.prototype.pageLoad = function(ev) {
 		}		
 	}
 
-	var contentEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
-	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
-		contentEl.appendChild(c);
-	}
+	var pageEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
+	//TODO render template with overview
 
 	bindingEl.appendChild( HTMLElement("div",{"class":"bk-top"}) );
 	bindingEl.appendChild( HTMLElement("div",{"class":"bk-bottom"}) );
@@ -2340,6 +2353,14 @@ Book.prototype.pageLoad = function(ev) {
 		"</h2>" );
 
 	ev.book.el.appendChild(bindingEl);
+
+	this.contentEl = HTMLElement("div",{"class":"book-content","make stateful":true})
+
+	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
+		this.contentEl.appendChild(c);
+	}
+
+	ev.book.getReader().appendChild(this.contentEl);
 };
 
 Book.prototype.click = function(ev) {
@@ -2363,32 +2384,29 @@ Book.prototype.click = function(ev) {
 
 		//TODO current = 0;
 		//TODO $content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
-		this.browsing = "opening";
 	}
 };
 
 Book.prototype.transEnd = function(ev) {
-	if (!this.browsing) return;
-
 	// finish close
-	if (this.browsing == "closing") {
+	if (this.stateful("state.collapsing")) {
 		this.stateful.set("state.expanded",false);
 		this.stateful.set("state.collapsing",false);
 		//TODO $parent.css( 'z-index', $parent.data( 'stackval' ) );
 		this.el.style.zIndex = "1000";
 		expandedBook = 0;
+		return;
 	}
 
 	// finish open
-	else {
+	if (this.stateful("state.expanding")) {
 		this.stateful.set("state.expanded",true);
 		this.stateful.set("state.expanding",false);
 		//TODO 					$parent.css( 'z-index', that.books.length );
 		this.el.style.zIndex = "";
 		expandedBook = this.el.uniqueID;
+		return;
 	}
-
-	this.browsing = null;
 };
 
 Book.prototype.layout = function(layout) {
@@ -2467,9 +2485,7 @@ Generator(function() {
 		
 	} );
 
-},{prototype:{
-
-}}).restrict({lifecycle:"page",singleton:true});
+});
 !function() {
 
 /* jshint -W064: false */

@@ -3496,7 +3496,7 @@ h6 {
   background: #f0f0f0;
   border-radius: 50%;
 }
-.bk-list .book-content {
+#book-reader .book-content {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -3505,7 +3505,7 @@ h6 {
   z-index: 5000;
   visibility: hidden;
 }
-.bk-list li.state-reading .book-content {
+#book-reader.state-reading .book-content {
   visibility: visible;
 }
 /* Individual style & artwork */
