@@ -208,8 +208,8 @@ module.exports = function(grunt) {
       },
 
       less: {
-        files: ['_less/*.less','assets/less/**/*.less',"./css/*.less"],
-        tasks: 'less:dev'
+        files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","bower_components/**/*.less"],
+        tasks: ['less:dev','less:dist']
       },
       sass: {
         files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
@@ -340,7 +340,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   // Default Task
-  grunt.registerTask('default', ['less:dev','concat:essential','concat:app','concurrent']);
+  grunt.registerTask('default', ['less:dev','less:dist','concat:essential','concat:app','concurrent']);
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
     'qunit','concat','uglify']);

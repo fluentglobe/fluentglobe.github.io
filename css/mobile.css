@@ -3559,24 +3559,26 @@ h6 {
   -moz-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
   transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
 }
+.bk-list li.state-expanded div.bk-book:hover,
 .bk-list li.state-expanded div.bk-book {
   -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
   -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
   transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
 }
+.bk-list li.feature.state-expanded div.bk-book:hover,
 .bk-list li.feature.state-expanded div.bk-book {
   -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
   -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
   transform: rotate3d(0, 1, 0, 0deg) translateX(300px) translateZ(100px);
 }
-.bk-list li.state-expanding .bk-book:hover,
-.bk-list li.state-expanding .bk-book {
+.bk-list li.state-expanding div.bk-book:hover,
+.bk-list li.state-expanding div.bk-book {
   -webkit-transform: rotate3d(0, 1, 0, 90deg) translateX(-300px);
   -moz-transform: rotate3d(0, 1, 0, 90deg) translateX(-300px);
   transform: rotate3d(0, 1, 0, 90deg) translateX(-300px);
 }
-.bk-list li.feature.state-expanding .bk-book:hover,
-.bk-list li.feature.state-expanding .bk-book {
+.bk-list li.feature.state-expanding div.bk-book:hover,
+.bk-list li.feature.state-expanding div.bk-book {
   -webkit-transform: rotate3d(0, 1, 0, -20deg) translateX(100px) translateZ(100px);
   -moz-transform: rotate3d(0, 1, 0, -20deg) translateX(100px) translateZ(100px);
   transform: rotate3d(0, 1, 0, -20deg) translateX(100px) translateZ(100px);
