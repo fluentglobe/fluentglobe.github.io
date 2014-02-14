@@ -152,19 +152,24 @@ module.exports = function(grunt) {
         options: {
           paths: [
             "./bower_components",
-            "./_less"],
-          yuicompress: true
+            "./_less"
+            ]
         },
         files: {
-          './css/mobile.min.css': './css/mobile.less',
-          './css/enhanced.min.css': './css/enhanced.less'
+          './css/mobile.css': './css/mobile.less',
+          './css/enhanced.css': './css/enhanced.less'
         }
       },
 
       dist: {
         options: {
-          paths: ["assets/less/bootstrap/less"],
-          yuicompress: true
+          paths: [
+            "./bower_components",
+            "./_less"
+          ],
+          compress: true,
+          cleancss: true,
+          report: true
         },
         files: {
           'css/mobile.min.css': 'css/mobile.less',

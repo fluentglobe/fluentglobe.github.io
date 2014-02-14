@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-02-09
+/*! Fluent Globe - v0.1.0 - 2014-02-14
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2280,6 +2280,7 @@ var expandedBook;
 function Book(el,config) {
 	this.el = el;
     this.stateful = el.stateful;
+    this.pos = config.pos;
 
     this.stateful.set("state.flipped",false);
     this.stateful.set("map.class.state.flipped","state-flipped");
@@ -2295,7 +2296,9 @@ function Book(el,config) {
 
     var ac = ApplicationConfig();
     var page = ac.loadPage(config.src,false,function(ev) { this.book.pageLoad({page:this,book:this.book}); }); //TODO ,false,this,this.pageLoad pass data,page in (event)
-	page.book = this;    
+	page.book = this;
+
+	if (config.feature) this.el.classList.add("feature");    
 }
 
 Book.prototype.destroy = function() {
@@ -2315,13 +2318,17 @@ Book.prototype.getReader = function() {
 };
 
 Book.prototype.pageLoad = function(ev) {
+	var bindingClass = "bk-book";
+	if (this.pos && this.pos < 0) bindingClass += " left-" + (-this.pos);
+	if (this.pos && this.pos > 0) bindingClass += " right-" + this.pos;
+
 	var page = ev.page, book = ev.book,
 		header = ev.page.body.querySelector("body > header"),
 		footer = ev.page.body.querySelector("body > footer"),
 		article = ev.page.body.querySelector("article"),
 		title = ev.page.head.querySelector("title"),
 		author = ev.page.head.querySelector("meta[name=author]");
-		bindingEl = HTMLElement("div",{"class":"bk-book"});
+		bindingEl = this.bookEl = HTMLElement("div",{"class": bindingClass});
 
 	if (header) {
 		var frontEl = HTMLElement("div",{"class":"bk-front","append to":bindingEl},
@@ -2353,6 +2360,11 @@ Book.prototype.pageLoad = function(ev) {
 		"</h2>" );
 
 	ev.book.el.appendChild(bindingEl);
+
+	this.transformBase = this.bookEl.style[this.prefixedTransform] || this.bookEl.style.transform;
+
+	var bookEl = this.el.children[0];
+
 
 	this.contentEl = HTMLElement("div",{"class":"book-content","make stateful":true})
 
@@ -2409,16 +2421,16 @@ Book.prototype.transEnd = function(ev) {
 	}
 };
 
+Book.prototype.prefixedTransform = Modernizr.prefixed("transform");
+
 Book.prototype.layout = function(layout) {
 	var width = this.el.offsetParent.offsetWidth,
 		left = this.el.offsetLeft;
 
 	// increasing z index up to middle then decreasing
 
-	if (left < width / 2) {
-		this.el.style.zIndex = Math.floor(left/10) + "";
-	} else {
-		this.el.style.zIndex = Math.floor(width/10 - left/10) + "";
+	if (this.pos) {
+		this.el.style.zIndex = String(10 - Math.abs(this.pos));
 	}
 };
 
