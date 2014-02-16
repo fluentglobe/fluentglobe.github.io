@@ -340,7 +340,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   // Default Task
-  grunt.registerTask('default', ['less:dev','less:dist','concat:essential','concat:app','concurrent']);
+  grunt.registerTask('default', ['copy','less:dev','less:dist','concat:essential','concat:app','concurrent']);
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
     'qunit','concat','uglify']);

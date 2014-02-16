@@ -2282,15 +2282,17 @@ function Book(el,config) {
     this.stateful = el.stateful;
     this.pos = config.pos;
 
-    this.stateful.set("state.flipped",false);
     this.stateful.set("map.class.state.flipped","state-flipped");
-    this.stateful.set("state.expanding",false);
+    this.stateful.set("state.flipped",false);
     this.stateful.set("map.class.state.expanding","state-expanding");
-    this.stateful.set("state.collapsing",false);
+    this.stateful.set("state.expanding",false);
     this.stateful.set("map.class.state.collapsing","state-collapsing");
+    this.stateful.set("state.collapsing",false);
+    this.stateful.set("map.class.state.collapsed","state-collapsed");
+    this.stateful.set("state.collapsed",true);
 
-    this.stateful.set("state.reading",false);
     this.stateful.set("map.class.state.reading","state-reading");
+    this.stateful.set("state.reading",false);
 
 	addEventListeners(this.el,BOOK_EVENTS);
 
@@ -2386,6 +2388,7 @@ Book.prototype.click = function(ev) {
 
 	// start open
 	} else {
+		this.stateful.set("state.collapsed",false);
 		this.stateful.set("state.expanding",true); 
 		this.stateful.set("state.collapsing",false);
 
@@ -2404,8 +2407,9 @@ Book.prototype.transEnd = function(ev) {
 	if (this.stateful("state.collapsing")) {
 		this.stateful.set("state.expanded",false);
 		this.stateful.set("state.collapsing",false);
+		this.stateful.set("state.collapsed",true);
 		//TODO $parent.css( 'z-index', $parent.data( 'stackval' ) );
-		this.el.style.zIndex = "1000";
+		this.el.style.zIndex = "";
 		expandedBook = 0;
 		return;
 	}
@@ -2415,7 +2419,7 @@ Book.prototype.transEnd = function(ev) {
 		this.stateful.set("state.expanded",true);
 		this.stateful.set("state.expanding",false);
 		//TODO 					$parent.css( 'z-index', that.books.length );
-		this.el.style.zIndex = "";
+		this.el.style.zIndex = "1000";
 		expandedBook = this.el.uniqueID;
 		return;
 	}
