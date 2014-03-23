@@ -2027,9 +2027,9 @@ html body.splash #intro .we-love figure {
   width: 383px;
   height: 431px;
   margin: 0;
-  -webkit-transform: scale(0.5, );
-  -ms-transform: scale(0.5, );
-  transform: scale(0.5, );
+  -webkit-transform: scale(0.5, 0.5);
+  -ms-transform: scale(0.5, 0.5);
+  transform: scale(0.5, 0.5);
   -ms-transform-origin: left top;
   -webkit-transform-origin: left top;
   transform-origin: left top;
