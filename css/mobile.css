@@ -1562,8 +1562,8 @@ article {
   width: 100%;
   border-left: 4px solid #fb441b;
   overflow: visible;
-  -webkit-transition: 0.3s ease-in-out left;
-  transition: 0.3s ease-in-out left;
+  -webkit-transition: .3s ease-in-out left,.3s ease-in-out margin-top;
+  transition: .3s ease-in-out left,.3s ease-in-out margin-top;
 }
 article > header {
   position: absolute;
@@ -1573,6 +1573,13 @@ article > header {
   right: 0;
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
+}
+.open-book article {
+  margin-top: 60px !important;
+  background: white;
+}
+body.open-book {
+  overflow: hidden;
 }
 body.screen.state-expanded #intro,
 body.splash.state-expanded #intro,
@@ -3205,6 +3212,25 @@ h6 {
   cursor: pointer;
 }
 /* End: Postroll */
+/* Individual style & artwork */
+/* Fallbacks */
+.no-csstransforms3d .bk-list li .bk-book > div,
+.no-csstransforms3d .bk-list li .bk-book .bk-cover-back {
+  display: none;
+}
+.no-csstransforms3d .bk-list li .bk-book > div.bk-front {
+  display: block;
+}
+.no-csstransforms3d .bk-info button,
+.no-js .bk-info button {
+  display: none;
+}
+.no-csstransforms3d .bk-list {
+  width: auto;
+}
+.bk-list {
+  height: 420px;
+}
 .bk-list {
   list-style: none;
   position: relative;
@@ -3282,6 +3308,11 @@ h6 {
   -webkit-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 0px) scale3d(1, 1, 1);
   -moz-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 0px) scale3d(1, 1, 1);
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 0px) scale3d(1, 1, 1);
+}
+.bk-list li .bk-book:hover {
+  -webkit-transform: rotateY(90deg) rotateZ(-15deg) translate3d(-150px, 5px, 0px) scale3d(1, 1, 1);
+  -moz-transform: rotateY(90deg) rotateZ(-15deg) translate3d(-150px, 5px, 0px) scale3d(1, 1, 1);
+  transform: rotateY(90deg) rotateZ(-15deg) translate3d(-150px, 5px, 0px) scale3d(1, 1, 1);
 }
 .bk-list li .bk-book > div {
   display: block;
@@ -3596,16 +3627,6 @@ h6 {
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
-.bk-list li .bk-page {
-  -webkit-transform: translate3d(0, 0, 19px);
-  -moz-transform: translate3d(0, 0, 19px);
-  transform: translate3d(0, 0, 19px);
-  display: none;
-  top: 5px;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
 .bk-list li .bk-left,
 .bk-list li .bk-right {
   width: 40px;
@@ -3639,6 +3660,17 @@ h6 {
   -moz-transform: rotate3d(0, 1, 0, -90deg);
   transform: rotate3d(0, 1, 0, -90deg);
   box-shadow: inset 4px 0 5px rgba(255, 255, 255, 0.1), inset 5px 0 5px rgba(0, 0, 0, 0.05), inset -5px 0 5px rgba(0, 0, 0, 0.04);
+}
+.bk-list li .bk-left h2 {
+  height: 40px;
+  line-height: 40px;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: rotate(90deg) translateY(-40px);
+  -moz-transform: rotate(90deg) translateY(-40px);
+  transform: rotate(90deg) translateY(-40px);
 }
 .bk-list li .bk-top {
   -webkit-transform: rotate3d(1, 0, 0, 90deg);
@@ -3678,19 +3710,29 @@ h6 {
   left: auto;
   right: 10px;
 }
+.bk-list li .bk-page {
+  -webkit-transform: translate3d(0, 0, 19px);
+  -moz-transform: translate3d(0, 0, 19px);
+  transform: translate3d(0, 0, 19px);
+  display: none;
+  top: 5px;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .bk-list li:last-child {
   margin-right: 0;
 }
-.bk-list li.state-expanded .bk-book .bk-front {
-  -webkit-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
-  -moz-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
-  transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
-}
-.bk-list li.state-expanded div.bk-book:hover,
-.bk-list li.state-expanded div.bk-book {
+.bk-list li.state-expanded div.bk-book,
+.bk-list li.state-expanded div.bk-book:hover {
   -webkit-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
   -moz-transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
   transform: rotate3d(0, 1, 0, 0deg) translateX(0px) translateZ(100px);
+}
+.bk-list li.state-expanded div.bk-book .bk-front {
+  -webkit-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
+  -moz-transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
+  transform: translate3d(0, 0, 20px) rotate3d(0, 1, 0, -160deg);
 }
 .bk-list li.state-collapsing div.bk-book:hover,
 .bk-list li.state-expanding div.bk-book:hover,
@@ -3705,16 +3747,46 @@ h6 {
   -moz-transform: translate3d(0, 0, 0px) rotate3d(0, 1, 0, 180deg);
   transform: translate3d(0, 0, 0px) rotate3d(0, 1, 0, 180deg);
 }
-.bk-list .bk-left h2 {
-  height: 40px;
-  line-height: 40px;
-  -webkit-transform-origin: 0 0;
-  -moz-transform-origin: 0 0;
-  -ms-transform-origin: 0 0;
-  transform-origin: 0 0;
-  -webkit-transform: rotate(90deg) translateY(-40px);
-  -moz-transform: rotate(90deg) translateY(-40px);
-  transform: rotate(90deg) translateY(-40px);
+@media screen and (device-aspect-ratio: 3/4) and (orientation: landscape) {
+  .bk-list li {
+    height: 600px;
+  }
+  .bk-list li ".bk-book" {
+    height: 600px;
+  }
+  .bk-list li .bk-page {
+    width: 445px;
+    height: 590px;
+  }
+  .bk-list li .bk-front,
+  .bk-list li .bk-back,
+  .bk-list li .bk-front > div {
+    width: 450px;
+    height: 600px;
+  }
+  .bk-list li .bk-top,
+  .bk-list li .bk-bottom {
+    width: 445px;
+  }
+  .bk-list li .bk-right {
+    width: 440px;
+  }
+  .bk-list li .bk-left {
+    height: 600px;
+  }
+  .bk-list li .bk-left h2 {
+    width: 550px;
+  }
+  .bk-list li .bk-bottom {
+    -webkit-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 590px);
+    -moz-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 590px);
+    transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 590px);
+  }
+  .bk-list li .bk-right {
+    -webkit-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 445px);
+    -moz-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 445px);
+    transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 445px);
+  }
 }
 .bk-content {
   position: absolute;
@@ -3769,6 +3841,14 @@ h6 {
   background: #f0f0f0;
   border-radius: 50%;
 }
+#book-reader {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 5000;
+}
 #book-reader .book-content {
   position: absolute;
   top: 0;
@@ -3776,29 +3856,9 @@ h6 {
   left: 50%;
   width: 50%;
   z-index: 5000;
+}
+#book-reader .book-content.state-hidden {
   visibility: hidden;
-}
-#book-reader.state-reading .book-content {
-  visibility: visible;
-}
-/* Individual style & artwork */
-/* Fallbacks */
-.no-csstransforms3d .bk-list li .bk-book > div,
-.no-csstransforms3d .bk-list li .bk-book .bk-cover-back {
-  display: none;
-}
-.no-csstransforms3d .bk-list li .bk-book > div.bk-front {
-  display: block;
-}
-.no-csstransforms3d .bk-info button,
-.no-js .bk-info button {
-  display: none;
-}
-.no-csstransforms3d .bk-list {
-  width: auto;
-}
-.bk-list {
-  height: 420px;
 }
 .bookshelf {
   width: 100%;

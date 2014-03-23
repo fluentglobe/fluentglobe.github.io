@@ -2236,6 +2236,7 @@ Resolver("page").declare("handlers.discard.form", discard_form);
 /* jshint -W064: false */
 
 var essential = Resolver("essential"),
+    pageResolver = Resolver("page"),
     ApplicationConfig = essential("ApplicationConfig"),
 
     console = essential("console"),
@@ -2301,22 +2302,25 @@ function Book(el,config) {
 	page.book = this;
 
 	if (config.feature) this.el.classList.add("feature");    
-}
 
-Book.prototype.destroy = function() {
-
-};
-
-Book.prototype.getReader = function() {
-	var reader = document.getElementById("book-reader");
-	if (!reader) {
-		reader = HTMLElement("div",{
+	// set up reader if not there
+	if (this.reader == undefined) {
+		Book.prototype.reader = HTMLElement("div",{
 			"append to": document.body,
 			"id":"book-reader",
 			"make stateful":true});
+		Book.prototype.reader.stateful.set("state.hidden",true);
 	}
 
-	return reader;
+	if (this.article == undefined) {
+		Book.prototype.article = document.getElementsByTagName("article")[0];
+	}
+}
+
+Book.prototype.destroy = function() {
+	this.bookEl = null;
+	this.pageEl = null;
+	this.contentEl = null;
 };
 
 Book.prototype.pageLoad = function(ev) {
@@ -2327,7 +2331,6 @@ Book.prototype.pageLoad = function(ev) {
 	var page = ev.page, book = ev.book,
 		header = ev.page.body.querySelector("body > header"),
 		footer = ev.page.body.querySelector("body > footer"),
-		article = ev.page.body.querySelector("article"),
 		title = ev.page.head.querySelector("title"),
 		author = ev.page.head.querySelector("meta[name=author]");
 		bindingEl = this.bookEl = HTMLElement("div",{"class": bindingClass});
@@ -2350,7 +2353,7 @@ Book.prototype.pageLoad = function(ev) {
 		}		
 	}
 
-	var pageEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
+	this.pageEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
 	//TODO render template with overview
 
 	bindingEl.appendChild( HTMLElement("div",{"class":"bk-top"}) );
@@ -2363,39 +2366,96 @@ Book.prototype.pageLoad = function(ev) {
 
 	ev.book.el.appendChild(bindingEl);
 
-	this.transformBase = this.bookEl.style[this.prefixedTransform] || this.bookEl.style.transform;
+	// ev.book.transformBase = this.bookEl.style[this.prefixedTransform] || this.bookEl.style.transform;
 
-	var bookEl = this.el.children[0];
+	//var bookEl = this.el.children[0];
 
+	ev.book._createReaderElement(ev.page.body.querySelector("article"));
+};
 
-	this.contentEl = HTMLElement("div",{"class":"book-content","make stateful":true})
+Book.prototype._createReaderElement = function(article) {
+
+	this.contentEl = HTMLElement("div",{
+		"class":"book-content","make stateful":true
+	});
+	this.contentEl.stateful.set("state.hidden",true);
 
 	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
 		this.contentEl.appendChild(c);
 	}
 
-	ev.book.getReader().appendChild(this.contentEl);
+	this.reader.appendChild(this.contentEl);
+};
+
+var openBook = {
+
+};
+
+Book.prototype.startOpen = function() {
+
+	this.stateful.set("state.collapsed",false);
+	this.stateful.set("state.expanding",true); 
+	this.stateful.set("state.collapsing",false);
+
+	var marginTop = parseInt(this.article.style.marginTop);
+	openBook.scrollY = window.scrollY;
+	openBook.marginTop = marginTop;
+	this.article.style.marginTop = (marginTop - openBook.scrollY) + "px";
+	window.scrollTo(0,0);
+	pageResolver.set("state.open-book",true);
+
+	var eb = EnhancedDescriptor.all[expandedBook];
+	if (eb) {
+		eb.stateful.set("state.expanded",false);
+	}
+};
+
+Book.prototype.finishOpen = function() {
+
+	this.stateful.set("state.expanded",true);
+	this.stateful.set("state.expanding",false);
+	this.el.style.zIndex = "100";
+	expandedBook = this.el.uniqueID;
+};
+
+Book.prototype.startClose = function() {
+
+	this.stateful.set("state.expanded",false);
+	this.stateful.set("state.expanding",false);
+	this.stateful.set("state.collapsing",true);
+	this.browsing = "closing";
+};
+
+Book.prototype.finishClose = function() {
+
+	this.stateful.set("state.expanded",false);
+	this.stateful.set("state.collapsing",false);
+	this.stateful.set("state.collapsed",true);
+	//TODO $parent.css( 'z-index', $parent.data( 'stackval' ) );
+	this.el.style.zIndex = "";
+	expandedBook = 0;
+
+	pageResolver.set("state.open-book",false);
+	this.article.style.marginTop = openBook.marginTop+"px"; //TODO tie with dynamic code
+	window.scrollTo(0,openBook.scrollY);
+
+	this.hideContent();
 };
 
 Book.prototype.click = function(ev) {
 
-	// start close
+	if (ev.target == this.pageEl) {
+		this.showContent();
+		return;
+	}
+
+	// console.log(this.el,this.bookEl.getBoundingClientRect());
+
 	if (this.stateful("state.expanded") || this.stateful("state.expanding")) {
-		this.stateful.set("state.expanded",false);
-		this.stateful.set("state.expanding",false);
-		this.stateful.set("state.collapsing",true);
-		this.browsing = "closing";
+		this.startClose();
 
-	// start open
 	} else {
-		this.stateful.set("state.collapsed",false);
-		this.stateful.set("state.expanding",true); 
-		this.stateful.set("state.collapsing",false);
-
-		var eb = EnhancedDescriptor.all[expandedBook];
-		if (eb) {
-			eb.stateful.set("state.expanded",false);
-		}
+		this.startOpen();
 
 		//TODO current = 0;
 		//TODO $content.removeClass( 'bk-content-current' ).eq( current ).addClass( 'bk-content-current' );
@@ -2403,26 +2463,35 @@ Book.prototype.click = function(ev) {
 };
 
 Book.prototype.transEnd = function(ev) {
-	// finish close
+
 	if (this.stateful("state.collapsing")) {
-		this.stateful.set("state.expanded",false);
-		this.stateful.set("state.collapsing",false);
-		this.stateful.set("state.collapsed",true);
-		//TODO $parent.css( 'z-index', $parent.data( 'stackval' ) );
-		this.el.style.zIndex = "";
-		expandedBook = 0;
+		this.finishClose();
 		return;
 	}
 
-	// finish open
 	if (this.stateful("state.expanding")) {
-		this.stateful.set("state.expanded",true);
-		this.stateful.set("state.expanding",false);
-		//TODO 					$parent.css( 'z-index', that.books.length );
-		this.el.style.zIndex = "1000";
-		expandedBook = this.el.uniqueID;
+		this.finishOpen();
 		return;
 	}
+};
+
+Book.prototype.showContent = function() {
+	/*
+	var placement = ElementPlacement(this.pageEl);
+	// debugger;
+	this.contentEl.style.left = this.pageEl.offsetLeft + "px";
+	this.contentEl.style.right = (this.pageEl.offsetLeft+this.pageEl.offsetWidth) + "px";
+	this.contentEl.style.top = this.pageEl.offsetTop + "px";
+	this.contentEl.style.bottom = (this.pageEl.offsetTop+this.pageEl.offsetHeight) + "px";
+	*/
+	this.contentEl.stateful.set("state.hidden",false);
+	this.reader.stateful.set("state.hidden",false);
+};
+
+Book.prototype.hideContent = function() {
+
+	this.contentEl.stateful.set("state.hidden",true);
+	this.reader.stateful.set("state.hidden",true);
 };
 
 Book.prototype.prefixedTransform = Modernizr.prefixed("transform");
@@ -2438,8 +2507,20 @@ Book.prototype.layout = function(layout) {
 	}
 };
 
+var bookSupported = false;
+function ensureOpenBookSupport() {
+	pageResolver.set("map.class.state.open-book","open-book");
+	pageResolver.set("state.open-book",false);
+	pageResolver.on("true","state.open-book",this,function(ev) {
+		// scrollTo(0,0);
+		//TODO animated move there by shifting to positioning
+		// when resetting switch back to scroll offset
+	});
+	bookSupported = true;
+}
 
 function enhance_book(el,role,config) {
+	if (!bookSupported) ensureOpenBookSupport();
     var book = new Book(el,config);
     return book;
 }
@@ -2713,7 +2794,6 @@ FormAction.prototype["start-over"] = function(el,ev) {
 */
 
 
-
 // section level
 Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.el = el;
@@ -2863,6 +2943,20 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
         }
     }
 }}));
+
+Layouter.variant("shifted-article",Generator(
+    function(key,el,conf) {
+        console.log("shifted",conf);
+    },
+    Laidout,
+    {"prototype":{
+
+        "layout": function(el,layout) {
+            console.log(layout);
+        }
+    }}
+));
+
 
 
 Laidout.variant("section-column",Generator(

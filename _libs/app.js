@@ -209,7 +209,6 @@ FormAction.prototype["start-over"] = function(el,ev) {
 */
 
 
-
 // section level
 Layouter.variant("paged-section",Generator(function(key,el,conf) {
     this.el = el;
@@ -359,6 +358,20 @@ Layouter.variant("paged-section",Generator(function(key,el,conf) {
         }
     }
 }}));
+
+Layouter.variant("shifted-article",Generator(
+    function(key,el,conf) {
+        console.log("shifted",conf);
+    },
+    Laidout,
+    {"prototype":{
+
+        "layout": function(el,layout) {
+            console.log(layout);
+        }
+    }}
+));
+
 
 
 Laidout.variant("section-column",Generator(
