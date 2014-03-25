@@ -5,6 +5,7 @@
 var essential = Resolver("essential"),
 	pageResolver = Resolver("page"),
 	EnhancedDescriptor = essential("EnhancedDescriptor"),
+	HTMLElement = essential("HTMLElement"),
 	MutableEvent = essential("MutableEvent"),
 	fireAction = essential("fireAction"),
 	addEventListeners = essential("addEventListeners"),
@@ -49,6 +50,8 @@ function updateConnected() {
 }
 // setTimeout(updateConnected,100); //TODO configurable with algorithm
 
+var newIframeId = 1;
+
 
 function EnhancedForm(el,config) {
 
@@ -61,6 +64,8 @@ function EnhancedForm(el,config) {
 	el.__builtinFocus = el.focus;
 	el.focus = form_focus;
 
+	this.namedElements = {};
+
 	// Strategy determines if element should be stateful and the effective role
 	var strategyRole = el.stateful("strategy.role","undefined") || effectiveRole;
 	for(var i=0,node; node = el.elements[i]; ++i) {
@@ -70,6 +75,12 @@ function EnhancedForm(el,config) {
 			accessor.init(role,el,node)
 			node.accessor = accessor;
 			//TODO add cleaner for accessor
+
+			var name = node.getAttribute("name");
+			if (name) {
+				this.namedElements[name] = node;
+				node.originalName = name;
+			}
 		}
 
 		if (node.tagName == "BUTTON" && node.getAttribute("role") == null) {
@@ -84,6 +95,10 @@ function EnhancedForm(el,config) {
 		"click": dialog_button_click
 	},false);
 
+
+	this.actionParts = URI.parse(el.action);
+
+	// this.url = new URI(el.action);
 	//TODO enhance/stateful buttons
 
 	// applyDefaultRole(el.getElementsByTagName("BUTTON"));
@@ -107,13 +122,35 @@ function EnhancedForm(el,config) {
 		default:
 			break;
 	}
+
+	// prepare form for default submit
+	this.actions = config.actions;
+	if (config.defaultAction) {
+		this.applyAction(el,config.defaultAction);
+	}
 }
 
 // EnhancedForm.prototype.
 
 EnhancedForm.prototype.destroy = function(el) {
 
+	this.namedElements = null;
 };
+
+EnhancedForm.prototype.applyAction = function(el,logicName) {
+	var logic = this.actions[logicName];
+	if (logic) {
+
+		// allow context dependent attribute names
+		for(var n in logic.mapName) {
+			if (this.namedElements[n]) this.namedElements[n].setAttribute("name",logic.mapName[n]);
+		}
+		this.actionParts.path = logic.path;
+	}
+};
+
+// no plan submit
+EnhancedForm.prototype.submit = function(el) {}
 
 EnhancedForm.prototype.planJsonSubmit = function(el) {
 	this.submit = this.jsonSubmit;
@@ -151,15 +188,34 @@ EnhancedForm.prototype.jsonSubmit = function(ev,el) {
 	ev.preventDefault();
 };
 
+function onIframeLoad(ev) {
+	//TODO pop it up
+	this.stateful.set("state.hidden",false);
+}
+
 EnhancedForm.prototype.planIframeSubmit = function(el) {
+	if (this.iframeId == undefined) {
+		this.iframeId = "form-target-" + (newIframeId++);
+
+		this.targetIframe = HTMLElement("iframe",{
+			"id": this.iframeId, "frameborder":"0", "border":"0",
+			"onload": onIframeLoad,
+			"make stateful": true,
+			"append to":el
+		});
+		this.targetIframe.stateful.set("state.hidden",true);
+	}
+
+	el.target = this.iframeId;
+	actionParts.protocol = actionParts.protocol.replace("client+http","http");
 	this.submit = this.iframeSubmit;
 };
 
 EnhancedForm.prototype.iframeSubmit = function(ev,el) {
 	// var enctype = this.getAttribute("enctype");
 
-	//TODO target = util iframe
-	el.target = iframeId;
+	var action = URI.build(this.actionParts);
+	el.setAttribute("action",action);
 	el.__builtinSubmit();
 };
 

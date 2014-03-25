@@ -16,8 +16,63 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 <!--
     </div>
 -->
-	<script>
+	<script type="application/config">
+  declare("signup",{
+    defaultAction: "new-beta-subscriber",
+    submittedButtonText: "Subscribing ...",
 
+    actions: {
+      "new-beta-subscriber": {
+        mapName: { name:"cm-name", email:"cm-vjikj-vjikj" },
+        path: "/t/i/s/vjikj/"
+      },
+
+      "new-subscriber-en": {
+        mapName: { name:"cm-name", email:"cm-pdtdj-pdtdj" },
+        path: "/t/i/s/pdtdj/"
+      },
+      "new-subscriber-de": {
+        mapName: { name:"cm-name", email:"cm-pdtdh-pdtdh" },
+        path: "/t/i/s/pdtdh/"
+
+      },
+      "new-subscriber-ch": {
+        mapName: { name:"cm-name", email:"cm-pdthy-pdthy" },
+        path:   "/t/i/s/pdthy/"
+
+      },
+      "new-subscriber-cs": {
+        mapName: { name:"cm-name", email:"cm-pdthh-pdthh" },
+        path:   "/t/i/s/pdthh/"
+
+      },
+      "new-subscriber-pt": {
+        mapName: { name:"cm-name", email:"cm-pdthi-pdthi" },
+        path:   "/t/i/s/pdthi/"
+
+      },
+      "new-subscriber-fr": {
+        mapName: { name:"cm-name", email:"cm-pdthl-pdthl" },
+        path:   "/t/i/s/pdthl/"
+
+      },
+      "new-subscriber-it": {
+        mapName: { name:"cm-name", email:"cm-pdthr-pdthr" },
+        path:   "/t/i/s/pdthr/"
+
+      },
+      "new-subscriber-jp": {
+        mapName: { name:"cm-name", email:"cm-pdthk-pdthk" },
+        path:   "/t/i/s/pdthk/"
+
+      },
+      "new-subscriber-pl": {
+        mapName: { name:"cm-name", email:"cm-pdthd-pdthd" },
+        path:   "/t/i/s/pdthd/"
+
+      }
+    }
+  });
 	</script>
 
     <div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
@@ -32,24 +87,12 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
       </section>
 
       <div class="form-and-story">
-      <!--
-      en   /t/i/s/pdtdj/  
-      de   /t/i/s/pdtdh/
 
-      ch   /t/i/s/pdthy/
-      cs   /t/i/s/pdthh/
-      pt   /t/i/s/pdthi/
-      fr   /t/i/s/pdthl/
-      it   /t/i/s/pdthr/
-      jp   /t/i/s/pdthk/
-      pl   /t/i/s/pdthd/
-
-      -->
-      <form class="signup" role="form"
-        action="client+http://fluentglobe.createsend.com" 
+      <form id="signup" class="signup" role="form"
+        action="client+http://fluentglobe.createsend.com/t/i/s/vjikj/" 
         method="post"
         enctype="application/x-www-form-urlencoded"
-        data-role="" >
+        >
 
         <fieldset>
         <!--
@@ -62,8 +105,9 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         <fieldset>
         {% include start-learning.html %}
 
-        <input placeholder="Your Name" name="name" type="text" size="15">
-        <input placeholder="e-mail" name="email" type="email" size="15">
+
+        <input placeholder="Your Name" name="name" type="text" size="15" required>
+        <input placeholder="e-mail" name="email" type="email" size="15" required>
         <button class="btn primary double-corner">
         {% include plan-button.html %}
         </button>

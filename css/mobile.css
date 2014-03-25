@@ -2068,8 +2068,20 @@ html body.splash #intro .signup {
   width: 94%;
   max-width: 400px;
 }
+html body.splash #intro .signup input,
+html body.splash #intro .signup select,
+html body.splash #intro .signup textarea {
+  color: black;
+}
 html body.splash #intro .signup .btn {
   margin: 1em;
+}
+html body.splash #intro .signup iframe {
+  position: absolute;
+  border: 0 none;
+  top: 2em;
+  height: 150px;
+  width: 100%;
 }
 html body.splash #intro > footer {
   position: absolute;
