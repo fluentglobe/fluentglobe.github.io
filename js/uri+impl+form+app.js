@@ -1970,7 +1970,7 @@ function updateConnected() {
 	// var xhr = XMLHttpRequest();
 	// xhr.open("OPTIONS",url,true);
 
-	var url = "https://fluentglobe.createsend.com/t/i/s/pdtdj/";
+	var url = "https://email.fluentglobe.com/t/i/s/pdtdj/";
 	var xhr = XMLHttpRequest();
 	xhr.open("GET",url,true);
 	xhr.onreadystatechange = function(ready) {
@@ -2138,15 +2138,15 @@ EnhancedForm.prototype.planIframeSubmit = function(el) {
 
 		this.targetIframe = HTMLElement("iframe",{
 			"id": this.iframeId, "frameborder":"0", "border":"0",
-			"onload": onIframeLoad,
 			"make stateful": true,
 			"append to":el
 		});
 		this.targetIframe.stateful.set("state.hidden",true);
+		this.targetIframe.onload = onIframeLoad;
 	}
 
 	el.target = this.iframeId;
-	actionParts.protocol = actionParts.protocol.replace("client+http","http");
+	this.actionParts.protocol = this.actionParts.protocol.replace("client+http","http");
 	this.submit = this.iframeSubmit;
 };
 

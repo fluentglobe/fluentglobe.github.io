@@ -105,7 +105,7 @@ Resolver("page").set("handlers.discard.navigation", discard_navigation);
 var FormAction = Generator(function(action) {
 },DialogAction);
 
-DialogAction.variant("client+http://fluentglobe.createsend.com",FormAction);
+DialogAction.variant("client+http://email.fluentglobe.com",FormAction);
 
 FormAction.prototype["next-what-for"] = function(el,ev) {
 	ev.commandElement.type = "button";

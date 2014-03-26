@@ -93,6 +93,7 @@ function filterArrayValues(data, value) {
     return data;
 }
 
+//TODO replace with shim? 
 function arrayContains(list, value) {
     var i, length;
     
