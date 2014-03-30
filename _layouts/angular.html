@@ -27,12 +27,15 @@
 
 </head>
 
-<body class="{{ page.body-class }}">
+
+<body class="{{ page.body-class }}"
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"
+{% endif %} >
 
 {{ content }}
 
   <script src="/js/jquery.min.js"></script>  
-  <script src="/js/angular.min.js"></script>  
+  <script {%if page.debug %}src="/js/angular.js"{% else %}src="/js/angular.min.js"{% endif %}></script>  
   <script src="/js/mediaelement-and-player.min.js"></script>
   {% if page.js-bundle %}
   <script src="{{ page.js-bundle }}"></script>

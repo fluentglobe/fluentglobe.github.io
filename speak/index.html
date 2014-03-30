@@ -1,0 +1,44 @@
+---
+layout: angular
+app-name: speakApp
+body-controller: SpeakController
+js-bundle: /js/speak.js
+debug: true
+---
+
+<div ng-view="">
+	
+</div>
+
+<script>
+function fudgeUrl(el) {
+	var file = el.querySelector("select[data-name=file]");
+
+	el.action = el.action + file.value;
+}
+</script>
+
+<form method="GET" action="http://cache.fluentglobe.com/" onsubmit="fudgeUrl(this)">
+
+	<dl>
+	<dd>
+	<select data-name="file">
+		<option>Recipes for Visiting Brazil preview.ibooks</option>
+		<option>Recipes for Visiting Brazil.ibooks</option>
+	</select>	
+	</dd>
+	<dd>
+	<button>Get it</button>
+	</dd>
+	</dl>
+
+</form>
+
+Nothing there {( 'yet' + '!' )}
+
+
+<ul>
+<li ng-repeat="book in books">
+	{( book.name )}
+</li>
+</ul>
