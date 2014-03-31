@@ -18,8 +18,12 @@ function SpeakController($scope) {
     { 'name':'Introduction to English' }
   ];
 }
-  
-speakApp.controller('SpeakController',SpeakController)
+
+function ReviewBookController($scope) {
+
+} 
+ 
+speakApp.controller('SpeakController',SpeakController).controller('ReviewBookController',ReviewBookController);
 
 speakApp.config(['$routeProvider','$locationProvider',
   function($routeProvider,$locationProvider) {
@@ -29,15 +33,24 @@ speakApp.config(['$routeProvider','$locationProvider',
         templateUrl: '/partials/shelf.html',
         controller: 'ShelfController'
       }).
-      // when('/pick/:name', {
-      //   templateUrl: '/partials/pick-book.html',
-      //   controller: 'PickBookController'
-      // }).
-      // when('/enable/:key/:name', {
+      when('/pick/:name', {
+        templateUrl: '/partials/pick-book.html',
+        controller: 'PickBookController'
+      }).
+      when('/review/recipes-brazil', {
+        templateUrl: '/partials/review-recipes-brazil.html',
+        controller: 'ReviewBookController'
+      }).
+      // when('/review/:key/:name', {
       //   templateUrl: '/partials/enable-book.html',
       //   controller: 'EnableBookController'
       // }).
+      when('/enable/:key/:name', {
+        templateUrl: '/partials/enable-book.html',
+        controller: 'EnableBookController'
+      }).
       otherwise({
+        // redirectTo: '/review/recipes-brazil' //'/shelf'
         redirectTo: '/shelf'
       });
   }]);

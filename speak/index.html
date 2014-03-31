@@ -1,14 +1,35 @@
 ---
 layout: angular
+body-class: splash splash-desktop
 app-name: speakApp
 body-controller: SpeakController
 js-bundle: /js/speak.js
 debug: true
 ---
-
-<div ng-view="">
-	
+<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" ng-view>
 </div>
+
+{% include lesson-menu.html %}
+
+
+    <article ng-view>
+        <header>
+        </header>
+
+        <section class="first">
+          <div class="bg"></div>
+
+        </section>
+
+        <section class="second even">
+        
+        </section>
+
+        <footer></footer>
+    </article>
+    <div id="tracer"></div>
+    
+
 
 <script>
 function fudgeUrl(el) {
@@ -17,28 +38,3 @@ function fudgeUrl(el) {
 	el.action = el.action + file.value;
 }
 </script>
-
-<form method="GET" action="http://cache.fluentglobe.com/" onsubmit="fudgeUrl(this)">
-
-	<dl>
-	<dd>
-	<select data-name="file">
-		<option>Recipes for Visiting Brazil preview.ibooks</option>
-		<option>Recipes for Visiting Brazil.ibooks</option>
-	</select>	
-	</dd>
-	<dd>
-	<button>Get it</button>
-	</dd>
-	</dl>
-
-</form>
-
-Nothing there {( 'yet' + '!' )}
-
-
-<ul>
-<li ng-repeat="book in books">
-	{( book.name )}
-</li>
-</ul>
