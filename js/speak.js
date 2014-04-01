@@ -19,11 +19,13 @@ function SpeakController($scope) {
   ];
 }
 
-function ReviewBookController($scope) {
-
+function ReviewBookController($scope,$routeParams) {
+  
 } 
- 
-speakApp.controller('SpeakController',SpeakController).controller('ReviewBookController',ReviewBookController);
+
+speakApp
+  .controller('SpeakController',SpeakController)
+  .controller('ReviewBookController',['$scope','$routeParams',ReviewBookController]);
 
 speakApp.config(['$routeProvider','$locationProvider',
   function($routeProvider,$locationProvider) {
