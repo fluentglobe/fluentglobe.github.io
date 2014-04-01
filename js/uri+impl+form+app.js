@@ -2664,6 +2664,7 @@ Book.prototype.pageLoad = function(ev) {
 			frontEl.firstChild.appendChild(c)
 		}		
 	}
+	else this.warning = "No cover"; //TODO fallback behave?
 
 	if (footer) {
 		var backEl = HTMLElement("div",{"class":"bk-back","append to":bindingEl});
