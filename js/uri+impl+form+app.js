@@ -2862,7 +2862,7 @@ Resolver("page").set("handlers.discard.book", discard_book);
 
 Generator(function() {
 
-	this.books = $( '#bk-list > li > div.bk-book' );
+	this.books = $( '#bookshelf > li > div.bk-book' );
 	this.width = this.books.parent().parent().width();
 
 

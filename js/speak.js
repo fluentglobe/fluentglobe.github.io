@@ -9,6 +9,7 @@ speakApp.config(['$interpolateProvider', function($interpolateProvider) {
 ]);
 
 !function() {
+  var HTMLElement = Resolver("essential::HTMLElement::");
 
 function SpeakController($scope) {
   $scope.books = [
@@ -20,7 +21,9 @@ function SpeakController($scope) {
 }
 
 function ReviewBookController($scope,$routeParams) {
-  
+  var ngView = document.querySelector("[ng-view]");
+  // debugger;
+  HTMLElement.query(ngView).withBranch().queue();
 } 
 
 speakApp
@@ -1003,15 +1006,15 @@ function PickBookController($scope) {
 
 }
 
-function EnableBookController($scope) {
-
+function EnableBookController($scope,$routeParams) {
+  // $routeParams.key name
 }
 
 speakControllers
   // .controller('SpeakController',SpeakController)
   .controller('ShelfController',ShelfController)
   .controller('PickBookController',PickBookController)
-  .controller('EnableBookController',EnableBookController);
+  .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
 
 
 },{}]},{},[1]);

@@ -24,14 +24,11 @@
 </script>
   {% endif %}
 
-
 </head>
 
-
 <body class="{{ page.body-class }}"
-{% if page.body-controller %} ng-controller="{{ page.body-controller }}"
-{% endif %} >
-
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
+>
 
 {{ content }}
 

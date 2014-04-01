@@ -8,6 +8,7 @@ speakApp.config(['$interpolateProvider', function($interpolateProvider) {
 ]);
 
 !function() {
+  var HTMLElement = Resolver("essential::HTMLElement::");
 
 function SpeakController($scope) {
   $scope.books = [
@@ -19,7 +20,9 @@ function SpeakController($scope) {
 }
 
 function ReviewBookController($scope,$routeParams) {
-  
+  var ngView = document.querySelector("[ng-view]");
+  // debugger;
+  HTMLElement.query(ngView).withBranch().queue();
 } 
 
 speakApp
