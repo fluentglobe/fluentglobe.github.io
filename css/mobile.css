@@ -2369,6 +2369,9 @@ html body.lesson-color #tracer {
     background-size: auto 100%;
   }
 }
+html.body.splash-desktop {
+  background-color: white;
+}
 img.left-side {
   float: left;
   max-height: 120px;
