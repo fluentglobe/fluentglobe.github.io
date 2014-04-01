@@ -994,16 +994,21 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 })(window, window.angular);
 
 },{}],3:[function(require,module,exports){
+!function() {
+  var HTMLElement = Resolver("essential::HTMLElement::");
+
 var speakControllers = angular.module('speakControllers',[]);
 
 // speakControllers.controller()
 
 function ShelfController($scope) {
-  console.log("shelf");
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
 } 
 
 function PickBookController($scope) {
-
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
 }
 
 function EnableBookController($scope,$routeParams) {
@@ -1016,5 +1021,6 @@ speakControllers
   .controller('PickBookController',PickBookController)
   .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
 
+}();
 
 },{}]},{},[1]);
