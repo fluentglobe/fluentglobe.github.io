@@ -27,6 +27,19 @@ module.exports = function(grunt) {
         dest: 'js/modernizr+essential.js'
       },
 
+      speak: {
+        src: [
+          // 'bower_components/essentialjs-future/app/js/spin.min.js',
+          // '_libs/uri.js',
+          // '_libs/impl.js',
+          // '_libs/form.js',
+          'bower_components/fluent-books/books.js',
+          'bower_components/fluent-books/controllers.js',
+          '_libs/speak.js'
+        ],
+        dest: 'js/speak.js'
+      },
+
       app: {
         src: [
           // 'bower_components/essentialjs-future/app/js/spin.min.js',
@@ -90,22 +103,31 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true, 
-            cwd: '../books/',
+            cwd: '../fluent-books/',
             src: ['*.js','*.less','*.css'],
             dest: 'bower_components/fluent-books/'
           },
           {
             expand: true, 
-            cwd: '../books/css/',
+            cwd: '../fluent-books/css/',
             src: ['*.less','*.css'],
             dest: 'bower_components/fluent-books/css/'
           },
           {
             expand: true, 
-            cwd: '../books/js/',
+            cwd: '../fluent-books/js/',
             src: '*.js',
             dest: 'bower_components/fluent-books/js/'
           }
+        ]
+      },
+
+      angular: {
+        files: [
+          { src: 'bower_components/angular/angular.js', dest: 'js/angular.js' },
+          { src: 'bower_components/angular/angular.min.js', dest: 'js/angular.min.js' },
+          { src: 'bower_components/jquery/jquery.js', dest: 'js/jquery.js' },
+          { src: 'bower_components/jquery/jquery.min.js', dest: 'js/jquery.min.js' }
         ]
       },
 
@@ -118,6 +140,13 @@ module.exports = function(grunt) {
             dest: 'js/'
           }
         ]
+      }
+    },
+
+    browserify: {
+      speak: {
+        src: '_libs/speak.js',
+        dest: 'js/speak.js'
       }
     },
 
@@ -219,6 +248,7 @@ module.exports = function(grunt) {
         files: ['_libs/*.js', 'assets/lib/**/*.js','bower_components/**/*.js'],
         tasks: [
           //'jshint',
+          'browserify',
           'concat:essential','concat:app'],
         options: {
           spawn: false
@@ -338,9 +368,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-browserify');
 
   // Default Task
-  grunt.registerTask('default', ['copy','less:dev','less:dist','concat:essential','concat:app','concurrent']);
+  grunt.registerTask('default', [
+    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','concurrent']
+    );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
     'qunit','concat','uglify']);
