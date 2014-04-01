@@ -259,9 +259,13 @@ function form_submit(ev) {
 function dialog_submit(clicked) {
 	if (clicked == undefined) { clicked = MutableEvent().withDefaultSubmit(this); }
 
-	if (clicked.commandElement) {
+	//TODO matching action
+	if (clicked.commandElement && clicked.commandName) {
 		fireAction(clicked);
-	} 
+	} else {
+		var actionDesc = EnhancedDescriptor(clicked.actionElement);
+		if (actionDesc && actionDesc.instance) actionDesc.instance.submit(clicked,clicked.actionElement);
+	}
 	//else {
 		//TODO default submit when no submit button or event
 	//}
