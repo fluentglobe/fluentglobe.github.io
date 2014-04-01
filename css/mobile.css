@@ -3245,14 +3245,23 @@ h6 {
 .no-csstransforms3d .bk-list {
   width: auto;
 }
-.bk-list {
-  height: 420px;
+#bookshelf {
+  position: relative;
+}
+#bookshelf .shelf {
+  width: 100%;
+  height: 63px;
+  z-index: -1;
+  margin-top: -28px;
+  background: transparent url(/images/shelf.png) no-repeat center center;
+  position: relative;
 }
 .bk-list {
   list-style: none;
   position: relative;
   width: 533px;
   /* 13 books * 40px + 13 books * margin (1px) */
+  height: 420px;
   margin: 0 auto;
   -webkit-perspective: 1800px;
   -moz-perspective: 1800px;
@@ -3877,14 +3886,6 @@ h6 {
 #book-reader .book-content.state-hidden {
   visibility: hidden;
 }
-#bookshelf .shelf {
-  width: 100%;
-  height: 63px;
-  z-index: -1;
-  margin-top: -28px;
-  background: transparent url(/images/shelf.png) no-repeat center center;
-  position: relative;
-}
 .seil-book .bk-front > div,
 .seil-book .bk-back,
 .seil-book .bk-left,
@@ -3968,17 +3969,17 @@ h6 {
   text-align: center;
   font-weight: 700;
 }
-.wcib14-book .bk-front > div,
-.wcib14-book .bk-back,
-.wcib14-book .bk-left,
-.wcib14-book .bk-front:after {
+.r4vb-book .bk-front > div,
+.r4vb-book .bk-back,
+.r4vb-book .bk-left,
+.r4vb-book .bk-front:after {
   background-color: #48711f;
 }
-.wcib14-book .bk-cover {
+.r4vb-book .bk-cover {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-.wcib14-book .bk-cover h2 {
+.r4vb-book .bk-cover h2 {
   position: absolute;
   right: 0;
   left: 0;
@@ -3986,27 +3987,30 @@ h6 {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
-.wcib14-book .bk-cover h2 span:first-child,
-.wcib14-book .bk-left h2 span:first-child {
+.r4vb-book .bk-cover h2 span:first-child,
+.r4vb-book .bk-left h2 span:first-child {
   text-transform: uppercase;
   font-weight: 400;
   font-size: 13px;
   padding-right: 20px;
 }
-.wcib14-book .bk-cover h2 span:first-child {
+.r4vb-book .bk-cover h2 span:first-child {
   display: block;
 }
-.wcib14-book .bk-left h2 {
+.r4vb-book .bk-left h2 {
   color: #ffffff;
   font-size: 15px;
   padding-right: 10px;
   text-align: right;
 }
-.wcib14-book .bk-back {
+.r4vb-book .bk-back {
   color: #ffffff;
   font-size: 13px;
   text-align: center;
   font-weight: 700;
+}
+.r4vb-book .bk-cover {
+  background-image: url(/images/r4vb-cover.jpg);
 }
 .pft-book .bk-front > div,
 .pft-book .bk-back,
@@ -4043,6 +4047,46 @@ h6 {
   text-align: right;
 }
 .pft-book .bk-back {
+  color: #ffffff;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 700;
+}
+.i2p-book .bk-front > div,
+.i2p-book .bk-back,
+.i2p-book .bk-left,
+.i2p-book .bk-front:after {
+  background-color: #d0161e;
+}
+.i2p-book .bk-cover {
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.i2p-book .bk-cover h2 {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.i2p-book .bk-cover h2 span:first-child,
+.i2p-book .bk-left h2 span:first-child {
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 13px;
+  padding-right: 20px;
+}
+.i2p-book .bk-cover h2 span:first-child {
+  display: block;
+}
+.i2p-book .bk-left h2 {
+  color: #ffffff;
+  font-size: 15px;
+  padding-right: 10px;
+  text-align: right;
+}
+.i2p-book .bk-back {
   color: #ffffff;
   font-size: 13px;
   text-align: center;
