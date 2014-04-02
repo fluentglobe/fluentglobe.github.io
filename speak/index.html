@@ -38,4 +38,16 @@ function fudgeUrl(el) {
 
 	el.action = el.action + file.value;
 }
+
+Resolver("page").set("map.class.state.scrolled","state-scrolled");
+
+var scrollThreshold = 50;
+
+// debugger;
+Resolver("essential::addEventListeners::")(window, {
+    "scroll": function() {
+        var offset = scrollY;
+        Resolver("page").set("state.scrolled", offset > scrollThreshold);
+    }
+});
 </script>

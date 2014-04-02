@@ -1574,10 +1574,6 @@ article > header {
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
 }
-.open-book article {
-  margin-top: 60px !important;
-  background: white;
-}
 body.open-book {
   overflow: hidden;
 }
@@ -3256,6 +3252,9 @@ h6 {
   background: transparent url(/images/shelf.png) no-repeat center center;
   position: relative;
 }
+.state-scrolled #bookshelf {
+  zoom: .7;
+}
 .bk-list {
   list-style: none;
   position: relative;
@@ -4056,7 +4055,7 @@ h6 {
 .i2p-book .bk-back,
 .i2p-book .bk-left,
 .i2p-book .bk-front:after {
-  background-color: #d0161e;
+  background-color: #efbe91;
 }
 .i2p-book .bk-cover {
   background-repeat: no-repeat;
@@ -4091,4 +4090,7 @@ h6 {
   font-size: 13px;
   text-align: center;
   font-weight: 700;
+}
+.i2p-book .bk-cover {
+  background-image: url(/images/i2p-cover.jpg);
 }

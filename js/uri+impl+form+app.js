@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-01
+/*! Fluent Globe - v0.1.0 - 2014-04-02
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2718,11 +2718,11 @@ Book.prototype.startOpen = function() {
 	this.stateful.set("state.expanding",true); 
 	this.stateful.set("state.collapsing",false);
 
-	var marginTop = parseInt(this.article.style.marginTop);
-	openBook.scrollY = window.scrollY;
-	openBook.marginTop = marginTop;
-	this.article.style.marginTop = (marginTop - openBook.scrollY) + "px";
-	window.scrollTo(0,0);
+	// var marginTop = parseInt(this.article.style.marginTop);
+	// openBook.scrollY = window.scrollY;
+	// openBook.marginTop = marginTop;
+	// this.article.style.marginTop = (marginTop - openBook.scrollY) + "px";
+	// window.scrollTo(0,0);
 	pageResolver.set("state.open-book",true);
 
 	var eb = EnhancedDescriptor.all[expandedBook];
@@ -2765,10 +2765,10 @@ Book.prototype.finishClose = function() {
 
 Book.prototype.click = function(ev) {
 
-	if (ev.target == this.pageEl) {
-		this.showContent();
-		return;
-	}
+	// if (ev.target == this.pageEl) {
+	// 	this.showContent();
+	// 	return;
+	// }
 
 	// console.log(this.el,this.bookEl.getBoundingClientRect());
 
