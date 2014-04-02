@@ -1006,7 +1006,7 @@ function ShelfController($scope) {
   HTMLElement.query(ngView).withBranch().queue();
 } 
 
-function PickBookController($scope) {
+function PickBookController($scope,$routeParams) {
   var ngView = document.querySelector("[ng-view]");
   HTMLElement.query(ngView).withBranch().queue();
 }
@@ -1018,7 +1018,7 @@ function EnableBookController($scope,$routeParams) {
 speakControllers
   // .controller('SpeakController',SpeakController)
   .controller('ShelfController',ShelfController)
-  .controller('PickBookController',PickBookController)
+  .controller('PickBookController',['$scope','$routeParams',PickBookController])
   .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
 
 }();
