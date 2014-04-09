@@ -3271,20 +3271,20 @@ h6 {
   /* Transform classes */
 }
 .bk-list li {
-  height: 520px;
+  height: 580px;
 }
 .bk-list li ".bk-book" {
-  height: 520px;
+  height: 580px;
 }
 .bk-list li .bk-page {
   width: 385px;
-  height: 510px;
+  height: 570px;
 }
 .bk-list li .bk-front,
 .bk-list li .bk-back,
 .bk-list li .bk-front > div {
   width: 390px;
-  height: 520px;
+  height: 580px;
 }
 .bk-list li .bk-top,
 .bk-list li .bk-bottom {
@@ -3294,15 +3294,15 @@ h6 {
   width: 380px;
 }
 .bk-list li .bk-left {
-  height: 520px;
+  height: 580px;
 }
 .bk-list li .bk-left h2 {
-  width: 470px;
+  width: 530px;
 }
 .bk-list li .bk-bottom {
-  -webkit-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 510px);
-  -moz-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 510px);
-  transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 510px);
+  -webkit-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 570px);
+  -moz-transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 570px);
+  transform: rotate3d(1, 0, 0, -90deg) translate3d(0, 0, 570px);
 }
 .bk-list li .bk-right {
   -webkit-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 385px);

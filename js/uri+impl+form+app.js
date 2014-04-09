@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-02
+/*! Fluent Globe - v0.1.0 - 2014-04-09
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2757,8 +2757,8 @@ Book.prototype.finishClose = function() {
 	expandedBook = 0;
 
 	pageResolver.set("state.open-book",false);
-	this.article.style.marginTop = openBook.marginTop+"px"; //TODO tie with dynamic code
-	window.scrollTo(0,openBook.scrollY);
+	// this.article.style.marginTop = openBook.marginTop+"px"; //TODO tie with dynamic code
+	// window.scrollTo(0,openBook.scrollY);
 
 	this.hideContent();
 };
