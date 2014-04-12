@@ -1374,6 +1374,105 @@ select[multiple].input-lg {
   top: 0;
   right: 15px;
 }
+.with-radio-toggle-switch .toggle-bg {
+  background: #ffffff;
+  border-radius: 2em;
+  border: 0.12em solid #e6e6e6;
+  display: block;
+  /* ...So that we can set a height and width */
+  float: left;
+  /* ...So that it doesn't take up the full width of the page */
+  height: 2em;
+  /* You can change this later if you want */
+  /* Required to allow the switch to move around */
+  width: 3.2em;
+  /* This can be changed later as well */
+  position: relative;
+}
+.with-radio-toggle-switch .toggle-bg:hover {
+  border-color: #d9d9d9;
+}
+.with-radio-toggle-switch .toggle-bg.on {
+  background: #00dc61;
+  border-color: #00c356;
+}
+.with-radio-toggle-switch .toggle-bg input {
+  margin: 0;
+  padding: 0;
+  width: 4.800000000000001em;
+  height: 100%;
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  -webkit-opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  z-index: 2;
+  /* We want the input to be over the span.switch, which we'll give a z-index of 1 */
+  /*IE*/
+  zoom: 1;
+  filter: alpha(opacity=0);
+  /* initial toggle position */
+  /* final relative toggle position */
+}
+.with-radio-toggle-switch .toggle-bg input:checked ~ .switch {
+  left: 0;
+}
+.with-radio-toggle-switch .toggle-bg input ~ :checked ~ .switch {
+  left: 1.1800000000000002em;
+}
+.with-radio-toggle-switch .toggle-bg input:checked {
+  z-index: 0;
+}
+.with-radio-toggle-switch .switch {
+  background: #ffffff;
+  border-radius: 2em;
+  border: 0.1em solid #d9d9d9;
+  display: block;
+  float: left;
+  height: 1.9em;
+  width: 1.9em;
+  left: -0.1em;
+  position: relative;
+  z-index: 1;
+  /* Remember, it must be below the invisible inputs */
+}
+.with-radio-toggle-switch .switch.on {
+  box-shadow: -0.2em 0.2em 0.5em rgba(0, 0, 0, 0.06), 0.4em 0.4em 1.5em rgba(0, 0, 0, 0.08);
+}
+.with-radio-toggle-switch .switch.off {
+  box-shadow: 0.2em 0.2em 0.5em rgba(0, 0, 0, 0.06), -0.4em 0.4em 1.5em rgba(0, 0, 0, 0.08);
+}
+.with-radio-toggle-switch .toggle-alternate {
+  clear: both;
+  margin: 1em 0 0;
+  width: 4.4799999999999995em;
+}
+.with-radio-toggle-switch .toggle-alternate input {
+  width: 6.240000000000001em;
+}
+.with-radio-toggle-switch .toggle-alternate input ~ :checked ~ .switch {
+  left: 2.4599999999999995em;
+}
+.with-radio-toggle-switch .toggle-alternate label {
+  font-weight: 300;
+  font-size: .9em;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0.54999999945em;
+}
+.with-radio-toggle-switch .toggle-bg label.on {
+  left: .75em;
+  color: white;
+  text-shadow: 0 0.1em 0 #00dc61;
+}
+.with-radio-toggle-switch .toggle-bg label.off {
+  right: .55em;
+  color: #aaa;
+}
 input[type=checkbox],
 input[type=radio] {
   display: inline-block;
