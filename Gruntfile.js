@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 
       essential: {
         src: [
+          '_libs/prefix.js',
           'bower_components/essentialjs-future/js/modernizr-custom.js',
           'bower_components/essentialjs-future/essential.js'
         ],
@@ -49,6 +50,7 @@ module.exports = function(grunt) {
           '_libs/form.js',
           'bower_components/angular-toggle-switch/angular-toggle-switch.min.js',
           'bower_components/fluent-books/books.js',
+          'bower_components/fluent-books/controllers.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'

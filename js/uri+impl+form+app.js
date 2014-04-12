@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-09
+/*! Fluent Globe - v0.1.0 - 2014-04-12
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2906,6 +2906,35 @@ Generator(function() {
 
 });
 !function() {
+  var HTMLElement = Resolver("essential::HTMLElement::");
+
+var speakControllers = angular.module('speakControllers',[]);
+
+// speakControllers.controller()
+
+function ShelfController($scope) {
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
+} 
+
+function PickBookController($scope,$routeParams) {
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
+}
+
+function EnableBookController($scope,$routeParams) {
+  // $routeParams.key name
+}
+
+speakControllers
+  // .controller('SpeakController',SpeakController)
+  .controller('ShelfController',ShelfController)
+  .controller('PickBookController',['$scope','$routeParams',PickBookController])
+  .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
+
+}();
+
+!function() {
 
 /* jshint -W064: false */
 
@@ -2928,6 +2957,17 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
     Resolver("page").set("map.class.state.online","online");
     Resolver("page").set("map.class.notstate.online","offline");
     Resolver("page").set("map.class.notstate.connected","disconnected");
+}
+
+if (window.angular) {
+
+    var browseApp = angular.module('browseApp', ['toggle-switch']);
+    browseApp.config(['$interpolateProvider', function($interpolateProvider) {
+          return $interpolateProvider.startSymbol('{(').endSymbol(')}');
+        }
+    ]);
+
+
 }
 
 function Navigation(el,config) {
