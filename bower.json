@@ -4,15 +4,15 @@
   "main": "assets/styles.css",
   "dependencies": {
     "jquery": "latest",
-  	"normalize-css": "latest",
+    "normalize-css": "latest",
     "fluent-books": "latest",
     "essentialjs-future": "latest",
- 
-  	"bootstrap": "latest",
-  	"turnjs": "latest",
+    "bootstrap": "latest",
+    "turnjs": "latest",
     "mediaelement": "latest",
-  	"snapjs": "latest",
-  	"hammerjs": "latest",
-  	"togetherjs": "latest"
+    "snapjs": "latest",
+    "hammerjs": "latest",
+    "togetherjs": "latest",
+    "angular-toggle-switch": "~0.3.0"
   }
 }
