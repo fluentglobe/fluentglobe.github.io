@@ -1,7 +1,7 @@
 require('../bower_components/angular-route/angular-route.js');
 var books = require('../bower_components/fluent-books/controllers.js');
 
-var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']);
+var speakApp = angular.module('speakApp', ['ngRoute','speakControllers','toggle-switch']);
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
       return $interpolateProvider.startSymbol('{(').endSymbol(')}');
     }
