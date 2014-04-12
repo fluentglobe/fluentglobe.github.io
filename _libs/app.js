@@ -23,6 +23,17 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
     Resolver("page").set("map.class.notstate.connected","disconnected");
 }
 
+if (window.angular) {
+
+    var browseApp = angular.module('browseApp', ['toggle-switch']);
+    browseApp.config(['$interpolateProvider', function($interpolateProvider) {
+          return $interpolateProvider.startSymbol('{(').endSymbol(')}');
+        }
+    ]);
+
+
+}
+
 function Navigation(el,config) {
     this.stateful = el.stateful;
 

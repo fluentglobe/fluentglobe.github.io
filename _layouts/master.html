@@ -2,11 +2,8 @@
 base-body-class:
 ---
 <!DOCTYPE html>
-<!--[if IEMobile 7]> <html lang="en" class="no-js iem7"> <![endif]-->
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js"><!--<![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}><!--<![endif]-->
 
 <head>
   {% include ipad_friendly_html5_head.html %}
@@ -18,19 +15,20 @@ base-body-class:
 {% endif %}
 </head>
 
-<body class="{{ page.base-body-class }}{{ page.body-class }}">
+<body class="{{ page.base-body-class }}{{ page.body-class }}"
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
+>
 
 {{ content }}
 
-  <!-- JavaScript -->
-{% if page.googlecdn %}
-  <!-- Grab Google CDN's jQuery. fall back to local if neccessary -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-{% endif %}
-  <script>!window.jQuery && document.write('<script src="/js/jquery-1.10.2.min.js"><\/script>')</script>
-  <!-- // <script src="/js/jquery-1.10.2.min.js"></script> -->
+  <script src="/js/jquery.min.js"></script>  
+  <script {%if page.debug %}src="/js/angular.js"{% else %}src="/js/angular.min.js"{% endif %}></script>  
   <script src="/js/mediaelement-and-player.min.js"></script>
-  <script src="/js/turn.min.js"></script>
+  {% if page.js-bundle %}
+  <script src="{{ page.js-bundle }}"></script>
+  {% else %}
+  <script src="/js/uri+impl+form+app.js"></script>
+  {% endif %}
 
   {% if site.analytics_id %}<script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
