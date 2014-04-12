@@ -231,10 +231,10 @@ th {
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 body {
   width: 100%;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 body {
@@ -1760,7 +1760,7 @@ body .menu nav.flag {
 body .menu nav.flag label {
   border-radius: 1px;
   border: 1px solid #f83104;
-  padding: 5px 10px 4px 9px;
+  padding: 5px 9px 4px 9px;
   min-width: 5em;
 }
 body .menu nav.flag label output {
