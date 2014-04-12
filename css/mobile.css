@@ -244,7 +244,7 @@ body {
   font-size: 13px;
   line-height: 18px;
   color: #333333;
-  background-color: #ffffff;
+  background-color: #f83104;
 }
 a {
   color: #428bca;
@@ -1560,7 +1560,7 @@ html[lang=ch] body [lang=ar] {
 article {
   position: relative;
   width: 100%;
-  border-left: 4px solid #fb441b;
+  border-left: 4px solid #f83104;
   overflow: visible;
   -webkit-transition: .3s ease-in-out left,.3s ease-in-out margin-top;
   transition: .3s ease-in-out left,.3s ease-in-out margin-top;
@@ -1612,8 +1612,8 @@ body .menu {
   width: 164px;
   border-right: 3px solid transparent;
   z-index: 10;
-  border-color: #fb441b;
-  background-color: #fb441b;
+  border-color: #f83104;
+  background-color: #f83104;
   color: #e0e0e0;
   -webkit-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
@@ -1703,7 +1703,7 @@ body .menu li[selected=true] q:after {
   content: "\2713";
 }
 body .menu nav.flag button.show-menu {
-  background-color: #fb441b;
+  background-color: #f83104;
   color: #e0e0e0;
   font-size: 19px;
   vertical-align: top;
@@ -1716,52 +1716,55 @@ body .menu nav.flag button.show-menu label {
   font-size: 1.2em;
 }
 body .menu ul li > ul {
-  border-top: 1px solid #f83104;
+  border-top: 1px solid #fb441b;
 }
 body .menu ul li > ul > li a,
 body .menu ul li > ul > li q {
-  background-color: #fb441b;
-  border-color: #f83104;
+  background-color: #f83104;
+  border-color: #fb441b;
   border-top: none;
 }
 body .menu ul a,
 body .menu ul q {
-  background-color: #f83104;
-  border: 1px solid #fb441b;
+  background-color: #fb441b;
+  border: 1px solid #f83104;
   color: #e0e0e0;
 }
 body .menu > ul {
-  border: 1px solid #fb441b;
+  border: 1px solid #f83104;
 }
 body .menu > ul > li:not( :last-child ) > a,
 body .menu > ul > li:not( :last-child ) > q {
-  border-right: 1px solid #f83104;
+  border-right: 1px solid #fb441b;
 }
 body .menu > ul > li:hover > a,
 body .menu > ul:not ( :hover ) > li.active > a,
 body .menu > ul > li:hover > q,
 body .menu > ul:not ( :hover ) > li.active > q {
-  background-color: #f83104;
+  background-color: #fb441b;
 }
 body .menu li ul {
-  background-color: #f83104;
+  background-color: #fb441b;
 }
 body .menu li ul a,
 body .menu li ul q {
-  border-top: 1px solid #fb441b;
+  border-top: 1px solid #f83104;
 }
 body .menu li ul li a:hover,
 body .menu li ul:not( :hover ) li.active a {
-  background-color: #fb441b;
+  background-color: #f83104;
 }
 body .menu nav.flag {
   width: 12em;
 }
 body .menu nav.flag label {
-  border-radius: 15px;
-  border: 2px solid #fb441b;
-  padding: 6px;
+  border-radius: 1px;
+  border: 1px solid #f83104;
+  padding: 5px 10px 4px 9px;
   min-width: 5em;
+}
+body .menu nav.flag label output {
+  color: #f83104;
 }
 .center-piece {
   position: absolute;

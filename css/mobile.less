@@ -65,7 +65,7 @@ article {
 
     position:relative; //absolute
     width: 100%;
-    border-left: @menu-edge-width solid @fluent-red;
+    border-left: @menu-edge-width solid @app-menu-bg;
     overflow: visible;
 
     .transition(~".3s ease-in-out left,.3s ease-in-out margin-top");
@@ -111,17 +111,18 @@ body {
 
     .menu {
         .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
-        .side-menu-color(@fluent-red,darken(@fluent-red,5%),#c00,#e0e0e0,white);
+        .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
         .transition(.3s ease-in-out left);
 
         nav.flag {
             width: 12em;
 
             label {
-                border-radius: 15px;
-                border: 2px solid @fluent-red;
-                padding: 6px;
+                border-radius: 1px;
+                border: 1px solid @app-menu-bg;
+                padding: 5px 9px 4px 9px;
                 min-width: 5em;
+                output { color: @app-menu-bg; }
             }
         }
     }
