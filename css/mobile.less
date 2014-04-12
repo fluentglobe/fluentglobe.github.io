@@ -16,6 +16,7 @@ html,body {
     overflow-x: hidden;  // make sure that menu shown doesn't add horz scroll bars
 }
 body {
+    overflow-y: visible;
     width: 100%; // make sure that menu shown doesn't add horz scroll bars
     -webkit-font-smoothing: antialiased;
 }
@@ -101,7 +102,7 @@ body {
             }
             > section {
                 position: relative;
-                margin-right: -@menu-width;
+                // margin-right: -@menu-width;
             }
         }
         .menu {
@@ -132,7 +133,7 @@ body {
 .center-piece {
     position: absolute;
     top:0; bottom:0;
-    left: 50%; margin-left: -160px;
+    left: 50%; margin-left: -@menu-width;
     width: 320px;
 
     color: #666;

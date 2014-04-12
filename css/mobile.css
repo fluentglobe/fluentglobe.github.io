@@ -234,6 +234,7 @@ body {
   overflow-x: hidden;
 }
 body {
+  overflow-y: visible;
   width: 100%;
   -webkit-font-smoothing: antialiased;
 }
@@ -1597,7 +1598,6 @@ body.screen.state-expanded article > section,
 body.splash.state-expanded article > section,
 body.lesson.state-expanded article > section {
   position: relative;
-  margin-right: -160px;
 }
 body.screen.state-expanded .menu,
 body.splash.state-expanded .menu,
