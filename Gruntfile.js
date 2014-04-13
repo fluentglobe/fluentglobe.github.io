@@ -28,20 +28,6 @@ module.exports = function(grunt) {
         dest: 'js/modernizr+essential.js'
       },
 
-      speak: {
-        src: [
-          // 'bower_components/essentialjs-future/app/js/spin.min.js',
-          // '_libs/uri.js',
-          // '_libs/impl.js',
-          // '_libs/form.js',
-          'bower_components/angular-toggle-switch/angular-toggle-switch.min.js',
-          'bower_components/fluent-books/books.js',
-          'bower_components/fluent-books/controllers.js',
-          '_libs/speak.js'
-        ],
-        dest: 'js/speak.js'
-      },
-
       app: {
         src: [
           // 'bower_components/essentialjs-future/app/js/spin.min.js',
@@ -253,7 +239,7 @@ module.exports = function(grunt) {
         tasks: [
           //'jshint',
           'browserify',
-          'concat:essential','concat:app','concat:speak'],
+          'concat:essential','concat:app'],
         options: {
           spawn: false
         }
@@ -376,7 +362,7 @@ module.exports = function(grunt) {
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','concat:speak','concurrent']
+    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
