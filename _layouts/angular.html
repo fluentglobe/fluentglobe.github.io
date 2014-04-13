@@ -1,3 +1,6 @@
+---
+base-body-class:
+---
 <!DOCTYPE html>
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8" ng-app="{{ page.app-name }}"> <![endif]-->
 <!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" ng-app="{{ page.app-name }}"><!--<![endif]-->
@@ -14,7 +17,7 @@
 
 </head>
 
-<body class="{{ page.body-class }}"
+<body class="{{ page.base-body-class }}{{ page.body-class }}"
 {% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
 >
 
