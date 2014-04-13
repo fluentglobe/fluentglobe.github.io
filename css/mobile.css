@@ -1374,32 +1374,20 @@ select[multiple].input-lg {
   top: 0;
   right: 15px;
 }
+.with-radio-toggle-switch {
+  text-align: center;
+}
 .with-radio-toggle-switch .toggle-bg {
-  background: #ffffff;
   border-radius: 2em;
-  border: 0.12em solid #e6e6e6;
-  display: block;
-  /* ...So that we can set a height and width */
-  float: left;
-  /* ...So that it doesn't take up the full width of the page */
+  display: inline-block;
   height: 2em;
-  /* You can change this later if you want */
-  /* Required to allow the switch to move around */
-  width: 3.2em;
-  /* This can be changed later as well */
   position: relative;
-}
-.with-radio-toggle-switch .toggle-bg:hover {
-  border-color: #d9d9d9;
-}
-.with-radio-toggle-switch .toggle-bg.on {
-  background: #00dc61;
-  border-color: #00c356;
+  width: 5em;
 }
 .with-radio-toggle-switch .toggle-bg input {
   margin: 0;
   padding: 0;
-  width: 4.800000000000001em;
+  width: 7.5em;
   height: 100%;
   -moz-opacity: 0;
   -khtml-opacity: 0;
@@ -1422,15 +1410,13 @@ select[multiple].input-lg {
   left: 0;
 }
 .with-radio-toggle-switch .toggle-bg input ~ :checked ~ .switch {
-  left: 1.1800000000000002em;
+  left: 2.98em;
 }
 .with-radio-toggle-switch .toggle-bg input:checked {
   z-index: 0;
 }
 .with-radio-toggle-switch .switch {
-  background: #ffffff;
   border-radius: 2em;
-  border: 0.1em solid #d9d9d9;
   display: block;
   float: left;
   height: 1.9em;
@@ -1438,7 +1424,6 @@ select[multiple].input-lg {
   left: -0.1em;
   position: relative;
   z-index: 1;
-  /* Remember, it must be below the invisible inputs */
 }
 .with-radio-toggle-switch .switch.on {
   box-shadow: -0.2em 0.2em 0.5em rgba(0, 0, 0, 0.06), 0.4em 0.4em 1.5em rgba(0, 0, 0, 0.08);
@@ -1449,29 +1434,48 @@ select[multiple].input-lg {
 .with-radio-toggle-switch .toggle-alternate {
   clear: both;
   margin: 1em 0 0;
-  width: 4.4799999999999995em;
+  width: 7em;
 }
 .with-radio-toggle-switch .toggle-alternate input {
-  width: 6.240000000000001em;
+  width: 9.75em;
 }
 .with-radio-toggle-switch .toggle-alternate input ~ :checked ~ .switch {
-  left: 2.4599999999999995em;
+  left: 4.9799999999999995em;
 }
 .with-radio-toggle-switch .toggle-alternate label {
   font-weight: 300;
   font-size: .9em;
   text-transform: uppercase;
   position: absolute;
-  top: 0.54999999945em;
+  top: 0.25em;
 }
 .with-radio-toggle-switch .toggle-bg label.on {
   left: .75em;
-  color: white;
-  text-shadow: 0 0.1em 0 #00dc61;
 }
 .with-radio-toggle-switch .toggle-bg label.off {
   right: .55em;
+}
+.with-radio-toggle-switch .toggle-bg {
+  background: #fb441b;
+  border: 0.12em solid #e6e6e6;
+}
+.with-radio-toggle-switch .toggle-bg:hover {
+  border-color: #d9d9d9;
+}
+.with-radio-toggle-switch .toggle-bg.on {
+  background: #aaaaaa;
+  border-color: #9d9d9d;
+}
+.with-radio-toggle-switch .toggle-bg label.on {
+  color: white;
+  text-shadow: 0 0.1em 0 #aaaaaa;
+}
+.with-radio-toggle-switch .toggle-bg label.off {
   color: #aaa;
+}
+.with-radio-toggle-switch .switch {
+  background: #ffffff;
+  border: 0.1em solid #d9d9d9;
 }
 input[type=checkbox],
 input[type=radio] {

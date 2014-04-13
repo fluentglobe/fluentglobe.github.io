@@ -122,22 +122,40 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 </div>
         </section>
 
-        <section>
+        <section ng-controller="add-review as add">
           <h3 lang="en">Please add a review</h3>
 
   <div style="text-align: left; margin:0 auto; width: 35em; max-width: 90%;">
     <p lang="en">Like us you probably prefer to buy books with interesting reviews. So please <b>help us</b> by adding one.</p>
-
+    <p lang="en">If you have already had a look at the book and know what you would like to say, jump to the review link below.
+      Otherwise get the book on the iBookstore or download the PDF below.
+      </p>
 
     <p lang="en"></p>
 
-    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804">
-    <label>Open the Book page in iTunes</label>
-    <img style="width:95%;" src="/images/review-p1.jpg">
-    <img style="width:95%;" src="/images/review-p2.jpg">
-    <img style="width:95%;" src="/images/ipad-review-p1.jpg">
-    <img style="width:95%;" src="/images/ipad-review-p2.jpg">
+    <div class="with-radio-toggle-switch device-switch" style="background: #fff;">
+      <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804">
+      <label>Open the Book page in iTunes</label>
+      </a>
+
+      <span class="toggle-bg toggle-alternate {(add.device || 'off')}">
+        <label class="{(add.device)}">{(add.device == 'on'? 'iPad':'Desktop')}</label>
+        <input type="radio" name="toggle" value="off" ng-model="add.device">
+        <input type="radio" name="toggle" value="on" ng-model="add.device">
+        <span class="switch {(add.device)}"></span>
+      </span>
+    </div>
+
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" ng-hide="add.device == 'on'">
+      <img style="width:100%;" src="/images/review-p1.jpg">
+      <img style="width:100%;" src="/images/review-p2.jpg">
     </a>
+
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" ng-hide="add.device == 'off'">
+      <img style="width:100%;" src="/images/ipad-review-p1.jpg">
+      <img style="width:100%;" src="/images/ipad-review-p2.jpg">
+    </a>
+
     <p></p>
 
     <ul lang="en" style="width: 30em;">

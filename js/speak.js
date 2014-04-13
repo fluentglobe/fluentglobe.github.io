@@ -1,8 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 require('../bower_components/angular-route/angular-route.js');
+require('../bower_components/angular-toggle-switch/angular-toggle-switch.min.js');
+
 var books = require('../bower_components/fluent-books/controllers.js');
 
-var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']);
+var speakApp = angular.module('speakApp', ['ngRoute','speakControllers','toggle-switch']);
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
       return $interpolateProvider.startSymbol('{(').endSymbol(')}');
     }
@@ -64,7 +66,7 @@ speakApp.config(['$routeProvider','$locationProvider',
 
 }();
 
-},{"../bower_components/angular-route/angular-route.js":2,"../bower_components/fluent-books/controllers.js":3}],2:[function(require,module,exports){
+},{"../bower_components/angular-route/angular-route.js":2,"../bower_components/angular-toggle-switch/angular-toggle-switch.min.js":3,"../bower_components/fluent-books/controllers.js":4}],2:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.15
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -994,6 +996,8 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 })(window, window.angular);
 
 },{}],3:[function(require,module,exports){
+angular.module("toggle-switch",["ng"]).directive("toggleSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=",disabled:"@",onLabel:"@",offLabel:"@",knobLabel:"@"},template:'<div class="switch" ng-click="toggle()" ng-class="{ \'disabled\': disabled }"><div class="switch-animate" ng-class="{\'switch-off\': !model, \'switch-on\': model}"><span class="switch-left" ng-bind="onLabel"></span><span class="knob" ng-bind="knobLabel"></span><span class="switch-right" ng-bind="offLabel"></span></div></div>',controller:["$scope",function($scope){$scope.toggle=function(){$scope.disabled||($scope.model=!$scope.model)}}],compile:function(element,attrs){attrs.onLabel||(attrs.onLabel="On"),attrs.offLabel||(attrs.offLabel="Off"),attrs.knobLabel||(attrs.knobLabel=" "),attrs.disabled||(attrs.disabled=!1)}}});
+},{}],4:[function(require,module,exports){
 !function() {
   var HTMLElement = Resolver("essential::HTMLElement::");
 

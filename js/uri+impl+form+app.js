@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-12
+/*! Fluent Globe - v0.1.0 - 2014-04-13
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
@@ -2967,6 +2967,9 @@ if (window.angular) {
         }
     ]);
 
+    browseApp.controller("add-review",['$scope', function($scope) {
+        $scope.device = 'off';//'iPad';
+    }]);
 
 }
 

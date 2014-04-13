@@ -31,6 +31,9 @@ if (window.angular) {
         }
     ]);
 
+    browseApp.controller("add-review",['$scope', function($scope) {
+        $scope.device = 'off';//'iPad';
+    }]);
 
 }
 

@@ -1,4 +1,6 @@
 require('../bower_components/angular-route/angular-route.js');
+require('../bower_components/angular-toggle-switch/angular-toggle-switch.min.js');
+
 var books = require('../bower_components/fluent-books/controllers.js');
 
 var speakApp = angular.module('speakApp', ['ngRoute','speakControllers','toggle-switch']);

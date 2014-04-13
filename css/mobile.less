@@ -31,7 +31,14 @@ body {
 @import (inline) "angular-toggle-switch/angular-toggle-switch-bootstrap.css";
 
 .with-radio-toggle-switch {
-    .radio-toggle-switch();
+    text-align: center;
+
+    .radio-toggle-switch(5em, 2em);
+    .radio-toggle-switch-color(@fluent-red,#aaa);
+
+    .toggle-bg {
+        // display: inline-block;
+    }
 }
 
 input {
