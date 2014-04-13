@@ -132,7 +132,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         {% include site-follow.html %}
       </header>
 
-        <section class="first" style="text-align: center;">
+        <section class="first" style="text-align: center; display:none;">
 
             <h3>It starts with a few words</h3>
 <p lang="en">We have lived in 7 different countries,
@@ -155,15 +155,26 @@ To be an insider not an outsider.
 
         <section class="second even">
         	<div class="left-col">
+              <div style="position:relative;left:50%; width:100px;">
+              <img width="100" src="/images/katty-head.jpg" style="margin-left:30px; border-radius:50px;">
+              <!-- <div style="text-align:center;">Caterine Apruzzese</div> -->
+              </div>
+
         	{% include katty-short.html %}
         	</div>
         	
         	<div class="right-col">
+              <div style="position:relative;left:50%; width:100px;margin-left:-150px;">
+              <img width="100" src="/images/henrik-head.jpg" style="margin-left:30px; border-radius:50px;">
+              <!-- <div style="text-align:center;">Henrik Vendelbo</div> -->
+              </div>
+
         	{% include henrik-short.html %}
         	</div>
         </section>
 
 		<footer class="constrained">
+      {% include page-footer-etc.html %}
 			{% include page-footer-copyright.html %}
 		</footer>
     </article>
