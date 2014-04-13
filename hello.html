@@ -113,10 +113,15 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
     <p lang="en"></p>
 
-    <p class="with-radio-toggle-switch device-switch" style="background: #fff;">
+    <p class="createsend-button" style="height:22px;display:inline-block;" data-listid="i/F0/33A/EAF/0AB002CCC1A9160B"></p>
+
+    <h4>
       <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804">
       <label>Open the Book page in iTunes</label>
       </a>
+    </h4>
+
+    <h6 class="with-radio-toggle-switch device-switch" style="background: #fff;">
 
       <span class="toggle-bg toggle-alternate {(add.device || 'off')}">
         <label class="{(add.device)}">{(add.device == 'on'? 'iPad':'Desktop')}</label>
@@ -124,7 +129,7 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         <input type="radio" name="toggle" value="on" ng-model="add.device">
         <span class="switch {(add.device)}"></span>
       </span>
-    </p>
+    </h6>
     
     <p>
     <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" ng-hide="add.device == 'on'">
@@ -161,9 +166,9 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
     <p>The review version is cut down to give you an easy review. So some pages will be missing,<p>
 
     <ul>
-    <li>- Some of the city information</li>
-    <li>- Some of the pages with interactive exercises.</li>
-    <li>- Some of the pages for learning with pictures and sounds.</li>
+    <li>Some of the city information</li>
+    <li>Some of the pages with interactive exercises.</li>
+    <li>Some of the pages for learning with pictures and sounds.</li>
     </ul>
 
     <p>As it is a PDF it does not have sounds and interactive exercises like the
@@ -180,3 +185,4 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 {% include site-menu.html %}
 {% include book-layout.html %}
     
+<script src="http://btn.createsend1.com/js/sb.min.js?v=2" type="text/javascript" class="createsend-script"></script>

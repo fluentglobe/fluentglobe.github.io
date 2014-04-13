@@ -2481,7 +2481,9 @@ article > header {
 .main-text h1,
 .main-text h2,
 .main-text h3,
-.main-text h4 {
+.main-text h4,
+.main-text h5,
+.main-text h6 {
   margin: .7em auto 1em auto;
   width: 35em;
   max-width: 90%;
