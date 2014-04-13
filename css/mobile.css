@@ -2475,6 +2475,39 @@ article > header {
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
 }
+.main-text-section {
+  text-align: center;
+}
+.main-text h1,
+.main-text h2,
+.main-text h3,
+.main-text h4 {
+  margin: .7em auto 1em auto;
+  width: 35em;
+  max-width: 90%;
+}
+.main-text ul,
+.main-text ol,
+.main-text p {
+  text-align: left;
+  margin: 0 auto .7em auto;
+  width: 35em;
+  max-width: 90%;
+}
+.constrained {
+  overflow: visible;
+}
+.constrained .centered-content {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  margin: 0 auto;
+  clear: both;
+}
+.centerContainer {
+  width: 300px;
+  margin: 0 auto;
+}
 body.open-book {
   overflow: hidden;
 }
@@ -3297,20 +3330,6 @@ img.right-side-80 {
   float: right;
   max-height: 80px;
   padding: 5px;
-}
-.constrained {
-  overflow: visible;
-}
-.constrained .centered-content {
-  position: relative;
-  text-align: center;
-  overflow: hidden;
-  margin: 0 auto;
-  clear: both;
-}
-.centerContainer {
-  width: 300px;
-  margin: 0 auto;
 }
 p br.page,
 br.page {

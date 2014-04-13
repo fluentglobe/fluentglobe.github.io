@@ -1,0 +1,64 @@
+article {
+
+    position:relative; //absolute
+    width: 100%;
+    border-left: @menu-edge-width solid @app-menu-bg;
+    overflow: visible;
+
+    .transition(~".3s ease-in-out left,.3s ease-in-out margin-top");
+
+    .outhangingHeader();
+
+    // .open-book & {
+    //     //position: static;
+    //     margin-top: 60px !important;
+    //     background: white;
+    // }
+
+    // .checkbox-switcher {
+    //     .switch-checkbox();
+    // }
+}
+
+// on section
+.main-text-section {
+    text-align: center;
+}
+
+// on parent of section or section itself
+.main-text {
+        h1,h2,h3,h4 {
+            margin: .7em auto 1em auto; 
+            width: 35em; 
+            max-width: 90%;
+        }
+
+        ul,ol,
+        p {
+            text-align: left; 
+            margin:0 auto .7em auto; 
+            width: 35em; 
+            max-width: 90%;
+        }
+}
+
+.constrained {
+    overflow: visible;
+
+    .centered-content {
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        margin: 0 auto;
+        clear: both;
+    }
+}
+
+.centerContainer {
+    width: 300px; //TODO change?
+    margin: 0 auto;
+}
+
+// .two-boxes
+
+

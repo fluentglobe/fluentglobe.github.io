@@ -76,28 +76,7 @@ input {
     .transition(.3s ease-in-out left);
 }
 
-article {
-
-    position:relative; //absolute
-    width: 100%;
-    border-left: @menu-edge-width solid @app-menu-bg;
-    overflow: visible;
-
-    .transition(~".3s ease-in-out left,.3s ease-in-out margin-top");
-
-    .outhangingHeader();
-
-    // .open-book & {
-    //     //position: static;
-    //     margin-top: 60px !important;
-    //     background: white;
-    // }
-
-    // .checkbox-switcher {
-    //     .switch-checkbox();
-    // }
-}
-
+@import "article";
 
 body {
 
@@ -711,25 +690,6 @@ img.right-side-80 {
     padding: 5px;
 }
 
-
-.constrained {
-    overflow: visible;
-
-    .centered-content {
-        position: relative;
-        text-align: center;
-        overflow: hidden;
-        margin: 0 auto;
-        clear: both;
-    }
-}
-
-.centerContainer {
-    width: 300px; //TODO change?
-    margin: 0 auto;
-}
-
-// .two-boxes
 
 @import "paging";
 
