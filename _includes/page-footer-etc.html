@@ -1,26 +1,20 @@
-      <div class="container">
-      </div>
+<nav class="etc" style="min-height: 400px;">
+	<div class="left-col center-block" hidden>
+		<h4>Recent Articles</h4>
 
+		{% for post in site.posts limit:4 %}
+	  <h6><a href="{{ post.url }}">{{ post.title }}</a>
+	  <time>{{ post.date | date:"%b %d" }}</time>
+	  </h6>
+		<p>
+		  {{ post.summary | truncatewords:20 }}
+		  <a href="{{ post.url }}">more</a>
+		</p>
+		{% endfor %}
 
-<nav class="container etc">
-	<div class="row">
-		<div class="col-sm-6 center-block">
-			<a href="mailto:people@fluentglobe.com">E-mail people@fluentglobe.com</a>
-		</div>
-
-		<div class="col-sm-6 center-block">
-			<h4>Recent Articles</h4>
-
-			{% for post in site.posts limit:4 %}
-		  <h6><a href="{{ post.url }}">{{ post.title }}</a>
-		  <time>{{ post.date | date:"%b %d" }}</time>
-		  </h6>
-			<p>
-			  {{ post.summary | truncatewords:20 }}
-			  <a href="{{ post.url }}">more</a>
-			</p>
-			{% endfor %}
-
-		</div>
 	</div>
+
+	<iframe class="right-col freshwidget-embedded-form" id="freshwidget-embedded-form" src="http://help.fluentglobe.com/widgets/feedback_widget/new?&widgetType=embedded&screenshot=no" scrolling="no" height="360px" width="100%" frameborder="0" >
+	</iframe>
+
 </nav>
