@@ -2475,6 +2475,18 @@ article > header {
   background-color: #282828;
   background-color: rgba(0, 0, 0, 0.7);
 }
+#intro .left-col,
+.splash article .left-col {
+  padding: 0 30px;
+}
+#intro .right-col,
+.splash article .right-col {
+  padding: 0 30px;
+}
+#intro .left-col,
+#intro .right-col {
+  margin-top: 3em;
+}
 .main-text-section {
   text-align: center;
 }
@@ -2938,12 +2950,6 @@ body.lesson .menu nav.flag label {
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
 }
-.splash article .left-col {
-  padding: 0 30px;
-}
-.splash article .right-col {
-  padding: 0 30px;
-}
 .splash article > footer {
   position: relative;
   padding: 20px 0 25px 0;
@@ -3051,12 +3057,14 @@ html body.splash #intro > footer {
   }
 }
 @media only screen and (min-width: 400px) {
+  #intro .left-col,
   .splash article .left-col {
     position: absolute;
     right: 50%;
     width: 50%;
     max-width: 500px;
   }
+  #intro .right-col,
   .splash article .right-col {
     position: relative;
     left: 50%;
@@ -4181,6 +4189,9 @@ h6 {
 }
 .state-scrolled #bookshelf {
   zoom: .7;
+}
+#bookspread.right-col {
+  zoom: .75;
 }
 .bk-list {
   list-style: none;
