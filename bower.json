@@ -13,6 +13,9 @@
     "snapjs": "latest",
     "hammerjs": "latest",
     "togetherjs": "latest",
-    "angular-toggle-switch": "~0.3.0"
+    "angular-toggle-switch": "~0.3.0",
+    "swiper": "~2.6.0",
+    "angular-socialshare": "*",
+    "swiper-3d-flow": "~2.1.0"
   }
 }
