@@ -2746,6 +2746,7 @@ body .menu nav.flag label output {
   top: 0;
   bottom: 0;
   min-height: 0;
+  z-index: -1;
 }
 body.lesson .menu nav.flag label {
   display: none;
@@ -3046,6 +3047,7 @@ html body.splash #intro > footer {
     top: 0;
     left: 0;
     right: 0;
+    z-index: -1;
   }
   html body.splash #intro > footer {
     position: relative;
