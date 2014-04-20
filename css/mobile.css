@@ -3049,6 +3049,10 @@ html body.splash #intro > footer {
     right: 0;
     z-index: -1;
   }
+  html body.splash #intro .left-col,
+  html body.splash #intro .right-col {
+    z-index: 1;
+  }
   html body.splash #intro > footer {
     position: relative;
     margin-top: 50px;
