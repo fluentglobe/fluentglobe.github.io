@@ -35,8 +35,8 @@ module.exports = function(grunt) {
           '_libs/impl.js',
           '_libs/form.js',
           'bower_components/angular-toggle-switch/angular-toggle-switch.min.js',
-          'bower_components/fluent-books/books.js',
-          'bower_components/fluent-books/controllers.js',
+          'bower_components/book-reader/books.js',
+          'bower_components/book-reader/controllers.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
@@ -89,29 +89,6 @@ module.exports = function(grunt) {
 
     // --- COPY ---
     copy: {
-      fluent: {
-        files: [
-          {
-            expand: true, 
-            cwd: '../fluent-books/',
-            src: ['*.js','*.less','*.css'],
-            dest: 'bower_components/fluent-books/'
-          },
-          {
-            expand: true, 
-            cwd: '../fluent-books/css/',
-            src: ['*.less','*.css'],
-            dest: 'bower_components/fluent-books/css/'
-          },
-          {
-            expand: true, 
-            cwd: '../fluent-books/js/',
-            src: '*.js',
-            dest: 'bower_components/fluent-books/js/'
-          }
-        ]
-      },
-
       angular: {
         files: [
           { src: 'bower_components/angular/angular.js', dest: 'js/angular.js' },
@@ -219,11 +196,6 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
-      },
-
-      fluent: {
-        files: ['../books/**/*.js','../books/**/*.css','../books/**/*.less'],
-        tasks: 'copy:fluent'
       },
 
       less: {
