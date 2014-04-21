@@ -25,7 +25,7 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
 
 if (window.angular) {
 
-    var browseApp = angular.module('browseApp', ['toggle-switch']);
+    var browseApp = angular.module('browseApp', []); // 'toggle-switch'
     browseApp.config(['$interpolateProvider', function($interpolateProvider) {
           return $interpolateProvider.startSymbol('{(').endSymbol(')}');
         }

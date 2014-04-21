@@ -5,7 +5,7 @@
   "dependencies": {
     "jquery": "latest",
     "normalize-css": "latest",
-    "fluent-books": "latest",
+    "fluent-book-reader": "latest",
     "essentialjs-future": "latest",
     "bootstrap": "latest",
     "turnjs": "latest",

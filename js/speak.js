@@ -4,7 +4,7 @@ require('../bower_components/angular-toggle-switch/angular-toggle-switch.min.js'
 
 var books = require('../bower_components/book-reader/controllers.js');
 
-var speakApp = angular.module('speakApp', ['ngRoute','speakControllers','toggle-switch']);
+var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
       return $interpolateProvider.startSymbol('{(').endSymbol(')}');
     }
@@ -1021,7 +1021,7 @@ function EnableBookController($scope,$routeParams) {
 
 speakControllers
   // .controller('SpeakController',SpeakController)
-  .controller('ShelfController',ShelfController)
+  .controller('ShelfController',['$scope',ShelfController])
   .controller('PickBookController',['$scope','$routeParams',PickBookController])
   .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
 

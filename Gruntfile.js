@@ -111,6 +111,14 @@ module.exports = function(grunt) {
     },
 
     browserify: {
+      common: {
+        src: '_libs/common.js',
+        dest: 'js/common.js'
+      },
+      product: {
+        src: '_libs/product-app.js',
+        dest: 'js/product-app.js'
+      },
       speak: {
         src: '_libs/speak.js',
         dest: 'js/speak.js'

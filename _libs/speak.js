@@ -3,7 +3,7 @@ require('../bower_components/angular-toggle-switch/angular-toggle-switch.min.js'
 
 var books = require('../bower_components/book-reader/controllers.js');
 
-var speakApp = angular.module('speakApp', ['ngRoute','speakControllers','toggle-switch']);
+var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
       return $interpolateProvider.startSymbol('{(').endSymbol(')}');
     }
