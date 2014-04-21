@@ -1989,6 +1989,40 @@ function updateConnected() {
 }
 // setTimeout(updateConnected,100); //TODO configurable with algorithm
 
+function parseURI (str) {
+	var	o   = parseUri.options,
+		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+		uri = {},
+		i   = 14;
+
+	while (i--) uri[o.key[i]] = m[i] || "";
+
+	uri[o.q.name] = {};
+	uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+		if ($1) uri[o.q.name][$1] = $2;
+	});
+	uri.toString = parseUri.toString;
+
+	return uri;
+};
+
+parseURI.options = {
+	strictMode: false,
+	key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+	q:   {
+		name:   "queryKey",
+		parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+	},
+	parser: {
+		strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+		loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+	}
+};
+
+parseURI.toString = function() {
+	return this.protocol + "://" + this.host + (this.port? ":"+this.port : "") + this.path + (this.query? "?" + this.query:"");
+};
+
 var newIframeId = 1;
 
 
@@ -2098,10 +2132,10 @@ EnhancedForm.prototype.planJsonSubmit = function(el) {
 EnhancedForm.prototype.jsonSubmit = function(ev,el) {
 
 	var actionVariant = ev.actionElement.actionVariant;
-	actionVariant.uri = URI(this.action);
-	if (actionVariant.uri.protocol() == "client+http") actionVariant.uri.protocol("http");
-	if (actionVariant.uri.protocol() == "client+https") actionVariant.uri.protocol("https");
-	if (actionVariant.host) actionVariant.uri.host(actionVariant.host);
+	actionVariant.uri = parseURI(this.action);
+	if (actionVariant.uri.protocol == "client+http") actionVariant.uri.protocol = "http";
+	if (actionVariant.uri.protocol == "client+https") actionVariant.uri.protocol = "https";
+	if (actionVariant.host) actionVariant.uri.host = actionVariant.host;
 
 	// http://enable-cors.org/
 	var enctype = el.getAttribute("enctype");
@@ -2928,7 +2962,7 @@ function EnableBookController($scope,$routeParams) {
 
 speakControllers
   // .controller('SpeakController',SpeakController)
-  .controller('ShelfController',ShelfController)
+  .controller('ShelfController',['$scope',ShelfController])
   .controller('PickBookController',['$scope','$routeParams',PickBookController])
   .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
 
@@ -2961,7 +2995,7 @@ if (! /PhantomJS\//.test(navigator.userAgent)) {
 
 if (window.angular) {
 
-    var browseApp = angular.module('browseApp', ['toggle-switch']);
+    var browseApp = angular.module('browseApp', []); // 'toggle-switch'
     browseApp.config(['$interpolateProvider', function($interpolateProvider) {
           return $interpolateProvider.startSymbol('{(').endSymbol(')}');
         }
