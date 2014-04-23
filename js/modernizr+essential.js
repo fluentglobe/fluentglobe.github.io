@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-12
+/*! Fluent Globe - v0.1.0 - 2014-04-23
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 window.html5 = {
@@ -7,7 +7,7 @@ window.html5 = {
 	
 ;window.Modernizr=function(e,t,n){function C(e){f.cssText=e}function k(e,t){return C(h.join(e+";")+(t||""))}function L(e,t){return typeof e===t}function A(e,t){return!!~(""+e).indexOf(t)}function O(e,t){for(var r in e){var i=e[r];if(!A(i,"-")&&f[i]!==n)return t=="pfx"?i:!0}return!1}function M(e,t,r){for(var i in e){var s=t[e[i]];if(s!==n)return r===!1?e[i]:L(s,"function")?s.bind(r||t):s}return!1}function _(e,t,n){var r=e.charAt(0).toUpperCase()+e.slice(1),i=(e+" "+d.join(r+" ")+r).split(" ");return L(t,"string")||L(t,"undefined")?O(i,t):(i=(e+" "+v.join(r+" ")+r).split(" "),M(i,t,n))}var r="2.7.1",i={},s=!0,o=t.documentElement,u="modernizr",a=t.createElement(u),f=a.style,l,c={}.toString,h=" -webkit- -moz- -o- -ms- ".split(" "),p="Webkit Moz O ms",d=p.split(" "),v=p.toLowerCase().split(" "),m={},g={},y={},b=[],w=b.slice,E,S=function(e,n,r,i){var s,a,f,l,c=t.createElement("div"),h=t.body,p=h||t.createElement("body");if(parseInt(r,10))while(r--)f=t.createElement("div"),f.id=i?i[r]:u+(r+1),c.appendChild(f);return s=["&#173;",'<style id="s',u,'">',e,"</style>"].join(""),c.id=u,(h?c:p).innerHTML+=s,p.appendChild(c),h||(p.style.background="",p.style.overflow="hidden",l=o.style.overflow,o.style.overflow="hidden",o.appendChild(p)),a=n(c,e),h?c.parentNode.removeChild(c):(p.parentNode.removeChild(p),o.style.overflow=l),!!a},x=function(){function r(r,i){i=i||t.createElement(e[r]||"div"),r="on"+r;var s=r in i;return s||(i.setAttribute||(i=t.createElement("div")),i.setAttribute&&i.removeAttribute&&(i.setAttribute(r,""),s=L(i[r],"function"),L(i[r],"undefined")||(i[r]=n),i.removeAttribute(r))),i=null,s}var e={select:"input",change:"input",submit:"form",reset:"form",error:"img",load:"img",abort:"img"};return r}(),T={}.hasOwnProperty,N;!L(T,"undefined")&&!L(T.call,"undefined")?N=function(e,t){return T.call(e,t)}:N=function(e,t){return t in e&&L(e.constructor.prototype[t],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(t){var n=this;if(typeof n!="function")throw new TypeError;var r=w.call(arguments,1),i=function(){if(this instanceof i){var e=function(){};e.prototype=n.prototype;var s=new e,o=n.apply(s,r.concat(w.call(arguments)));return Object(o)===o?o:s}return n.apply(t,r.concat(w.call(arguments)))};return i}),m.touch=function(){var n;return"ontouchstart"in e||e.DocumentTouch&&t instanceof DocumentTouch?n=!0:S(["@media (",h.join("touch-enabled),("),u,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(e){n=e.offsetTop===9}),n},m.hashchange=function(){return x("hashchange",e)&&(t.documentMode===n||t.documentMode>7)},m.draganddrop=function(){var e=t.createElement("div");return"draggable"in e||"ondragstart"in e&&"ondrop"in e},m.websockets=function(){return"WebSocket"in e||"MozWebSocket"in e},m.backgroundsize=function(){return _("backgroundSize")},m.csscolumns=function(){return _("columnCount")};for(var D in m)N(m,D)&&(E=D.toLowerCase(),i[E]=m[D](),b.push((i[E]?"":"no-")+E));return i.addTest=function(e,t){if(typeof e=="object")for(var r in e)N(e,r)&&i.addTest(r,e[r]);else{e=e.toLowerCase();if(i[e]!==n)return i;t=typeof t=="function"?t():t,typeof s!="undefined"&&s&&(o.className+=" "+(t?"":"no-")+e),i[e]=t}return i},C(""),a=l=null,function(e,t){function c(e,t){var n=e.createElement("p"),r=e.getElementsByTagName("head")[0]||e.documentElement;return n.innerHTML="x<style>"+t+"</style>",r.insertBefore(n.lastChild,r.firstChild)}function h(){var e=y.elements;return typeof e=="string"?e.split(" "):e}function p(e){var t=f[e[u]];return t||(t={},a++,e[u]=a,f[a]=t),t}function d(e,n,r){n||(n=t);if(l)return n.createElement(e);r||(r=p(n));var o;return r.cache[e]?o=r.cache[e].cloneNode():s.test(e)?o=(r.cache[e]=r.createElem(e)).cloneNode():o=r.createElem(e),o.canHaveChildren&&!i.test(e)&&!o.tagUrn?r.frag.appendChild(o):o}function v(e,n){e||(e=t);if(l)return e.createDocumentFragment();n=n||p(e);var r=n.frag.cloneNode(),i=0,s=h(),o=s.length;for(;i<o;i++)r.createElement(s[i]);return r}function m(e,t){t.cache||(t.cache={},t.createElem=e.createElement,t.createFrag=e.createDocumentFragment,t.frag=t.createFrag()),e.createElement=function(n){return y.shivMethods?d(n,e,t):t.createElem(n)},e.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+h().join().replace(/[\w\-]+/g,function(e){return t.createElem(e),t.frag.createElement(e),'c("'+e+'")'})+");return n}")(y,t.frag)}function g(e){e||(e=t);var n=p(e);return y.shivCSS&&!o&&!n.hasCSS&&(n.hasCSS=!!c(e,"article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block}mark{background:#FF0;color:#000}template{display:none}")),l||m(e,n),e}var n="3.7.0",r=e.html5||{},i=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i,s=/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,o,u="_html5shiv",a=0,f={},l;(function(){try{var e=t.createElement("a");e.innerHTML="<xyz></xyz>",o="hidden"in e,l=e.childNodes.length==1||function(){t.createElement("a");var e=t.createDocumentFragment();return typeof e.cloneNode=="undefined"||typeof e.createDocumentFragment=="undefined"||typeof e.createElement=="undefined"}()}catch(n){o=!0,l=!0}})();var y={elements:r.elements||"abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video",version:n,shivCSS:r.shivCSS!==!1,supportsUnknownElements:l,shivMethods:r.shivMethods!==!1,type:"default",shivDocument:g,createElement:d,createDocumentFragment:v};e.html5=y,g(t)}(this,t),i._version=r,i._prefixes=h,i._domPrefixes=v,i._cssomPrefixes=d,i.hasEvent=x,i.testProp=function(e){return O([e])},i.testAllProps=_,i.testStyles=S,i.prefixed=function(e,t,n){return t?_(e,t,n):_(e,"pfx")},o.className=o.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(s?" js "+b.join(" "):""),i}(this,this.document),function(e,t,n){function r(e){return"[object Function]"==d.call(e)}function i(e){return"string"==typeof e}function s(){}function o(e){return!e||"loaded"==e||"complete"==e||"uninitialized"==e}function u(){var e=v.shift();m=1,e?e.t?h(function(){("c"==e.t?k.injectCss:k.injectJs)(e.s,0,e.a,e.x,e.e,1)},0):(e(),u()):m=0}function a(e,n,r,i,s,a,f){function l(t){if(!d&&o(c.readyState)&&(w.r=d=1,!m&&u(),c.onload=c.onreadystatechange=null,t)){"img"!=e&&h(function(){b.removeChild(c)},50);for(var r in T[n])T[n].hasOwnProperty(r)&&T[n][r].onload()}}var f=f||k.errorTimeout,c=t.createElement(e),d=0,g=0,w={t:r,s:n,e:s,a:a,x:f};1===T[n]&&(g=1,T[n]=[]),"object"==e?c.data=n:(c.src=n,c.type=e),c.width=c.height="0",c.onerror=c.onload=c.onreadystatechange=function(){l.call(this,g)},v.splice(i,0,w),"img"!=e&&(g||2===T[n]?(b.insertBefore(c,y?null:p),h(l,f)):T[n].push(c))}function f(e,t,n,r,s){return m=0,t=t||"j",i(e)?a("c"==t?E:w,e,t,this.i++,n,r,s):(v.splice(this.i++,0,e),1==v.length&&u()),this}function l(){var e=k;return e.loader={load:f,i:0},e}var c=t.documentElement,h=e.setTimeout,p=t.getElementsByTagName("script")[0],d={}.toString,v=[],m=0,g="MozAppearance"in c.style,y=g&&!!t.createRange().compareNode,b=y?c:p.parentNode,c=e.opera&&"[object Opera]"==d.call(e.opera),c=!!t.attachEvent&&!c,w=g?"object":c?"script":"img",E=c?"script":w,S=Array.isArray||function(e){return"[object Array]"==d.call(e)},x=[],T={},N={timeout:function(e,t){return t.length&&(e.timeout=t[0]),e}},C,k;k=function(e){function t(e){var e=e.split("!"),t=x.length,n=e.pop(),r=e.length,n={url:n,origUrl:n,prefixes:e},i,s,o;for(s=0;s<r;s++)o=e[s].split("="),(i=N[o.shift()])&&(n=i(n,o));for(s=0;s<t;s++)n=x[s](n);return n}function o(e,i,s,o,u){var a=t(e),f=a.autoCallback;a.url.split(".").pop().split("?").shift(),a.bypass||(i&&(i=r(i)?i:i[e]||i[o]||i[e.split("/").pop().split("?")[0]]),a.instead?a.instead(e,i,s,o,u):(T[a.url]?a.noexec=!0:T[a.url]=1,s.load(a.url,a.forceCSS||!a.forceJS&&"css"==a.url.split(".").pop().split("?").shift()?"c":n,a.noexec,a.attrs,a.timeout),(r(i)||r(f))&&s.load(function(){l(),i&&i(a.origUrl,u,o),f&&f(a.origUrl,u,o),T[a.url]=2})))}function u(e,t){function n(e,n){if(e){if(i(e))n||(f=function(){var e=[].slice.call(arguments);l.apply(this,e),c()}),o(e,f,t,0,u);else if(Object(e)===e)for(p in h=function(){var t=0,n;for(n in e)e.hasOwnProperty(n)&&t++;return t}(),e)e.hasOwnProperty(p)&&(!n&&!--h&&(r(f)?f=function(){var e=[].slice.call(arguments);l.apply(this,e),c()}:f[p]=function(e){return function(){var t=[].slice.call(arguments);e&&e.apply(this,t),c()}}(l[p])),o(e[p],f,t,p,u))}else!n&&c()}var u=!!e.test,a=e.load||e.both,f=e.callback||s,l=f,c=e.complete||s,h,p;n(u?e.yep:e.nope,!!a),a&&n(a)}var a,f,c=this.yepnope.loader;if(i(e))o(e,0,c,0);else if(S(e))for(a=0;a<e.length;a++)f=e[a],i(f)?o(f,0,c,0):S(f)?k(f):Object(f)===f&&u(f,c);else Object(e)===e&&u(e,c)},k.addPrefix=function(e,t){N[e]=t},k.addFilter=function(e){x.push(e)},k.errorTimeout=1e4,null==t.readyState&&t.addEventListener&&(t.readyState="loading",t.addEventListener("DOMContentLoaded",C=function(){t.removeEventListener("DOMContentLoaded",C,0),t.readyState="complete"},0)),e.yepnope=l(),e.yepnope.executeStack=u,e.yepnope.injectJs=function(e,n,r,i,a,f){var l=t.createElement("script"),c,d,i=i||k.errorTimeout;l.src=e;for(d in r)l.setAttribute(d,r[d]);n=f?u:n||s,l.onreadystatechange=l.onload=function(){!c&&o(l.readyState)&&(c=1,n(),l.onload=l.onreadystatechange=null)},h(function(){c||(c=1,n(1))},i),a?l.onload():p.parentNode.insertBefore(l,p)},e.yepnope.injectCss=function(e,n,r,i,o,a){var i=t.createElement("link"),f,n=a?u:n||s;i.href=e,i.rel="stylesheet",i.type="text/css";for(f in r)i.setAttribute(f,r[f]);o||(p.parentNode.insertBefore(i,p),h(n,0))}}(this,document),Modernizr.load=function(){yepnope.apply(window,[].slice.call(arguments,0))},Modernizr.addTest("filereader",function(){return!!(window.File&&window.FileList&&window.FileReader)}),Modernizr.addTest("ie8compat",function(){return!window.addEventListener&&document.documentMode&&document.documentMode===7}),Modernizr.addTest("csscalc",function(){var e="width:",t="calc(10px);",n=document.createElement("div");return n.style.cssText=e+Modernizr._prefixes.join(t+e),!!n.style.length}),Modernizr.addTest("regions",function(){var e=Modernizr.prefixed("flowFrom"),t=Modernizr.prefixed("flowInto");if(!e||!t)return!1;var n=document.createElement("div"),r=document.createElement("div"),i=document.createElement("div"),s="modernizr_flow_for_regions_check";r.innerText="M",n.style.cssText="top: 150px; left: 150px; padding: 0px;",i.style.cssText="width: 50px; height: 50px; padding: 42px;",i.style[e]=s,n.appendChild(r),n.appendChild(i),document.documentElement.appendChild(n);var o,u,a=r.getBoundingClientRect();return r.style[t]=s,o=r.getBoundingClientRect(),u=o.left-a.left,document.documentElement.removeChild(n),r=i=n=undefined,u==42}),Modernizr.addTest("csspositionsticky",function(){var e="position:",t="sticky",n=document.createElement("modernizr"),r=n.style;return r.cssText=e+Modernizr._prefixes.join(t+";"+e).slice(0,-e.length),r.position.indexOf(t)!==-1});
 /*!
-    Essential JavaScript - v0.4.0 ❀ http://essentialjs.com
+    Essential JavaScript - v0.5.0 ❀ http://essentialjs.com
     Copyright (c) 2011-2014 Henrik Vendelbo
 
     This program is free software: you can redistribute it and/or modify it under the terms of
@@ -32,6 +32,8 @@ window.html5 = {
 function Resolver(name_andor_expr,ns,options)
 {
 	"use strict"; // Enable ECMAScript "strict" operation for this function. See more: http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
+
+    var forDoc = false, forEl = false;
 
 	switch(typeof(name_andor_expr)) {
 	case "undefined":
@@ -97,6 +99,18 @@ function Resolver(name_andor_expr,ns,options)
     case "object":
         // Resolver({})
         // Resolver({},{options})
+        forDoc = (name_andor_expr.nodeType === 9);
+        forEl = (name_andor_expr.nodeType !== undefined && !forDoc);
+        if (name_andor_expr === window && Resolver.window) return Resolver.window;
+        else if (forDoc) {
+            var existing = Resolver.getByUniqueID(Resolver.forDoc,name_andor_expr);
+            if (existing) return existing;
+        }
+        //if (name_andor_expr === document && Resolver.document) return Resolver.document;
+        else if (forEl) {
+            var existing = Resolver.getByUniqueID(Resolver.forEl,name_andor_expr);
+            if (existing) return existing;
+        }
         options = ns || {};
         ns = name_andor_expr;
         break;
@@ -250,7 +264,7 @@ function Resolver(name_andor_expr,ns,options)
     resolver.get = resolver;
     resolver.named = options.name;
     if (options.name) Resolver[options.name] = resolver;
-    resolver.namespace = arguments[0];
+    resolver.namespace = arguments[0]; // should be possible to change to 'ns'
     resolver.references = { };
 
     var VALID_LISTENERS = {
@@ -331,6 +345,43 @@ function Resolver(name_andor_expr,ns,options)
             }
             return value;
         }
+
+        function remove() {
+            if (arguments.length > 0) {
+                var subnames = (typeof arguments[0] == "object")? arguments[0] : arguments[0].split(".");
+                var symbol = subnames.pop();
+                var base = _resolve(names,subnames,onundefinedSet);
+                var combined = names.concat(subnames);
+                var parentName = combined.join(".");
+                subnames.push(symbol);
+
+                //TODO if typeof base != object 
+                var oldValue = base[symbol];
+                if (oldValue === undefined) return;
+                delete base[symbol];
+
+                var childRef = resolver.references[parentName + "." + symbol];
+                if (childRef) childRef._callListener("change",combined,base,symbol,undefined,oldValue);
+                var parentRef = resolver.references[parentName];
+                if (parentRef) parentRef._callListener("change",combined,base,symbol,undefined,oldValue);
+
+            } else {
+                var symbol = names[names.length - 1];
+                var base = _resolve(baseNames,null,onundefinedSet);
+                var oldValue = base[symbol];
+                if (oldValue === undefined) return;
+                delete base[symbol];
+
+                this._callListener("change",baseNames,base,leafName,undefined,oldValue);
+                //TODO test for triggering specific listeners
+                if (baseRefName) {
+                    var parentRef = resolver.references[baseRefName];
+                    if (parentRef) parentRef._callListener("change",baseNames,base,leafName,undefined,oldValue);
+                }
+            }
+            return oldValue;
+        }
+
         function set(value) {
         	if (arguments.length > 1) {
         		var subnames = (typeof arguments[0] == "object")? arguments[0] : arguments[0].split(".");
@@ -550,7 +601,7 @@ function Resolver(name_andor_expr,ns,options)
             //TODO if (ref is defined)
             try {
                 localStorage[this.id] = JSON.stringify(ref());
-            } catch(ex) { console.warn("Failed to read store_local = ",this.id,ex); } //TODO consider feedback
+            } catch(ex) { Resolver("essential::console::")().warn("Failed to read store_local = ",this.id,ex); } //TODO consider feedback
         }
         function store_cookie(ref) {
             if (ref._reading_cookie) return; //TODO only if same cookie
@@ -648,6 +699,7 @@ function Resolver(name_andor_expr,ns,options)
             }
         }    
 
+        get.remove = remove;
         get.set = set;
         get.toggle = toggle;
         get.get = get;
@@ -715,8 +767,6 @@ function Resolver(name_andor_expr,ns,options)
         return get;
     };
 
-
-
     resolver.on = function(type,selector,data,callback) 
     {
     	switch(arguments.length) {
@@ -733,6 +783,32 @@ function Resolver(name_andor_expr,ns,options)
 		    	this.reference(selector).on(type,data,callback);
     			break;
     	}
+    };
+
+    resolver.remove = function(name,onundefined)
+    {
+        var names;
+        if (typeof name == "object" && name.join) {
+            names = name;
+            name = name.join(".");
+        } else {
+            names = name.split("::");
+            if (names.length > 1) {
+                return Resolver(names.shift()).remove(names[0],onundefined);
+            }
+            names = name.split(".");
+        }
+        var symbol = names.pop();
+        var base = _resolve(names,null,onundefined), oldValue = base[symbol];
+        if (oldValue === undefined) return;
+        delete base[symbol];
+
+        var ref = resolver.references[name];
+        if (ref) ref._callListener("change",names,base,symbol,undefined);
+        var parentName = names.join(".");
+        var parentRef = resolver.references[parentName];
+        if (parentRef) parentRef._callListener("change",names,base,symbol,undefined);
+        return oldValue;
     };
     
     /*
@@ -902,8 +978,45 @@ function Resolver(name_andor_expr,ns,options)
     	if (options.mixinto.on==null) options.mixinto.on = resolver.on;
     }
 
+    if (forDoc) {
+        Resolver._docDefaults(resolver);
+        Resolver.setByUniqueID(Resolver.forDoc,ns,resolver);
+        resolver.uniquePageID = ns.uniquePageID;
+    } else if (forEl) {
+        Resolver.setByUniqueID(Resolver.forEl,ns,resolver);
+        resolver.uniqueID = ns.uniqueID;
+    }
+
     return resolver;
 }
+
+Resolver.forEl = {}; // for unique elements
+Resolver.forDoc = {}; // for unique documents
+
+Resolver.__lastUniqueID = 345;
+
+Resolver.getByUniqueID = function(map,el,forceID) {
+    if (el.nodeType === 9) {
+        if (el.uniquePageID === undefined && forceID) el.uniquePageID = ++Resolver.__lastUniqueID;
+        if (el.uniquePageID !== undefined) return map[el.uniquePageID];
+    } else {
+        if (el.uniqueID === undefined && forceID) el.uniqueID = ++Resolver.__lastUniqueID;
+        if (el.uniqueID !== undefined) return map[el.uniqueID];
+    }
+
+    return null;
+};
+
+Resolver.setByUniqueID = function(map,el,value) {
+    if (el.nodeType === 9) {
+        if (el.uniquePageID === undefined) el.uniquePageID = ++Resolver.__lastUniqueID;
+        map[el.uniquePageID] = value;
+    } else {
+        if (el.uniqueID === undefined) el.uniqueID = ++Resolver.__lastUniqueID;
+        map[el.uniqueID] = value;
+    }
+};
+
 
 Resolver.readloads = [];
 Resolver.storeunloads = [];
@@ -935,8 +1048,81 @@ Resolver.exists = function(name) {
     return this[name] != undefined;
 };
 
+
+Resolver.docMethod = function(name,fn) {
+    Resolver.docMethod.fn[name] = fn;
+    //TODO extend .docExec prototype
+    for(var id in Resolver.forDoc) {
+        var resolver = Resolver.forDoc[id],
+            icp = resolver.InitContext.prototype;
+        if (resolver[name] === undefined) resolver[name] = fn;
+        if (icp[name] === undefined) icp[name] = fn.bind(resolver);
+    }
+};
+Resolver.docMethod.fn = {};
+
+Resolver.functionProxy = function(src) {
+
+   // When executing the Function constructor, we are going
+    // to wrap the source code in a WITH keyword block that
+    // allows the THIS context to extend the local scope of
+    // the function.
+    //
+    // NOTE: This works without a nested self-executing
+    // function. I put it in there simply because it makes me
+    // feel a little more comfortable with the use of the
+    // WITH keyword.
+    return(
+        Function(
+            "with (this){" +
+                "return(" +
+                    "(function(){" + src + "})()" +
+                ");" +
+            "};"
+        )
+    );
+};
+
+Resolver._docDefaults = function(resolver) {
+    var esn = resolver.namespace.essential = resolver.namespace.essential || {};
+    esn.enabledRoles = esn.enabledRoles || {};
+    esn.handlers = esn.handlers || { init:{}, enhance:{}, sizing:{}, layout:{}, discard:{} };
+
+    esn.config = esn.config || {}; // from config scripts
+    resolver.InitContext = function(el) { 
+        this.element = el; 
+        if (el) this.parentElement = el.parentElement || el.parentNode;
+        this.document = resolver.namespace;
+        this.resolver = resolver;
+    };
+    resolver.InitContext.prototype = {
+        modules: esn.modules
+    };
+    // this._setDocMethods(resolver);
+    var icp = resolver.InitContext.prototype,fn;
+    for(var n in Resolver.docMethod.fn) {
+        fn = Resolver.docMethod.fn[n];
+        if (resolver[n] === undefined) resolver[n] = fn;
+        if (icp[n] === undefined) icp[n] = fn.bind(resolver);
+    }
+
+    esn.inits = esn.inits || []; // init scripts
+    esn.modules = esn.modules || {};
+    esn.resources = esn.resources || {};
+    esn.templates = esn.templates || {};
+    esn.descriptors = esn.descriptors || {};
+
+    esn.lang = document.documentElement.lang || "en";
+    esn.locale = "en-us";
+};
+
+// Resolver._setDocMethods = function(resolver) {
+// };
+
 Resolver({},{ name:"default" });
 Resolver(window, {name:"window"});
+Resolver(document, {name:"document"}).declare("essential.appliedConfig",{});
+
 
 function Generator(mainConstr,options)
 {
@@ -1326,6 +1512,15 @@ function Generator(mainConstr,options)
 	return generator;
 };
 
+Generator.instantiateSingletons	= function(lc)
+{
+	for(var i=0,g; g = Generator.restricted[i]; ++i) {
+		if (g.info.lifecycle == lc) { // TODO  && g.info.existing[g.info.identifier(..)] == undefined
+			g();
+		}
+	}
+};
+
 /* List of generators that have been restricted */
 Generator.restricted = [];
 Generator.ObjectGenerator = Generator(Object);
@@ -1623,9 +1818,8 @@ Generator.discardRestricted = function()
 
 		cleaners._inrecurse = (cleaners._inrecurse || 0) + 1;
 
-		for(var child=el.firstElementChild!==undefined? el.firstElementChild : el.firstChild; child; 
-			child = child.nextElementSibling!==undefined? child.nextElementSibling : child.nextSibling) {
-			if (child.nodeType == 1) cleanRecursively(child,unwind,true); //TODO perhaps run through .children instead
+		for(var i=0, children=el.children, child; child=children && children[i]; ++i) {
+			if (child.nodeType == 1) cleanRecursively(child,unwind,true);
 		}
 
 		if (cleanMe) callCleaners(el);
@@ -1641,7 +1835,7 @@ Generator.discardRestricted = function()
 		var appConfig = Resolver("essential::ApplicationConfig::")();
 
 		for(var i=0,c; c = el.children[i]; ++i) {
-			var role = c.getAttribute("role"), conf = appConfig.getConfig(c) || {};
+			var role = c.getAttribute("role"), conf = Resolver.config(c) || {};
 			var se = this.sizingElement(el,el,c,role,conf);
 			if (se) {
 				// set { sizingElement:true } on conf?
@@ -1692,6 +1886,7 @@ Generator.discardRestricted = function()
 	// map of uniqueID referenced (TODO array for performance/memory?)
 	var enhancedElements = essential.declare("enhancedElements",{});
 
+	//TODO Resolver("document::essential.unfinished::")
 	var unfinishedElements = essential.declare("unfinishedElements",{});
 
 	// map of uniqueID referenced
@@ -1703,7 +1898,50 @@ Generator.discardRestricted = function()
 	// open windows
 	var enhancedWindows = essential.declare("enhancedWindows",[]);
 
-	function enhanceQuery() {
+	function DescriptorQuery(sel,el) {
+		var q = [], context = { list:q };
+
+		if (typeof sel == "string") {
+			var strainer = selectorStrainer(sel);
+			if (el) {
+				var context = { list:q };
+				findChildrenToEnhance(el || document.body,context,strainer);
+			} else {
+				for(var id in enhancedElements) {
+					var desc = enhancedElements[id];
+					if (strainer(desc.el,desc)) q.push(desc);
+				}
+			}
+
+		} else {
+			var ac = essential("ApplicationConfig")();
+			el=sel; sel=undefined;
+			if (typeof el.length == "number") {
+				for(var i=0,e; e = el[i]; ++i) {
+
+					var conf = Resolver.config(e), role = e.getAttribute("role");
+					var desc = EnhancedDescriptor(e,role,conf,false,ac);
+					if (desc) q.push(desc);
+				}
+			} else if (el.nodeType == 1) {
+				//TODO third param context ? integrate with desc.context
+				//TODO identify existing descriptors
+
+				var conf = Resolver.config(el), role = el.getAttribute("role");
+				var desc = EnhancedDescriptor(el,role,conf);
+				if (desc) q.push(desc);
+			}
+		}
+		q.el = el;
+		for(var n in DescriptorQuery.fn) q[n] = DescriptorQuery.fn[n];
+
+		return q;
+	}
+	essential.declare("DescriptorQuery",DescriptorQuery);
+
+	DescriptorQuery.fn = {};
+
+	DescriptorQuery.fn.enhance = function() {
 		var pageResolver = Resolver("page"),
 			handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
 
@@ -1719,33 +1957,41 @@ Generator.discardRestricted = function()
 			if (desc.conf.sizingElement) sizingElements[desc.uniqueID] = desc;
 		}
 
-	}
+	};
 
-	function discardQuery() {
+	DescriptorQuery.fn.discard = function() {
 		for(var i=0,desc; desc = this[i]; ++i) {
 			if (desc) {
 				desc.discardNow();
 				desc._unlist();
 			}
 		}
-	}
+	};
 
-	function queueQuery() {
+	DescriptorQuery.fn.queue = function() {
 		for(var i=0,desc; desc = this[i]; ++i) {
 			if (desc) {
 				EnhancedDescriptor.unfinished[desc.uniqueID] = desc;
 			}
 		}
-	}
+	};
+
+	DescriptorQuery.fn.getInstance = function() {
+		if (this.length) return this[0].instance;
+		return null;
+	};
 
 	function findChildrenToEnhance(el,context,fn) {
 
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
 		while(e) {
 			if (e.attributes) {
-				var conf = essential("ApplicationConfig")().getConfig(e), role = e.getAttribute("role");
+				var conf = Resolver.config(e), role = e.getAttribute("role");
 				// var sizingElement = false;
 				// if (context.layouter) sizingElement = context.layouter.sizingElement(el,e,role,conf);
+
+				//TODO if not enabledRole skip
+
 				var desc = EnhancedDescriptor(e,role,conf);
 				var add = true;
 				if (fn) add = fn(e,desc,conf);
@@ -1754,7 +2000,7 @@ Generator.discardRestricted = function()
 				} else {
 
 				}
-				if (desc==null || !desc.state.contentManaged) findChildrenToEnhance(e,{layouter:context.layouter,list:context.list});
+				if (desc==null || !desc.state.contentManaged) findChildrenToEnhance(e,{layouter:context.layouter,list:context.list},fn);
 			}
 			e = e.nextElementSibling!==undefined? e.nextElementSibling : e.nextSibling;
 		}
@@ -1779,7 +2025,7 @@ Generator.discardRestricted = function()
 		};
 	}
 
-	function queueOnlyBranch() {
+	DescriptorQuery.fn.onlyBranch = function() {
 		if (this.el == undefined) throw new Error('Branch of undefined element'); // not sure what to do
 		var context = { list:this };
 		this.length = 0;
@@ -1787,64 +2033,38 @@ Generator.discardRestricted = function()
 		findChildrenToEnhance(this.el,context);
 		//TODO push those matched descriptors into q
 		return this;
-	}
+	};
 
-	function queueWithBranch() {
+	DescriptorQuery.fn.withBranch = function() {
 		this.onlyBranch();
 
-		var conf = essential("ApplicationConfig")().getConfig(this.el), role = this.el.getAttribute("role");
+		var conf = Resolver.config(this.el), role = this.el.getAttribute("role");
+
+				//TODO if not enabledRole skip
+				
 		var desc = EnhancedDescriptor(this.el,role,conf);
 		if (desc) this.shift(desc);
 		return this;
-	}
+	};
  
-	function DescriptorQuery(sel,el) {
-		var q = [], context = { list:q };
-
-		if (typeof sel == "string") {
-			var strainer = selectorStrainer(sel);
-			if (el) {
-				var context = { list:q };
-				findChildrenToEnhance(el || document.body,context,strainer);
-			} else {
-				for(var id in enhancedElements) {
-					var desc = enhancedElements[id];
-					if (strainer(desc.el,desc)) q.push(desc);
-				}
-			}
-
-		} else {
-			var ac = essential("ApplicationConfig")();
-			el=sel; sel=undefined;
-			if (typeof el.length == "number") {
-				for(var i=0,e; e = el[i]; ++i) {
-
-					var conf = ac.getConfig(e), role = e.getAttribute("role");
-					var desc = EnhancedDescriptor(e,role,conf,false,ac);
-					if (desc) q.push(desc);
-				}
-			} else if (el.nodeType == 1) {
-				//TODO third param context ? integrate with desc.context
-				//TODO identify existing descriptors
-
-				var conf = essential("ApplicationConfig")().getConfig(el), role = el.getAttribute("role");
-				var desc = EnhancedDescriptor(el,role,conf);
-				if (desc) q.push(desc);
-			}
-		}
-		q.el = el;
-		q.onlyBranch = queueOnlyBranch;
-		q.withBranch = queueWithBranch;
-		q.queue = queueQuery;
-		q.enhance = enhanceQuery;
-		q.discard = discardQuery;
-		return q;
-	}
-	essential.declare("DescriptorQuery",DescriptorQuery);
 
 
 	function EnhancedContext() {
 	}
+	EnhancedContext.prototype.clear = function() {
+		this.instance = null;
+		this.placement = null;
+
+		// this.uniqueID
+		this.el = null;
+		this.stateful = null;
+
+		this.controller = null;
+		this.controllerID = null;
+		this.controllerStateful = null;
+		this.layouterParent = null;
+		this.layouterEl = null;
+	};
 	// EnhancedContext.prototype.??
 
 	function _EnhancedDescriptor(el,role,conf,page,uniqueID) {
@@ -2018,12 +2238,13 @@ Generator.discardRestricted = function()
 		if (this.uniqueID == null) return; // just in case, shouldn't happen
 		var desc = enhancedElements[this.uniqueID];
 		if (desc) {
+			var enhanced = desc.state.enhanced;
 			if (desc.laidout) desc.laidout.destroy(desc.el);
 			if (desc.layouter) desc.layouter.destroy(desc.el);
 			//TODO destroy
 			//TODO discard/destroy for layouter and laidout
 
-			var controller = desc.getController();
+			var controller = desc.controller || desc.getController();
 			if (controller && controller.destroyed) controller.destroyed(desc.el,desc.instance);
 
 			// if (desc.discardHandler) 
@@ -2035,18 +2256,44 @@ Generator.discardRestricted = function()
 
 			//TODO discard queue for generator instances
 
+			if (controller && enhanced) {
+				--controller.__enhanced;
+				if (controller.__enhanced == 0 && controller.destroy) {
+					controller.destroy(desc.el);
+					controller.__init_called = false;
+				}	
+			}
+
 			return r;
 		}
 	}
 
 	_EnhancedDescriptor.prototype.setInstance = function(instance) {
+		this._initController();
 		this.instance = instance;
+		this._setInstance();
+	};
+
+	_EnhancedDescriptor.prototype._initController = function() {
+		this._updateContext();
+		var controller = this.getController();
+		if (controller && ! controller.__init_called && controller.init) {
+			controller.init(this.el,this.config,this.context);
+			controller.__init_called = true;
+		}
+	};
+
+	_EnhancedDescriptor.prototype._setInstance = function() {
 		this.state.enhanced = this.instance === false? false:true;
 		this.state.needEnhance = !this.state.enhanced;
 
 		if (this.state.enhanced) {
+			//TODO mark when it was enhanced so auto-discard can be equivalent
 			var controller = this.getController();
-			if (controller && controller.enhanced) controller.enhanced(this.el,this.instance);
+			if (controller) {
+				if (controller.enhanced) controller.enhanced(this.el,this.instance,this.config,this.context);
+				controller.__enhanced = controller.__enhanced? controller.__enhanced+1 : 1;
+			}
 
 			this.sizingHandler = this.handlers.sizing[this.role];
 			this.layoutHandler = this.handlers.layout[this.role];
@@ -2070,11 +2317,11 @@ Generator.discardRestricted = function()
 		if (handlers.enhance == undefined) debugger;
 		// desc.callCount = 1;
 		if (this.role && handlers.enhance[this.role] && enabledRoles[this.role]) {
-			this._updateContext();
+			this._initController();
 			//TODO allow parent to modify context
 			this.instance = handlers.enhance[this.role].call(this,this.el,this.role,this.conf,this.context);
+			this._setInstance();
 		}
-		this.setInstance(this.instance);
 	};
 
 	_EnhancedDescriptor.prototype._tryMakeLayouter = function(key) {
@@ -2171,12 +2418,16 @@ Generator.discardRestricted = function()
 	};
 
 	_EnhancedDescriptor.prototype._null = function() {
-
+		this.instance = null;
+		this.controller = null;
 		this.sizingHandler = undefined;
 		this.layoutHandler = undefined;
 		this.layouter = undefined;
 		this.laidout = undefined;
+		this.sizing.currentStyle = null;
+		this.layout.currentStyle = null;
 		this.layout.enable = false;					
+		if (this.context) this.context.clear();
 		this.context = undefined;
 		this._updateContext = function() {}; //TODO why is this called after discard, fix that
 	};
@@ -2187,6 +2438,7 @@ Generator.discardRestricted = function()
 		cleanRecursively(this.el);
 		this._null();
 		this.el = undefined;
+		this.state.enhanced = false;
 		this.state.discarded = true;					
 	};
 
@@ -2286,13 +2538,18 @@ Generator.discardRestricted = function()
 	// used to emulate IE uniqueID property
 	var lastUniqueID = 555;
 
+	//TODO Resolver.setByUniqueID
+
 	// Get the enhanced descriptor for and element
+	//TODO move to put this function on the document resolver for the page
 	function EnhancedDescriptor(el,role,conf,force,page) {
+		// forced replacement, or called with parameters to make a descriptor, so not a lookup
+		var makeIt = force || ((role || conf) && arguments.length>=3);
+		if (el.uniqueID === undefined && makeIt) el.uniqueID = ++lastUniqueID;
+
 		var uniqueID = el.uniqueID;
-		if (uniqueID == undefined) uniqueID = el.uniqueID = ++lastUniqueID;
 		var desc = enhancedElements[uniqueID];
-		if (desc && !force) return desc;
-		if (!force && role==null && conf==null && arguments.length>=3) return null;
+		if (desc || !makeIt) return desc;
 
 		if (page == undefined) {
 			var pageResolver = Resolver("page");
@@ -2437,6 +2694,25 @@ Generator.discardRestricted = function()
 	};
 */
 
+	// roles that have a prepare handler can tweak the original DOM content
+	Resolver.docMethod("prepareDomWithRole", function() {
+
+		var pageResolver = Resolver("page"),
+			handlers = pageResolver("handlers"), enabledRoles = pageResolver("enabledRoles");
+
+		if (handlers.prepare) {
+			for(var n in enabledRoles) {
+				var prepare = handlers.prepare[n];
+				if (prepare) {
+					var withRole = document.body.querySelectorAll("[role="+n+ "]");
+					for(var i=0,el; el = withRole[i]; ++i) {
+						prepare(el,n);
+					}
+				}
+			}
+		}
+	});
+
 	function branchDescs(el) {
 		var descs = [];
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
@@ -2464,56 +2740,36 @@ Generator.discardRestricted = function()
 		//TODO clearInterval(placement.broadcaster) ?
 	};
 
-	function instantiatePageSingletons()
+	Resolver("document")._ready = function()
 	{
-		for(var i=0,g; g = Generator.restricted[i]; ++i) {
-			if (g.info.lifecycle == "page") { // TODO  && g.info.existing[g.info.identifier(..)] == undefined
-				g();
-			}
-		}
-	}
-	essential.set("instantiatePageSingletons",instantiatePageSingletons);
+		this._readyFired = true;
 
+		this.seal(true);
 
-
-	essential.set("_queueDelayedAssets",function(){});
-
-	var _essentialTesting = !!document.documentElement.getAttribute("essential-testing");
-	var _readyFired = _essentialTesting;
-
-	function fireDomReady()
-	{
-		if (_readyFired) return;
-		_readyFired = true;
-
-		var liveTimeout = Resolver("page::liveTimeout","null");
-		if (liveTimeout) {
-			// Allow the browser to render the page, preventing initial transitions
-			setTimeout(function() {
-				Resolver("page").set("state.livepage",true);
-			},liveTimeout);
-		}
-		else if (liveTimeout == 0) Resolver("page").set("state.livepage",true);
-
-		//TODO derive state.lang and locale from html.lang
-		
+		//TODO only support stored in head, after that immediately load
 		Resolver.loadReadStored();
 
 		try {
-			essential("_queueDelayedAssets")();
-			essential.set("_queueDelayedAssets",function(){});
-
-			instantiatePageSingletons();
+			//TODO ap config _queueAssets
+			Generator.instantiateSingletons("page");
+			this.prepareDomWithRole();
+			if (!this.namespace.loading) EnhancedDescriptor.enhanceUnfinished();
+			//TODO flag module "dom" as ready
 		}
 		catch(ex) {
 			proxyConsole.error("Failed to launch delayed assets and singletons",ex);
 		}
-	}
-	function fireLoad()
-	{
+	};
 
-	}
-	function fireUnload()
+	Resolver("document")._load = function() {
+		this._loadFired = true;
+		this.seal(true);
+
+		Resolver("page").set("state.livepage",true);
+		this.reflectModules();
+	};
+
+	Resolver("document")._unload = function()
 	{
 		//TODO singleton deconstruct / before discard?
 
@@ -2521,20 +2777,15 @@ Generator.discardRestricted = function()
 
 		Generator.discardRestricted();
 
-		//TODO move to configured
-		if (EnhancedDescriptor.maintainer) clearInterval(EnhancedDescriptor.maintainer);
-		EnhancedDescriptor.maintainer = null;
 		discardEnhancedElements();
 		enhancedWindows.discardAll();
 
-		for(var n in Resolver) {
-			if (typeof Resolver[n].destroy == "function") Resolver[n].destroy();
-		}
+		//TODO Resolver resetPageState method
 		Resolver("page").set("state.launched",false);
 		Resolver("page").set("state.livepage",false);
 		Resolver("page").set("pages",null);
 		Resolver("page").set("pagesById",null);
-	}
+	};
 
 	// iBooks HTML widget
 	if (window.widget) {
@@ -2543,134 +2794,97 @@ Generator.discardRestricted = function()
 		};
 	}
 
-    function doScrollCheck() {
-      try {
-        // If IE is used, use the trick by Diego Perini
-        // http://javascript.nwbox.com/IEContentLoaded/
-        win.document.documentElement.doScroll("left");
-      } catch(e) {
-        setTimeout(doScrollCheck, 1);
-        return;
-      }
+	function fireReadyStateChange() {
 
-      // and execute any waiting functions
-      fireDomReady();
-    }  
-
-	function listenForDomReady() 
-	{
-	    // Mozilla, Opera and webkit nightlies currently support this event
-	    if (win.document.addEventListener) {
-	      var DOMContentLoaded = function() {
-	        win.document.removeEventListener("DOMContentLoaded", DOMContentLoaded, false);
-	        fireDomReady();
-	      };
-	      
-	      win.document.addEventListener("DOMContentLoaded", DOMContentLoaded, false);
-	      win.addEventListener("load", fireDomReady, false); // fallback
-	      
-	      // If IE event model is used
-	    } else if (win.document.attachEvent) {
-	      
-	      var onreadystatechange = function() {
-	        if (win.document.readyState === "complete") {
-	          win.document.detachEvent("onreadystatechange", onreadystatechange);
-	          fireDomReady();
-	        }
-	      };
-	      
-	      win.document.attachEvent("onreadystatechange", onreadystatechange);
-	      win.attachEvent("onload", fireDomReady); // fallback
-
-	      // If IE and not a frame, continually check to see if the document is ready
-	      var toplevel = false;
-
-	      try {
-	        toplevel = win.frameElement == null;
-	      } catch(e) {}
-
-	      // The DOM ready check for Internet Explorer
-	      if (win.document.documentElement.doScroll && toplevel) {
-	        doScrollCheck();
-	      }
-	    } 
+		Resolver("document::readyState").trigger("change");
 	}
-
 
 	if (window.device) {
 		//TODO PhoneGap support
 	}
 	else {
-		listenForDomReady();		
+		if (document.readyState === "complete") {
+			fireDomReady();
+			fireReadyStateChange();
+		} 
+
 		if (win.addEventListener) {
-			win.addEventListener("load",fireLoad,false);
+			win.document.addEventListener("readystatechange",fireReadyStateChange,false);
 		} else {
-			win.attachEvent("onload",fireLoad);
-		}
-		if (win.addEventListener) {
-			win.addEventListener("unload",fireUnload,false);
-		} else {
-			win.attachEvent("onunload",fireUnload);
+			win.document.attachEvent("onreadystatechange",fireReadyStateChange);
 		}
 	}
 
-	var proxyConsole = essential.declare("console",{});
-	function setStubConsole() {
-		function no_logging(level,parts) {}
- 
-		proxyConsole["log"] = function() { 
-			no_logging("none",arguments); };
-		proxyConsole["trace"] = function() { 
-			no_logging("trace",arguments); };
-		proxyConsole["debug"] = function() { 
-			no_logging("debug",arguments); };
-		proxyConsole["info"] = function() { 
-			no_logging("info",arguments); };
-		proxyConsole["warn"] = function() { 
-			no_logging("warn",arguments); };
-		proxyConsole["error"] = function() { 
-			no_logging("error",arguments); };
-		proxyConsole["group"] = function() { 
-			no_logging("group",arguments); };
-		proxyConsole["groupEnd"] = function() { 
-			no_logging("groupEnd",arguments); };
+	// get active console
+	// - modern browsers return window.console
+	// - IE8/9 return stub that always works
+	// - Can be overridden with custom impl
+	// usage
+	// > var mylog = Resolver("essential::console::")();
+	// > mylog.log("hello");
+	var proxyConsole = essential.set("console",function() {
+		return proxyConsole.custom || window.console&&window.console.debug&&window.console || ie8Console;
+	});
+	proxyConsole.custom = null;
+	proxyConsole.destination = {};
+
+	// make custom logger
+	// - the destination named can be set to silent
+	// - destination.queue can be set to array instance to dump logs
+	// - destination.queue.push can be customised to make streaming/file loggers
+	// - destination.defaultLevel can be set to override level
+	proxyConsole.logger = function(dest,level) {
+		var _dest = essential.declare(["console","destination",dest],{}), _con = proxyConsole();
+		return function() {
+			if (_dest.silent) return;
+			//TODO optionally add destination name to end of logged line
+			_con[_dest.defaultLevel || level].apply(_con,arguments);
+			//TODO push to level / push combination
+
+			if (_dest.queue && typeof _dest.queue.push == "function") {
+				_dest.queue.push([].concat(arguments));
+			}
+		};
+	};
+
+	var stubConsole = {
+		log: function() { this.nil("log",arguments); },
+		trace: function() { this.nil("trace",arguments); },
+		debug: function() { this.nil("debug",arguments); },
+		info: function() { this.nil("info",arguments); },
+		warn: function() { this.nil("warn",arguments); },
+		error: function() { this.nil("error",arguments); },
+		group: function() { this.nil("group",arguments); },
+		groupEnd: function() { this.nil("groupEnd",arguments); },
+		nil: function(level,parts) {}
+	};
+	var setStubConsole = essential.declare("setStubConsole",function(stub) {
+		proxyConsole.custom = stub || stubConsole;
+	});
+
+	function _ielog(name) {
+		return function() {
+			if (window.console) console[name](Array.prototype.join.call(arguments," "));
+		};
 	}
-	essential.declare("setStubConsole",setStubConsole);
- 
-	function setWindowConsole() {
-		proxyConsole["log"] = function() { 
-			window.console.log.apply(window.console,arguments); };
-		proxyConsole["trace"] = function() { 
-			window.console.trace(); };
-		proxyConsole["debug"] = function() { 
-			(window.console.debug || window.console.info).apply(window.console,arguments); };
-		proxyConsole["info"] = function() { 
-			window.console.info.apply(window.console,arguments); };
-		proxyConsole["warn"] = function() { 
-			window.console.warn.apply(window.console,arguments); };
-		proxyConsole["error"] = function() { 
-			window.console.error.apply(window.console,arguments); };
- 
-		if (window.console.debug == undefined) {
-			// IE8
-			proxyConsole["log"] = function(m) { 
-				window.console.log(Array.prototype.join.call(arguments," ")); };
-			proxyConsole["trace"] = function(m) { 
-				window.console.trace(); };
-			proxyConsole["debug"] = function(m) { 
-				window.console.log(Array.prototype.join.call(arguments," ")); };
-			proxyConsole["info"] = function(m) { 
-				window.console.info(Array.prototype.join.call(arguments," ")); };
-			proxyConsole["warn"] = function(m) { 
-				window.console.warn(Array.prototype.join.call(arguments," ")); };
-			proxyConsole["error"] = function(m) { 
-				window.console.error(Array.prototype.join.call(arguments," ")); };
-		}
-	}
-	essential.declare("setWindowConsole",setWindowConsole);
-	
-	if (window.console) setWindowConsole();
-	else setStubConsole();
+
+	var id8Console = {
+		log: _ielog("log"),
+		trace: _ielog("trace"),
+		debug: _ielog("debug"),
+		info: _ielog("info"),
+		warn: _ielog("warn"),
+		error: _ielog("error"),
+		group: _ielog("group"),
+		groupEnd: _ielog("groupEnd")
+	};
+	//TODO start out with object that queues, switch to _ielog when window.console is first seen
+
+
+	var setWindowConsole = essential.declare("setWindowConsole",function() {
+		proxyConsole.custom = null;
+	});
+
 
 	function htmlEscape(str) {
 		if (str == null) return str;
@@ -2688,6 +2902,10 @@ Generator.discardRestricted = function()
 	var defaultLocale = window.navigator.userLanguage || window.navigator.language || "en"
 	translations.declare("defaultLocale",defaultLocale);
 	translations.declare("locale",defaultLocale);
+
+	Resolver("document").on("change","essential.locale",function(ev) {
+		translations.set("locale",ev.value);
+	});
 
 	/*
 		locales.de = { chain:"en" }
@@ -2867,7 +3085,7 @@ Generator.discardRestricted = function()
 !function() {
 
 	var essential = Resolver("essential",{}),
-		console = essential("console"),
+		log = essential("console")(),
 		EnhancedDescriptor = essential("EnhancedDescriptor"),
 		isIE = navigator.userAgent.indexOf("; MSIE ") > -1 && navigator.userAgent.indexOf("; Trident/") > -1;
 
@@ -2877,7 +3095,6 @@ Generator.discardRestricted = function()
 	if (base) {
 		var baseUrl = base.href;
 		if (baseUrl.charAt(baseUrl.length - 1) != "/") baseUrl += "/";
-		// debugger;
 		essential.set("baseUrl",baseUrl);
 	}
 
@@ -3004,12 +3221,15 @@ Generator.discardRestricted = function()
 	 */
 	function importHTMLDocument(head,body) {
 
-		var doc = {},
+		var doc = {}, // perhaps make DocumentFragment instead
 			markup = _combineHeadAndBody(head,body),
 			hasDoctype = markup.substring(0,9).toLowerCase() == "<!doctype";
 
 		try {
 			var ext = _createStandardsDoc(markup);
+			doc.nodeType = ext.nodeType;
+			doc.pseudoDocument = true;
+			doc.documentElement = ext.documentElement;
 			if (document.adoptNode) {
 				doc.head = document.adoptNode(ext.head);
 				doc.body = document.adoptNode(ext.body);
@@ -3025,6 +3245,9 @@ Generator.discardRestricted = function()
 			if (ext.head === undefined) ext.head = ext.body.previousSibling;
 
 			doc.uniqueID = ext.uniqueID;
+			doc.documentElement = ext.documentElement;
+			doc.nodeType = ext.nodeType;
+			doc.pseudoDocument = true;
 			doc.head = ext.head;
 			doc.body = _importNode(document,ext.body,true);
 
@@ -3289,7 +3512,7 @@ Generator.discardRestricted = function()
 	}
 
 
-	function AllEvents() {}
+	function AllEvents(type,init,copy) { this.type=type;this.init=init;this.copy=copy; }
 	AllEvents.prototype.__ = function(m) { if (m) for(var n in m) this[n] = m[n]; };
 	AllEvents.prototype.cancelable = true;
 	AllEvents.prototype.create = createEventDOM;
@@ -3305,58 +3528,35 @@ Generator.discardRestricted = function()
 	function MouseEvents(m) {
 		this.__(m);
 	}
-	MouseEvents.prototype = new AllEvents();
-	MouseEvents.prototype.type = "MouseEvents";
-	MouseEvents.prototype.init = initMouseEvent;
-	MouseEvents.prototype.copy = copyMouseEvent;
-
+	MouseEvents.prototype = new AllEvents("MouseEvents",initMouseEvent,copyMouseEvent);
 
 	function MouseOverOutEvents(m) {
 		this.__(m);
 	}
-	MouseOverOutEvents.prototype = new AllEvents();
-	MouseOverOutEvents.prototype.type = "MouseEvents";
-	MouseOverOutEvents.prototype.init = initMouseEvent;
-	MouseOverOutEvents.prototype.copy = copyMouseEventOverOut;
-
+	MouseOverOutEvents.prototype = new AllEvents("MouseEvents",initMouseEvent,copyMouseEventOverOut);
 
 	function KeyEvents(m) {
 		this.__(m);
 	}
-	KeyEvents.prototype = new AllEvents();
-	KeyEvents.prototype.type = "KeyboardEvent";
-	KeyEvents.prototype.init = initEvent;
-	KeyEvents.prototype.copy = copyKeyEvent;
-
+	KeyEvents.prototype = new AllEvents("KeyboardEvent",initEvent,copyKeyEvent);
 	
 	function InputEvents(m) {
 		this.__(m);
 	}
-	InputEvents.prototype = new AllEvents();
-	InputEvents.prototype.type = "FocusEvent";
-	InputEvents.prototype.init = initFocusEvent;
+	InputEvents.prototype = new AllEvents("FocusEvent",initFocusEvent,copyInputEvent);
 	InputEvents.prototype.cancelable = false;
-	InputEvents.prototype.copy = copyInputEvent;
-
 
 	function FocusEvents(m) {
 		this.__(m);
 	}
-	FocusEvents.prototype = new AllEvents();
-	FocusEvents.prototype.type = "FocusEvent";
-	FocusEvents.prototype.init = initFocusEvent;
+	FocusEvents.prototype = new AllEvents("FocusEvent",initFocusEvent,copyInputEvent);
 	FocusEvents.prototype.cancelable = false;
-	FocusEvents.prototype.copy = copyInputEvent;
-
 
 	function UIEvents(m) {
 		this.__(m);
 	}
-	UIEvents.prototype = new AllEvents();
-	UIEvents.prototype.type = "UIEvent";
-	UIEvents.prototype.init = initUIEvent;
+	UIEvents.prototype = new AllEvents("UIEvent",initUIEvent,copyNavigateEvent);
 	UIEvents.prototype.cancelable = false;
-	UIEvents.prototype.copy = copyNavigateEvent;
 
 
 	var BUTTON_MAP = { "1":0, "2":2, "4":1 };
@@ -3448,7 +3648,7 @@ Generator.discardRestricted = function()
 		absDelta = Math.abs(delta);
 		absDeltaXY = Math.max(Math.abs(deltaY),Math.abs(deltaX));
 
-		// console.log("deltas",{x:deltaX,y:deltaY},"scrollLeft",this.target.scrollLeft);
+		// log.log("deltas",{x:deltaX,y:deltaY},"scrollLeft",this.target.scrollLeft);
 
 		/*
 		var delta = this.delta;
@@ -3568,7 +3768,7 @@ Generator.discardRestricted = function()
 			this.type = src.type;
 			var r = EVENTS[src.type];
 			if (r) r.copy.call(this,src);
-			else console.warn("unhandled essential event",src.type,src);
+			else log.warn("unhandled essential event",src.type,src);
 		}
 	}
 	_MutableEvent.prototype.relatedTarget = null;
@@ -3814,7 +4014,7 @@ Generator.discardRestricted = function()
 			_from = __from;
 		}
 		
-		var e = _doc.createElement(_tagName), enhanced = false, enhance = false, appendTo;
+		var e = _doc.createElement(_tagName), enhanced = false, enhance = false, appendTo, src;
 		for(var n in _from) {
 			switch(n) {
 				case "tagName": break; // already used
@@ -3825,14 +4025,13 @@ Generator.discardRestricted = function()
 					//TODO support object
 					if (_from[n] !== undefined) e.style.cssText = _from[n]; 
 					break;
-					
 				case "src":
 					if (_from[n] !== undefined) {
-						e[n] = _from[n];
 						if (/cachebuster=/.test(_from[n])) {
-							e[n] = e[n].replace(/cachebuster=*[0-9]/,"cachebuster="+ String(new Date().getTime()));
-						}
+							src = _from[n].replace(/cachebuster=*[0-9]/,"cachebuster="+ String(new Date().getTime()));
+						} else src = _from[n];
 					}
+					if (src) e[n] = src; 
 					break;
 
 				case "data-role":
@@ -3846,6 +4045,7 @@ Generator.discardRestricted = function()
 				case "id":
 				case "className":
 				case "rel":
+				case "async":
 				case "lang":
 				case "language":
 					if (_from[n] !== undefined) e[n] = _from[n]; 
@@ -3867,6 +4067,7 @@ Generator.discardRestricted = function()
 				case "make stateful":
 					essential("StatefulResolver")(e,_from[n]);
 					break;
+				//TODO "set state" make stateful & mixin to "state."
 
 				// "type" IE9 el.type is readonly:
 
@@ -3886,6 +4087,7 @@ Generator.discardRestricted = function()
 					break;
 			}
 		}
+
 		var l = [];
 		for(var i=c_from; i<=c_to; ++i) {
 			var p = arguments[i];
@@ -3923,7 +4125,7 @@ Generator.discardRestricted = function()
 
 		this.query(el).discard();
 
-		if (!leaveInDom) el.parentNode.removeChild(el);
+		if (!leaveInDom && el.parentNode) el.parentNode.removeChild(el);
 	};
 
 	
@@ -3931,18 +4133,25 @@ Generator.discardRestricted = function()
 
 	// this = element
 	function regScriptOnload(domscript,trigger) {
-
-		domscript.onload = function(ev) { 
+		function onload(ev) {
 			if ( ! this.onloadDone ) {
 				this.onloadDone = true;
 				trigger.call(this,ev || event); 
 			}
-		};
-		domscript.onreadystatechange = function(ev) { 
+		}
+
+		function onreadystatechange(ev) {
 			if ( ( "loaded" === this.readyState || "complete" === this.readyState ) && ! this.onloadDone ) {
 				this.onloadDone = true; 
 				trigger.call(this,ev || event);
 			}
+		}
+
+		if (domscript.addEventListener) {
+			domscript.addEventListener("load",onload,false);
+		} else {
+			domscript.onload = onload;
+			domscript.onreadystatechange = onreadystatechange;
 		}
 	}
 
@@ -3952,7 +4161,6 @@ Generator.discardRestricted = function()
 		return HTMLElement("SCRIPT",from,doc);
 	}
 	essential.set("HTMLScriptElement",HTMLScriptElement);
-
 
 	function _ElementPlacement(el,track,calcBounds) {
 		this.bounds = {};
@@ -4278,13 +4486,490 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 
 }();
+
+
+// set("bodyResolver")
+
+Resolver.docMethod("require",function(path) {
+    if (this("essential.modules")[path] == undefined) {
+        var ex = new Error("Missing module '" + path + "'");
+        ex.ignore = true;
+        throw ex;   
+    } 
+});
+
+	//TODO resolver.exec("callInits",null)
+Resolver.docMethod("callInits",function() {
+	var inits = this("essential.inits");
+	for(var i=0,fn; fn = inits[i]; ++i) if (!fn.done) {
+		try {
+			fn.call(fn.context || {});
+			fn.done = true;
+		} catch(ex) {
+			// debugger;
+		} //TODO only ignore ex.ignore
+	}
+});
+
+/* 
+	Resolver.config(document,'declare(..); declare("..")');
+	var conf = Resolver.config(el)
+*/
+Resolver.config = function(el,script) {
+	var log = Resolver("essential::console::")();
+	var _singleQuotesRe = new RegExp("'","g");
+
+
+	function _getRoleConfig(resolver, el,key) {
+		//TODO cache the config on element.stateful
+
+		var config = null, doc = resolver.namespace,
+			ref = resolver.reference("essential.config","null"),
+			appliedConfig = resolver("essential.appliedConfig");
+
+		function eitherConfig(key) {
+			for(var n in appliedConfig) 
+				if (appliedConfig[n] && appliedConfig[n][key]) return appliedConfig[n][key];
+			return ref(key);
+		}
+
+		function mixinConfig(config,key) {
+			var declared = eitherConfig(key);
+			if (declared) {
+				config = config || {};
+				for(var n in declared) config[n] = declared[n];
+			}
+			return config;
+		}
+
+		// mixin the declared config
+		if (key) config = mixinConfig(config,key);
+		if (el.nodeName == "HEAD" || el.nodeName == "BODY") config = mixinConfig(config,el.nodeName.toLowerCase());
+
+		// mixin the data-role
+		var dataRole = el.getAttribute("data-role");
+		if (dataRole) try {
+			config = config || {};
+			//TODO alternate CSS like syntax
+			var map = JSON.parse("{" + dataRole.replace(_singleQuotesRe,'"') + "}");
+			for(var n in map) config[n] = map[n];
+		} catch(ex) {
+			log.debug("Invalid config: ",dataRole,ex);
+			config["invalid-config"] = dataRole;
+		}
+
+		return config;
+	}
+
+
+	var doc = el.nodeType == 9? el : el.ownerDocument, docResolver = Resolver(doc);
+	if (docResolver == null) return null; // if not known document
+
+	if (script) {
+		if (typeof script == "string") script = Resolver.functionProxy(script);
+		var context = docResolver.reference("essential.config");
+		//TODO extend the reference with additional api
+		try {
+			script.call(context);
+		} catch(ex) {
+			Resolver("essential::console::")().error("Failed to parse application/config",s.text);
+		}
+
+	} else {
+		if (el.id) {
+			return _getRoleConfig(docResolver, el,el.id);
+		}
+		var name;
+		try {
+			name = el.getAttribute("name");
+		}
+		catch(ex) { // access denied
+			return null;
+		}
+		if (name) {
+			var p = el.parentNode;
+			while(p && p.tagName) {
+				if (p.id) {
+					return _getRoleConfig(docResolver, el,p.id + "." + name);
+				} 
+				p = p.parentNode;
+			} 
+		}
+		return _getRoleConfig(docResolver, el);
+	}
+};
+
+!function() {
+	var essential = Resolver("essential"),
+		HTMLElement = essential("HTMLElement"),
+		HTMLScriptElement = essential("HTMLScriptElement"),
+		addEventListeners = essential("addEventListeners");
+
+	function addHeadScript(text,doc) {
+
+		//TODO support adding to other sub-documents
+		if (false) {
+			HTMLElement("script",{
+				"append to": doc.head
+			},text);	
+		}
+		else doc.write('<script>'+text+'</'+'script>')
+
+	}
+
+	function describeLink(link,lang) {
+
+		var attrsStr = link.getAttribute("attrs");
+		var attrs = {};
+		if (attrsStr) {
+			try {
+				eval("attrs = {" + attrsStr + "}");
+			} catch(ex) {
+				//TODO
+			}
+		}
+		attrs["rel"] = link.rel || attrs.rel;
+		attrs["stage"] = link.getAttribute("stage") || attrs.stage || undefined;
+		attrs["type"] = link.type || link.getAttribute("type") || attrs.type || "text/javascript";
+		attrs["name"] = link.getAttribute("data-name") || link.getAttribute("name") || attrs.name || undefined;
+		attrs["content"] = link.getAttribute("content") || attrs.content || undefined;
+		attrs["base"] = essential("baseUrl");
+		attrs["subpage"] = (link.getAttribute("subpage") == "false" || link.getAttribute("data-subpage") == "false")? false:true;
+		//attrs["id"] = link.getAttribute("script-id");
+		attrs["onload"] = flagLoaded;
+
+		attrs["src"] = (link.href || link.getAttribute("src") || attrs.src || "").replace(essential("baseUrl"),"");
+
+		switch(attrs.type) {
+			case "text/javascript":
+				attrs.stage = "loading";
+				break;
+			case "text/javascript+preloading":
+			case "text/javascript+authenticated":
+				var s = attrs.type.split("+");
+				attrs.type = s[0];
+				attrs.stage = s[1];
+				break;
+
+			//TODO XHR for others
+		}
+
+		return attrs;
+	}
+
+	function flagLoaded() {
+		var name = this.getAttribute("data-module"); 
+
+		setTimeout(function(){
+			Resolver("document").setModuleLoaded(name,true);
+		},0);
+	}
+
+	function Module(name) {this.name=name;}
+
+	Module.prototype.scriptMarkup = function(subpage) {
+		var loaded = "Resolver('document').setModuleLoaded(this.getAttribute('data-module'), true);",
+			attr = subpage? "" : " defer";
+		return '<script src="' + this.attrs.src + '" data-module="'+ this.name +'" onload="'+loaded+'"'+attr+'></'+'script>';
+	};
+
+	Module.prototype.addScript = function() {
+		document.write(this.scriptMarkup());
+		this.added = true;
+		// console.log("added script",this.name);
+	};
+
+	Module.prototype.addScriptAsync = function() {
+		// var src = this.attrs.src;
+		this.attrs["append to"] = this.link.ownerDocument.head;
+		// this.attrs.src = undefined;
+		this.attrs.async = false;
+
+		HTMLScriptElement(this.attrs);
+		this.added = true;
+		console.log("added script",this.name);
+	};
+
+	var pendingScripts = [];
+	var firstScript = document.scripts[0];
+
+	// Watch scripts load in IE
+	function stateChange() {
+	  // Execute as many scripts in order as we can
+	  while (pendingScripts[0] && pendingScripts[0].readyState == 'loaded') {
+	    var pendingScript = pendingScripts.shift();
+	    // avoid future loading events from this script (eg, if src changes)
+	    pendingScript.onreadystatechange = null;
+	    // can't just appendChild, old IE bug if element isn't closed
+	    firstScript.parentNode.insertBefore(pendingScript, firstScript);
+	    flagLoaded.call(pendingScript);
+	  }
+	}	
+
+	Module.prototype.addScriptIE = function() {
+
+    	var script = document.createElement('script');
+	    pendingScripts.push(script);
+	    // listen for state changes
+	    script.onreadystatechange = stateChange;
+	    // must set src AFTER adding onreadystatechange listener
+	    // else we’ll miss the loaded event for cached scripts
+	    script.src = src;
+		this.added = true;
+	};
+
+	if (firstScript) {
+		if ('async' in firstScript) Module.prototype.addScript = Module.prototype.addScriptAsync;
+		else if (firstScript.readyState) Module.prototype.addScript = Module.prototype.addScriptIE;
+	} 
+
+	Module.prototype.queueHead = function(stage,lang) {
+		if (this.loaded || this.added) return;
+		var langOk = (lang && this.link.lang)? (this.link.lang == lang) : true; //TODO test on add script
+		if (this.attrs.stage==stage && langOk) this.addScript();
+	};
+
+	Resolver.docMethod("setModuleLoaded",function(name,loaded) {
+		this.set(["essential","modules",name,"loaded"], loaded==undefined? true:loaded);
+		this.reflectModules();
+		if (document.body) Generator.instantiateSingletons("page");
+	});
+
+	Resolver.docMethod("setResourceAvailable",function(name,available) {
+		if (this.namespace.essential.resources[name] == undefined) t
+		this.set(["essential","resources",name,"available"], available==undefined? true:available);
+		this.reflectModules();
+		if (document.body) Generator.instantiateSingletons("page"); // perhaps move to common place
+	});
+
+	Resolver.docMethod("reflectModules", function() {
+		var modules = this.namespace.essential.modules,
+			resources = this.namespace.essential.resources;
+		var flags = { loadingScripts:false, launchingScripts:false, loadingResources:false };
+		var authenticated = Resolver("page::state.authenticated::");
+
+		for(var n in modules) {
+			var m = modules[n];
+			if (m.attrs.type == "text/javascript") {
+				if (! m.added) {
+					if (m.attrs.stage == "authenticated" && authenticated) {
+						m.addScript();
+					}
+				} else if (!m.loaded) {
+					if (m.attrs.stage=="preloading" || m.attrs.stage=="loading") flags.loadingScripts = true;
+					else flags[m.attrs.stage + "Scripts"] = true;
+				}
+			} 
+
+			//TODO other types of modules
+		}
+		for(var n in resources) {
+			var r = resources[n];
+			if (r.required && (!r.available || !r.loaded)) {
+				flags.loadingResources = true;
+			}
+		}
+
+		this.set("essential.loading", flags.loadingScripts || flags.loadingResources);
+		// Maybe/Maybe not, if (!flags.loadingScripts && !flags.loadingResources) this.callInits();
+		//TODO set loading/launching
+	});
+
+	function queueModule(link,attrs) {
+		var name = attrs.name || attrs.src; 
+
+		var module = Resolver("document").declare(["essential","modules",name],new Module(name));
+		module.link = link;
+		module.attrs = attrs;
+		module.attrs["data-module"] = module.name;
+	}
+
+	function useBuiltins(doc,list) {
+		for(var i=0,r; r = list[i]; ++i) Resolver(doc).set(["essential","enabledRoles",r],true);
+	}
+
+    function readCookie(doc,id) {
+        var wEQ = id + "=";
+        var ca = doc.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(wEQ) == 0) return c.substring(wEQ.length,c.length);
+        }
+        return undefined;
+    }
+
+    function scanElements(doc,els) {
+    	var resolver = Resolver(doc), inits = resolver("essential.inits"); 
+
+		for(var i=0,el; el = els[i]; ++i) switch(el.tagName){
+			case "meta":
+			case "META":
+				var attrs = describeLink(el);
+				switch(attrs.name) {
+					case "enhanced roles":
+						if (!el.__applied__) useBuiltins(doc, (el.getAttribute("content") || "").split(" "));
+						break;
+
+					//TODO enhanced tags
+
+					case "track main":
+						if (this.opener) {
+							// document.appstate.set("state.managed",true);
+							// docResolver.set("essential.state.managed",true);
+							Resolver("page").set("state.managed",true);
+						}
+						break;
+
+					case "text selection":
+						if (!el.__applied__) textSelection((el.getAttribute("content") || "").split(" "));
+						break;
+
+					case "lang cookie":
+			            var value = readCookie(doc,attrs.content) || readCookie(document, attrs.content);
+			            if (value != undefined) {
+			                value = decodeURI(value);
+			                resolver.set("essential.lang",value);
+			            }
+						break;
+
+					case "locale cookie":
+			            var value = readCookie(doc,attrs.content) || readCookie(document,attrs.content);
+			            if (value != undefined) {
+			                value = decodeURI(value);
+			                resolver.set("essential.locale",value);
+			                var s = value.toLowerCase().replace("_","-").split("-");
+			                resolver.set("essential.lang",s[0]);
+			            }
+						break;
+
+				}
+				el.__applied__ = true;
+				break;
+
+			case "link":
+			case "LINK":
+				switch(el.rel) {
+					// case "stylesheet":
+					// 	this.resources().push(l);
+					// 	break;			
+					case "subresource":
+					//case "preload":
+					//case "load":
+					//case "protected":
+					//case "stylesheet":
+						if (!el.__applied__) queueModule(el,describeLink(el));
+						break;
+				}
+				el.__applied__ = true;
+				break;
+
+			case "script":
+			case "SCRIPT":
+				var attrs = describeLink(el);
+				if (!el.__applied__) switch(attrs.type) {
+					case "application/config":
+						//TODO try catch log for parse errors
+						Resolver.config(doc, el.text);
+						break;
+					case "application/init": 
+						//TODO try catch log for parse errors
+						var init = Resolver.functionProxy(el.text);
+						init.context = new resolver.InitContext(el);
+						inits.push(init);
+						break;
+					default:
+						if (attrs.name && attrs.src == null) resolver.set("essential.modules",name,true); 
+						break;
+				}
+				el.__applied__ = true;
+				break;
+		}
+
+    }
+
+	function scanHead(doc) {
+		var resolver = Resolver(doc), inits = resolver("essential.inits");
+
+		//TODO support text/html use base subpage functionality
+
+		scanElements(doc, doc.head.children);
+
+		// default is english (perhaps make it configurable)
+		if (doc.documentElement.lang == "") doc.documentElement.lang = "en";
+		if (doc.defaultLang == undefined) doc.defaultLang = doc.documentElement.lang;
+	}
+
+	Resolver.docMethod("queueHead", function(addSeal) {
+		var doc = this.namespace, essential = doc.essential;
+		scanHead(doc);
+
+		for(var n in essential.modules) {
+			essential.modules[n].queueHead("preloading",doc.documentElement.lang);
+		}		
+		if (addSeal !== false) addHeadScript('Resolver("document").seal();',doc);
+
+		// this.reflectModules();	
+	});
+
+	Resolver.docMethod("seal",function(sealBody) {
+		var essential = this.namespace.essential, doc = this.namespace;
+
+		if (! essential.headSealed) {
+			scanHead(doc);
+			for(var n in essential.modules) {
+				essential.modules[n].queueHead("loading",document.documentElement.lang);
+			}		
+			essential.headSealed = true;
+		}
+		if (sealBody && ! essential.bodySealed) {
+			var scripts = doc.body.getElementsByTagName("script");
+			scanElements(doc,scripts); //TODO use doc.scripts instead?
+
+			for(var n in essential.modules) {
+				essential.modules[n].queueHead("loading",document.documentElement.lang);
+			}		
+			essential.bodySealed = true;
+		}
+		this.reflectModules();
+	});
+
+	function textSelection(tags) {
+		var pass = {};
+		for(var i=0,n; n = tags[i]; ++i) {
+			pass[n] = true;
+			pass[n.toUpperCase()] = true;
+		}
+
+		//TODO Resolver.enhanceDocument(doc)
+		//TODO test that this works, and register it regardless, just change the config
+		addEventListeners(document.documentElement, {
+			"selectstart": function(ev) {
+				ev = MutableEvent(ev);
+				var allow = false;
+				for(var el = ev.target; el; el = el.parentNode) {
+					if (pass[el.tagName || ""]) allow = true;
+				} 
+				if (!allow) ev.preventDefault();
+				return allow;
+			}
+		}, true); // capture
+	}
+
+
+
+
+}();
+
+
 /*
 	StatefulResolver and ApplicationConfig
 */
-!function(Scripted_gather) {
+!function() {
 
 	var essential = Resolver("essential",{}),
-		console = essential("console"),
+		essentialRef = Resolver("document::essential"),
+		log = essential("console")(),
 		DOMTokenList = essential("DOMTokenList"),
 		MutableEvent = essential("MutableEvent"),
 		ensureCleaner = essential("ensureCleaner"),
@@ -4527,7 +5212,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 			// extra state
 		}
 
-		var mapClass = el.stateful("map.class","undefined");
+		var mapClass = el.stateful? el.stateful("map.class","undefined") : null;
 		if (mapClass) {
 			var symbolState = mapClass.state[event.symbol],symbolNotState = mapClass.notstate[event.symbol];
 			var bits = (symbolState||"").split("%");
@@ -4635,10 +5320,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 	var pageResolver = StatefulResolver(null,{ name:"page", mapClassForState:true });
 
 	// application/config declarations on the main page
-	pageResolver.declare("config",{});
+	pageResolver.declare("config",Resolver("document::essential.config::"));
 
 	// descriptors for elements on main page to enhance
-	pageResolver.declare("descriptors",{});
+	pageResolver.declare("descriptors",Resolver("document::essential.descriptors::"));
 
 	pageResolver.reference("state").mixin({
 		"livepage": false,
@@ -4648,25 +5333,24 @@ _ElementPlacement.prototype._computeIE = function(style)
 		"authorised": true,
 		"connected": true,
 		"online": true, //TODO update
-		"preloading": false,
+		//"preloading": false,
 		"loading": true,
-		"loadingConfig": false,
-		"loadingScripts": false,
 		"configured": true,
 		"fullscreen": false,
 		"launching": false, 
 		"launched": false,
 
-		"lang": document.documentElement.lang || "en",
-
-		"loadingScriptsUrl": {},
-		"loadingConfigUrl": {}
+		"lang": essentialRef("lang")
 		});
 
 	Resolver("translations").on("change bind","locale",function(ev) {
 		var s = ev.value.split("-");
 		if (s.length == 1) s = ev.value.split("_");
-		if (Resolver.exists("page")) Resolver("page").set("state.lang",s[0]);
+		if (Resolver.exists("page")) pageResolver.set("state.lang",s[0]);
+	});
+
+	Resolver("document").on("change","essential.lang",function(ev) {
+		if (Resolver.exists("page")) pageResolver.set("state.lang",ev.value);
 	});
 
 
@@ -4678,14 +5362,9 @@ _ElementPlacement.prototype._computeIE = function(style)
 		"logStatus": false
 	});
 
-	pageResolver.declare("enabledRoles",{});
-	pageResolver.declare("handlers.init",{});
-	pageResolver.declare("handlers.enhance",{});
-	pageResolver.declare("handlers.sizing",{});
-	pageResolver.declare("handlers.layout",{});
-	pageResolver.declare("handlers.discard",{});
-
-	pageResolver.declare("templates",{});
+	pageResolver.declare("enabledRoles",Resolver("document::essential.enabledRoles::"));
+	pageResolver.declare("handlers",Resolver("document::essential.handlers::"));
+	pageResolver.declare("templates",Resolver("document::essential.templates::"));
 
 	// Object.defineProperty(pageResolver.namespace,'handlers',{
 	// 	get: function() { return pageResolver.namespace.__handlers; },
@@ -4716,15 +5395,6 @@ _ElementPlacement.prototype._computeIE = function(style)
 	pageResolver.reference("map.class.notstate").mixin({
 		authenticated: "login"
 	});
-
-    var NEXT_PAGE_ID = 1;
-    function getUniquePageID(doc) {
-    	if (doc.uniquePageID==undefined) {
-    		doc.uniquePageID = NEXT_PAGE_ID++;
-    	}
-    	return doc.uniquePageID;
-    }
-    getUniquePageID(document);
 
 	StatefulResolver.updateClass = function(stateful,el) {
 		var triggers = {};
@@ -4785,19 +5455,18 @@ _ElementPlacement.prototype._computeIE = function(style)
 	essential.set("launchWindows",launchWindows);
 
 	// page state & sub pages instances of _Scripted indexed by logical URL / id
-	Resolver("page").declare("pages",{});
-	Resolver("page").declare("pagesById",{});
-	Resolver("page").declare("state.requiredPages",0);
+	pageResolver.declare("pages",{});
+	pageResolver.declare("pagesById",{});
+	pageResolver.declare("state.requiredPages",0);
 
 	function _Scripted() {
 		// the derived has to define resolver before this
-		this.config = this.resolver.reference("config","undefined");
+		this.config = this.resolver.reference("config","undefined"); // obsolete
 		this.resolver.declare("resources",[]);
 		this.resources = this.resolver.reference("resources");
-		this.resolver.declare("inits",[]);
-		this.inits = this.resolver.reference("inits");
 	}
 
+	//TODO migrate to Resolver.config support
 	_Scripted.prototype.declare = function(key,value) {
 		this.config.declare(key,value);
 		if (typeof value == "object") {
@@ -4806,65 +5475,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 		}
 	}; 
 
-	_Scripted.prototype.modules = { "domReady":true };	// keep track of what modules are loaded
-
-	_Scripted.prototype.context = {
-		"require": function(path) {
-			if (this.modules[path] == undefined) {
-				var ex = new Error("Missing module '" + path + "'");
-				ex.ignore = true;
-				throw ex;	
-			} 
-		}
-	};
-
-	_Scripted.prototype._gather = Scripted_gather;
-
-	var _singleQuotesRe = new RegExp("'","g");
-
-	_Scripted.prototype._getElementRoleConfig = function(element,key) {
-		//TODO cache the config on element.stateful
-
-		var config = null;
-
-		// mixin the declared config
-		if (key) {
-			var declared = this.config(key);
-			if (declared) {
-				config = {};
-				for(var n in declared) config[n] = declared[n];
-			}
-		}
-
-		if (element == this.body) {
-			var declared = this.config("body");
-			if (declared) {
-				config = config || {};
-				for(var n in declared) config[n] = declared[n];
-			}
-		}
-		else if (element == this.head) {
-			var declared = this.config("head");
-			if (declared) {
-				config = config || {};
-				for(var n in declared) config[n] = declared[n];
-			}
-		}
-
-		// mixin the data-role
-		var dataRole = element.getAttribute("data-role");
-		if (dataRole) try {
-			config = config || {};
-			var map = JSON.parse("{" + dataRole.replace(_singleQuotesRe,'"') + "}");
-			for(var n in map) config[n] = map[n];
-		} catch(ex) {
-			console.debug("Invalid config: ",dataRole,ex);
-			config["invalid-config"] = dataRole;
-		}
-
-		return config;
-	};
-
+	//config related, TODO review
 	_Scripted.prototype.getElement = function(key) {
 		var keys = key.split(".");
 		// var el = this.document.getElementById(keys[0]);
@@ -4877,52 +5488,13 @@ _ElementPlacement.prototype._computeIE = function(style)
 		this.config.declare(key,value);
 	};
 
-	_Scripted.prototype.getConfig = function(element) {
-		if (element.id) {
-			return this._getElementRoleConfig(element,element.id);
-		}
-		var name;
-		try {
-			name = element.getAttribute("name");
-		}
-		catch(ex) { // access denied
-			return null;
-		}
-		if (name) {
-			var p = element.parentNode;
-			while(p && p.tagName) {
-				if (p.id) {
-					return this._getElementRoleConfig(element,p.id + "." + name);
-				} 
-				p = p.parentNode;
-			} 
-		}
-		return this._getElementRoleConfig(element);
-	};
-
-	_Scripted.prototype.doInitScripts = function() {
-		var inits = this.inits();
-		for(var i=0,s; s = inits[i]; ++i) if (s.parentNode && !s.done) {
-			// this.currently = s
-			try {
-				this.context["element"] = s;
-				this.context["parentElement"] = s.parentElement || s.parentNode;
-				with(this.context) eval(s.text);
-				s.done = true;
-			} catch(ex) {
-				// debugger;
-			} //TODO only ignore ex.ignore
-		}
-		this.context["this"] = undefined;
-	};
-
 	//TODO move to DescriptorQuery, move when improving scroller
 	_Scripted.prototype._prep = function(el,context) {
 
 		var e = el.firstElementChild!==undefined? el.firstElementChild : el.firstChild;
 		while(e) {
 			if (e.attributes) {
-				var conf = this.getConfig(e), role = e.getAttribute("role");
+				var conf = Resolver.config(e), role = e.getAttribute("role");
 				// var sizingElement = false;
 				// if (context.layouter) sizingElement = context.layouter.sizingElement(el,e,role,conf);
 				var desc = EnhancedDescriptor(e,role,conf,false,this);
@@ -4947,103 +5519,17 @@ _ElementPlacement.prototype._computeIE = function(style)
 	*/
 	_Scripted.prototype.prepareEnhance = function() {
 
-		this._gather(this.head.getElementsByTagName("script"));
-		this._gather(this.body.getElementsByTagName("script"));		
+		//TODO change
+
+		//TODO call prepare handlers and identify the elements to enhance
+		// DescriptorQuery(this.body).withBranch().queue();
+
 		this._prep(this.body,{});
 	};
 
-	function delayedScriptOnload(scriptRel) {
-		function delayedOnload(ev) {
-			var el = this, src = el.getAttribute("src");
-			var name = el.getAttribute("name");
-			if (name) {
-				ApplicationConfig().modules[name] = true;
-			}
-			setTimeout(function(){
-				// make sure it's not called before script executes
-				var scripts = pageResolver(["state","loadingScriptsUrl"]);
-				//console.info("script",el.getAttribute("src"),el.src,scriptRel);
-
-				if (scripts[src] != undefined) {
-					// relative url
-					pageResolver.set(["state","loadingScriptsUrl",src],false);
-				} else if (scripts[el.src.replace(serverUrl,"")] != undefined) {
-					//TODO absolute url
-					pageResolver.set(["state","loadingScriptsUrl",el.src.replace(serverUrl,"")],false);
-				}
-			},0);
-		}
-		return delayedOnload;       
-	}
-
 	_Scripted.prototype._queueAssets = function() {
-
-		var links = this.document.getElementsByTagName("link");
-
-		//TODO differentiate on type == "text/javascript"
-		for(var i=0,l; l=links[i]; ++i) switch(l.rel) {
-			case "stylesheet":
-				this.resources().push(l);
-				break;			
-			case "pastload":
-			case "preload":
-				//TODO differentiate on lang
-				var attrsStr = l.getAttribute("attrs");
-				var attrs = {};
-				if (attrsStr) {
-					try {
-						eval("attrs = {" + attrsStr + "}");
-					} catch(ex) {
-						//TODO
-					}
-				}
-				attrs["type"] = l.getAttribute("type") || "text/javascript";
-				attrs["src"] = l.getAttribute("src");
-				attrs["name"] = l.getAttribute("data-name") || l.getAttribute("name") || undefined;
-				attrs["base"] = essential("baseUrl");
-				attrs["subpage"] = (l.getAttribute("subpage") == "false" || l.getAttribute("data-subpage") == "false")? false:true;
-				//attrs["id"] = l.getAttribute("script-id");
-				attrs["onload"] = delayedScriptOnload(l.rel);
-
-				var relSrc = attrs["src"].replace(essential("baseUrl"),"");
-				l.attrs = attrs;
-				if (l.rel == "preload") {
-					var langOk = true;
-					if (l.lang) langOk = (l.lang == this.resolver("state.lang"));
-					if (langOk) {
-						this.resolver.set(["state","preloading"],true);
-						this.resolver.set(["state","loadingScripts"],true);
-						this.resolver.set(["state","loadingScriptsUrl",relSrc],l); 
-						this.body.appendChild(HTMLScriptElement(attrs));
-						l.added = true;
-					} 
-				} else {
-					var langOk = true;
-					if (l.lang) langOk = (l.lang == this.resolver("state.lang"));
-					if (langOk) {
-						this.resolver.set(["state","loadingScripts"],true);
-						this.resolver.set(["state","loadingScriptsUrl",relSrc],l); 
-					} 
-				}
-				break;
-		}
-		if (! this.resolver(["state","preloading"])) {
-			var scripts = this.resolver(["state","loadingScriptsUrl"]);
-			for(var n in scripts) {
-				var link = scripts[n];
-				if (link.rel == "pastload") {
-					var langOk = true;
-					if (link.lang) langOk = (link.lang == this.resolver("state.lang"));
-					if (langOk) {
-						this.body.appendChild(HTMLScriptElement(link.attrs));
-						link.added = true;
-					} 
-				}
-			}
-		}
-
+		//TODO additional links queue in modules
 	};
-
 
 
 	function _SubPage(appConfig) {
@@ -5071,7 +5557,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 	};
 
 	SubPage.prototype.page = function(url) {
-		console.error("SubPage application/config cannot define pages ("+url+")",this.url);
+		log.error("SubPage application/config cannot define pages ("+url+")",this.url);
 	};
 
 	// keep a head prefix with meta tags for iframe/window subpages
@@ -5126,13 +5612,15 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	SubPage.prototype.loadedPageDone = function(text,lastModified) {
 		var doc = this.document = importHTMLDocument(text);
-		this.uniquePageID = getUniquePageID(doc);
-		Resolver("page").set(["pagesById",this.uniquePageID],this);
+		Resolver(doc).seal(true);
+		this.uniquePageID = doc.uniquePageID;
+		pageResolver.set(["pagesById",this.uniquePageID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
 
 		this.prepareEnhance();
+		// DescriptorQuery(this.body).withBranch().queue();
 
 		if (this.requiredForLaunch) {
 			var requiredPages = pageResolver("state.requiredPages") - 1;
@@ -5152,14 +5640,16 @@ _ElementPlacement.prototype._computeIE = function(style)
 	SubPage.prototype.parseHTML = function(text,text2) {
 		var head = (this.options && this.options["track main"])? '<meta name="track main" content="true">' : text2||'';
 		var doc = this.document = importHTMLDocument(head,text);
-		this.uniquePageID = getUniquePageID(doc);
-		Resolver("page").set(["pagesById",this.uniquePageID],this);
+		Resolver(doc).seal(true);
+		this.uniquePageID = doc.uniquePageID;
+		pageResolver.set(["pagesById",this.uniquePageID],this);
 		this.head = doc.head;
 		this.body = doc.body;
 		this.documentLoaded = true;
 
 		this.resolver.declare("handlers",pageResolver("handlers"));
 		this.prepareEnhance();
+		// DescriptorQuery(this.body).withBranch().queue();
 	};
 
 	SubPage.prototype.applyBody = function() {
@@ -5167,16 +5657,6 @@ _ElementPlacement.prototype._computeIE = function(style)
 			db = document.body,
 			fc = db.firstElementChild!==undefined? db.firstElementChild : db.firstChild;
 
-
-		//TODO import the elements ? or only allow getElement for a while
-		// try {
-		// 	this.head = document.importNode(doc.head,true);
-		// 	this.body = document.importNode(doc.body,true);
-		// }
-		// catch(ex) {
-		// 	this.head = doc.head;
-		// 	this.body = doc.body;
-		// }
 		if (this.applied) return;
 
 		var applied = this.applied = [];
@@ -5191,7 +5671,10 @@ _ElementPlacement.prototype._computeIE = function(style)
 			e = this.body.firstElementChild!==undefined? this.body.firstElementChild : this.body.firstChild;
 		}
 
-		this.doInitScripts();
+		// debugger;
+		var subResolver = Resolver(this.document);
+		Resolver("document").set(["essential","appliedConfig",subResolver.uniquePageID],subResolver("essential.config"));
+		subResolver.callInits();
 
 		//TODO put descriptors in reheating them
 		var descs = this.resolver("descriptors");
@@ -5209,6 +5692,9 @@ _ElementPlacement.prototype._computeIE = function(style)
 		if (this.applied == null) return;
 		var applied = this.applied;
 		this.applied = null;
+
+		var subResolver = Resolver(this.document);
+		Resolver("document").set(["essential","appliedConfig",subResolver.uniquePageID],undefined);
 
 		//TODO pull the descriptors out, freeze them
 		var descs = this.resolver("descriptors");
@@ -5232,19 +5718,20 @@ _ElementPlacement.prototype._computeIE = function(style)
 		return true;
 	};
 
+	//TODO emit modules injection
 	SubPage.prototype.getHeadHtml = function() {
-		var resources = ApplicationConfig().resources(),
-			loadingScriptsUrl = ApplicationConfig().resolver("state.loadingScriptsUrl"),
+		var links = document.getElementsByTagName("link"),
+			modules = essentialRef("modules"),
 			p = [],
 			base = "";
 
-		for(var i=0,r; r = resources[i]; ++i) {
-			if (this.doesElementApply(r)) p.push( outerHtml(r) );
+		for(var i=0,l; l = links[i]; ++i) {
+			if (l.rel == "stylesheet" && this.doesElementApply(l)) p.push( outerHtml(l) );
 		}
-		for(var u in loadingScriptsUrl) {
-			var link = loadingScriptsUrl[u];
-			base = link.attrs.base;
-			if (this.doesElementApply(link)) p.push( outerHtml(link) );
+		for(var u in modules) {
+			var module = modules[u];
+			base = module.attrs.base;
+			if (this.doesElementApply(module)) p.push( module.scriptMarkup(true) );
 		}
 		if (this.options && this.options["track main"]) p.push('<meta name="track main" content="true">');
 		if (base) p.push('<base href="'+base+'">');
@@ -5282,7 +5769,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 
 	function updateOnlineStatus(ev) {
-		//console.log("online status",navigator.onLine,ev);
+		//log.log("online status",navigator.onLine,ev);
 		var online = navigator.onLine;
 		if (online != undefined) {
 			pageResolver.set(["state","online"],online);	
@@ -5293,8 +5780,8 @@ _ElementPlacement.prototype._computeIE = function(style)
 	function _ApplicationConfig() {
 		this.resolver = pageResolver;
 		//TODO kill it on document, it's a generator not a fixed number, pagesByName
-		this.uniquePageID = getUniquePageID(document);
-		Resolver("page").set(["pagesById",this.uniquePageID],this);
+		this.uniquePageID = document.uniquePageID;
+		this.resolver.set(["pagesById",this.uniquePageID],this);
 		this.document = document;
 		this.head = this.document.head || this.document.body.previousSibling;
 		this.body = this.document.body;
@@ -5305,16 +5792,16 @@ _ElementPlacement.prototype._computeIE = function(style)
 		for(var n in this.state) state.set(n,this.state[n]);
 		this.state = state;
 		document.documentElement.lang = this.state("lang");
-		this.resolver.on("change","state.loadingScriptsUrl",this,this.onLoadingScripts);
-		this.resolver.on("change","state.loadingConfigUrl",this,this.onLoadingConfig);
 
 		this.pages = this.resolver.reference("pages",{ generator:SubPage });
 		SubPage.prototype.appConfig = this;
 
 		pageResolver.reflectStateOn(document.body,false);
 		this.prepareEnhance();
+		// DescriptorQuery(this.body).withBranch().queue();
 
-		var conf = this.getConfig(this.body), role = this.body.getAttribute("role");
+		// body can now be configured in script
+		var conf = Resolver.config(this.body), role = this.body.getAttribute("role");
 		if (conf || role)  EnhancedDescriptor(this.body,role,conf,false,this);
 
 		this._markPermanents(); 
@@ -5341,15 +5828,11 @@ _ElementPlacement.prototype._computeIE = function(style)
 			ac.resolver = null;
 			ac.config = null;
 			ac.resources = null;
-			ac.inits = null;
 			// ac.pages = null;
 			// ac.state = null;
 		}
 	}) );
 	
-	// preset on instance (old api)
-	ApplicationConfig.presets.declare("state", { });
-
 	ApplicationConfig.prototype.getIntroductionArea = function() {
 		var pages = this.resolver("pages");
 		for(var n in pages) {
@@ -5392,6 +5875,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 
 	ApplicationConfig.prototype._requiredPage = function(src)
 	{
+		//TODO allow marking it as protected
 		//TODO if already there page.applyBody();
 		var page = this.loadPage(src,true);
 		this.bodySrc = src;
@@ -5456,6 +5940,18 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 	EnhancedDescriptor.enhanceUnfinished = enhanceUnfinishedElements;
 
+	function appInits() {
+		if (document.body) {
+			Generator.instantiateSingletons("page");
+			Resolver.document.callInits();
+		}
+		enhanceUnfinishedElements();
+	}
+
+	Resolver("document").on("change","essential.loading",function(ev) {
+		pageResolver.set("state.loading",ev.value);
+	});
+
 	pageResolver.on("change","state", onStateChange);
 
 	function onStateChange(ev) {
@@ -5465,14 +5961,9 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if (ev.value) {
 					var ap = ApplicationConfig();
 
-					if (!b.loadingScripts && !b.loadingConfig) {
-						--ev.inTrigger;
-						this.set("state.loading",false);
-						++ev.inTrigger;
-					} else {
-						ap.doInitScripts();
-						enhanceUnfinishedElements();
-					}
+					Resolver.document.callInits();
+					enhanceUnfinishedElements();
+
 					if (_activeAreaName) {
 						activateArea(_activeAreaName);
 					} else {
@@ -5481,49 +5972,26 @@ _ElementPlacement.prototype._computeIE = function(style)
 					}
 				}
 				break;
-			case "loadingScripts":
-			case "loadingConfig":
-				//console.log("loading",this("state.loading"),this("state.loadingScripts"),this("state.loadingConfig"))
-				--ev.inTrigger;
-				this.set("state.loading",b.loadingScripts || b.loadingConfig);
-				++ev.inTrigger;
-				break;
-
-			case "preloading":
-				if (! ev.value) {
-					for(var n in b.loadingScriptsUrl) {
-						var link = b.loadingScriptsUrl[n];
-						if (link.rel == "pastload" && !link.added) {
-							var langOk = true;
-							if (link.lang) langOk = (link.lang == pageResolver("state.lang"));
-							if (langOk) document.body.appendChild(HTMLScriptElement(link.attrs));
-							link.added = langOk;
-						}
-					}
-				}
-				break;
 
 			case "loading":
 				if (ev.value == false) {
-					var ap = ApplicationConfig();
-
-					if (document.body) essential("instantiatePageSingletons")();
-					ap.doInitScripts();	
-					enhanceUnfinishedElements();
+					appInits();
 					if (window.widget) widget.notifyContentIsReady(); // iBooks widget support
 					if (b.configured && b.authenticated 
 						&& b.authorised && b.connected && !b.launched) {
 						this.set("state.launching",true);
 						// do the below as recursion is prohibited
-						if (document.body) essential("instantiatePageSingletons")();
+						if (document.body) Generator.instantiateSingletons("page");
 						enhanceUnfinishedElements();
 					}
 				} 
+				else return; // temp fix for setting loading = true during tests
 				break;
 			case "authenticated":
-				if (ev.base.livepage) {
+				if (b.livepage) {
+					Resolver("document").reflectModules();
+					// updateScripts(document,b);
 					var ap = ApplicationConfig();
-
 					if (b.authenticated) activateArea(ap.getAuthenticatedArea());
 					else activateArea(ap.getIntroductionArea());
 				}
@@ -5533,77 +6001,52 @@ _ElementPlacement.prototype._computeIE = function(style)
 				if ( !b.loading && b.configured && b.authenticated 
 					&& b.authorised && b.connected && !b.launched) {
 					this.set("state.launching",true);
-
-					var ap = ApplicationConfig();
-
-					// do the below as recursion is prohibited
-					if (document.body) essential("instantiatePageSingletons")();
-					ap.doInitScripts();	
-					enhanceUnfinishedElements();
+					appInits();
 				}
 				break;			
 			case "launching":
+				if (ev.value == true) {
+					appInits();
+				}
+				break;
+				//TODO autoLaunch on launchingScripts changing
 			case "launched":
 				if (ev.value == true) {
-					var ap = ApplicationConfig();
-
-					if (document.body) essential("instantiatePageSingletons")();
-					ap.doInitScripts();	
-					enhanceUnfinishedElements();
-					if (ev.symbol == "launched" && b.requiredPages == 0) this.set("state.launching",false);
+					appInits();
+					if (b.requiredPages == 0) this.set("state.launching",false);
+				} else {
+					Resolver("essential::EnhancedDescriptor.discardAll::")(); //TODO allow marking elements that survive unlaunch
 				}
 				break;
 			case "requiredPages":
 				if (ev.value == 0 && !b.launching) {
 					this.set("state.launching",false);
 				}
-				break
+				break;
 			case "lang":
 				document.documentElement.lang = ev.value;
 				break;
 			
 			default:
 				if (b.loading==false && b.launching==false && b.launched==false) {
-					if (document.body) essential("instantiatePageSingletons")();
-				}
+					if (document.body) Generator.instantiateSingletons("page");
+				} 
 		}
+
+		if (ev.symbol == "launching" && b.launching && b.authenticated) {
+			//TODO only do if not already done.
+			var modules = essentialRef("modules");
+			for(var n in modules) {
+				modules[n].queueHead("authenticated",document.head.lang);
+			}		
+		}
+
+		//TODO switch to launched when all resources & modules required are loaded
 
 		// should this be configurable in the future?
         if (b.launched && (!b.authorised || !b.authenticated) && b.autoUnlaunch !== false) {
             this.set("state.launched",false);
         }
-	};
-
-	ApplicationConfig.prototype.onLoadingScripts = function(ev) {
-		var loadingScriptsUrl = this("state.loadingScriptsUrl");
-			
-		var loadingScripts = false;
-		var preloading = false;
-		for(var url in loadingScriptsUrl) {
-			var link = loadingScriptsUrl[url];
-			if (link.rel == "preload") preloading = true;
-			if (link) loadingScripts = true;
-		}
-		this.set("state.loadingScripts",loadingScripts);
-		this.set("state.preloading",preloading);
-		if (ev.value==false) {
-			// finished loading a script
-			if (document.body) essential("instantiatePageSingletons")();
-		}
-	};
-
-	ApplicationConfig.prototype.onLoadingConfig = function(ev) {
-		var loadingConfigUrl = this("state.loadingConfigUrl");
-			
-		var loadingConfig = false;
-		for(var url in loadingConfigUrl) {
-			if (loadingConfigUrl[url]) loadingConfig = true;
-		}
-		this.set("state.loadingConfig",loadingConfig);
-		if (ev.value==false) {
-			// finished loading a config
-			if (document.body) essential("instantiatePageSingletons")();
-		}
 	};
 
 	ApplicationConfig.prototype.isPageState = function(whichState) {
@@ -5886,36 +6329,7 @@ _ElementPlacement.prototype._computeIE = function(style)
 	}
 	essential.declare("openWindow",openWindow);
 
-}(
-// need with context not supported in strict mode
-function(scripts) {
-	var resources = this.resources();
-	var inits = this.inits();
-
-	for(var i=0,s; s = scripts[i]; ++i) {
-		switch(s.getAttribute("type")) {
-			case "application/config":
-				try {
-					with(this) eval(s.text);
-				} catch(ex) {
-					Resolver("essential::console").error("Failed to parse application/config",s.text);
-				}
-				break;
-			case "application/init": 
-				inits.push(s);
-				break;
-			default:
-				var name = s.getAttribute("name");
-				if (name && s.getAttribute("src") == null) this.modules[name] = true; 
-				//TODO onload if src to flag that module is loaded
-				if (s.parentNode == document.head) {
-					resources.push(s);
-				}
-				break;
-		}
-	}
-}
-);
+}();
 
 /*!
 * XMLHttpRequest.js Copyright (C) 2011 Sergey Ilinsky (http://www.ilinsky.com)
@@ -6467,7 +6881,7 @@ function(scripts) {
 
 	var essential = Resolver("essential",{}),
 		ObjectType = essential("ObjectType"),
-		console = essential("console"),
+		log = essential("console")(),
 		MutableEvent = essential("MutableEvent"),
 		StatefulResolver = essential("StatefulResolver"),
 		ApplicationConfig = essential("ApplicationConfig"),
@@ -6863,6 +7277,15 @@ function(scripts) {
 	    
 	};
 
+	function parseProps(value) {
+		var parts = value.split(";"), props = {};
+		for(var i=0,prop,part; part = parts[i]; ++i) {
+			prop = part.split(":");
+			props[ prop.shift().replace(/ /g,"") ] = prop.join(":").replace(/^ +/,"");
+		}
+		return props;
+	}
+
 	/**
 	 * @param el Template Element with attributes
 	 * @param decorators Map of objects specifying decorator functions and category attributes
@@ -6883,6 +7306,11 @@ function(scripts) {
 	        	    is_simple: decorators[name].simple
 	        	};
 	        	
+	        	if (decorators[name].props) {
+	        		//TODO catch parse failure and flag it in mAttributes
+	        		mAttribute.props = parseProps(value);
+	        	}
+
 	        	// *entry:mapping references decoding
 	            if (decorators[name].refs) { //TODO review the flag to filter on !!!
 	            	var pParts = [];
@@ -7047,53 +7475,55 @@ function(scripts) {
 	    (top.impl || this).enhance(top);
 	};
 
+	function renderParts(resolver) {
+		var parts = [];
+		for(var j=0,isVar = false, part; j<this.parts.length; ++j, isVar = !isVar) {
+			part = this.parts[j];
+			parts.push(isVar? resolver(part) : part);
+		}
+		this.node.nodeValue = parts.join("");
+	}
 
-
-	function _queueDelayedAssets()
-	{
-		//TODO move this to pageResolver("state.ready")
-		var config = ApplicationConfig();//TODO move the state transitions here
-		config._queueAssets();
-
-		// var scripts = document.head.getElementsByTagName("script");
-		// for(var i=0,s; s = scripts[i]; ++i) {
-
-		// }
-
-		if (pageResolver(["state","loadingScripts"])) console.debug("loading phased scripts");
-
-		var metas = document.getElementsByTagName("meta");
-		for(var i=0,m; m = metas[i]; ++i) {
-			switch((m.getAttribute("name") || "").toLowerCase()) {
-				case "text selection":
-					textSelection((m.getAttribute("content") || "").split(" "));
-					break;
-				case "enhanced roles":
-					useBuiltins((m.getAttribute("content") || "").split(" "));
-					break;
-				case "track main":
-					if (this.opener) {
-						pageResolver.set("state.managed",true);
+	HTMLElement.fn.findTextSubstitutions = function(el) {
+		var texts = [];
+		for(var j=0,t; t = el.childNodes[j]; ++j) if (t.nodeName == "#text") {
+			var curlz = t.nodeValue.indexOf("{{");
+			if (curlz>=0) {
+				var parts = t.nodeValue.split(/{{|}}/),
+					selectors = [];
+				for(var l=0,isVar=false,p; l<parts.length; ++l, isVar = !isVar) {
+					p = parts[l];
+					if (isVar) {
+						selectors.push(parts[l] = p.replace(/^ +/,"").replace(/ +$/,""));
 					}
-					break;
+				}
+				texts.push({
+					node: t,
+					parts: parts,
+					selectors: selectors,
+					renderText: renderParts
+				});
 			}
 		}
-	}
-	essential.set("_queueDelayedAssets",_queueDelayedAssets);
+		return texts;
+	};
 
-
-	function configRequired(url)
-	{
-		pageResolver.set(["state","loadingConfig"],true);
-		pageResolver.set(["state","loadingConfigUrl",url],true);
+	function renderSelector(resolver) {
+		this.node.nodeValue = resolver(this.selectors[0]);
 	}
-	essential.set("configRequired",configRequired);
 
-	function configLoaded(url)
-	{
-		pageResolver.set(["state","loadingConfigUrl",url],false);
-	}
-	essential.set("configLoaded",configLoaded);
+	HTMLElement.fn.makeTextSubstitution = function(el,selector) {
+		if (el.childNodes.length === 0 || el.childNodes[0].nodeName !== "#text") {
+			var t = document.createTextNode("");
+			if (el.childNodes.length) el.insertBeforeChild(t,el.childNodes[0]);
+			else el.appendChild(t);
+		}
+		return {
+			node: el.childNodes[0],
+			selectors: [selector],
+			renderText: renderSelector
+		};
+	};
 
 
 	function _DialogAction(actionName) {
@@ -7139,7 +7569,6 @@ function(scripts) {
 				if (el.actionVariant[sn]) el.actionVariant[sn](el,ev);
 			}
 			//TODO else dev_note("Submit of " submitName " unknown to DialogAction " action)
-
 		} 
 		else {
 			el = HTMLElement.getEnhancedParent(ev.commandElement);
@@ -7165,88 +7594,6 @@ function(scripts) {
 	essential.declare("fireAction",fireAction);
 
 
-	function _StatefulField(name,el) {
-		var stateful = StatefulResolver(el,true);
-		return stateful;
-	}
-	var StatefulField = essential.declare("StatefulField",Generator(_StatefulField, { alloc:false }));
-
-	StatefulField.prototype.destroy = function() {};
-	StatefulField.prototype.discard = function() {};
-
-	function _TextField() {
-
-	}
-	StatefulField.variant("input[type=text]",Generator(_TextField,_StatefulField));
-
-	function _CheckboxField() {
-
-	}
-	StatefulField.variant("input[type=checkbox]",Generator(_CheckboxField,_StatefulField));
-
-	function _TimeField() {
-
-	}
-	StatefulField.variant("input[type=time]",Generator(_TimeField,_StatefulField));
-
-	function _CommandField(name,el,role) {
-
-	}
-	var CommandField = StatefulField.variant("*[role=link]",Generator(_CommandField,_StatefulField));
-	StatefulField.variant("*[role=button]",Generator(_CommandField,_StatefulField));
-
-
-	/* Enhance all stateful fields of a parent */
-	function enhanceStatefulFields(parent) {
-
-		for(var el = parent.firstChild; el; el = el.nextSibling) {
-			//TODO avoid non elements, firstChildNode. Skip non type 1 (comments) on old IE
-			//TODO do not enhance nested enhanced roles
-
-			var name = el.name || el.getAttribute("data-name") || el.getAttribute("name");
-			if (name) {
-				var role = el.getAttribute("role");
-				var variants = [];
-				if (role) {
-					//TODO support multiple roles
-					if (el.type) variants.push("*[role="+role+",type="+el.type+"]");
-					variants.push("*[role="+role+"]");
-				} else {
-					if (el.type) variants.push(el.tagName.toLowerCase()+"[type="+el.type+"]");
-					variants.push(el.tagName.toLowerCase());
-				}
-
-				var stateful = StatefulField.variant(variants)(name,el,role);
-			}
-
-			enhanceStatefulFields(el); // enhance children
-		}
-	}
-	essential.declare("enhanceStatefulFields",enhanceStatefulFields);
-
-	function useBuiltins(list) {
-		for(var i=0,r; r = list[i]; ++i) pageResolver.set(["enabledRoles",r],true);
-	}
-
-	function textSelection(tags) {
-		var pass = {};
-		for(var i=0,n; n = tags[i]; ++i) {
-			pass[n] = true;
-			pass[n.toUpperCase()] = true;
-		}
-		addEventListeners(document.body, {
-			"selectstart": function(ev) {
-				ev = MutableEvent(ev);
-				var allow = false;
-				for(var el = ev.target; el; el = el.parentNode) {
-					if (pass[el.tagName || ""]) allow = true;
-				} 
-				if (!allow) ev.preventDefault();
-				return allow;
-			}
-		});
-	}
-
 	var _scrollbarSize;
 	function scrollbarSize() {
 		if (_scrollbarSize === undefined) {
@@ -7269,7 +7616,7 @@ function(scripts) {
 
 	var essential = Resolver("essential",{}),
 		ObjectType = essential("ObjectType"),
-		console = essential("console"),
+		log = essential("console")(),
 		MutableEvent = essential("MutableEvent"),
 		StatefulResolver = essential("StatefulResolver"),
 		statefulCleaner = essential("statefulCleaner"),
@@ -7430,7 +7777,7 @@ function(scripts) {
 		dialog_next_down = initial_top;
 
 	function enhance_dialog(el,role,config,context) {
-		// TODO if (config['invalid-config']) console.log()
+		// TODO if (config['invalid-config']) log.log()
 
 		var configTemplate = config.template,
 			contentTemplate = config['content-template'], 
@@ -7582,6 +7929,7 @@ function(scripts) {
 	}
 	pageResolver.set("handlers.layout.dialog",layout_dialog);
 
+	//TODO turn into destroy_dialog so it happens before the discard of other elements, or slightly before
 	function discard_dialog(el,role,instance) {
 		var existing = 0, dialogs = DescriptorQuery("[role=dialog]");
 		for(var i=0,d; d = dialogs[i]; ++i) {
@@ -7592,6 +7940,7 @@ function(scripts) {
 			dialog_top = initial_top;
 			dialog_left = initial_left;
 		} 
+		if (el.parentElement) el.parentElement.removeChild(el);
 	}
 	pageResolver.set("handlers.discard.dialog",discard_dialog);
 
@@ -7866,7 +8215,7 @@ function(scripts) {
 					enhanced.vert.hide();
 					enhanced.horz.hide();
 				}
-				//console.log("mouse out of scrolled.");
+				//log.log("mouse out of scrolled.");
 			},30);
 		}
 
@@ -7905,9 +8254,9 @@ function(scripts) {
 
 			var chain = parentChain(ev.target);
 			var preventLeft = preventWheel && ev.deltaX > 0 && chain.every(function(el) { return el.scrollLeft == 0; });
-			// if (preventLeft) console.log("prevent left scroll ");
+			// if (preventLeft) log.log("prevent left scroll ");
 			var preventTop = preventWheel && ev.deltaY > 0 && chain.every(function(el) { return el.scrollTop == 0; });
-			// if (preventTop) console.log("prevent top scroll ");
+			// if (preventTop) log.log("prevent top scroll ");
 
 			var prevent = false;
 
@@ -7917,7 +8266,7 @@ function(scripts) {
 				if (ev.deltaY != 0) {
 					var max = Math.max(0, this.stateful("pos.scrollHeight","0") - this.offsetHeight);
 					var top = this.stateful("pos.scrollTop","0");
-					// console.log("vert delta",ev.deltaY, top, max, this.stateful("pos.scrollHeight"),this.offsetHeight);
+					// log.log("vert delta",ev.deltaY, top, max, this.stateful("pos.scrollHeight"),this.offsetHeight);
 					top = Math.min(max,Math.max(0, top - ev.deltaY));
 					this.stateful.set("pos.scrollTop",top);
 					prevent = true;
@@ -8010,7 +8359,7 @@ function(scripts) {
 				var y = Math.min( Math.max(movement.startY + movement.factorY*(ev.pageY - movement.startPageY),movement.minY), movement.maxY );
 				var x = Math.min( Math.max(movement.startX + movement.factorX*(ev.pageX - movement.startPageX),movement.minX), movement.maxX );
 				movement.track(ev,x,y);
-				// console.log(movement.factorX,movement.factorY)
+				// log.log(movement.factorX,movement.factorY)
 			},
 			"click": function(ev) {
 				ev.preventDefault();
@@ -8403,28 +8752,64 @@ function(scripts) {
 	pageResolver.set("handlers.discard.scrolled",discard_scrolled);
 	
 }();
+Resolver("document").queueHead();
+
 Resolver("essential::ApplicationConfig::").restrict({ "singleton":true, "lifecycle":"page" });
 
 Resolver("page").set("liveTimeout",60);
 //TODO clearInterval on unload
 
-!function() {
-	function onPageLoad(ev) {
-		Resolver("page").set("state.livepage",true);
+Resolver("document").on("change","readyState",function(ev) {
+	switch(ev.value) {
+		case "loaded":
+			Resolver("document").seal(false);
+			break;
+
+		case "interactive":
+			if (! Resolver("document")._readyFired) Resolver("document")._ready();
+
+			var liveTimeout = Resolver("page::liveTimeout","null");
+			if (liveTimeout) {
+				// Allow the browser to render the page, preventing initial transitions
+				setTimeout(function() {
+					Resolver("page").set("state.livepage",true);
+				},liveTimeout);
+			}
+			else if (liveTimeout == 0) Resolver("page").set("state.livepage",true);
+			break;
+
+		case "complete":
+			Resolver("document")._load();
+			break;
 	}
-	if (window.addEventListener) window.addEventListener("load",onPageLoad,false);
-	else if (window.attachEvent) window.attachEvent("onload",onPageLoad);
-}();
+});
+
+!function() {
+
+var EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
+	enhancedWindows = Resolver("essential::enhancedWindows::"),
+	placement = Resolver("essential::placement::"),
+	defaultButtonClick = Resolver("essential::defaultButtonClick::"),
+	pageResolver = Resolver("page"),
+	updateOnlineStatus = Resolver("essential::updateOnlineStatus::");
+
+
+function onPageUnLoad(ev) {
+
+	if (EnhancedDescriptor.maintainer) clearInterval(EnhancedDescriptor.maintainer);
+	EnhancedDescriptor.maintainer = null;
+
+	Resolver("document")._unload();
+
+	for(var n in Resolver) {
+		if (typeof Resolver[n].destroy == "function") Resolver[n].destroy();
+	}
+}
+if (window.addEventListener) window.addEventListener("unload",onPageUnLoad,false);
+else if (window.attachEvent) window.attachEvent("onunload",onPageUnLoad);
 
 
 Resolver("page::state.livepage").on("change",function(ev) {
-	var EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
-		enhancedWindows = Resolver("essential::enhancedWindows::"),
-		placement = Resolver("essential::placement::"),
-		defaultButtonClick = Resolver("essential::defaultButtonClick::"),
-		pageResolver = Resolver("page"),
-		updateOnlineStatus = Resolver("essential::updateOnlineStatus::");
-
 	function resizeTriggersReflow(ev) {
 		EnhancedDescriptor.refreshAll();
 		enhancedWindows.notifyAll(ev);
@@ -8497,3 +8882,4 @@ Resolver("page::state.managed").on("change",function(ev) {
 	}
 });
 
+}();
