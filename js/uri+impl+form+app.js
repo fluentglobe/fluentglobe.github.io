@@ -3017,7 +3017,7 @@ function Navigation(el,config) {
 
     var config, items = el.querySelectorAll("[role=menuitem]");
     for(var i=0,item; item = items[i]; ++i) {
-        config = ApplicationConfig().getConfig(item);
+        config = Resolver.config(item);
         if (config.select) {
             this.stateful.on("change",config.select,{config:config,el:item},
                 function(ev) {
@@ -3039,7 +3039,7 @@ Navigation.prototype.destroy = function() {
 Navigation.prototype.click = function(ev) {
 
     if (ev.commandRole == "menuitem") {
-        var config = ApplicationConfig().getConfig(ev.commandElement);
+        var config = Resolver.config(ev.commandElement);
         if (config.select) {
             this.stateful.set(config.select,config.value);
         }
