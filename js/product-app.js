@@ -878,6 +878,18 @@ function Book(el,config) {
 	this.el = el;
     this.stateful = el.stateful;
     this.pos = config.pos;
+    this.dest = config.dest;
+    if (this.dest) {
+	    this.home = el.ownerDocument.querySelector(this.dest);
+    }
+    else {
+    	for(var _el = el; _el; _el = _el.parentNode) {
+    		if (_el.nodeType == 1 && _el.className.indexOf("bookspread") >= 0) this.home = _el;
+    	}
+    }
+
+    var img = el.getElementsByTagName("img")[0];
+    if (img) img.style.width = "100%"
 
     this.stateful.set("map.class.state.flipped","state-flipped");
     this.stateful.set("state.flipped",false);
@@ -891,9 +903,17 @@ function Book(el,config) {
     this.stateful.set("map.class.state.reading","state-reading");
     this.stateful.set("state.reading",false);
 
-    // return;
+	this.prefix = config.prefix;
 
-	addEventListeners(this.el,BOOK_EVENTS);
+	this.type = "plain";
+	if (config.feature) this.type = "feature";
+	else if (config.spread) this.type = "spread";
+
+	this.el.classList.add("bk-origin");
+	//TODO IE11 review
+	this.el.classList.add(this.type + "-book");
+
+    return;
 
     var ac = ApplicationConfig();
     var page = ac.loadPage(config.src,false,function(ev) { 
