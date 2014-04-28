@@ -3,7 +3,6 @@
 var StatefulResolver = Resolver("essential::StatefulResolver::"),
 	EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
 	sizingElements = Resolver("essential::sizingElements::"),
-	ApplicationConfig = Resolver("essential::ApplicationConfig::"),
 	Layouter = Resolver("essential::Layouter::"),
 	Laidout = Resolver("essential::Laidout::"),
 	DialogAction = Resolver("essential::DialogAction::");
