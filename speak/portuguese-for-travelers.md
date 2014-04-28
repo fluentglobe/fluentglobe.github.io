@@ -3,7 +3,7 @@ layout: book
 theme: main
 blog-link: no
 body-class: lesson lesson-color
-permalink: portuguese-for-travelers.html
+permalink: /speak/portuguese-for-travelers.html
 title: Portuguese for Travelers
 author: Caterine Apruzzese
 cover-heading: <span>Caterine Apruzzese</span><span>Portuguese for Travelers</span>

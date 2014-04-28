@@ -3,7 +3,7 @@ layout: book
 theme: main
 blog-link: no
 body-class: lesson lesson-color
-permalink: recipes-brazil.html
+permalink: /speak/recipes-brazil.html
 title: Recipes for Visiting Brazil
 author: Caterine Apruzzese
 not-this-one: <span>Caterine Apruzzese</span><span>Recipes for Visiting Brazil</span>

@@ -1,4 +1,5 @@
 #server_port: 9191
+relative_permalinks: false
 url: http://fluentglobe.com
 img_url: http://fluentglobe.com/images
 a_url: http://a.fluentglobe.com

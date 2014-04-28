@@ -3,7 +3,7 @@ layout: book
 theme: main
 blog-link: no
 body-class: lesson lesson-color
-permalink: speak-english-in-newyork.html
+permalink: /speak/speak-english-in-newyork.html
 title: Speak English in New York
 author: Caterine Apruzzese
 cover-heading: <span>Caterine Apruzzese</span><span>Speak English in New York</span>
