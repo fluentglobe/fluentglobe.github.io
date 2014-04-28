@@ -691,20 +691,49 @@ img.right-side-80 {
     padding: 5px;
 }
 
-
 @import "paging";
 
 @import "fresh/less/mediaelementplayer";
 
-
 @import "book-reader/css/mixins.less";
 
-
-@bk-list-height: 420px;
-@bk-base-width: 42px;
-//@bk-book-height: 520px;
-@bk-book-height: 580px; // works for first 2 books
-
 @import "book-reader/css/book-shelf";
+@import "book-reader/css/book-spread";
+
+.bookspread {
+    .bk-origin {
+        width: @bk-cover-base-width * .75;
+        height: @bk-cover-base-height * .75;
+
+        .bk-front {
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    .book-center {
+        position: absolute;
+        margin-left: -.5 * @bk-cover-base-width * .75;
+        left: 50%;
+    }
+
+    .book-left-1 {
+        position: absolute;
+        margin-left: -(@bk-cover-base-width * .75 + 5px);
+        left: 50%;
+    }
+
+    .book-right-1 {
+        position: absolute;
+        margin-left: 5px;
+        left: 50%;
+    }
+    .book-right-2 {
+        position: absolute;
+        margin-left: (@bk-cover-base-width * .75 + 2 * 5px);
+        left: 50%;
+    }
+}
 
 @import "common/freshdesk";

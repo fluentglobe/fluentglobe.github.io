@@ -5,7 +5,7 @@ app-name: productApp
 debug: true
 ---
 
-<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+<div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
 
   <section class="left-col" style="color:#bbb;">
     <h2 style="text-align:center;">Available Now</h2>
@@ -13,17 +13,17 @@ debug: true
 
     <h4 style="text-align:center;">
 
-<a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store" style="display:inline-block;text-align:center;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_ibooks-lrg.png) no-repeat;width:136px;height:40px;margin:20px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_ibooks-lrg.svg);}"></a>
-<br>
-<a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804">For iPad and Mac on iTunes</a>
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store" style="display:inline-block;text-align:center;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_ibooks-lrg.png) no-repeat;width:136px;height:40px;margin:20px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_ibooks-lrg.svg);}"></a>
+    <br>
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804">For iPad and Mac on iTunes</a>
 
     </h4>
   </section>
 
-  <div id="bookspread" class="right-col">
-    <ul id="bk-list" class="bk-list clearfix">
-      <li role="book" data-role="'src':'/speak/recipes-brazil.html','pos':-4,'feature':true" class="r4vb-book"></li>
-    </ul>
+  <div class="right-col clearfix">
+    <div role="book" class="book-center" data-role="'prefix':'r4vb','src':'/speak/recipes-brazil.html','spread':true">
+    {% include book/r4vb-info.html %}
+    </div>
   </div>
 
 

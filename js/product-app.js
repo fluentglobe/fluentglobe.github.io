@@ -853,7 +853,20 @@ var essential = Resolver("essential"),
 			'transition' : 'transitionend'
 		}[ Modernizr.prefixed( 'transition' ) ];
 
+	var BODY_EVENTS = {
+		click: function(ev) {
+			ev = MutableEvent(ev);
+			var wRole = ev.target.querySelector("[role=book]")
+			if (wRole) {
+		        if (wRole.stateful("state.disabled")) return; // disable
 
+		        EnhancedDescriptor.all[wRole.uniqueID].instance.click(ev);
+		        ev.stopPropagation();
+			}
+		}
+	};
+
+	// Can this be made to work?
 	var BOOK_EVENTS = {
 		click: function(ev) {
 			ev = MutableEvent(ev);
@@ -873,8 +886,6 @@ var essential = Resolver("essential"),
 var expandedBook;
 
 function Book(el,config) {
-	// ensureOpenBookSupport();
-
 	this.el = el;
     this.stateful = el.stateful;
     this.pos = config.pos;
@@ -888,8 +899,8 @@ function Book(el,config) {
     	}
     }
 
-    var img = el.getElementsByTagName("img")[0];
-    if (img) img.style.width = "100%"
+    // var img = el.getElementsByTagName("img")[0];
+    // if (img) img.style.width = "100%"
 
     this.stateful.set("map.class.state.flipped","state-flipped");
     this.stateful.set("state.flipped",false);
@@ -913,6 +924,10 @@ function Book(el,config) {
 	//TODO IE11 review
 	this.el.classList.add(this.type + "-book");
 
+	addEventListeners(this.el,BOOK_EVENTS);
+
+	this._makeReaderBook();
+
     return;
 
     var ac = ApplicationConfig();
@@ -921,30 +936,48 @@ function Book(el,config) {
     }); //TODO ,false,this,this.pageLoad pass data,page in (event)
 	page.book = this;
 
-	if (config.feature) this.el.classList.add("feature");    
-
-	// set up reader if not there
-	if (this.reader == undefined) {
-		Book.prototype.reader = HTMLElement("div",{
-			"append to": document.body,
-			"id":"book-reader",
-			"make stateful":true});
-		Book.prototype.reader.stateful.set("state.hidden",true);
-	}
-
-	if (this.article == undefined) {
-		Book.prototype.article = document.getElementsByTagName("article")[0];
-	}
 }
 
 Book.prototype.destroy = function() {
 	this.bookEl = null;
 	this.pageEl = null;
-	this.contentEl = null;
+	this.readerBookEl = null;
 };
+
+Book.prototype._makeReaderBook = function() {
+	this.ensureOpenBookSupport();
+
+	this._createReaderElement();
+};
+
+Book.prototype._createReaderElement = function() {
+
+	this.readerBookEl = HTMLElement("div",{
+		"class":"bk-book","make stateful":true
+	},'<div class="bk-promo"></div>');
+	this.readerBookEl.stateful.set("state.hidden",true);
+
+	var promo = this.el.querySelector(".bk-promo");
+	if (promo) {
+		for(var i=0,c; c = promo.childNodes[i]; ++i) if (c.nodeType == 1) {
+			this.readerBookEl.firstChild.appendChild(c);
+		}
+	}
+	// copy article information when loaded page
+	// for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
+	// 	this.readerBookEl.appendChild(c);
+	// }
+
+	this.reader.appendChild(this.readerBookEl);
+};
+
 
 Book.prototype.pageLoad = function(ev) {
 	var bindingClass = "bk-book";
+	bindingClass += " " + this.type + "-type";
+
+	if (this.prefix) bindingClass += " " + this.prefix + "-book";
+
 	if (this.pos && this.pos < 0) bindingClass += " left-" + (-this.pos);
 	if (this.pos && this.pos > 0) bindingClass += " right-" + this.pos;
 
@@ -953,10 +986,11 @@ Book.prototype.pageLoad = function(ev) {
 		footer = ev.page.body.querySelector("body > footer"),
 		title = ev.page.head.querySelector("title"),
 		author = ev.page.head.querySelector("meta[name=author]");
-		bindingEl = this.bookEl = HTMLElement("div",{"class": bindingClass});
+		bookEl = this.bookEl = HTMLElement("div",{"class": bindingClass});
 
+	// front used in all cases
 	if (header) {
-		var frontEl = HTMLElement("div",{"class":"bk-front","append to":bindingEl},
+		var frontEl = HTMLElement("div",{"class":"bk-front","append to":bookEl},
 			'<div class="bk-cover">','</div>',
 			'<div class="bk-cover-back">','</div>');
 
@@ -967,45 +1001,33 @@ Book.prototype.pageLoad = function(ev) {
 	else this.warning = "No cover"; //TODO fallback behave?
 
 	if (footer) {
-		var backEl = HTMLElement("div",{"class":"bk-back","append to":bindingEl});
+		var backEl = HTMLElement("div",{"class":"bk-back","append to":bookEl});
 
 		for(var i=0,c; c = footer.childNodes[i]; ++i) if (c.nodeType == 1) {
 			backEl.appendChild(c)
 		}		
 	}
 
-	this.pageEl = HTMLElement("div",{"class":"bk-page", "append to":bindingEl });
+	this.pageEl = HTMLElement("div",{"class":"bk-page", "append to":bookEl });
 	//TODO render template with overview
 
-	bindingEl.appendChild( HTMLElement("div",{"class":"bk-top"}) );
-	bindingEl.appendChild( HTMLElement("div",{"class":"bk-bottom"}) );
-	bindingEl.appendChild( HTMLElement("div",{"class":"bk-right"}) );
-	HTMLElement("div",{"class":"bk-left", "append to":bindingEl},"<h2>",
-		"<span>", title? title.firstChild.nodeValue.split("|")[0] : "", "</span>",
-		"<span>", author? author.getAttribute("content") : "", "</span>",
-		"</h2>" );
-
-	ev.book.el.appendChild(bindingEl);
-
-	// ev.book.transformBase = this.bookEl.style[this.prefixedTransform] || this.bookEl.style.transform;
-
-	//var bookEl = this.el.children[0];
-
-	ev.book._createReaderElement(ev.page.body.querySelector("article"));
-};
-
-Book.prototype._createReaderElement = function(article) {
-
-	this.contentEl = HTMLElement("div",{
-		"class":"book-content","make stateful":true
-	});
-	this.contentEl.stateful.set("state.hidden",true);
-
-	for(var i=0,c; c = article.childNodes[i]; ++i) if (c.nodeType == 1) {
-		this.contentEl.appendChild(c);
+	if (this.type == "spread") {
+		var backTwoEl = HTMLElement("div",{"class":"bk-back-two"});
+		//TODO content on the inside back
+		bookEl.appendChild( backTwoEl );
+	}
+	else {
+		bookEl.appendChild( HTMLElement("div",{"class":"bk-top"}) );
+		bookEl.appendChild( HTMLElement("div",{"class":"bk-bottom"}) );
+		bookEl.appendChild( HTMLElement("div",{"class":"bk-right"}) );
+		HTMLElement("div",{"class":"bk-left", "append to":bookEl},"<h2>",
+			"<span>", title? title.firstChild.nodeValue.split("|")[0] : "", "</span>",
+			"<span>", author? author.getAttribute("content") : "", "</span>",
+			"</h2>" );
 	}
 
-	this.reader.appendChild(this.contentEl);
+	this.home.appendChild(bookEl);
+	// ev.book.transformBase = this.bookEl.style[this.prefixedTransform] || this.bookEl.style.transform;
 };
 
 var openBook = {
@@ -1013,6 +1035,8 @@ var openBook = {
 };
 
 Book.prototype.startOpen = function() {
+
+	this.showReaderBook();
 
 	this.stateful.set("state.collapsed",false);
 	this.stateful.set("state.expanding",true); 
@@ -1024,6 +1048,7 @@ Book.prototype.startOpen = function() {
 	// this.article.style.marginTop = (marginTop - openBook.scrollY) + "px";
 	// window.scrollTo(0,0);
 	pageResolver.set("state.open-book",true);
+	this.reader.stateful.set("state.hidden",false);
 
 	var eb = EnhancedDescriptor.all[expandedBook];
 	if (eb) {
@@ -1057,6 +1082,7 @@ Book.prototype.finishClose = function() {
 	expandedBook = 0;
 
 	pageResolver.set("state.open-book",false);
+	this.reader.stateful.set("state.hidden",true);
 	// this.article.style.marginTop = openBook.marginTop+"px"; //TODO tie with dynamic code
 	// window.scrollTo(0,openBook.scrollY);
 
@@ -1066,7 +1092,7 @@ Book.prototype.finishClose = function() {
 Book.prototype.click = function(ev) {
 
 	// if (ev.target == this.pageEl) {
-	// 	this.showContent();
+	// 	this.showReaderBook();
 	// 	return;
 	// }
 
@@ -1096,22 +1122,21 @@ Book.prototype.transEnd = function(ev) {
 	}
 };
 
-Book.prototype.showContent = function() {
-	/*
-	var placement = ElementPlacement(this.pageEl);
-	// debugger;
-	this.contentEl.style.left = this.pageEl.offsetLeft + "px";
-	this.contentEl.style.right = (this.pageEl.offsetLeft+this.pageEl.offsetWidth) + "px";
-	this.contentEl.style.top = this.pageEl.offsetTop + "px";
-	this.contentEl.style.bottom = (this.pageEl.offsetTop+this.pageEl.offsetHeight) + "px";
-	*/
-	this.contentEl.stateful.set("state.hidden",false);
+Book.prototype.showReaderBook = function() {
+	// var placement = ElementPlacement(this.pageEl);
+	var rect = this.el.getBoundingClientRect()
+	this.readerBookEl.style.left = rect.left + "px";
+	// this.readerBookEl.style.right = (this.pageEl.offsetLeft+this.pageEl.offsetWidth) + "px";
+	this.readerBookEl.style.top = rect.top + "px";
+	// this.readerBookEl.style.bottom = (this.pageEl.offsetTop+this.pageEl.offsetHeight) + "px";
+
+	this.readerBookEl.stateful.set("state.hidden",false);
 	this.reader.stateful.set("state.hidden",false);
 };
 
 Book.prototype.hideContent = function() {
 
-	this.contentEl.stateful.set("state.hidden",true);
+	this.readerBookEl.stateful.set("state.hidden",true);
 	this.reader.stateful.set("state.hidden",true);
 };
 
@@ -1128,19 +1153,32 @@ Book.prototype.layout = function(layout) {
 	}
 };
 
-var bookSupported = false;
-function ensureOpenBookSupport() {
-	if (bookSupported) return;
+Book.prototype.ensureOpenBookSupport = function () {
+	if (this.bookSupported) return;
 
 	pageResolver.set("map.class.state.open-book","open-book");
 	pageResolver.set("state.open-book",false);
 	pageResolver.on("true","state.open-book",this,function(ev) {
-		// scrollTo(0,0);
 		//TODO animated move there by shifting to positioning
 		// when resetting switch back to scroll offset
 	});
-	bookSupported = true;
-}
+	Book.prototype.bookSupported = true;
+
+	addEventListeners(document.body,BODY_EVENTS);
+
+	// set up reader if not there
+	if (this.reader == undefined) {
+		var r = Book.prototype.reader = HTMLElement("div",{
+			"append to": document.body,
+			"id":"book-reader",
+			"make stateful":true});
+		r.stateful.set("state.hidden",true);
+	}
+
+};
+
+Book.prototype.bookSupported = false;
+Book.prototype.reader = undefined;
 
 
 // module: reader export
