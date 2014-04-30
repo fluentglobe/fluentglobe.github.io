@@ -93,6 +93,7 @@ module.exports = function(grunt) {
         files: [
           { src: 'bower_components/angular/angular.js', dest: 'js/angular.js' },
           { src: 'bower_components/angular/angular.min.js', dest: 'js/angular.min.js' },
+          { src: 'bower_components/angular/angular.min.js.map', dest: 'js/angular.min.js.map' },
           { src: 'bower_components/jquery/jquery.js', dest: 'js/jquery.js' },
           { src: 'bower_components/jquery/jquery.min.js', dest: 'js/jquery.min.js' }
         ]

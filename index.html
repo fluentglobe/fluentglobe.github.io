@@ -17,75 +17,13 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 <!--
     </div>
 -->
-	<script type="application/config">
-  declare("signup",{
-    defaultAction: "new-beta-subscriber",
-    submittedButtonText: "Subscribing ...",
-
-    actions: {
-      "new-beta-subscriber": {
-        mapName: { name:"cm-name", email:"cm-vjikj-vjikj", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path: "/t/i/s/vjikj/"
-      },
-
-      "new-subscriber-en": {
-        mapName: { name:"cm-name", email:"cm-pdtdj-pdtdj", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path: "/t/i/s/pdtdj/"
-      },
-      "new-subscriber-de": {
-        mapName: { name:"cm-name", email:"cm-pdtdh-pdtdh", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path: "/t/i/s/pdtdh/"
-
-      },
-      "new-subscriber-ch": {
-        mapName: { name:"cm-name", email:"cm-pdthy-pdthy", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthy/"
-
-      },
-      "new-subscriber-cs": {
-        mapName: { name:"cm-name", email:"cm-pdthh-pdthh", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthh/"
-
-      },
-      "new-subscriber-pt": {
-        mapName: { name:"cm-name", email:"cm-pdthi-pdthi", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthi/"
-
-      },
-      "new-subscriber-fr": {
-        mapName: { name:"cm-name", email:"cm-pdthl-pdthl", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthl/"
-
-      },
-      "new-subscriber-it": {
-        mapName: { name:"cm-name", email:"cm-pdthr-pdthr", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthr/"
-
-      },
-      "new-subscriber-jp": {
-        mapName: { name:"cm-name", email:"cm-pdthk-pdthk", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthk/"
-
-      },
-      "new-subscriber-pl": {
-        mapName: { name:"cm-name", email:"cm-pdthd-pdthd", "from-country":"cm-fo-bjum", "native-language":"cm-f-bjutl" },
-        path:   "/t/i/s/pdthd/"
-
-      }
-    }
-  });
-	</script>
+<script type="application/config">{% include signup-config.js %}</script>
 
     <div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
 
-      <aside class="we-love">
-        <figure></figure>
-        {% include we-love.html %}
-      </aside>
+      <aside class="we-love"><figure></figure> {% include we-love.html %} </aside>
 
-      <section class="benefits">
-        {% include benefits.html %}
-      </section>
+      <section class="benefits"> {% include benefits.html %} </section>
 
       <div class="form-and-story">
 
@@ -96,41 +34,32 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
         >
 
         <fieldset>
-        <!--
-          <img src="images/henrik.png" alt="Henrik">
-          <img src="images/katty.png" alt="Katty">
-          -->
-
-        </fieldset>
-
-        <fieldset>
         {% include start-learning.html %}
 
         <input type="hidden" name="from-country">
         <input type="hidden" name="native-language">
         <input placeholder="Your Name" name="name" type="text" size="15" required>
         <input placeholder="e-mail" name="email" type="email" size="15" required>
-        <button class="btn primary double-corner">
-        {% include plan-button.html %}
-        </button>
+        <button class="btn primary double-corner"> {% include plan-button.html %} </button>
         </fieldset>
-
       </form>
 
-
-      <section class="story">
-        {% include story.html %}
-      </section>
+      <section class="story"> {% include story.html %} </section>
       </div>
 
       <footer></footer>
 
     </div>
 
+
+<main>
+
+
     <article>
     	<header id="more-to-tell">
         {% include site-follow.html %}
       </header>
+
 
         <section class="first" style="text-align: center; display:none;">
 
@@ -178,5 +107,6 @@ To be an insider not an outsider.
 			{% include page-footer-copyright.html %}
 		</footer>
     </article>
+</main>
 
 {% include site-menu.html %}

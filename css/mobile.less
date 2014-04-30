@@ -161,7 +161,7 @@ body {
 	position: absolute;
 	top: 0; bottom: 0;
 	min-height: 0;
-    z-index: -1;
+    // better keep same level for clickability: no, z-index: -1;
 
     //TODO increase z-index for content elements
 }
@@ -493,7 +493,7 @@ html body.splash {
             position: fixed;
             top: 0;
             left: 0; right: 0;
-            z-index: -1;
+            // z-index: -1;
 
             .left-col, .right-col {
                 z-index: 1;
@@ -506,7 +506,7 @@ html body.splash {
             }
         }
         article {
-            margin-top: 100%;
+            top: 100%; //TODO perhaps main instead
             z-index: 100;
         }
     }
