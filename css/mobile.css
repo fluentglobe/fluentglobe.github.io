@@ -4805,172 +4805,38 @@ h6 {
   background: #f0f0f0;
   border-radius: 50%;
 }
-.seil-book .bk-front > div,
-.seil-book .bk-back,
-.seil-book .bk-left,
-.seil-book .bk-front:after {
-  background-color: #000000;
+/*
+.seil-book {
+    .custom-book(black,transparent,white,white,rgba(0,0,0,0.1));
+    //.custom-title-bottom-screened();
+    // .custom-fonts();
+
+    .bk-cover {
+        background-image: url(/images/seil-cover.jpg);  
+    }
 }
-.seil-book .bk-cover {
-  background-repeat: no-repeat;
-  background-size: 100% auto;
+
+.sein-book {
+    .custom-book(black,white,white,white,rgba(0,0,0,0.1));
+    //.custom-title-bottom-screened();
+    // .custom-fonts();
 }
-.seil-book .bk-cover h2 {
-  position: absolute;
-  right: 0;
-  left: 0;
-  padding: 30px;
-  color: transparent;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+
+.r4vb-book {
+    .custom-book(rgb(72,113,31),white,white,white,rgba(0,0,0,0.1));
+    //.custom-title-bottom-screened();
+    // .custom-fonts();
+    .bk-cover {
+        background-image: url(/images/r4vb-cover.jpg);  
+    }
 }
-.seil-book .bk-cover h2 span:first-child,
-.seil-book .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
+
+.pft-book {
+    .custom-book(rgb(208,22,30),white,white,white,rgba(0,0,0,0.1));
+    //.custom-title-bottom-screened();
+    // .custom-fonts();
 }
-.seil-book .bk-cover h2 span:first-child {
-  display: block;
-}
-.seil-book .bk-left h2 {
-  color: #ffffff;
-  font-size: 15px;
-  padding-right: 10px;
-  text-align: right;
-}
-.seil-book .bk-back {
-  color: #ffffff;
-  font-size: 13px;
-  text-align: center;
-  font-weight: 700;
-}
-.seil-book .bk-cover {
-  background-image: url(/images/seil-cover.jpg);
-}
-.sein-book .bk-front > div,
-.sein-book .bk-back,
-.sein-book .bk-left,
-.sein-book .bk-front:after {
-  background-color: #000000;
-}
-.sein-book .bk-cover {
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-}
-.sein-book .bk-cover h2 {
-  position: absolute;
-  right: 0;
-  left: 0;
-  padding: 30px;
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-.sein-book .bk-cover h2 span:first-child,
-.sein-book .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
-}
-.sein-book .bk-cover h2 span:first-child {
-  display: block;
-}
-.sein-book .bk-left h2 {
-  color: #ffffff;
-  font-size: 15px;
-  padding-right: 10px;
-  text-align: right;
-}
-.sein-book .bk-back {
-  color: #ffffff;
-  font-size: 13px;
-  text-align: center;
-  font-weight: 700;
-}
-.r4vb-book .bk-front > div,
-.r4vb-book .bk-back,
-.r4vb-book .bk-left,
-.r4vb-book .bk-front:after {
-  background-color: #48711f;
-}
-.r4vb-book .bk-cover {
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-}
-.r4vb-book .bk-cover h2 {
-  position: absolute;
-  right: 0;
-  left: 0;
-  padding: 30px;
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-.r4vb-book .bk-cover h2 span:first-child,
-.r4vb-book .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
-}
-.r4vb-book .bk-cover h2 span:first-child {
-  display: block;
-}
-.r4vb-book .bk-left h2 {
-  color: #ffffff;
-  font-size: 15px;
-  padding-right: 10px;
-  text-align: right;
-}
-.r4vb-book .bk-back {
-  color: #ffffff;
-  font-size: 13px;
-  text-align: center;
-  font-weight: 700;
-}
-.r4vb-book .bk-cover {
-  background-image: url(/images/r4vb-cover.jpg);
-}
-.pft-book .bk-front > div,
-.pft-book .bk-back,
-.pft-book .bk-left,
-.pft-book .bk-front:after {
-  background-color: #d0161e;
-}
-.pft-book .bk-cover {
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-}
-.pft-book .bk-cover h2 {
-  position: absolute;
-  right: 0;
-  left: 0;
-  padding: 30px;
-  color: #ffffff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-.pft-book .bk-cover h2 span:first-child,
-.pft-book .bk-left h2 span:first-child {
-  text-transform: uppercase;
-  font-weight: 400;
-  font-size: 13px;
-  padding-right: 20px;
-}
-.pft-book .bk-cover h2 span:first-child {
-  display: block;
-}
-.pft-book .bk-left h2 {
-  color: #ffffff;
-  font-size: 15px;
-  padding-right: 10px;
-  text-align: right;
-}
-.pft-book .bk-back {
-  color: #ffffff;
-  font-size: 13px;
-  text-align: center;
-  font-weight: 700;
-}
+*/
 .i2p-book .bk-front > div,
 .i2p-book .bk-back,
 .i2p-book .bk-left,
