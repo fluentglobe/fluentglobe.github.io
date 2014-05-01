@@ -5866,3 +5866,17 @@ h6 {
 .orange-anchors a {
   color: #e15a1f;
 }
+.download-on-ibooks {
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  background: url(../images/badge_ibooks-lrg.png) no-repeat;
+  width: 110px;
+  height: 40px;
+  margin: 20px;
+}
+@media only screen {
+  .download-on-ibooks {
+    background-image: url(../images/badge_ibooks-lrg.svg);
+  }
+}
