@@ -2455,6 +2455,12 @@ html[lang=ch] body [lang=ar] {
   -webkit-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
 }
+.narrow-blurp {
+  margin: 40px auto 0 auto;
+  border: 0;
+  width: 10em;
+  text-align: center;
+}
 article {
   position: relative;
   width: 100%;
