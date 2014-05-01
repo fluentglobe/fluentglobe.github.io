@@ -85,6 +85,12 @@ input {
     text-align: center;
 }
 
+.bookspread {
+    .book-origin-common-layout();
+    .book-origin-layout(@bk-cover-base-width * .75,@bk-cover-base-height * .75);
+}
+
+
 @import "article";
 
 body {
@@ -484,7 +490,7 @@ html body.splash {
 
 @media only screen and (max-width: 799px) and (max-height : 719px) {
     #intro {
-        min-height: 64em;
+        min-height: 74em; // before increasing to 80em, resize the bg-image
     }
 }
 
@@ -617,6 +623,34 @@ html body.splash {
 // Phone < 5:
 @media screen and (device-aspect-ratio: 2/3) {
 
+    #intro {
+        height:100%;
+        min-height: initial;
+        max-height: initial;
+    }
+
+    html body.splash {
+        #intro {
+            height:100%;
+            min-height: initial;
+            max-height: initial;
+        }
+        article {
+            margin-top: 100%;
+        }
+    }
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
+    }
+}
+
+// iPhone 5 portrait
+@media screen and (device-aspect-ratio: 40/71) and (orientation:portrait) {
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
+    }
 }
 
 // iPhone 5 landscape and squashed browser:
@@ -638,6 +672,10 @@ html body.splash {
         article {
             margin-top: 100%;
         }
+    }
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
     }
 }
 
@@ -709,40 +747,5 @@ img.right-side-80 {
 @import "book-reader/css/book-shelf";
 @import "book-reader/css/book-spread";
 
-.bookspread {
-    .bk-origin {
-        width: @bk-cover-base-width * .75;
-        height: @bk-cover-base-height * .75;
-
-        .bk-front {
-            img {
-                width: 100%;
-            }
-        }
-    }
-
-    .book-center {
-        position: absolute;
-        margin-left: -.5 * @bk-cover-base-width * .75;
-        left: 50%;
-    }
-
-    .book-left-1 {
-        position: absolute;
-        margin-left: -(@bk-cover-base-width * .75 + 5px);
-        left: 50%;
-    }
-
-    .book-right-1 {
-        position: absolute;
-        margin-left: 5px;
-        left: 50%;
-    }
-    .book-right-2 {
-        position: absolute;
-        margin-left: (@bk-cover-base-width * .75 + 2 * 5px);
-        left: 50%;
-    }
-}
 
 @import "common/freshdesk";

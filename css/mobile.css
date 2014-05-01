@@ -2461,6 +2461,47 @@ html[lang=ch] body [lang=ar] {
   width: 10em;
   text-align: center;
 }
+.bookspread .bk-origin .bk-front img {
+  width: 100%;
+}
+.bookspread .book-center,
+.bookspread .book-left-1,
+.bookspread .book-left-2,
+.bookspread .book-right-1,
+.bookspread .book-right-2 {
+  position: absolute;
+}
+.bookspread .book-center,
+.bookspread .book-right-1,
+.bookspread .book-right-2 {
+  left: 50%;
+}
+.bookspread .book-left-1,
+.bookspread .book-left-2 {
+  right: 50%;
+}
+.bookspread div.bk-front,
+.bookspread div.bk-back-two,
+.bookspread div.bk-front,
+.bookspread .bk-origin {
+  width: 240px;
+  height: 362.25px;
+}
+.bookspread .book-center {
+  margin-left: -120px;
+}
+.bookspread .book-left-1 {
+  margin-right: 5px;
+}
+.bookspread .book-left-2 {
+  margin-right: 250px;
+}
+.bookspread .book-right-1 {
+  margin-left: 5px;
+}
+.bookspread .book-right-2 {
+  margin-left: 250px;
+}
 article {
   position: relative;
   width: 100%;
@@ -3037,7 +3078,7 @@ html body.splash #intro > footer {
 }
 @media only screen and (max-width: 799px) and (max-height: 719px) {
   #intro {
-    min-height: 64em;
+    min-height: 74em;
   }
 }
 @media only screen and (min-height: 720px) {
@@ -3125,6 +3166,67 @@ html body.splash #intro > footer {
     bottom: 50px;
   }
 }
+@media screen and (device-aspect-ratio: 2/3) {
+  #intro {
+    height: 100%;
+    min-height: initial;
+    max-height: initial;
+  }
+  html body.splash #intro {
+    height: 100%;
+    min-height: initial;
+    max-height: initial;
+  }
+  html body.splash article {
+    margin-top: 100%;
+  }
+  .bookspread div.bk-front,
+  .bookspread div.bk-back-two,
+  .bookspread div.bk-front,
+  .bookspread .bk-origin {
+    width: 144px;
+    height: 217.35px;
+  }
+  .bookspread .book-center {
+    margin-left: -72px;
+  }
+  .bookspread .book-left-1 {
+    margin-right: 5px;
+  }
+  .bookspread .book-left-2 {
+    margin-right: 154px;
+  }
+  .bookspread .book-right-1 {
+    margin-left: 5px;
+  }
+  .bookspread .book-right-2 {
+    margin-left: 154px;
+  }
+}
+@media screen and (device-aspect-ratio: 40/71) and (orientation: portrait) {
+  .bookspread div.bk-front,
+  .bookspread div.bk-back-two,
+  .bookspread div.bk-front,
+  .bookspread .bk-origin {
+    width: 144px;
+    height: 217.35px;
+  }
+  .bookspread .book-center {
+    margin-left: -72px;
+  }
+  .bookspread .book-left-1 {
+    margin-right: 5px;
+  }
+  .bookspread .book-left-2 {
+    margin-right: 154px;
+  }
+  .bookspread .book-right-1 {
+    margin-left: 5px;
+  }
+  .bookspread .book-right-2 {
+    margin-left: 154px;
+  }
+}
 @media screen and (device-aspect-ratio: 40/71) and (orientation: landscape), only screen and (max-height: 321px) {
   #intro {
     height: 100%;
@@ -3138,6 +3240,28 @@ html body.splash #intro > footer {
   }
   html body.splash article {
     margin-top: 100%;
+  }
+  .bookspread div.bk-front,
+  .bookspread div.bk-back-two,
+  .bookspread div.bk-front,
+  .bookspread .bk-origin {
+    width: 144px;
+    height: 217.35px;
+  }
+  .bookspread .book-center {
+    margin-left: -72px;
+  }
+  .bookspread .book-left-1 {
+    margin-right: 5px;
+  }
+  .bookspread .book-left-2 {
+    margin-right: 154px;
+  }
+  .bookspread .book-right-1 {
+    margin-left: 5px;
+  }
+  .bookspread .book-right-2 {
+    margin-left: 154px;
   }
 }
 html body.splash-garden #intro {
@@ -4942,6 +5066,9 @@ h6 {
 #book-reader .book-content.state-hidden {
   visibility: hidden;
 }
+.bookspread .right-col {
+  min-height: 402.25px;
+}
 .bookspread .bk-book {
   position: absolute;
 }
@@ -5512,33 +5639,6 @@ h6 {
     -moz-transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 445px);
     transform: rotate3d(0, 1, 0, 90deg) translate3d(0, 0, 445px);
   }
-}
-.bookspread .bk-origin {
-  width: 240px;
-  height: 362.25px;
-}
-.bookspread .bk-origin .bk-front img {
-  width: 100%;
-}
-.bookspread .book-center {
-  position: absolute;
-  margin-left: -120px;
-  left: 50%;
-}
-.bookspread .book-left-1 {
-  position: absolute;
-  margin-left: -245px;
-  left: 50%;
-}
-.bookspread .book-right-1 {
-  position: absolute;
-  margin-left: 5px;
-  left: 50%;
-}
-.bookspread .book-right-2 {
-  position: absolute;
-  margin-left: 250px;
-  left: 50%;
 }
 @media (max-width: 400px) {
   iframe.freshwidget-embedded-form {
