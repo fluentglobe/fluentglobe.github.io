@@ -787,7 +787,6 @@ essential.set("roleAccessor",roleAccessor);
 require('./impl.js'); 
 require('./form.js');
 
-
 function enhance_book(el,role,config) {
 
 	var reader = require('../bower_components/book-reader/index.js');
@@ -808,6 +807,14 @@ Resolver("page").set("handlers.enhance.book", enhance_book);
 Resolver("page").set("handlers.layout.book", layout_book);
 Resolver("page").set("handlers.discard.book", discard_book);
 
+Resolver("page").set("handlers.enhance.slider", require('./slider.js').enhance);
+Resolver("page").set("handlers.layout.slider", function(el,layout,instance) {
+    if (instance) return instance.layout(layout);
+});
+Resolver("page").set("handlers.discard.slider", function(el,role,instance) {
+    if (instance) instance.destroy(el);
+});
+
 
 if (window.angular) {
 
@@ -824,7 +831,37 @@ if (window.angular) {
 }
 
 
-},{"../bower_components/book-reader/index.js":4,"./form.js":1,"./impl.js":2}],4:[function(require,module,exports){
+},{"../bower_components/book-reader/index.js":5,"./form.js":1,"./impl.js":2,"./slider.js":4}],4:[function(require,module,exports){
+!function(window) {
+
+function Slider(el,role,config,context) {
+	jQuery(el).layerSlider(config);
+}
+Slider.prototype.layout = function() {};
+Slider.prototype.destroy = function() {};
+
+// module: reader export
+var slider = {};
+if(typeof module === 'object' && typeof module.exports === 'object') {
+	slider = module.exports;
+}
+else {
+	window.slider = slider;
+}
+
+slider.enhance = function(el,role,config,context) {
+    if (window.jQuery == undefined || jQuery.fn.layerSlider == undefined) return false;
+
+    var slider = new Slider(el,role,config,context);
+    return slider;
+}
+slider.Slider = Slider;
+
+
+}(window);
+
+
+},{}],5:[function(require,module,exports){
 !function(window) {
 
 /* jshint -W064: false */

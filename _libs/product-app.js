@@ -1,7 +1,6 @@
 require('./impl.js'); 
 require('./form.js');
 
-
 function enhance_book(el,role,config) {
 
 	var reader = require('../bower_components/book-reader/index.js');
@@ -21,6 +20,14 @@ function discard_book(el,role,instance) {
 Resolver("page").set("handlers.enhance.book", enhance_book);
 Resolver("page").set("handlers.layout.book", layout_book);
 Resolver("page").set("handlers.discard.book", discard_book);
+
+Resolver("page").set("handlers.enhance.slider", require('./slider.js').enhance);
+Resolver("page").set("handlers.layout.slider", function(el,layout,instance) {
+    if (instance) return instance.layout(layout);
+});
+Resolver("page").set("handlers.discard.slider", function(el,role,instance) {
+    if (instance) instance.destroy(el);
+});
 
 
 if (window.angular) {
