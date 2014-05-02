@@ -16,7 +16,8 @@
     <meta name="viewport" content="initial-scale=1.0"><!-- width=device-width,  -->
     <meta name="google" value="notranslate">
 
-    <meta name="enhanced roles" content="book dialog toolbar form navigation template">
+{% if page.enhancedRoles %}    <meta name="enhanced roles" content="{{ page.enhancedRoles }}">
+{% else %}    <meta name="enhanced roles" content="slider book dialog toolbar form navigation template">{% endif %}
 
 	<title>{% if page.title %} {{ page.title }} | {% endif %} {{site.title}}</title>
 	<meta name="description" content="{{ site.description }}">
