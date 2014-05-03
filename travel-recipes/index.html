@@ -4,6 +4,8 @@ layout: frontpage
 js-bundle: ../js/product-app.js
 app-name: productApp
 debug: true
+facebook-like-title: Going to Brazil?
+facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
 ---
 
 <div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
@@ -165,14 +167,7 @@ Pag 69 
   </section>
 
   <section class="main-text-section main-text" ng-controller="add-review as add">
-    <h3 lang="en"><a id="review">Going to Brazil?</a></h3>
-    <h4 lang="en">Meet others on our FaceBook page</h4>
-
-    <div class="fb-like-box" data-href="https://www.facebook.com/FluentGlobeTravelRecipes" data-width="300" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
-
-    <p>Or even better, help us by:</p>
-
-    <h3 lang="en">Please add a review</h3>
+    <h3 lang="en"><a id="review">Please add a review</a></h3>
 
     <p lang="en">Like us you probably prefer to buy books with interesting reviews. So please <b>help us</b> by adding one.</p>
     <p lang="en">If you have already had a look at the book and know what you would like to say, jump to the review link below.</p>
@@ -234,7 +229,7 @@ http://tinypic.com/r/1zptdud/8
   </section>
 
 	<footer class="constrained">
-    {% include page-footer-etc.html %}
+    {% include book/footer.html %}
 		{% include page-footer-copyright.html %}
 	</footer>
 </article>
