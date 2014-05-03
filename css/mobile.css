@@ -6627,3 +6627,40 @@ body * .ls-container .ls-webkit-hack,
   padding: 0;
   margin: 0 auto;
 }
+.splash article .with-slider .white-bg {
+  color: #ffa724;
+}
+.splash article .with-slider h1 {
+  font-size: 50px;
+  white-space: nowrap;
+}
+.splash article .with-slider .ls-l {
+  font-size: 20px;
+  color: #fff5e5;
+}
+.splash article .with-slider .flip-corner {
+  /*
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            */
+  color: #ff0046;
+}
+.splash article .with-slider .flip-corner span {
+  position: absolute;
+  display: block;
+  height: 1em;
+  right: 100px;
+  bottom: 1em;
+  white-space: nowrap;
+}
+.splash article .with-slider .flip-corner figure {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 90px;
+  height: 90px;
+  margin: 0;
+  background-repeat: no-repeat;
+  background: url(../images/slide-90.png) bottom right;
+}

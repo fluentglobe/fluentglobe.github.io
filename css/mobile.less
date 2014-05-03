@@ -777,8 +777,57 @@ img.right-side-80 {
 
 @import (less) "layerslider.css";
 
-.splash article .with-slider {
-    padding: 0;
-    margin: 0 auto;
+.splash article {
+    .with-slider {
+        padding: 0;
+        margin: 0 auto;
 
+        .white-bg {
+            color:#ffa724;
+        }
+
+        h1 {
+            font-size:50px;white-space: nowrap;
+        }
+
+        .ls-l {
+            font-size:20px;color:#fff5e5;
+        }
+
+        .flip-corner {
+
+            /*
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            */
+
+            // width: 200px;
+            // height: 150px;
+            color: rgb(255,0,70);
+
+            span {
+                position: absolute;
+                display: block;
+                height: 1em;
+                right: 100px;
+                bottom: 1em;
+                white-space: nowrap;
+            }
+
+            figure {
+                position: absolute;
+                right:0;
+                bottom:0;
+                width: 90px;
+                height: 90px;
+                margin: 0;
+                background-repeat: no-repeat;
+                background: url(../images/slide-90.png) bottom right;
+            }
+        }
+    }
 }
+
+
+
