@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-04-13
+/*! Fluent Globe - v0.1.0 - 2014-05-05
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 // https://github.com/medialize/URI.js
