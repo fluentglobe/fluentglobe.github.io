@@ -777,7 +777,7 @@ img.right-side-80 {
 
 @import (less) "layerslider.css";
 
-.splash article {
+#ls-global .splash article {
     .with-slider {
         padding: 0;
         margin: 0 auto;
@@ -811,19 +811,29 @@ img.right-side-80 {
                 display: block;
                 height: 1em;
                 right: 100px;
-                bottom: 1em;
+                bottom: 1.75em;
                 white-space: nowrap;
             }
 
             figure {
                 position: absolute;
-                right:0;
-                bottom:0;
+                right:5px;
+                bottom:10px;
                 width: 90px;
                 height: 90px;
                 margin: 0;
                 background-repeat: no-repeat;
                 background: url(../images/slide-90.png) bottom right;
+            }
+        }
+
+        .rounded-link {
+            img {
+                display: block;
+                width: 200px;
+                height: 200px;
+                border: 6px solid @fluent-red;
+                border-radius: 100px;
             }
         }
     }
