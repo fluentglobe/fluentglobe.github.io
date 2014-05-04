@@ -1,5 +1,6 @@
 require('./impl.js'); 
 require('./form.js');
+require('./router.js');
 
 function enhance_book(el,role,config) {
 
