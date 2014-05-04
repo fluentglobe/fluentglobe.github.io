@@ -100,6 +100,12 @@ module.exports = function(grunt) {
         ]
       },
 
+      app_map: {
+        files: [
+          { src: 'bower_components/es5-shim/es5-shim.map', dest: 'js/es5-shim.map' },
+        ]
+      },
+
       mediaelement: {
         files: [
           {
