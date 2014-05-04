@@ -882,6 +882,12 @@ RouterPath.prototype.updateEls = function(resource) {
 function Router() {
     this.hrefs = [];
     this.resourcesOn = {};
+    this.hashDriven = [];
+
+    addEventListeners(window,{
+        hashchange: this.hashchange.bind(this)
+
+    });
 }
 Router.prototype.setRoot = function(r) {
     this.root = r.toLowerCase();
@@ -942,12 +948,24 @@ Router.prototype.onAnchorClick = function(href,attributes) {
 };
 
 Router.prototype.requireHash = function(el,config) {
+    StatefulResolver(el,true);
+    this.hashDriven.push(el,config);
+    this._hideIfNotHash(el,config);
+};
+
+Router.prototype.hashchange = function(ev) {
+    for(var i=0,l=this.hashDriven.length; i<l; i+=2) {
+        var el = this.hashDriven[i], config = this.hashDriven[i+1];
+        this._hideIfNotHash(el,config);
+    }
+};
+
+Router.prototype._hideIfNotHash = function(el,config) {
     var id = el.id, hash = location.hash.replace("#","");
     if (typeof config["require-hash"] == "string") id = config["require-hash"];
-
-    StatefulResolver(el,true);
     el.stateful.set("state.hidden", id !== hash);
 };
+
 
 addEventListeners(document.documentElement,{
     "click": function(ev) {
@@ -988,7 +1006,7 @@ Resolver("document").on("change","readyState",function(ev) {
             if (config["require-hash"]) document.essential.router.requireHash(el,config);
         }
     }
-})
+});
 
 essentialRef.declare("router",new Router());
 
