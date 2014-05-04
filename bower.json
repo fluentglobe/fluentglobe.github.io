@@ -4,6 +4,7 @@
   "main": "assets/styles.css",
   "dependencies": {
     "jquery": "latest",
+    "es5-shim": "latest",
     "normalize-css": "latest",
     "essentialjs": "*",
     "bootstrap": "latest",
