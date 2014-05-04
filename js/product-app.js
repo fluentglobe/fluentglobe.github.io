@@ -1016,10 +1016,26 @@ essentialRef.declare("router",new Router());
 !function(window) {
 
 function Slider(el,role,config,context) {
+	config.cbPrev = this.cbPrev.bind(this);
+	config.cbNext = this.cbNext.bind(this);
 	jQuery(el).layerSlider(config);
 }
 Slider.prototype.layout = function() {};
 Slider.prototype.destroy = function() {};
+
+Slider.prototype.cbPrev = function(data) {
+	var prev = Resolver.config(data.nextLayer[0]);
+	if (prev && prev['set-hash']) location.hash = "#" + prev['set-hash'];
+	// curLayer (jQ), curLayerIndex
+	// version, prevNext (string)
+};
+Slider.prototype.cbNext = function(data) {
+	// data.nextLayerIndex = 0..
+	// data.nextLayer
+	var next = Resolver.config(data.nextLayer[0]);
+	// debugger;
+	if (next && next['set-hash']) location.hash = "#" + next['set-hash'];
+};
 
 // module: reader export
 var slider = {};
