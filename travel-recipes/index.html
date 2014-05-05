@@ -82,6 +82,11 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
         </div>
       </div>
 
+      <!-- suitcase -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:suitcase;" data-role="'set-hash':'suitcase'">
+        <img src="slides/p4.png" style="height: 100%;" class="ls-bg" alt="Slide background">
+      </div>
+
       <!-- things to avoid -->
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:avoid;" data-role="'set-hash':'avoid'">
         <img src="slides/p81.png" style="height: 100%;" class="ls-bg" alt="Slide background">
@@ -90,7 +95,7 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
       </div>
 
       <!-- food -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:avoid;" data-role="'set-hash':'food'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:food;" data-role="'set-hash':'food'">
         <img src="slides/p48.png" style="height: 100%;" class="ls-bg" alt="Slide background">
       </div>
 
@@ -125,6 +130,7 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
   </section>
 
   <section class="main-text-section main-text" ng-controller="add-review as add">
+    <div id="suitcase" data-role="'require-hash':'suitcase'">{% include book/brazil-pack-article.html %}</div>
     <div id="food" data-role="'require-hash':'food'">{% include book/brazil-food-article.html %}</div>
     <div id="safety" data-role="'require-hash':'safety'">{% include book/brazil-safety-article.html %}</div>
     <div id="cities" data-role="'require-hash':'cities'">{% include book/brazil-cities-article.html %}</div>
