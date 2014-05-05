@@ -102,7 +102,8 @@ module.exports = function(grunt) {
 
       app_map: {
         files: [
-          { src: 'bower_components/es5-shim/es5-shim.map', dest: 'js/es5-shim.map' },
+          { src: 'bower_components/es5-shim/es5-shim.js', dest: 'js/es5-shim.js' },
+          { src: 'bower_components/es5-shim/es5-shim.map', dest: 'js/es5-shim.map' }
         ]
       },
 
