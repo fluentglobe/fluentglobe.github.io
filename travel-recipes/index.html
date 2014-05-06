@@ -52,7 +52,7 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
   <section role="slider" data-role="'autoStart':false,'pauseOnHover':false,'autoPlayVideos':false, 'skinsPath':'../assets/skins/', 'skin':'fullwidthdark'" class="with-slider main-text-section main-text" style="height:748px;">
 
       <div class="ls-slide" data-ls="slidedelay:5000;">
-        <img src="slides/2435.jpg" style="height: 100%;" class="ls-bg" alt="Slide background">
+        <img src="slides/2435.jpg" style="height: 748px;" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
         <div hidden>
@@ -84,24 +84,33 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
 
       <!-- suitcase -->
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:suitcase;" data-role="'set-hash':'suitcase'">
-        <img src="slides/p4.png" style="height: 100%;" class="ls-bg" alt="Slide background">
-      </div>
-
-      <!-- things to avoid -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:avoid;" data-role="'set-hash':'avoid'">
-        <img src="slides/p81.png" style="height: 100%;" class="ls-bg" alt="Slide background">
-        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
-
+        <img src="slides/p4.png" style="height: 748px;" class="ls-bg" alt="Slide background">
       </div>
 
       <!-- food -->
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:food;" data-role="'set-hash':'food'">
-        <img src="slides/p48.png" style="height: 100%;" class="ls-bg" alt="Slide background">
+        <img src="slides/p48.png" style="height: 748px;" class="ls-bg" alt="Slide background">
+      </div>
+
+      <!-- language -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:language;" data-role="'set-hash':'language'">
+        <img src="slides/p23.png" style="height: 748px;" class="ls-bg" alt="Slide background">
+      </div>
+
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92;" data-role="'set-hash':'language'">
+        <img src="slides/p26.jpg" style="height: 748px;" class="ls-bg" alt="Slide background">
+      </div>
+
+      <!-- things to avoid -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:avoid;" data-role="'set-hash':'avoid'">
+        <img src="slides/p81.png" style="height: 748px;" class="ls-bg" alt="Slide background">
+        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
+
       </div>
 
       <!-- cities -->
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:cities;" data-role="'set-hash':'cities'">
-        <img src="slides/p90.png" style="height: 100%;" class="ls-bg" alt="Slide background">
+        <img src="slides/p90.png" style="height: 748px;" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
       </div>
@@ -122,16 +131,17 @@ facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
       -->
 
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; deeplink:review;" data-role="'set-hash':'review'">
-        <img src="/images/review-p1.jpg" style="height: 100%;" class="ls-bg" alt="Slide background"/>
+        <img src="/images/review-p1.jpg" style="height: 748px" class="ls-bg" alt="Slide background"/>
       </div>
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; ">
-        <img src="/images/review-p2.jpg" style="height: 100%;" class="ls-bg" alt="Slide background"/>
+        <img src="/images/review-p2.jpg" style="height: 748px" class="ls-bg" alt="Slide background"/>
       </div>
   </section>
 
   <section class="main-text-section main-text" ng-controller="add-review as add">
     <div id="suitcase" data-role="'require-hash':'suitcase'">{% include book/brazil-pack-article.html %}</div>
     <div id="food" data-role="'require-hash':'food'">{% include book/brazil-food-article.html %}</div>
+    <div id="language" data-role="'require-hash':'language'">{% include book/brazil-language-article.html %}</div>
     <div id="safety" data-role="'require-hash':'safety'">{% include book/brazil-safety-article.html %}</div>
     <div id="cities" data-role="'require-hash':'cities'">{% include book/brazil-cities-article.html %}</div>
     <div id="review" data-role="'require-hash':'review'">{% include book/review-article.html %}</div>
