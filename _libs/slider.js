@@ -9,23 +9,25 @@ Slider.prototype.layout = function() {};
 Slider.prototype.destroy = function() {};
 
 Slider.prototype.cbPrev = function(data) {
-	var prev = Resolver.config(data.nextLayer[0]);
-	if (prev && prev['set-hash']) {
-		location.hash = "#" + prev['set-hash'];
-		document.essential.router.hashchange();
-	}
+
+	setTimeout( this.reflectSlide.bind(this,"prev",data), 100 );
+
 	// curLayer (jQ), curLayerIndex
 	// version, prevNext (string)
 };
 Slider.prototype.cbNext = function(data) {
 	// data.nextLayerIndex = 0..
 	// data.nextLayer
-	var next = Resolver.config(data.nextLayer[0]);
-	//TODO why is attribute not there???
-	if (next && next['set-hash']) {
-		location.hash = "#" + next['set-hash'];
-		document.essential.router.hashchange();
-	}
+
+	setTimeout( this.reflectSlide.bind(this,"next",data), 100 );
+};
+
+Slider.prototype.reflectSlide = function(direction,data) {
+
+	var config = Resolver.config(data.nextLayer[0]);
+	// console.log(direction, config? config["set-hash"]:"???", data.nextLayer[0], config);
+
+	if (config && config['set-hash']) document.essential.router.setHash(config['set-hash']);
 };
 
 // module: reader export

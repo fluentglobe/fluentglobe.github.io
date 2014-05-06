@@ -118,6 +118,11 @@ Router.prototype.requireHash = function(el,config) {
     this._hideIfNotHash(el,config);
 };
 
+Router.prototype.setHash = function(name) {
+    location.hash = "#" + name;
+    this.hashchange();
+};
+
 Router.prototype.hashchange = function(ev) {
     for(var i=0,l=this.hashDriven.length; i<l; i+=2) {
         var el = this.hashDriven[i], config = this.hashDriven[i+1];
