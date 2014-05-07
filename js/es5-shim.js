@@ -45,6 +45,13 @@ var array_splice = Array.prototype.splice;
 var array_push = Array.prototype.push;
 var array_unshift = Array.prototype.unshift;
 
+var isFunction = function (val) {
+    return prototypeOfObject.toString.call(val) === '[object Function]';
+};
+var isRegex = function (val) {
+    return prototypeOfObject.toString.call(val) === '[object RegExp]';
+};
+
 //
 // Function
 // ========
@@ -60,7 +67,7 @@ if (!Function.prototype.bind) {
         // 1. Let Target be the this value.
         var target = this;
         // 2. If IsCallable(Target) is false, throw a TypeError exception.
-        if (typeof target !== "function") {
+        if (!isFunction(target)) {
             throw new TypeError("Function.prototype.bind called on incompatible " + target);
         }
         // 3. Let A be a new (possibly empty) internal list of all of the
@@ -148,7 +155,7 @@ if (!Function.prototype.bind) {
             boundArgs.push("$" + i);
         }
 
-        // XXX Build a dynamic function with desired amount of arguments is the only 
+        // XXX Build a dynamic function with desired amount of arguments is the only
         // way to set the length property of a function.
         // In environments where Content Security Policies enabled (Chrome extensions,
         // for ex.) all use of eval or Function costructor throws an exception.
@@ -217,8 +224,8 @@ if ((supportsAccessors = owns(prototypeOfObject, "__defineGetter__"))) {
 // Default value for second param
 // [bugfix, ielt9, old browsers]
 // IE < 9 bug: [1,2].splice(0).join("") === "" but should be "12"
-if ([1,2].splice(0).length != 2) {
-    if (function() { // test IE < 9 to splice bug - see issue #138
+if ([1, 2].splice(0).length !== 2) {
+    if (function () { // test IE < 9 to splice bug - see issue #138
         function makeArray(l) {
             var a = [];
             while (l--) {
@@ -242,7 +249,7 @@ if ([1,2].splice(0).length != 2) {
         // else {
         //    IE8 bug
         // }
-    }()) {//IE 6/7
+    }()) { // IE 6/7
         Array.prototype.splice = function(start, deleteCount) {
             if (!arguments.length) {
                 return [];
@@ -253,8 +260,7 @@ if ([1,2].splice(0).length != 2) {
                 ].concat(_Array_slice_.call(arguments, 2)));
             }
         };
-    }
-    else {//IE8
+    } else { // IE8
         Array.prototype.splice = function(start, deleteCount) {
             var result;
             var args = _Array_slice_.call(arguments, 2);
@@ -308,7 +314,7 @@ if ([1,2].splice(0).length != 2) {
 // Return len+argCount.
 // [bugfix, ielt8]
 // IE < 8 bug: [].unshift(0) === undefined but should be "1"
-if ([].unshift(0) != 1) {
+if ([].unshift(0) !== 1) {
     Array.prototype.unshift = function() {
         array_unshift.apply(this, arguments);
         return this.length;
@@ -344,7 +350,7 @@ if (!Array.isArray) {
 // Check failure of by-index access of string characters (IE < 9)
 // and failure of `0 in boxedString` (Rhino)
 var boxedString = Object("a");
-var splitString = boxedString[0] != "a" || !(0 in boxedString);
+var splitString = boxedString[0] !== "a" || !(0 in boxedString);
 
 var properlyBoxesContext = function properlyBoxed(method) {
     // Check node 0.6.21 bug where third parameter is not boxed
@@ -368,7 +374,7 @@ if (!Array.prototype.forEach || !properlyBoxesContext(Array.prototype.forEach)) 
             length = self.length >>> 0;
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(); // TODO message
         }
 
@@ -397,7 +403,7 @@ if (!Array.prototype.map || !properlyBoxesContext(Array.prototype.map)) {
             thisp = arguments[1];
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -424,7 +430,7 @@ if (!Array.prototype.filter || !properlyBoxesContext(Array.prototype.filter)) {
             thisp = arguments[1];
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -453,7 +459,7 @@ if (!Array.prototype.every || !properlyBoxesContext(Array.prototype.every)) {
             thisp = arguments[1];
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -479,7 +485,7 @@ if (!Array.prototype.some || !properlyBoxesContext(Array.prototype.some)) {
             thisp = arguments[1];
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -508,7 +514,7 @@ if (!Array.prototype.reduce || !reduceCoercesToObject) {
             length = self.length >>> 0;
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -557,7 +563,7 @@ if (!Array.prototype.reduceRight) {
             length = self.length >>> 0;
 
         // If no callback function or if callback is not a callable function
-        if (_toString(fun) != "[object Function]") {
+        if (!isFunction(fun)) {
             throw new TypeError(fun + " is not a function");
         }
 
@@ -600,7 +606,7 @@ if (!Array.prototype.reduceRight) {
 // ES5 15.4.4.14
 // http://es5.github.com/#x15.4.4.14
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
-if (!Array.prototype.indexOf || ([0, 1].indexOf(1, 2) != -1)) {
+if (!Array.prototype.indexOf || ([0, 1].indexOf(1, 2) !== -1)) {
     Array.prototype.indexOf = function indexOf(sought /*, fromIndex */ ) {
         var self = splitString && _toString(this) === "[object String]" ?
                 this.split("") :
@@ -630,7 +636,7 @@ if (!Array.prototype.indexOf || ([0, 1].indexOf(1, 2) != -1)) {
 // ES5 15.4.4.15
 // http://es5.github.com/#x15.4.4.15
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/lastIndexOf
-if (!Array.prototype.lastIndexOf || ([0, 1].lastIndexOf(0, -3) != -1)) {
+if (!Array.prototype.lastIndexOf || ([0, 1].lastIndexOf(0, -3) !== -1)) {
     Array.prototype.lastIndexOf = function lastIndexOf(sought /*, fromIndex */) {
         var self = splitString && _toString(this) === "[object String]" ?
                 this.split("") :
@@ -676,9 +682,6 @@ if (!Object.keys) {
             "constructor"
         ],
         dontEnumsLength = dontEnums.length,
-        isFunction = function isFunction(value) {
-            return _toString(value) === '[object Function]';
-        },
         isArguments = function isArguments(value) {
             var str = _toString(value);
             var isArgs = str === '[object Arguments]';
@@ -828,7 +831,7 @@ if (!dateToJSONIsSupported) {
         // O with argument "toISOString".
         toISO = o.toISOString;
         // 5. If IsCallable(toISO) is false, throw a TypeError exception.
-        if (typeof toISO != "function") {
+        if (typeof toISO !== "function") {
             throw new TypeError("toISOString property is not callable");
         }
         // 6. Return the result of calling the [[Call]] internal method of
@@ -1279,6 +1282,35 @@ if (
     };
 }
 
+var str_replace = String.prototype.replace;
+var replaceReportsGroupsCorrectly = (function () {
+    var groups = [];
+    'x'.replace(/x(.)?/g, function (match, group) {
+        groups.push(group);
+    });
+    return groups.length === 1 && typeof groups[0] === 'undefined';
+}());
+
+if (!replaceReportsGroupsCorrectly) {
+    String.prototype.replace = function replace(searchValue, replaceValue) {
+        var isFn = isFunction(replaceValue);
+        var hasCapturingGroups = isRegex(searchValue) && (/\)[*?]/).test(searchValue.source);
+        if (!isFn || !hasCapturingGroups) {
+            return str_replace.apply(this, arguments);
+        } else {
+            var wrappedReplaceValue = function (match) {
+                var length = arguments.length;
+                var originalLastIndex = searchValue.lastIndex;
+                searchValue.lastIndex = 0;
+                var args = searchValue.exec(match);
+                searchValue.lastIndex = originalLastIndex;
+                args.push(arguments[length - 2], arguments[length - 1]);
+                return replaceValue.apply(this, args);
+            };
+            return str_replace.call(this, searchValue, wrappedReplaceValue);
+        }
+    };
+}
 
 // ECMA-262, 3rd B.2.3
 // Note an ECMAScript standart, although ECMAScript 3rd Edition has a
@@ -1369,20 +1401,20 @@ function isPrimitive(input) {
 }
 
 function toPrimitive(input) {
-    var val, valueOf, toString;
+    var val, valueOf, toStr;
     if (isPrimitive(input)) {
         return input;
     }
     valueOf = input.valueOf;
-    if (typeof valueOf === "function") {
+    if (isFunction(valueOf)) {
         val = valueOf.call(input);
         if (isPrimitive(val)) {
             return val;
         }
     }
-    toString = input.toString;
-    if (typeof toString === "function") {
-        val = toString.call(input);
+    toStr = input.toString;
+    if (isFunction(toStr)) {
+        val = toStr.call(input);
         if (isPrimitive(val)) {
             return val;
         }
