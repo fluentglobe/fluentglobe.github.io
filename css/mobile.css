@@ -2757,6 +2757,10 @@ body .menu nav.flag label {
 body .menu nav.flag label output {
   color: #f83104;
 }
+.principal-pic {
+  position: absolute;
+  z-index: -9999;
+}
 .center-piece {
   position: absolute;
   top: 0;
