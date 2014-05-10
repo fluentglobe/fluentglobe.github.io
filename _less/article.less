@@ -18,6 +18,72 @@ article {
     // .checkbox-switcher {
     //     .switch-checkbox();
     // }
+
+    section {
+        header {
+            .clearfix();
+            text-align: center;
+
+            h1 {
+            }
+
+            img.feature {
+                width:300px;
+                padding: 0 10px 10px 10px;
+                margin-top: -20px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    article {
+        section {
+            header {
+                .feature {
+                    padding: 0 20px 20px 20px;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 799px) {
+    article {
+        section {
+            header {
+                h1 {
+                    text-align: left;
+                    margin-left: 1em;
+                }
+                .feature.left {
+                    float: left;
+                }
+                .feature.right {
+                    float: right;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1299px) {
+    article {
+        section {
+            header {
+                min-height: 100px;
+                .feature {
+                    position: absolute;
+                }
+                .feature.left {
+                    left: 0;
+                }
+                .feature.right {
+                    right: 0;
+                }
+            }
+        }
+    }
 }
 
 #intro,

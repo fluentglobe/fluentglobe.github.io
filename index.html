@@ -19,53 +19,63 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 -->
 <script type="application/config">{% include signup-config.js %}</script>
 
-    <div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
 
-      <aside class="we-love"><figure></figure> {% include we-love.html %} </aside>
+  <aside class="we-love"><figure></figure> {% include we-love.html %} </aside>
 
-      <section class="benefits"> {% include benefits.html %} </section>
+  <section class="benefits"> {% include benefits.html %} </section>
 
-      <div class="form-and-story">
+  <div class="form-and-story">
 
-      <form id="signup" class="signup" role="form"
-        action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-        method="post"
-        enctype="application/x-www-form-urlencoded"
-        >
+  <form id="signup" class="signup" role="form"
+    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
+    method="post"
+    enctype="application/x-www-form-urlencoded"
+    >
 
-        <fieldset>
-        {% include start-learning.html %}
+    <fieldset>
+    {% include start-learning.html %}
 
-        <input type="hidden" name="from-country">
-        <input type="hidden" name="native-language">
-        <input placeholder="Your Name" name="name" type="text" size="15" required>
-        <input placeholder="e-mail" name="email" type="email" size="15" required>
-        <button class="btn primary double-corner"> {% include plan-button.html %} </button>
-        </fieldset>
-      </form>
+    <input type="hidden" name="from-country">
+    <input type="hidden" name="native-language">
+    <input placeholder="Your Name" name="name" type="text" size="15" required>
+    <input placeholder="e-mail" name="email" type="email" size="15" required>
+    <button class="btn primary double-corner"> {% include plan-button.html %} </button>
+    </fieldset>
+  </form>
 
-      <section class="story"> {% include story.html %} </section>
-      </div>
+  <section class="story"> {% include story.html %} </section>
+  </div>
 
-      <footer></footer>
+  <footer></footer>
 
-    </div>
+</div>
 
 
 <main>
 
+  <article>
+  	<header id="more-to-tell">
+      {% include site-follow.html %}
+    </header>
 
-    <article>
-    	<header id="more-to-tell">
-        {% include site-follow.html %}
-      </header>
-        <section class="first">
-        {% include layered-cake-article.html %}
-        </section>
+    <section class="first bookspread">
+      {% include layered-cake-article.html %}
 
-        <section style="text-align: center; display:none;">
+      <div class="left-col">
+        <div role="book" class="book-center" data-role="'prefix':'r4vb','src':'/speak/recipes-brazil.html','spread':true">
+        {% include book/r4vb-info.html %}
+        </div>
+      </div>
 
-            <h3>It starts with a few words</h3>
+      <div class="right-col" style="height:300px;">
+      </div>
+
+    </section>
+
+    <section style="text-align: center; display:none;">
+
+        <h3>It starts with a few words</h3>
 <p lang="en">We have lived in 7 different countries,
 and haven't settled yet.
 </p>
