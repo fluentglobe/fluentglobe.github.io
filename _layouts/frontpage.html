@@ -19,6 +19,9 @@ body-class: splash splash-color
    //      });
    //    };
 
+
+//TODO <link rel="subresource">
+
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
@@ -27,40 +30,6 @@ body-class: splash splash-color
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-    <script>
-        !function() {
-            var afterImageOffset = 180;
-
-        function placeParts() {
-            var contentHeight = introFooter.offsetTop, afterContent = 100,
-                bgWidth = tracer.offsetWidth, bgHeight = tracer.offsetHeight;
-            var maxHeight = bgHeight;
-            if (bgHeight < bgWidth) Math.floor(Math.max(bgHeight,(intro.offsetWidth * bgHeight / bgWidth)));
-            maxHeight = Math.min(maxHeight, contentHeight + afterContent)
-            intro.style.maxHeight = maxHeight + "px";
-
-            /* 
-                tracer 0 indicates intro & article relative
-            */
-            if (bgHeight == 0) article.style.top = "0";
-            else if (contentHeight) article.style.top = intro.offsetHeight+"px";
-            // var scaledImage = (afterImageOffset * intro.offsetWidth / bgWidth);
-
-            //console.log("height <=",maxHeight,"article free",intro.offsetHeight,bgWidth,bgHeight,introFooter.offsetTop); //,"scaled",scaledImage);
-        }
-
-        var intro = document.getElementById("intro"),
-            introFooter = document.querySelector("#intro > footer");
-        var article = document.querySelector('article');
-        var tracer = document.getElementById("tracer");
-
-        if (intro && introFooter) {
-            placeParts();
-            if (window.addEventListener) window.addEventListener("resize",placeParts,true);
-            else window.attachEvent("onresize",placeParts);
-        }
-        }();
-    </script>
     <!--
     <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
     <style type="text/css" media="screen, projection">

@@ -23,8 +23,10 @@ module.exports = function(grunt) {
         src: [
           '_libs/prefix.js',
           'bower_components/essentialjs/js/modernizr-custom.js',
-          'bower_components/es5-shim/es5-shim.min.js',          
-          'bower_components/essentialjs/essential.js'
+          // 'bower_components/es5-shim/es5-shim.min.js',          
+          'bower_components/es5-shim/es5-shim.js',          
+          'bower_components/essentialjs/essential.js',
+          '_libs/head.js'
         ],
         dest: 'js/modernizr+essential.js'
       },
