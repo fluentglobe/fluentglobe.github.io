@@ -4,14 +4,13 @@
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf) {
 
 		this.lowBoundsWidth = conf.lowBoundsWidth || 800;
+		this.afterContent = conf.afterContent || 100;
 		// this.placeParts(el);
 		this.article = el.querySelector("article");
 		this.tracer = el.querySelector("tracer");
 		this.intro = el.querySelector("#intro");
 		this.introFooter = el.querySelector("#intro > footer");
 
-		//TODO way to flag immediate layout
-		this.layout(el,{ height: el.offsetHeight, width: el.offsetWidth },[]);
 	},Layouter,{ 
 		prototype: {
 
@@ -19,14 +18,15 @@
 				//TODO add tracer element instead of having it in frontpage.html
 
 				//TODO configurable after content gap
-				var contentHeight = this.introFooter? this.introFooter.offsetTop : layout.height, afterContent = 100,
+				var contentHeight = this.introFooter? this.introFooter.offsetTop : layout.height,
 					bgWidth = this.tracer? this.tracer.offsetWidth : layout.width, bgHeight = this.tracer? this.tracer.offsetHeight : layout.height;
 
-	            var maxHeight = bgHeight;
+	            var maxHeight = Math.min(bgHeight,layout.height);
 				var introHeight = layout.height;
 
-				if (bgWidth <= this.lowBoundsWidth) {
-					if (this.intro) this.intro.style.maxHeight = "";
+				if (layout.width <= this.lowBoundsWidth) {
+		            maxHeight = Math.min(bgHeight, contentHeight + this.afterContent);
+					if (this.intro) this.intro.style.maxHeight = maxHeight + "px";
 					if (this.article) this.article.style.top = "";
 				}
 				else {
@@ -34,7 +34,7 @@
 		            if (bgHeight < bgWidth) maxHeight = Math.floor(Math.max(bgHeight,(layout.width * bgHeight / bgWidth)));
 
 		            // no more than content in intro
-		            maxHeight = Math.min(maxHeight, contentHeight + afterContent);
+		            maxHeight = Math.min(maxHeight, contentHeight + this.afterContent);
 
 					if (this.intro) {
 			            this.intro.style.maxHeight = maxHeight + "px";
@@ -54,7 +54,9 @@
 	//TODO move to lib
 	Resolver("document::readyState").on("change",function(ev) {
 		if (ev.value == "complete" || ev.value == "interactive") {
-			Resolver("essential::DescriptorQuery::")(document.body).enhance();
+			var body = Resolver("essential::DescriptorQuery::")(document.body);
+			body[0].conf.sizingElement = true;
+			body.enhance();
 		}
 	});
 
