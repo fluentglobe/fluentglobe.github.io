@@ -212,9 +212,9 @@ module.exports = function(grunt) {
     // },
 
     typescript: {
-      base: {
-        src: ['_libs/*.ts','**/*.ts'],
-        dest: 'js',
+      body: {
+        src: ['_libs/body.ts'],
+        dest: 'js/body.js',
         options: {
           basePath: '_libs',
           target: 'es5' //or es3
