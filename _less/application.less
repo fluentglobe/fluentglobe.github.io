@@ -1,7 +1,7 @@
 @import "common/mixins";
 @import "bootstrap/less/mixins";
 
-.intro-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max) {
+.intro-on-body(@image:url(../images/girl-on-terrace.jpg),@image-portrait:url(../images/girl-on-terrace.jpg),@min-height: @top-splash-room, @max-height: @top-splash-max, @bg-color: black) {
 
     #intro {
 
@@ -13,7 +13,7 @@
 
         //padding-top: 200px;
         color: white;
-
+        background-color: @bg-color;
         background-image: @image;
         background-position: top left;
         background-repeat: no-repeat; 

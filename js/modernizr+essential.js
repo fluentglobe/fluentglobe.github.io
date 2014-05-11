@@ -3768,7 +3768,7 @@ Generator.discardRestricted = function()
 			this._updateLayouterContext();
 			var varLayouter = Layouter.variants[this.conf.layouter];
 			if (varLayouter) {
-				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.context.layouterParent);
+				this.layouter = this.el.layouter = varLayouter.generator(key,this.el,this.conf,this.context.layouterParent,this.context);
 				if (this.context.layouterParent) sizingElements[this.uniqueID] = this; //TODO not sure this is needed, adds overhead
 				if (varLayouter.generator.prototype.hasOwnProperty("layout")) {
 					this.layout.enable = true;
@@ -10347,17 +10347,25 @@ Resolver("page::state.managed").on("change",function(ev) {
 }();
 
 !function() {
-	var Layouter = Resolver("essential::Layouter::");
+	var Layouter = Resolver("essential::Layouter::"),
+		Placement = Resolver("essential::ElementPlacement::");
 
-	Layouter.variant("intro-plus-article",Generator(function(key,el,conf) {
+	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
 		this.lowBoundsWidth = conf.lowBoundsWidth || 800;
-		this.afterContent = conf.afterContent || 100;
+		this.afterContent = conf.afterContent || 60;
 		// this.placeParts(el);
 		this.article = el.querySelector("article");
 		this.tracer = el.querySelector("tracer");
 		this.intro = el.querySelector("#intro");
 		this.introFooter = el.querySelector("#intro > footer");
+
+		// if (this.intro) {
+		// 	this.introPlacement = new Placement(this.intro);
+		// 	this.introPlacement.manually(['paddingTop','paddingBottom']);
+
+		// 	this.paddingVert = parseInt(this.introPlacement.style.paddingTop) + parseInt(this.introPlacement.style.paddingBottom);
+		// }
 
 	},Layouter,{ 
 		prototype: {
@@ -10366,35 +10374,26 @@ Resolver("page::state.managed").on("change",function(ev) {
 				//TODO add tracer element instead of having it in frontpage.html
 
 				//TODO configurable after content gap
-				var contentHeight = this.introFooter? this.introFooter.offsetTop : layout.height,
-					bgWidth = this.tracer? this.tracer.offsetWidth : layout.width, bgHeight = this.tracer? this.tracer.offsetHeight : layout.height;
+				var contentHeight = this.introFooter? this.introFooter.offsetTop + this.introFooter.offsetHeight : layout.height,
+					bgWidth = this.tracer? this.tracer.offsetWidth : layout.width, bgHeight = this.tracer? this.tracer.offsetHeight : layout.height,
+					effectiveBgHeight = Math.floor( bgHeight * layout.width/bgWidth ),
+					fixedIntro = !(layout.width <= this.lowBoundsWidth);
 
-	            var maxHeight = Math.min(bgHeight,layout.height);
 				var introHeight = layout.height;
+		        var maxHeight = fixedIntro? Math.min(effectiveBgHeight, layout.height, contentHeight + this.afterContent) : (contentHeight + this.afterContent);
 
-				if (layout.width <= this.lowBoundsWidth) {
-		            maxHeight = Math.min(bgHeight, contentHeight + this.afterContent);
-					if (this.intro) this.intro.style.maxHeight = maxHeight + "px";
-					if (this.article) this.article.style.top = "";
+				if (this.intro) {
+		            this.intro.style.maxHeight = maxHeight + "px";
+		            // Since maxheight doesn't seem to be applied immediately, do it in code
+					introHeight = Math.min(this.intro.offsetHeight,maxHeight);
 				}
-				else {
-		            // relative dimensions
-		            if (bgHeight < bgWidth) maxHeight = Math.floor(Math.max(bgHeight,(layout.width * bgHeight / bgWidth)));
+		        // console.log(effectiveBgHeight,fixedIntro,introHeight,maxHeight);
 
-		            // no more than content in intro
-		            maxHeight = Math.min(maxHeight, contentHeight + this.afterContent);
-
-					if (this.intro) {
-			            this.intro.style.maxHeight = maxHeight + "px";
-						introHeight = this.intro.offsetHeight;
-					}
-
-					if (this.article) {
-
-			            if (bgHeight == 0) this.article.style.top = "0";
-			            else if (contentHeight) this.article.style.top = introHeight+"px";
-					}
+				if (this.article) {
+		            if (!fixedIntro || bgHeight == 0) this.article.style.top = "0";
+		            else if (contentHeight) this.article.style.top = introHeight+"px";
 				}
+
 			}
 		}
 	}));
