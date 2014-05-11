@@ -160,7 +160,7 @@ Resolver("document").elementsWithConfig = function() {
     //TODO change when appliedConfig is mixed in
     for(var n in config) {
         //TODO better lookup of element
-        var el = document.body.getElementById(n);
+        var el = document.getElementById(n);
         if (el) els.push(el);
     }
 
