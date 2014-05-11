@@ -11,3 +11,7 @@ Build approach / ideas,
 
 http://dontkry.com/posts/code/angular-browserify-grunt.html
 
+
+
+> npm install -g grunt
+> npm install -g typescript

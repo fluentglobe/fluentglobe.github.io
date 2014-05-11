@@ -211,6 +211,17 @@ module.exports = function(grunt) {
     //   }
     // },
 
+    typescript: {
+      base: {
+        src: ['_libs/*.ts','**/*.ts'],
+        dest: 'js',
+        options: {
+          basePath: '_libs',
+          target: 'es5' //or es3
+        }
+      }
+    },
+
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -224,6 +235,10 @@ module.exports = function(grunt) {
       sass: {
         files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
         tasks: 'sass:dev'
+      },
+      typescript: {
+        files: ['**/*.ts'],
+        tasks: ['typescript']
       },
       scripts: {
         files: ['_libs/*.js', 'assets/lib/**/*.js','bower_components/**/*.js'],
@@ -315,7 +330,7 @@ module.exports = function(grunt) {
     },
 
     concurrent: {
-      tasks: ['watch:less',/*'watch:sass',*/ 'watch:scripts', 'jekyll:dev'],
+      tasks: ['watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript', 'jekyll:dev'],
       options: {
         logConcurrentOutput: true
       }
@@ -350,10 +365,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-typescript');
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','concurrent']
+    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','typescript','concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
