@@ -6,7 +6,7 @@ base-body-class:
 <!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}><!--<![endif]-->
 
 <head
-{% if page.og-namespace %}prefix="ogns: {{ page.og-namespace }}" {% endif %}
+{% if page.og-namespace %}prefix="vertical: {{ page.og-namespace }}" {% endif %}
 >
   <meta name="p:domain_verify" content="3b56841eaf51184a3ddc7b704a471e45"/>
   <script type="application/config">
@@ -14,11 +14,11 @@ base-body-class:
   declare("body.layouter","intro-plus-article");
   </script>
 
-  {% if page.og-type %}<meta property="og:type" content="ogns:{{ page.og-type }}">{% endif %}
-  {% if page.og-author %}<meta property="ogns:author" content="{{ page.og-author }}">{% endif %}
-  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="ogns:tag" content="{{ tag }}">
+  {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
+  {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
+  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
   {% endfor %}{% endif %}
-  {% if page.og-images %}{% for image in page.og-images %}<meta property="ogns:image" content="{{ image }}">
+  {% if page.og-images %}{% for image in page.og-images %}<meta property="vertical:image" content="{{ image }}">
   {% endfor %}{% endif %}
   {% include ipad_friendly_html5_head.html %}
 
