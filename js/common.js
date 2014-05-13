@@ -193,7 +193,7 @@ Book.prototype.pageLoad = function(ev) {
 		header = ev.page.body.querySelector("body > header"),
 		footer = ev.page.body.querySelector("body > footer"),
 		title = ev.page.head.querySelector("title"),
-		author = ev.page.head.querySelector("meta[name=author]");
+		author = ev.page.head.querySelector("meta[name=author]"),
 		bookEl = this.bookEl = HTMLElement("div",{"class": bindingClass});
 
 	// front used in all cases
