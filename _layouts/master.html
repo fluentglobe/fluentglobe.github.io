@@ -15,7 +15,8 @@ base-body-class:
   </script>
 
   {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
-  {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
+  {% if page.og-author-first-name %}<meta property="vertical:author:first_name" content="{{ page.og-author-first-name }}">{% endif %}
+  {% if page.og-author-last-name %}<meta property="vertical:author:last_name" content="{{ page.og-author-last-name }}">{% endif %}
   {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
   {% endfor %}{% endif %}
   {% if page.og-images %}{% for image in page.og-images %}<meta property="vertical:image" content="{{ image }}">
