@@ -1,6 +1,7 @@
 ---
 layout: frontpage
 base-body-class: with-menu 
+js-bundle: js/body.js
 ---
 
 <!--     <div role="toolbar" data-role="'generator':'app.Application'" action="controls">
@@ -59,17 +60,14 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
       {% include site-follow.html %}
     </header>
 
-    <section class="first bookspread">
+    <section class="first bookspread" style="padding-bottom: 300px;">
       {% include layered-cake-article.html %}
 
-      <div class="left-col">
-        <div role="book" class="book-center" data-role="'prefix':'r4vb','src':'/speak/recipes-brazil.html','spread':true">
-        {% include book/r4vb-info.html %}
-        </div>
-      </div>
+        <img style="position: absolute; right:10px; width: 50px;" src="images/itunes-store-bw.png">
 
-      <div class="right-col" style="height:300px;">
-      </div>
+        <div role="book" class="book-center" style="margin-top: -130px;" data-role="'prefix':'r4vb','src':'/speak/recipes-brazil.html','spread':true">
+            {% include book/r4vb-info.html %}
+        </div>
 
     </section>
 
@@ -114,7 +112,7 @@ To be an insider not an outsider.
         	</div>
         </section>
 
-		<footer class="constrained">
+		<footer class="constrained bookspread">
       {% include page-footer-etc.html %}
 			{% include page-footer-copyright.html %}
 		</footer>
