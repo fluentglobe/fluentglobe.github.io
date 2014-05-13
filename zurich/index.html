@@ -1,0 +1,77 @@
+---
+title: Fluentbook
+layout: city
+blog-link: no
+body-class: splash splash-zurich
+js-bundle: /js/fluentbook.js
+app-name: productApp
+debug: true
+facebook-like-title: Fluentbook App - Learn to Speak
+facebook-fan-page-url: https://www.facebook.com/FluentbookLearnToSpeak
+og-tags:
+- Language Learning
+- Learning German
+- Learning Portuguese
+og-images:
+- /image/fluentbook-icon.jpg
+---
+<div id="fb-root"></div>
+
+<main>
+<article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">
+	<header id="more-to-tell">
+<!--         <div class="contact">
+        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
+
+        <h4>U.K. +44-2036088053 </h4>
+        </div>
+ -->
+        {% include site-follow.html %}
+  </header>
+
+  <section class="main-text-section main-text" ng-controller="add-review as add">
+
+  </section>
+
+  <section>
+  <!-- 
+
+<a href="http://tinypic.com?ref=1zptdud" target="_blank"><img src="http://i60.tinypic.com/1zptdud.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
+
+[IMG]http://i60.tinypic.com/1zptdud.jpg[/IMG]
+
+e-mail link
+http://tinypic.com/r/1zptdud/8
+
+
+  -->
+  </section>
+
+	<footer class="constrained">
+    {% include book/footer.html %}
+		{% include page-footer-copyright.html %}
+	</footer>
+</article>
+</main>
+
+{% include site-menu.html %}
+{% include book-layout.html %}
+    
+<script src="http://btn.createsend1.com/js/sb.min.js?v=2" type="text/javascript" class="createsend-script"></script>
+
+<script>
+/*
+var simperium = new Simperium('{{ fluentbook_simperium_id }}', { token : 'SIMPERIUM_ACCESS_TOKEN'});
+var bucket = simperium.bucket('todo');
+bucket.on('notify', function(id, data) {
+    console.log("object "+id+" was updated!");
+    console.log("new data is:");
+    console.log(data);
+});
+bucket.on('local', function(id) {
+    console.log("request for local state for object "+id+" received");
+    return {"some": "json"};
+});
+bucket.start();
+*/
+</script>
