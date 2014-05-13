@@ -929,6 +929,47 @@ var fluentglobe;
         window.reader = { Book: Book };
     }
 }(this);
+!function (window) {
+    function Slider(el, role, config, context) {
+        config.cbPrev = this.cbPrev.bind(this);
+        config.cbNext = this.cbNext.bind(this);
+        jQuery(el).layerSlider(config);
+    }
+    Slider.prototype.layout = function () {
+    };
+    Slider.prototype.destroy = function () {
+    };
+
+    Slider.prototype.cbPrev = function (data) {
+        setTimeout(this.reflectSlide.bind(this, "prev", data), 100);
+    };
+    Slider.prototype.cbNext = function (data) {
+        setTimeout(this.reflectSlide.bind(this, "next", data), 100);
+    };
+
+    Slider.prototype.reflectSlide = function (direction, data) {
+        var config = Resolver.config(data.nextLayer[0]);
+
+        if (config && config['set-hash'])
+            document.essential.router.setHash(config['set-hash']);
+    };
+
+    var slider = { enhance: null, Slider: null };
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        slider = module.exports;
+    } else {
+        window.slider = slider;
+    }
+
+    slider.enhance = function (el, role, config, context) {
+        if (window.jQuery == undefined || jQuery.fn.layerSlider == undefined)
+            return false;
+
+        var slider = new Slider(el, role, config, context);
+        return slider;
+    };
+    slider.Slider = Slider;
+}(window);
 function enhance_book(el, role, config) {
     var book = new reader.Book(el, config);
 
@@ -949,7 +990,7 @@ Resolver("page").set("handlers.enhance.book", enhance_book);
 Resolver("page").set("handlers.layout.book", layout_book);
 Resolver("page").set("handlers.discard.book", discard_book);
 
-Resolver("page").set("handlers.enhance.slider", require('./slider.js').enhance);
+Resolver("page").set("handlers.enhance.slider", slider.enhance);
 Resolver("page").set("handlers.layout.slider", function (el, layout, instance) {
     if (instance)
         return instance.layout(layout);
