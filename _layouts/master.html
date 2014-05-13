@@ -18,7 +18,8 @@ base-body-class:
   {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
   {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
   {% endfor %}{% endif %}
-  {% if page.og-images %}{% for image in page.og-images %}<meta property="vertical:image" content="{{ image }}">
+  {% if page.og-images %}{% for image in page.og-images %}<meta property="og:image" content="{{ image }}">
+  <meta property="twitter:image" content="{{ image }}">
   {% endfor %}{% endif %}
   {% include ipad_friendly_html5_head.html %}
 
