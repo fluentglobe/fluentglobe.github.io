@@ -5,13 +5,21 @@ base-body-class:
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}> <![endif]-->
 <!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}><!--<![endif]-->
 
-<head>
+<head
+{% if page.og-namespace %}prefix="ogns: {{ page.og-namespace }}" {% endif %}
+>
   <meta name="p:domain_verify" content="3b56841eaf51184a3ddc7b704a471e45"/>
   <script type="application/config">
   declare("body",{});
   declare("body.layouter","intro-plus-article");
   </script>
 
+  {% if page.og-type %}<meta property="og:type" content="ogns:{{ page.og-type }}">{% endif %}
+  {% if page.og-author %}<meta property="ogns:author" content="{{ page.og-author }}">{% endif %}
+  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="ogns:tag" content="{{ tag }}">
+  {% endfor %}{% endif %}
+  {% if page.og-images %}{% for image in page.og-images %}<meta property="ogns:image" content="{{ image }}">
+  {% endfor %}{% endif %}
   {% include ipad_friendly_html5_head.html %}
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
@@ -23,6 +31,8 @@ base-body-class:
 <body class="{{ page.base-body-class }}{{ page.body-class }}"
 {% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
 >
+  {% if page.og-images %}{% for image in page.og-images %}<img src="{{ image }}" rel="image_src" class="principal-pic" alt="{{ page.title }} - Principal Picture">
+  {% endfor %}{% endif %}
 
 {{ content }}
 
