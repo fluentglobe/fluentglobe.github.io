@@ -2,9 +2,9 @@
 layout: city
 title: Fluentbook
 blog-link: no
-body-class: splash
+body-class: splash splash-fluentbook
 js-bundle: /js/fluentbook.js
-app-name: productApp
+no-app-name: productApp
 debug: true
 facebook-like-title: Fluentbook App - Learn to Speak
 facebook-fan-page-url: https://www.facebook.com/FluentbookLearnToSpeak
@@ -15,7 +15,44 @@ og-tags:
 og-images:
 - /image/fluentbook-icon.jpg
 ---
-<div id="fb-root"></div>
+<script type="application/config">{% include signup-config.js %}</script>
+
+<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+
+  <aside class="we-love"><figure></figure> {% include we-love.html %} </aside>
+
+  <section class="benefits"> {% include benefits.html %} </section>
+
+  <div class="form-and-story">
+
+  <form >
+    <input name="email" type="email" placeholder="e-mail">
+    <button class="btn">Start</button>
+  </form>
+
+  <form id="signup" class="signup" role="form"
+    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
+    method="post"
+    enctype="application/x-www-form-urlencoded"
+    >
+
+    <fieldset>
+    {% include start-learning.html %}
+
+    <input type="hidden" name="from-country">
+    <input type="hidden" name="native-language">
+    <input placeholder="Your Name" name="name" type="text" size="15" required>
+    <input placeholder="e-mail" name="email" type="email" size="15" required>
+    <button class="btn primary double-corner"> {% include plan-button.html %} </button>
+    </fieldset>
+  </form>
+
+  <section class="story"> {% include story.html %} </section>
+  </div>
+
+  <footer></footer>
+
+</div>
 
 <main>
 <article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">

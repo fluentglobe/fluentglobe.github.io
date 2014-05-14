@@ -3382,6 +3382,76 @@ html body.splash-zurich .bg-tracer {
     background-size: auto 100%;
   }
 }
+html body.splash-fluentbook #intro:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url(../images/05.png);
+}
+html body.splash-fluentbook #intro {
+  left: 0;
+  right: 0;
+  color: white;
+  background-color: #000000;
+  background-image: url(../images/lawn-1024-bare.jpg);
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+html body.splash-fluentbook .bg-tracer {
+  position: fixed;
+  visibility: hidden;
+  width: 960px;
+  height: 548px;
+}
+@media only screen and (min-width: 320px) and (max-width: 360px) {
+  html body.splash-fluentbook #intro {
+    background-image: url(../images/lawn-360-bare.jpg);
+    background-position: top center;
+    background-size: 360px auto;
+  }
+  html body.splash-fluentbook .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media only screen and (min-width: 361px) and (max-width: 800px) {
+  html body.splash-fluentbook #intro {
+    background-image: url(../images/lawn-360-bare.jpg);
+    background-position: top center;
+    background-size: 100% auto;
+  }
+  html body.splash-fluentbook .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  html body.splash-fluentbook #intro {
+    background-image: url(../images/lawn-360-bare.jpg);
+    background-position: top left;
+    background-size: 360px auto;
+  }
+  html body.splash-fluentbook .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media screen and (device-aspect-ratio: 3/4) and (orientation: portrait) {
+  html body.splash-fluentbook #stuck {
+    background-position: bottom center;
+    background-size: auto 100%;
+  }
+}
 html body.splash-garden #intro {
   left: 0;
   right: 0;
