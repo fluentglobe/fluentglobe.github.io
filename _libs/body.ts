@@ -1,10 +1,12 @@
 /// <reference path="../../HTML-Widgets/DefinitelyTyped/essentialjs/essential.d.ts"/>
 /// <reference path="../../HTML-Widgets/DefinitelyTyped/jquery/jquery.d.ts"/>
+/// <reference path="../../HTML-Widgets/DefinitelyTyped/angularjs/angular.d.ts"/>
+
 /// <reference path="head.d.ts"/>
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
-/// <reference path="../components/book-reader/index.ts"/>
+/// <reference path="../components/book-reader/reader.ts"/>
 /// <reference path="../components/book-reader/slider.ts"/>
 
 function enhance_book(el,role,config) {
