@@ -1,6 +1,25 @@
 _site/
 .DS_Store
 
-/bower_components/
+/components/angular/
+/components/angular-route/
+/components/angular-socialshare/
+/components/angular-toggle-switch/
+
+/components/es5-shim/
+/components/normalize-css/
+/components/bootstrap/
+/components/essentialjs/
+/components/hammerjs/
+/components/jquery/
+/components/mediaelement/
+/components/snapjs/
+/components/togetherjs/
+/components/turnjs/
+/components/greensock/
+/components/responsiveSlides.js/
+/components/swiper/
+/components/swiper-3d-flow/
+/components/swiper-smooth-progress/
 
 /node_modules/
