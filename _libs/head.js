@@ -1,14 +1,16 @@
 !function() {
 	var Layouter = Resolver("essential::Layouter::"),
-		Placement = Resolver("essential::ElementPlacement::");
+		Placement = Resolver("essential::ElementPlacement::"),
+		HTMLElement = Resolver("essential::HTMLElement::");
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
 		this.lowBoundsWidth = conf.lowBoundsWidth || 800;
 		this.afterContent = conf.afterContent || 60;
 		// this.placeParts(el);
+		this.tracer = HTMLElement("div",{"class":"bg-tracer", "append to":el});
+
 		this.article = el.querySelector("article");
-		this.tracer = el.querySelector("tracer");
 		this.intro = el.querySelector("#intro");
 		this.introFooter = el.querySelector("#intro > footer");
 

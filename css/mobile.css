@@ -2807,6 +2807,7 @@ body .menu nav.flag label output {
 .principal-pic {
   position: absolute;
   z-index: -9999;
+  opacity: 0;
 }
 .center-piece {
   position: absolute;
@@ -3330,7 +3331,7 @@ html body.splash-garden #intro {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-html body.splash-garden #tracer {
+html body.splash-garden .bg-tracer {
   position: fixed;
   visibility: hidden;
   width: 960px;
@@ -3342,7 +3343,7 @@ html body.splash-garden #tracer {
     background-position: top center;
     background-size: 360px auto;
   }
-  html body.splash-garden #tracer {
+  html body.splash-garden .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3355,7 +3356,7 @@ html body.splash-garden #tracer {
     background-position: top center;
     background-size: 100% auto;
   }
-  html body.splash-garden #tracer {
+  html body.splash-garden .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3368,7 +3369,7 @@ html body.splash-garden #tracer {
     background-position: top left;
     background-size: 360px auto;
   }
-  html body.splash-garden #tracer {
+  html body.splash-garden .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3391,7 +3392,7 @@ html body.splash-color #intro {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-html body.splash-color #tracer {
+html body.splash-color .bg-tracer {
   position: fixed;
   visibility: hidden;
   width: 960px;
@@ -3403,7 +3404,7 @@ html body.splash-color #tracer {
     background-position: top center;
     background-size: 360px auto;
   }
-  html body.splash-color #tracer {
+  html body.splash-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3416,7 +3417,7 @@ html body.splash-color #tracer {
     background-position: top center;
     background-size: 100% auto;
   }
-  html body.splash-color #tracer {
+  html body.splash-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3429,7 +3430,7 @@ html body.splash-color #tracer {
     background-position: top left;
     background-size: 360px auto;
   }
-  html body.splash-color #tracer {
+  html body.splash-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3452,7 +3453,7 @@ html body.lesson-color #intro {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-html body.lesson-color #tracer {
+html body.lesson-color .bg-tracer {
   position: fixed;
   visibility: hidden;
   width: 960px;
@@ -3464,7 +3465,7 @@ html body.lesson-color #tracer {
     background-position: top center;
     background-size: 360px auto;
   }
-  html body.lesson-color #tracer {
+  html body.lesson-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3477,7 +3478,7 @@ html body.lesson-color #tracer {
     background-position: top center;
     background-size: 100% auto;
   }
-  html body.lesson-color #tracer {
+  html body.lesson-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
@@ -3490,7 +3491,7 @@ html body.lesson-color #tracer {
     background-position: top left;
     background-size: 360px auto;
   }
-  html body.lesson-color #tracer {
+  html body.lesson-color .bg-tracer {
     position: fixed;
     visibility: hidden;
     width: 360px;
