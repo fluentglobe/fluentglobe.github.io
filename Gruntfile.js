@@ -22,10 +22,10 @@ module.exports = function(grunt) {
       essential: {
         src: [
           '_libs/prefix.js',
-          'bower_components/essentialjs/js/modernizr-custom.js',
-          // 'bower_components/es5-shim/es5-shim.min.js',          
-          'bower_components/es5-shim/es5-shim.js',          
-          'bower_components/essentialjs/essential.js',
+          'components/essentialjs/js/modernizr-custom.js',
+          // 'components/es5-shim/es5-shim.min.js',          
+          'components/es5-shim/es5-shim.js',          
+          'components/essentialjs/essential.js',
           '_libs/head.js'
         ],
         dest: 'js/modernizr+essential.js'
@@ -33,13 +33,13 @@ module.exports = function(grunt) {
 
       app: {
         src: [
-          // 'bower_components/essentialjs/app/js/spin.min.js',
+          // 'components/essentialjs/app/js/spin.min.js',
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
-          'bower_components/angular-toggle-switch/angular-toggle-switch.min.js',
-          'bower_components/book-reader/books.js',
-          'bower_components/book-reader/controllers.js',
+          'components/angular-toggle-switch/angular-toggle-switch.min.js',
+          'components/book-reader/books.js',
+          'components/book-reader/controllers.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
@@ -74,17 +74,17 @@ module.exports = function(grunt) {
 
       jquery: {
         files: {
-          'js/jquery.min.js': 'bower_components/jquery/jquery.js'
+          'js/jquery.min.js': 'components/jquery/jquery.js'
         }
       },
 
       bootstrap: {
         files: {
           'js/bootstrap.min.js': [
-            'bower_components/bootstrap/js/collapse.js',
-            'bower_components/bootstrap/js/scrollspy.js',
-            'bower_components/bootstrap/js/button.js',
-            'bower_components/bootstrap/js/affix.js'
+            'components/bootstrap/js/collapse.js',
+            'components/bootstrap/js/scrollspy.js',
+            'components/bootstrap/js/button.js',
+            'components/bootstrap/js/affix.js'
           ]
         }
       }
@@ -94,18 +94,18 @@ module.exports = function(grunt) {
     copy: {
       angular: {
         files: [
-          { src: 'bower_components/angular/angular.js', dest: 'js/angular.js' },
-          { src: 'bower_components/angular/angular.min.js', dest: 'js/angular.min.js' },
-          { src: 'bower_components/angular/angular.min.js.map', dest: 'js/angular.min.js.map' },
-          { src: 'bower_components/jquery/jquery.js', dest: 'js/jquery.js' },
-          { src: 'bower_components/jquery/jquery.min.js', dest: 'js/jquery.min.js' }
+          { src: 'components/angular/angular.js', dest: 'js/angular.js' },
+          { src: 'components/angular/angular.min.js', dest: 'js/angular.min.js' },
+          { src: 'components/angular/angular.min.js.map', dest: 'js/angular.min.js.map' },
+          { src: 'components/jquery/jquery.js', dest: 'js/jquery.js' },
+          { src: 'components/jquery/jquery.min.js', dest: 'js/jquery.min.js' }
         ]
       },
 
       app_map: {
         files: [
-          { src: 'bower_components/es5-shim/es5-shim.js', dest: 'js/es5-shim.js' },
-          { src: 'bower_components/es5-shim/es5-shim.map', dest: 'js/es5-shim.map' }
+          { src: 'components/es5-shim/es5-shim.js', dest: 'js/es5-shim.js' },
+          { src: 'components/es5-shim/es5-shim.map', dest: 'js/es5-shim.map' }
         ]
       },
 
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true, flatten: true,
-            cwd: 'bower_components/mediaelement/build/',
+            cwd: 'components/mediaelement/build/',
             src: ['*.swf','*.xap'],
             dest: 'js/'
           }
@@ -166,7 +166,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           paths: [
-            "./bower_components",
+            "./components",
             "./_less"
             ]
         },
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           paths: [
-            "./bower_components",
+            "./components",
             "./_less"
           ],
           compress: true,
@@ -229,7 +229,7 @@ module.exports = function(grunt) {
       },
 
       less: {
-        files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","bower_components/**/*.less"],
+        files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","components/**/*.less"],
         tasks: ['less:dev','less:dist']
       },
       sass: {
@@ -241,7 +241,7 @@ module.exports = function(grunt) {
         tasks: ['typescript']
       },
       scripts: {
-        files: ['_libs/*.js', 'assets/lib/**/*.js','bower_components/**/*.js'],
+        files: ['_libs/*.js', 'assets/lib/**/*.js','components/**/*.js'],
         tasks: [
           //'jshint',
           'browserify',

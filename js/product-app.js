@@ -790,7 +790,7 @@ require('./router.js');
 
 function enhance_book(el,role,config) {
 
-	var reader = require('../bower_components/book-reader/index.js');
+	var reader = require('../components/book-reader/index.js');
 	var	book = new reader.Book(el,config);
 
 	return book;
@@ -832,7 +832,7 @@ if (window.angular) {
 }
 
 
-},{"../bower_components/book-reader/index.js":6,"./form.js":1,"./impl.js":2,"./router.js":4,"./slider.js":5}],4:[function(require,module,exports){
+},{"../components/book-reader/index.js":6,"./form.js":1,"./impl.js":2,"./router.js":4,"./slider.js":5}],4:[function(require,module,exports){
 // router.intercept(["/sp/servlet/logout","/ws/servlet/logout"], function() {
 //    .... will do the logout
 // })

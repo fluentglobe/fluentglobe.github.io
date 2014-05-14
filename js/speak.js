@@ -1,8 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-require('../bower_components/angular-route/angular-route.js');
-require('../bower_components/angular-toggle-switch/angular-toggle-switch.min.js');
+require('../components/angular-route/angular-route.js');
+require('../components/angular-toggle-switch/angular-toggle-switch.min.js');
 
-var books = require('../bower_components/book-reader/controllers.js');
+var books = require('../components/book-reader/controllers.js');
 
 var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
@@ -66,7 +66,7 @@ speakApp.config(['$routeProvider','$locationProvider',
 
 }();
 
-},{"../bower_components/angular-route/angular-route.js":2,"../bower_components/angular-toggle-switch/angular-toggle-switch.min.js":3,"../bower_components/book-reader/controllers.js":4}],2:[function(require,module,exports){
+},{"../components/angular-route/angular-route.js":2,"../components/angular-toggle-switch/angular-toggle-switch.min.js":3,"../components/book-reader/controllers.js":4}],2:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.15
  * (c) 2010-2014 Google, Inc. http://angularjs.org

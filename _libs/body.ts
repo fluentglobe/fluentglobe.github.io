@@ -4,8 +4,8 @@
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
-/// <reference path="../bower_components/book-reader/index.ts"/>
-/// <reference path="../bower_components/book-reader/slider.ts"/>
+/// <reference path="../components/book-reader/index.ts"/>
+/// <reference path="../components/book-reader/slider.ts"/>
 
 function enhance_book(el,role,config) {
 

@@ -1,4 +1,0 @@
-# .... Book Reader .... already built
-#[submodule "bower_components/book-reader"]
-#	path = bower_components/book-reader
-#	url = git@github.com:fluentglobe/book-reader.git
