@@ -1,5 +1,5 @@
 ---
-title: Fluentbook
+title: Learn German in Zurich
 layout: city
 blog-link: no
 body-class: splash splash-zurich
@@ -25,11 +25,6 @@ og-images:
 
   <div class="form-and-story">
 
-  <form >
-    <input name="email" type="email" placeholder="e-mail">
-    <button class="btn">Start</button>
-  </form>
-
   <form id="signup" class="signup" role="form"
     action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
     method="post"
@@ -37,13 +32,10 @@ og-images:
     >
 
     <fieldset>
-    {% include intro/start-learning.html %}
+    {% include intro/do-you-live-in.html %}
 
-    <input type="hidden" name="from-country">
-    <input type="hidden" name="native-language">
-    <input placeholder="Your Name" name="name" type="text" size="15" required>
     <input placeholder="e-mail" name="email" type="email" size="15" required>
-    <button class="btn primary double-corner"> {% include intro/plan-button.html %} </button>
+    <button class="btn primary double-corner"> {% include intro/next-step-button.html %} </button>
     </fieldset>
   </form>
 
