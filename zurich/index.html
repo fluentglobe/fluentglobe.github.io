@@ -13,15 +13,15 @@ og-tags:
 - Learning German
 - Learning Portuguese
 og-images:
-- /image/icon.jpg
+- /images/icon.jpg
 ---
 <script type="application/config">{% include signup-config.js %}</script>
 
 <div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
 
-  <aside class="we-love"><figure></figure> {% include we-love.html %} </aside>
+  <aside class="we-love"><figure></figure> {% include intro/we-love-local.html %} </aside>
 
-  <section class="benefits"> {% include benefits.html %} </section>
+  {% include intro/benefits-tailored.html %}
 
   <div class="form-and-story">
 
@@ -37,17 +37,17 @@ og-images:
     >
 
     <fieldset>
-    {% include start-learning.html %}
+    {% include intro/start-learning.html %}
 
     <input type="hidden" name="from-country">
     <input type="hidden" name="native-language">
     <input placeholder="Your Name" name="name" type="text" size="15" required>
     <input placeholder="e-mail" name="email" type="email" size="15" required>
-    <button class="btn primary double-corner"> {% include plan-button.html %} </button>
+    <button class="btn primary double-corner"> {% include intro/plan-button.html %} </button>
     </fieldset>
   </form>
 
-  <section class="story"> {% include story.html %} </section>
+  {% include intro/story-local.html %}
   </div>
 
   <footer></footer>
