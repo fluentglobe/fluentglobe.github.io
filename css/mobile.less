@@ -667,6 +667,14 @@ html body.splash {
 @media screen and (device-aspect-ratio: 3/4) {}
 
 html body.splash-zurich {
+    #intro:before {
+        content: " ";
+        // z-index: -9999;
+        position: absolute;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        background-image: url(../images/05.png);
+    }
 
     .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
 
