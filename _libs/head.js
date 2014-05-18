@@ -10,37 +10,35 @@
 	//TODO configurable delayed value, list of required entries
 
 	//TODO resolve before checking, if undefined
-	Resolver("document::readyState").on("change",function(ev) {
-		if (ev.value == "interactive" && geoip().ip == undefined) {
-			Resolver("state").set("state.configured",false);
-			var xhr = Resolver("essential::XMLHttpRequest::")();
-			xhr.open("GET",'http://freegeoip.net/json/',true);
-			// xhr.setRequestHeader('Accept','text/json')
-			try {
+	function  _getGeoIP() {
+		Resolver("state").set("state.configured",false);
+		var xhr = Resolver("essential::XMLHttpRequest::")();
+		xhr.open("GET",'http://freegeoip.net/json/',true);
+		// xhr.setRequestHeader('Accept','text/json')
+		try {
 		/*
 		$.get('http://freegeoip.net/json/',function(data) {
 
 			geoip.set(data);
 		}, 'jsonp');
 		*/
-				xhr.send(null);
-				xhr.onreadystatechange = function() {
-					if (xhr.readyState == 4) {
-						Resolver("state").set("state.configured",true);
-						if (xhr.status >= 200 && xhr.status < 300) {
-							geoip.set(JSON.parse(xhr.responseText));
-						} else {
-							geoip.set("errorStatus",xhr.status);
-							geoip.set("error",xhr.responseText);
-						}
+			xhr.send(null);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					Resolver("state").set("state.configured",true);
+					if (xhr.status >= 200 && xhr.status < 300) {
+						geoip.set(JSON.parse(xhr.responseText));
+					} else {
+						geoip.set("errorStatus",xhr.status);
+						geoip.set("error",xhr.responseText);
 					}
 				}
 			}
-			catch(ex) {
-
-			}
 		}
-	});
+		catch(ex) {
+
+		}
+	}
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
@@ -91,8 +89,14 @@
 		}
 	}));
 
-	//TODO move to lib
+
 	Resolver("document::readyState").on("change",function(ev) {
+
+		if (ev.value == "interactive" && geoip().ip == undefined) {
+			_getGeoIP();
+		}
+
+		//TODO move to lib
 		if (ev.value == "complete" || ev.value == "interactive") {
 			var body = Resolver("essential::DescriptorQuery::")(document.body);
 			body[0].conf.sizingElement = true;
