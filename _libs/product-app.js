@@ -33,7 +33,7 @@ Resolver("page").set("handlers.discard.slider", function(el,role,instance) {
 
 if (window.angular) {
 
-    var productApp = angular.module('productApp', [  ]); // 'toggle-switch'
+    var productApp = angular.module('fluentApp', [  ]); // 'toggle-switch'
     productApp.config(['$interpolateProvider', function($interpolateProvider) {
           return $interpolateProvider.startSymbol('{(').endSymbol(')}');
         }

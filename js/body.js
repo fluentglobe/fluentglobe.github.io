@@ -1,3 +1,11 @@
+if (window["angular"]) {
+    var productApp = angular.module('fluentApp', []);
+    productApp.config([
+        '$interpolateProvider', function ($interpolateProvider) {
+            return $interpolateProvider.startSymbol('{(').endSymbol(')}');
+        }
+    ]);
+}
 var fluentbook;
 (function (fluentbook) {
     var essential = Resolver("essential"), StatefulResolver = essential("StatefulResolver");
@@ -637,6 +645,22 @@ var fluentglobe;
 
     essentialRef.declare("router", new Router());
 })(fluentglobe || (fluentglobe = {}));
+var account;
+(function (account) {
+    var access_token = Resolver("document::essential.access_token"), geoip = Resolver("document::essential.geoip");
+    access_token.stored("load change", "session");
+
+    account.BookAccess = Generator(function () {
+        if (access_token()) {
+        } else {
+        }
+    }).restrict({ singleton: true, lifecycle: "page" });
+
+    if (window["angular"]) {
+        var module = angular.module("fluentApp");
+        module.factory("BookAccess", account.BookAccess);
+    }
+})(account || (account = {}));
 !function (window) {
     var essential = Resolver("essential"), pageResolver = Resolver("page"), ApplicationConfig = essential("ApplicationConfig"), console = essential("console"), StatefulResolver = essential("StatefulResolver"), addEventListeners = essential("addEventListeners"), MutableEvent = essential("MutableEvent"), EnhancedDescriptor = essential("EnhancedDescriptor"), DescriptorQuery = essential("DescriptorQuery"), ElementPlacement = essential("ElementPlacement"), Layouter = essential("Layouter"), Laidout = essential("Laidout"), HTMLElement = essential("HTMLElement"), DialogAction = essential("DialogAction");
 
@@ -1001,12 +1025,7 @@ Resolver("page").set("handlers.discard.slider", function (el, role, instance) {
 });
 
 if (window["angular"]) {
-    var productApp = angular.module('productApp', []);
-    productApp.config([
-        '$interpolateProvider', function ($interpolateProvider) {
-            return $interpolateProvider.startSymbol('{(').endSymbol(')}');
-        }
-    ]);
+    var productApp = angular.module('fluentApp');
 
     productApp.controller("add-review", [
         '$scope', function ($scope) {
