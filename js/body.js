@@ -1,11 +1,3 @@
-if (window["angular"]) {
-    var productApp = angular.module('fluentApp', []);
-    productApp.config([
-        '$interpolateProvider', function ($interpolateProvider) {
-            return $interpolateProvider.startSymbol('{(').endSymbol(')}');
-        }
-    ]);
-}
 var fluentbook;
 (function (fluentbook) {
     var essential = Resolver("essential"), StatefulResolver = essential("StatefulResolver");
@@ -656,11 +648,48 @@ var account;
         }
     }).restrict({ singleton: true, lifecycle: "page" });
 
+    account.BookAccess.prototype.city = function () {
+        switch (geoip().region_code) {
+            case "25":
+                return "Zürich";
+        }
+
+        return geoip().region_name;
+    };
+
     if (window["angular"]) {
-        var module = angular.module("fluentApp");
-        module.factory("BookAccess", account.BookAccess);
+        var module = angular.module("fluentAccount", []);
+        module.factory("Access", account.BookAccess);
+
+        module.controller("signup", function ($scope) {
+            Resolver("document::essential.geoip").intoAngularScope($scope, {
+                'region_code': 'region_code',
+                'region_name': 'region_name'
+            }, function (values, action) {
+                switch (values.region_code) {
+                    case "25":
+                        values.region_name = "Zürich";
+                        break;
+                }
+            });
+        });
     }
 })(account || (account = {}));
+var survey;
+(function (survey) {
+    if (window["angular"]) {
+        var module = angular.module('fluentSurvey', ["fluentAccount"]);
+
+        module.controller("user-survey", [
+            '$scope', function ($scope) {
+                $scope.study = "already";
+
+                $scope.save = function () {
+                    console.log("TODO save survey");
+                };
+            }]);
+    }
+})(survey || (survey = {}));
 !function (window) {
     var essential = Resolver("essential"), pageResolver = Resolver("page"), ApplicationConfig = essential("ApplicationConfig"), console = essential("console"), StatefulResolver = essential("StatefulResolver"), addEventListeners = essential("addEventListeners"), MutableEvent = essential("MutableEvent"), EnhancedDescriptor = essential("EnhancedDescriptor"), DescriptorQuery = essential("DescriptorQuery"), ElementPlacement = essential("ElementPlacement"), Layouter = essential("Layouter"), Laidout = essential("Laidout"), HTMLElement = essential("HTMLElement"), DialogAction = essential("DialogAction");
 
@@ -1025,9 +1054,14 @@ Resolver("page").set("handlers.discard.slider", function (el, role, instance) {
 });
 
 if (window["angular"]) {
-    var productApp = angular.module('fluentApp');
+    var fluentApp = angular.module('fluentApp', ["fluentAccount", "fluentSurvey"]);
+    fluentApp.config([
+        '$interpolateProvider', function ($interpolateProvider) {
+            return $interpolateProvider.startSymbol('{(').endSymbol(')}');
+        }
+    ]);
 
-    productApp.controller("add-review", [
+    fluentApp.controller("add-review", [
         '$scope', function ($scope) {
             $scope.device = 'off';
         }]);

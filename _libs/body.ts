@@ -8,6 +8,7 @@
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
 /// <reference path="../components/book-reader/account.ts"/>
+/// <reference path="../components/book-reader/survey.ts"/>
 /// <reference path="../components/book-reader/reader.ts"/>
 /// <reference path="../components/book-reader/slider.ts"/>
 
@@ -41,11 +42,14 @@ Resolver("page").set("handlers.discard.slider", function(el,role,instance) {
 
 if (window["angular"]) {
 
-    var productApp = angular.module('fluentApp');
+    var fluentApp = angular.module('fluentApp', [ "fluentAccount","fluentSurvey" ]);
+    fluentApp.config(['$interpolateProvider', function($interpolateProvider) {
+          return $interpolateProvider.startSymbol('{(').endSymbol(')}');
+        }
+    ]);
 
-    productApp.controller("add-review",['$scope', function($scope) {
+    fluentApp.controller("add-review",['$scope', function($scope) {
         $scope.device = 'off';//'iPad';
     }]);
-
 }
 
