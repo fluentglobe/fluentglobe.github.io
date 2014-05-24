@@ -4,7 +4,7 @@ layout: city
 blog-link: no
 body-class: splash splash-zurich
 js-bundle: /js/body.js
-no-app-name: fluentApp
+app-name: fluentApp
 debug: true
 facebook-like-title: Fluentbook App - Learn to Speak
 facebook-fan-page-url: https://www.facebook.com/FluentbookLearnToSpeak
@@ -23,13 +23,9 @@ og-images:
 
   {% include intro/benefits-tailored.html %}
 
-  <div class="form-and-story">
+  <div class="form-and-story" ng-controller="signup">
 
-  <form id="signup" class="signup" role="form"
-    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-    method="post"
-    enctype="application/x-www-form-urlencoded"
-    >
+  <form class="signup">
 
     <fieldset>
     {% include intro/do-you-live-in.html %}

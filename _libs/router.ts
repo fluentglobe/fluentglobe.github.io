@@ -16,6 +16,40 @@ var global = Resolver(), essential = Resolver("essential"),
 
 var baseUrl = location.href.substring(0,location.href.lastIndexOf("/")+1);
 
+Resolver("document::essential.geoip").copyToScope = function(scope,names,adjuster) {
+    var v = {};
+    for(var n in names) {
+        v[ n ] = this.get( n );
+    }
+    if (adjuster) adjuster(v,'to scope');
+    for(var n in names) {
+        scope[ names[n] ] = v[n];
+    }
+}
+
+//TODO apply to all references, pluggable references
+Resolver("document::essential.geoip").intoAngularScope = function(scope,names,adjuster) {
+
+    this.copyToScope(scope,names,adjuster);
+
+    // changes to angular model goes to resolver
+    this.on("change",this,function(ev) {
+        ev.data.copyToScope(scope,names,adjuster);
+    });
+
+    // changes to resolver goes to angular model
+    /*
+    var angularNames = [], esNames = [], ref = this;
+    for(var n in names) { angularNames.push(names[n]); esNames.push(n); }
+    var dereg = scope.$watchGroup(angularNames, function(newVals,oldVals,scope) {
+        for(var i,v; v = newVals[i]; ++i) {
+            ref.set(esNames[i], v);
+        }
+    });
+*/
+
+    //TODO use dereg function
+};
 
 function RouterPath(href,resources,fn) {
     this.href = href.toLowerCase();

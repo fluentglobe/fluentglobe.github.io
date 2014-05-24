@@ -466,6 +466,26 @@ var fluentglobe;
 
     var baseUrl = location.href.substring(0, location.href.lastIndexOf("/") + 1);
 
+    Resolver("document::essential.geoip").copyToScope = function (scope, names, adjuster) {
+        var v = {};
+        for (var n in names) {
+            v[n] = this.get(n);
+        }
+        if (adjuster)
+            adjuster(v, 'to scope');
+        for (var n in names) {
+            scope[names[n]] = v[n];
+        }
+    };
+
+    Resolver("document::essential.geoip").intoAngularScope = function (scope, names, adjuster) {
+        this.copyToScope(scope, names, adjuster);
+
+        this.on("change", this, function (ev) {
+            ev.data.copyToScope(scope, names, adjuster);
+        });
+    };
+
     function RouterPath(href, resources, fn) {
         this.href = href.toLowerCase();
         this.resources = resources;
