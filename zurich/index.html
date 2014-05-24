@@ -25,17 +25,27 @@ og-images:
 
   <div class="form-and-story" ng-controller="signup">
 
-  <form class="signup">
+    <form class="signup">
 
-    <fieldset>
-    {% include intro/do-you-live-in.html %}
+      <fieldset>
+      {% include intro/do-you-live-in.html %}
 
-    <input placeholder="e-mail" name="email" type="email" size="15" required>
-    <button class="btn primary double-corner"> {% include intro/next-step-button.html %} </button>
-    </fieldset>
-  </form>
+      <div ng-show="region_name == 'Zürich'">
+      <input placeholder="e-mail" name="email" type="email" size="15" required>
+      <button class="btn primary double-corner"> {% include intro/next-step-button.html %} </button>
+      </div>
+      <div ng-show="region_name != 'Zürich'">
+      <p>You seem to be in {( region_name )}. </p>
+      <button class="btn primary double-corner"  ng-click="region_name = 'Zürich'">I live in Zürich</button>
+      </div>
 
-  {% include intro/story-local.html %}
+      </fieldset>
+
+      <pre>signup = {( signup | json )}</pre>
+      <pre> {( region_code )} {( region_name )} </pre>
+    </form>
+
+    {% include intro/story-local.html %}
   </div>
 
   <footer></footer>
@@ -54,8 +64,42 @@ og-images:
         {% include site-follow.html %}
   </header>
 
-  <section class="main-text-section main-text" ng-controller="add-review as add">
+  <section class="main-text-section main-text" ng-controller="user-survey as survey">
+    <form name="surveyForm" ng-submit="save()">
+      <fieldset ng-show="study == 'already'">
+        <h3>Tell us a bit about you</h3>
+        <p>Do you study already (1 of 5)</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="private"> Yes, with private tutor.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="intensive"> Yes, intensive language class.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="weekly"> Yes, in classroom weekly.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="selfstudy"> Yes, selfstudy</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="groups"> Yes, study groups/meetups</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="manu"> Yes, in many ways.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="no"> No, not yet</p>
 
+        <button ng-click="next">Next</button>
+      </fieldset>
+
+      <fieldset ng-show="study == 'progress'">
+        <p>How is your progress? (2 of 5)</p>
+        <p><input type="checkbox" name="study-progress"> I would like to learn a more practical German</p>
+        <p><input type="checkbox" name="study-progress"> I forget a lot between sessions</p>
+        <p><input type="checkbox" name="study-progress"> I need to understand the local dialect better.</p>
+        <p><input type="checkbox" name="study-progress"> I find pronunciation very difficult</p>
+        <p><input type="checkbox" name="study-progress"> It is too slow, but I don't have spare time</p>
+        <p><input type="checkbox" name="study-progress"> I'm happy with my progress</p>
+      </fieldset>
+
+      <fieldset ng-show="study == 'why'">
+        <p>Why are you learning German (3 of 5)</p>
+
+        I need it at work
+        I want to speak with family
+        I feel foolish for not being able to
+      </fieldset>
+    </form>
+
+    <pre>study = {( study | json )}</pre>
   </section>
 
   <section>

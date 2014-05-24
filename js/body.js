@@ -668,18 +668,17 @@ var account;
         }
     }).restrict({ singleton: true, lifecycle: "page" });
 
-    account.BookAccess.prototype.city = function () {
-        switch (geoip().region_code) {
-            case "25":
-                return "Zürich";
-        }
+    account.BookAccess.angularProvider = function (module, name) {
+        var generator = this;
 
-        return geoip().region_name;
+        module.provider(name, function GeneratorProvider() {
+            this.$get = [generator];
+        });
     };
 
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
-        module.factory("Access", account.BookAccess);
+        account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
             Resolver("document::essential.geoip").intoAngularScope($scope, {
@@ -687,11 +686,17 @@ var account;
                 'region_name': 'region_name'
             }, function (values, action) {
                 switch (values.region_code) {
+                    case "19":
                     case "25":
+                        values.region = "zurich";
                         values.region_name = "Zürich";
                         break;
                 }
             });
+
+            $scope.iLiveIn = function (city) {
+                console.log("I live in ", city);
+            };
         });
     }
 })(account || (account = {}));
