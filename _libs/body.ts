@@ -4,6 +4,7 @@
 
 /// <reference path="head.d.ts"/>
 /// <reference path="../components/book-reader/fluent-app-def.ts"/>
+// in head:  <reference path="resolved.ts"/>
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
