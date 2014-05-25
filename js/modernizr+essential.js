@@ -10392,8 +10392,14 @@ Resolver("page::state.managed").on("change",function(ev) {
 		}
 	}
 
-	var language = Resolver("document::essential.language");
+	var language = Resolver("document::essential.language"),
+		countryCode = Resolver("document::essential.countryCode");
 	language.declare("English"); //TODO calculate value support in Resolver ?
+	countryCode.declare("uk");
+
+	geoip.on("change",function(ev) {
+		countryCode.set(ev.value.country_code.toLowerCase());
+	});
 
 	Resolver("document::essential.lang").on("change",function(ev) {
 		switch(ev.value) {
@@ -10476,6 +10482,21 @@ Resolver("page::state.managed").on("change",function(ev) {
 		}
 	});
 
+	function classRenderSelector(resolver) {
+		this.el.className = this.baseClass + resolver(this.selectors[0]);
+	}
+
+	HTMLElement.fn.makeClassSubstitution = function(el,selector) {
+		var baseClass = el.className; if (baseClass) baseClass += " ";
+
+		return {
+			el: el,
+			baseClass: baseClass,
+			selectors: [selector],
+			renderClass: classRenderSelector
+		};
+	};
+
 
 	var policy = {
 		DECORATORS: {
@@ -10492,6 +10513,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 
 		attrs = HTMLElement.fn.describeAttributes(el,policy);
 		attrs.texts = [];
+		attrs.classes = [];
 		//TODO support data-resolve on root element ?
 
 		if (attrs.texts.length === 0) {
@@ -10510,6 +10532,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 			dataResolve = attrs["data-resolve"];
 
 			attrs.texts = [];
+			attrs.classes = [];
 
 			if (dataResolve) {
 				if (dataResolve.props.text) {
@@ -10517,6 +10540,9 @@ Resolver("page::state.managed").on("change",function(ev) {
 				}
 				if (dataResolve.props.html) {
 					//TODO makeHtmlSubstitution
+				}
+				if (dataResolve.props["class"]) {
+					attrs.classes.push(HTMLElement.fn.makeClassSubstitution(ce,dataResolve.props["class"]));
 				}
 			} 
 			if (attrs.texts.length === 0) {
@@ -10553,11 +10579,30 @@ Resolver("page::state.managed").on("change",function(ev) {
 		}
 	}
 
+	function classRefresher(c,resolver) {
+		return function(ev) {
+			c.renderClass.call(c,resolver);
+		};
+	}
+
+	function classUpdaters(attrs,resolver) {
+		for(var i=0,c; c = attrs.classes[i]; ++i) {
+			c.renderClass.call(c,resolver);
+			for(var j=0,s; s = c.selectors[j]; ++j) if (s.indexOf("::")>=0) {
+				var parts = s.split("::");
+				Resolver(parts[0]).on("change",parts[1],classRefresher(c,resolver));
+			} else {
+				resolver.on("change",s,classRefresher(c,resolver));
+			}
+		}
+	}
+
 	Resolver("page").declare("handlers.enhance.resolved", function(el,role,config,context) {
 
 		if (el.queued) {
 			for(var i=0,q; q = el.queued[i]; ++i) {
 				textUpdaters(q,el.stateful);
+				classUpdaters(q,el.stateful);
 			}
 			//TODO update on any part change
 			//TODO update state.blank
@@ -10577,6 +10622,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 		if (el.queued) {
 			for(var i=0,q; q = el.queued[i]; ++i) {
 				textUpdaters(q,el.stateful);
+				classUpdaters(q,el.stateful);
 			}
 			//TODO update on any part change
 			//TODO update state.blank
