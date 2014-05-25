@@ -10348,6 +10348,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 
 !function() {
 	var Layouter = Resolver("essential::Layouter::"),
+		docResolver = Resolver("document"),
 		addEventListeners = Resolver("essential::addEventListeners::"),
 		MutableEvent = Resolver("essential::MutableEvent::"),
 		EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
@@ -10390,6 +10391,26 @@ Resolver("page::state.managed").on("change",function(ev) {
 
 		}
 	}
+
+	var language = Resolver("document::essential.language");
+	language.declare("English"); //TODO calculate value support in Resolver ?
+
+	Resolver("document::essential.lang").on("change",function(ev) {
+		switch(ev.value) {
+			case "en": language.set("English"); break;
+			case "fr": language.set("Francais"); break;
+			case "de": language.set("Deutsch"); break;
+			case "es": language.set("Español"); break;
+			case "pt": language.set("Portuguese"); break;
+			case "it": language.set("Italiano"); break;
+			case "pl": language.set("Polski"); break;
+			case "cs": language.set("Čeština"); break;
+			case "ar": language.set("العربية"); break;
+			case "ru": language.set("Русский"); break;
+			case "ch": language.set("中国的"); break;
+			case "jp": language.set("日本人"); break;
+		}
+	});
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
@@ -10456,6 +10477,94 @@ Resolver("page::state.managed").on("change",function(ev) {
 	});
 
 
+	var policy = {
+		DECORATORS: {
+			"data-resolve": {
+				props: true
+			}
+		}
+	};
+
+	function prepare_resolved(el) {
+		var els = el.getElementsByTagName("*"), text = [], 
+			queued = el.queued = [],
+			attrs, dataResolve;
+
+		attrs = HTMLElement.fn.describeAttributes(el,policy);
+		attrs.texts = [];
+		//TODO support data-resolve on root element ?
+
+		if (attrs.texts.length === 0) {
+			attrs.texts = attrs.texts.concat(HTMLElement.fn.findTextSubstitutions(el));
+		}
+
+		if (attrs.texts.length || dataResolve) {
+			attrs.el = el;
+			queued.push(attrs);
+			for(var i=0,t; t = attrs.texts[i]; ++i) t.renderText.call(t,docResolver);
+			//TODO renderAttrs class title placeholder
+		}
+
+		for(var i=0,ce; ce = els[i]; ++i) {
+			attrs = HTMLElement.fn.describeAttributes(ce,policy);
+			dataResolve = attrs["data-resolve"];
+
+			attrs.texts = [];
+
+			if (dataResolve) {
+				if (dataResolve.props.text) {
+					attrs.texts.push(HTMLElement.fn.makeTextSubstitution(ce,dataResolve.props.text));
+				}
+				if (dataResolve.props.html) {
+					//TODO makeHtmlSubstitution
+				}
+			} 
+			if (attrs.texts.length === 0) {
+				// nested text if not in attribute
+				attrs.texts = attrs.texts.concat(HTMLElement.fn.findTextSubstitutions(ce));
+			}
+
+			if (attrs.texts.length || dataResolve) {
+				attrs.el = ce;
+				queued.push(attrs);
+				for(var j=0,t; t = attrs.texts[j]; ++j) t.renderText.call(t,docResolver);
+				//TODO renderAttrs class title placeholder
+			}
+		}
+	}
+
+	Resolver("page").declare("handlers.prepare.resolved", prepare_resolved);
+
+	function textRefresher(t,resolver) {
+		return function(ev) {
+			t.renderText.call(t,resolver);
+		};
+	}
+
+	function textUpdaters(attrs,resolver) {
+		for(var i=0,t; t = attrs.texts[i]; ++i) {
+			t.renderText.call(t,resolver);
+			for(var j=0,s; s = t.selectors[i]; ++i) if (s.indexOf("::")>=0) {
+				var parts = s.split("::");
+				Resolver(parts[0]).on("change",parts[1],textRefresher(t,resolver));
+			} else {
+				resolver.on("change",s,textRefresher(t,resolver));
+			}
+		}
+	}
+
+	Resolver("page").declare("handlers.enhance.resolved", function(el,role,config,context) {
+
+		if (el.queued) {
+			for(var i=0,q; q = el.queued[i]; ++i) {
+				textUpdaters(q,el.stateful);
+			}
+			//TODO update on any part change
+			//TODO update state.blank
+			el.queued = undefined;
+		}
+	});
+
 
 	function Navigation(el,config) {
 	    this.stateful = el.stateful;
@@ -10464,6 +10573,15 @@ Resolver("page::state.managed").on("change",function(ev) {
 	        // "change": form_input_change,
 	        "click": dialog_button_click
 	    },false);
+
+		if (el.queued) {
+			for(var i=0,q; q = el.queued[i]; ++i) {
+				textUpdaters(q,el.stateful);
+			}
+			//TODO update on any part change
+			//TODO update state.blank
+			el.queued = undefined;
+		}
 
 	    var config, items = el.querySelectorAll("[role=menuitem]");
 	    for(var i=0,item; item = items[i]; ++i) {
@@ -10529,6 +10647,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 	    if (instance) instance.destroy(el);
 	}
 
+	Resolver("page").declare("handlers.prepare.navigation", prepare_resolved);
 	Resolver("page").set("handlers.enhance.navigation", enhance_navigation);
 	Resolver("page").set("handlers.layout.navigation", layout_navigation);
 	Resolver("page").set("handlers.discard.navigation", discard_navigation);

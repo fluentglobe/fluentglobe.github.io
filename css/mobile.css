@@ -2794,7 +2794,7 @@ body .menu li ul:not( :hover ) li.active a {
   background-color: #f83104;
 }
 body .menu nav.flag {
-  width: 12em;
+  width: 13em;
 }
 body .menu nav.flag label {
   border-radius: 1px;
