@@ -691,6 +691,65 @@ var account;
             this.city = account.OUR_CITIES[city];
     }
 
+    function startSignUp(email, signup) {
+        var app_id = document.essential.fluentbook_simperium_app_id, api_key = document.essential.fluentbook_simperium_api_key;
+        var url = "https://auth.simperium.com/1/" + app_id + "/authorize/", createUrl = "https://auth.simperium.com/1/" + app_id + "/create/";
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ "username": email, "password": "-" }),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-Simperium-API-Key", api_key);
+            },
+            success: function (data) {
+                signup.message = "";
+                contiueSignup(email, data.access_token);
+            },
+            error: function (err, tp, code) {
+                switch (code) {
+                    case "BAD REQUEST":
+                        signup.message = err.responseJSON.message;
+                        break;
+
+                    case "UNAUTHORIZED":
+                        $.ajax({
+                            url: createUrl,
+                            type: "POST",
+                            contentType: "application/json",
+                            dataType: "json",
+                            data: JSON.stringify({ "username": email, "password": "-" }),
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader("X-Simperium-API-Key", api_key);
+                            },
+                            success: function (data) {
+                                signup.message = "";
+                                contiueSignup(email, data.access_token);
+                            },
+                            error: function (err, tp, code) {
+                                switch (err.status) {
+                                    case 400:
+                                        signup.message = err.responseJSON.message;
+
+                                        break;
+                                }
+
+                                console.log("Failed to create user for", email);
+                            }
+                        });
+                        break;
+                }
+            }
+        });
+    }
+    account.startSignUp = startSignUp;
+
+    function contiueSignup(email, access_token) {
+        console.log("continuing", email, "signup", "using token", access_token);
+    }
+
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
         account.BookAccess.angularProvider(module, "Access");
@@ -709,7 +768,8 @@ var account;
             $scope.iLiveIn = iLiveIn;
 
             $scope.start = function () {
-                console.log("signing up");
+                startSignUp(this.signup.email, this.signup);
+                console.log("signing up", this.signup.email);
             };
         });
     }

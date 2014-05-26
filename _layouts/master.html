@@ -12,6 +12,8 @@ base-body-class:
   <script type="application/config">
   declare("body",{});
   declare("body.layouter","intro-plus-article");
+  Resolver("document").declare("essential.fluentbook_simperium_app_id", "{{ site.fluentbook_simperium_app_id }}");
+  Resolver("document").declare("essential.fluentbook_simperium_api_key","{{ site.fluentbook_simperium_api_key }}");
   </script>
 
   {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}

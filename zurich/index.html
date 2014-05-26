@@ -25,24 +25,27 @@ og-images:
 
   <div class="form-and-story" ng-controller="signup">
 
-    <form class="signup">
+    <form name="signup" class="signup" ng-submit="start()">
 
       <fieldset>
       {% include intro/do-you-live-in.html %}
 
-      <div ng-show="region_name == 'Zürich'">
-      <input placeholder="e-mail" name="email" type="email" size="15" required>
-      <button class="btn primary double-corner"> {% include intro/next-step-button.html %} </button>
+      <div ng-show="city">
+      <input placeholder="e-mail" name="email" type="email" size="15" ng-model="signup.email" required>
+      <button class="btn primary double-corner" type="submit" value="Tailor" ng-disabled="!signup.$valid"> {% include intro/next-step-button.html %} </button>
+      <p>{{ message }}</p>
       </div>
-      <div ng-show="region_name != 'Zürich'">
+
+      <div ng-show="!city">
       <p>You seem to be in {( region_name )}. </p>
-      <button class="btn primary double-corner"  ng-click="region_name = 'Zürich'">I live in Zürich</button>
+      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">I live in Zürich</button>
       </div>
 
       </fieldset>
-
+      { % if site.debug % }
       <pre>signup = {( signup | json )}</pre>
-      <pre> {( region_code )} {( region_name )} </pre>
+      <pre> {( region_code )} {( region_name )} {( city )}</pre>
+      { % endif % }
     </form>
 
     {% include intro/story-local.html %}
