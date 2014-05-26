@@ -659,7 +659,17 @@ var fluentglobe;
 })(fluentglobe || (fluentglobe = {}));
 var account;
 (function (account) {
+    account.OUR_CITIES = {
+        "zurich": { code: "zurich", name: "Zürich" }
+    };
+
+    account.GEO2CITY = {
+        "CH19": account.OUR_CITIES.zurich,
+        "CH25": account.OUR_CITIES.zurich
+    };
+
     var access_token = Resolver("document::essential.access_token"), geoip = Resolver("document::essential.geoip");
+    access_token.declare("");
     access_token.stored("load change", "session");
 
     account.BookAccess = Generator(function () {
@@ -676,26 +686,30 @@ var account;
         });
     };
 
+    function iLiveIn(city) {
+        if (account.OUR_CITIES[city])
+            this.city = account.OUR_CITIES[city];
+    }
+
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
         account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
             Resolver("document::essential.geoip").intoAngularScope($scope, {
+                'city': 'city',
+                'country_code': 'country_code',
                 'region_code': 'region_code',
                 'region_name': 'region_name'
             }, function (values, action) {
-                switch (values.region_code) {
-                    case "19":
-                    case "25":
-                        values.region = "zurich";
-                        values.region_name = "Zürich";
-                        break;
-                }
+                var city = account.GEO2CITY[values.country_code + values.region_code];
+                values.city = city;
             });
 
-            $scope.iLiveIn = function (city) {
-                console.log("I live in ", city);
+            $scope.iLiveIn = iLiveIn;
+
+            $scope.start = function () {
+                console.log("signing up");
             };
         });
     }
