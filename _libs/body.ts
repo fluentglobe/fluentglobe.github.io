@@ -54,3 +54,10 @@ if (window["angular"]) {
     }]);
 }
 
+document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {
+    Resolver("document").set("essential.access_token","");
+    //TODO collapse site-menu
+    
+    return false;
+});
+

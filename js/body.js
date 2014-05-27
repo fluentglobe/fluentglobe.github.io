@@ -526,7 +526,7 @@ var fluentglobe;
 
     Router.prototype.manage = function (match, resources, fn) {
         if (match.href) {
-            if (typeof match.href == "typeof")
+            if (typeof match.href == "string")
                 this.hrefs.push(new RouterPath(match.href, resources, fn));
             else
                 for (var i = 0, h; h = match.href[i]; ++i)
@@ -539,6 +539,7 @@ var fluentglobe;
             this.resourcesOn[resources] = true;
             Resolver("document").on("change", resources, this, this._onResources);
             var map = Resolver("document")(resources);
+
             for (var n in map) {
                 Resolver("document").reference(resources + "." + n).trigger("change");
             }
@@ -668,9 +669,12 @@ var account;
         "CH25": account.OUR_CITIES.zurich
     };
 
-    var access_token = Resolver("document::essential.access_token"), geoip = Resolver("document::essential.geoip");
+    var access_token = Resolver("document::essential.access_token"), user_name = access_token = Resolver("document::essential.user_name"), geoip = Resolver("document::essential.geoip");
     access_token.declare("");
     access_token.stored("load change", "session");
+    user_name.declare("");
+    user_name.stored("load change", "session");
+    var console = Resolver("essential::console::")();
 
     account.BookAccess = Generator(function () {
         if (access_token()) {
@@ -686,12 +690,19 @@ var account;
         });
     };
 
+    account.BookAccess.prototype.updateAuthenticated = function () {
+        this.authenticated = !!access_token();
+        if (this.authenticated) {
+            this.simperium = new Simperium(document.essential.fluentbook_simperium_app_id, { token: access_token() });
+        }
+    };
+
     function iLiveIn(city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
     }
 
-    function startSignUp(email, signup) {
+    function startSignUp(email, $scope) {
         var app_id = document.essential.fluentbook_simperium_app_id, api_key = document.essential.fluentbook_simperium_api_key;
         var url = "https://auth.simperium.com/1/" + app_id + "/authorize/", createUrl = "https://auth.simperium.com/1/" + app_id + "/create/";
 
@@ -705,13 +716,17 @@ var account;
                 xhr.setRequestHeader("X-Simperium-API-Key", api_key);
             },
             success: function (data) {
-                signup.message = "";
-                contiueSignup(email, data.access_token);
+                $scope.signup.message = "";
+                user_name.set(email);
+
+                access_token.set(data.access_token);
+                $scope.authenticated = true;
+                contiueSignup(email);
             },
             error: function (err, tp, code) {
                 switch (code) {
                     case "BAD REQUEST":
-                        signup.message = err.responseJSON.message;
+                        $scope.signup.message = err.responseJSON.message;
                         break;
 
                     case "UNAUTHORIZED":
@@ -725,13 +740,16 @@ var account;
                                 xhr.setRequestHeader("X-Simperium-API-Key", api_key);
                             },
                             success: function (data) {
-                                signup.message = "";
-                                contiueSignup(email, data.access_token);
+                                $scope.signup.message = "";
+                                user_name.set(email);
+                                access_token.set(data.access_token);
+                                $scope.authenticated = true;
+                                contiueSignup(email);
                             },
                             error: function (err, tp, code) {
                                 switch (err.status) {
                                     case 400:
-                                        signup.message = err.responseJSON.message;
+                                        $scope.signup.message = err.responseJSON.message;
 
                                         break;
                                 }
@@ -746,8 +764,8 @@ var account;
     }
     account.startSignUp = startSignUp;
 
-    function contiueSignup(email, access_token) {
-        console.log("continuing", email, "signup", "using token", access_token);
+    function contiueSignup(email) {
+        console.log("continuing", email, "signup", "using token", access_token());
     }
 
     if (window["angular"]) {
@@ -755,6 +773,9 @@ var account;
         account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
+            $scope.access = account.BookAccess();
+            $scope.access.updateAuthenticated();
+
             Resolver("document::essential.geoip").intoAngularScope($scope, {
                 'city': 'city',
                 'country_code': 'country_code',
@@ -768,7 +789,7 @@ var account;
             $scope.iLiveIn = iLiveIn;
 
             $scope.start = function () {
-                startSignUp(this.signup.email, this.signup);
+                startSignUp(this.signup.email, this);
                 console.log("signing up", this.signup.email);
             };
         });
@@ -1165,3 +1186,9 @@ if (window["angular"]) {
             $scope.device = 'off';
         }]);
 }
+
+document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (ev) {
+    Resolver("document").set("essential.access_token", "");
+
+    return false;
+});

@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-05-17
+/*! Fluent Globe - v0.1.0 - 2014-05-27
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 window.html5 = {
@@ -10418,6 +10418,9 @@ Resolver("page::state.managed").on("change",function(ev) {
 		}
 	});
 
+	document.essential.user_name = "";
+	document.essential.access_token = "";
+
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
 		this.lowBoundsWidth = conf.lowBoundsWidth || 800;
@@ -10651,15 +10654,17 @@ Resolver("page::state.managed").on("change",function(ev) {
 	};
 
 	Navigation.prototype.click = function(ev) {
-
+		var prevent = false;
 	    if (ev.commandRole == "menuitem") {
 	        var config = Resolver.config(ev.commandElement);
 	        if (config.select) {
 	            this.stateful.set(config.select,config.value);
+	            prevent = true;
 	        }
 	        
 	        // model.language
 	        // ev.commandElement.stateful.set("state.selected",true);
+	        return prevent;
 	    }
 	};
 
@@ -10672,8 +10677,9 @@ Resolver("page::state.managed").on("change",function(ev) {
 	        if (ev.stateful && ev.stateful("state.disabled")) return; // disable
 	        if (ev.ariaDisabled) return; //TODO fold into stateful
 
-	        EnhancedDescriptor.all[this.uniqueID].instance.click(ev);
-	        ev.stopPropagation();
+	        if (EnhancedDescriptor.all[this.uniqueID].instance.click(ev)) {
+		        ev.stopPropagation();
+	        }
 	    }
 
 	    if (ev.defaultPrevented) return false;

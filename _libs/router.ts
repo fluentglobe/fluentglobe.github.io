@@ -91,9 +91,10 @@ Router.prototype.setRoot = function(r) {
     this.root = r.toLowerCase();
 };
 
+//TODO how should resources be integrated ?
 Router.prototype.manage = function(match, resources, fn) {
     if (match.href) {
-        if (typeof match.href == "typeof") this.hrefs.push(new RouterPath(match.href,resources,fn));
+        if (typeof match.href == "string") this.hrefs.push(new RouterPath(match.href,resources,fn));
         else for(var i=0,h; h = match.href[i]; ++i) this.hrefs.push(new RouterPath(h,resources,fn));
     }
 
@@ -103,6 +104,8 @@ Router.prototype.manage = function(match, resources, fn) {
         this.resourcesOn[resources] = true;
         Resolver("document").on("change", resources, this, this._onResources);
         var map = Resolver("document")(resources);
+
+        // available flag on resource listening
         for(var n in map) {
             Resolver("document").reference(resources + "." + n).trigger("change");
         }
