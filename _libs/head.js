@@ -12,6 +12,14 @@
 	state.declare("authenticated",true);
 	state.declare("authorised",true);
 	state.on("change",function(ev) {
+		if (ev.symbol == "authenticated" && !ev.value) {
+		    Resolver("document").set("essential.session.username","");
+		    Resolver("document").set("essential.session.access_token","");
+		    Resolver("document").set("essential.session.password",false);
+		    Resolver("document").set("essential.state.authorised",false);
+		    //TODO (essential.session).wipeStored()
+		}
+
 		Resolver("page").set("state.authenticated", ev.base.authenticated);
 		Resolver("page").set("state.authorised", ev.base.authorised);
 	});
@@ -85,7 +93,8 @@
 	session.declare({
 		userid: "",
 		username: "",
-		access_token: ""
+		access_token: "",
+		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
 	session.on("change",function(ev) {

@@ -25,12 +25,18 @@ og-images:
 
   <div class="form-and-story" ng-controller="signup">
 
-    <form name="signup" class="signup" ng-submit="start()">
-
-      <fieldset>
+    <div class="signup">
       {% include intro/do-you-live-in.html %}
 
-      <div ng-show="city && !access.state.authenticated">
+      <fieldset ng-show="!city">
+      <p>You seem to be in {( region_name )}. </p>
+      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">I live in Zürich</button>
+      </fieldset>
+
+    <form name="signup" ng-submit="start()">
+
+      <fieldset>
+      <div ng-show="city && !access.state.authenticated && !access.session.password">
       <input placeholder="e-mail" name="username" type="email" size="15" ng-model="access.session.username" required>
       <button class="btn primary double-corner" type="submit" value="Tailor" ng-disabled="!signup.$valid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ signup.message }}</p>
@@ -40,18 +46,32 @@ og-images:
         <p lang="en">You are signed in as {( access.session.username )}</p>
       </div>
 
-      <div ng-show="!city">
-      <p>You seem to be in {( region_name )}. </p>
-      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">I live in Zürich</button>
-      </div>
-
       </fieldset>
-      { % if site.debug % }
-      <pre>state = {( access.state | json )}</pre>
-      <pre>session = {( access.session | json )}</pre>
-      <pre> {( region_code )} {( region_name )} {( city )}</pre>
-      { % endif % }
     </form>
+
+    <form name="signin">
+      <fieldset>
+      <div ng-show="city && !access.state.authenticated && access.session.password">
+        <p>{{ access.session.username }} is an existing user.</p>
+        <p>
+          <input placeholder="password" name="password" type="password" size="15" ng-model="password" required>
+        </p>
+        <a href="javascript:;" ng-click="access.forgetUser();">Go back</a>
+        <a>I forgot password</a>
+        <button class="btn primary double-corner" type="sumit" value="Login">
+        Sign In
+        </button>
+      </div>
+      </fieldset>
+    </form>
+
+    {% if site.debug %}
+    <pre>state = {( access.state | json )}</pre>
+    <pre>session = {( access.session | json )}</pre>
+    <pre> {( region_code )} {( region_name )} {( city )}</pre>
+    {% endif %}
+
+    </div>
 
     {% include intro/story-local.html %}
   </div>

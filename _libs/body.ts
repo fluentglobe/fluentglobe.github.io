@@ -55,11 +55,8 @@ if (window["angular"]) {
 }
 
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {
-    Resolver("document").set("essential.session.username","");
-    Resolver("document").set("essential.session.access_token","");
     Resolver("document").set("essential.state.authenticated",false);
-    Resolver("document").set("essential.state.authorised",false);
-    // Resolver("page").set("state.authenticated",false);
+    Resolver("page").set("state.expanded",false);
     //TODO collapse site-menu
 
     return false;

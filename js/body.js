@@ -694,6 +694,13 @@ var account;
         }
     };
 
+    account.BookAccess.prototype.forgetUser = function () {
+        setTimeout(function () {
+            session.set("username", "");
+            session.set("password", false);
+        }, 0);
+    };
+
     function iLiveIn(city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
@@ -708,7 +715,7 @@ var account;
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({ "username": email, "password": "-" }),
+            data: JSON.stringify({ "username": email, "password": "--" }),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("X-Simperium-API-Key", api_key);
             },
@@ -717,7 +724,7 @@ var account;
                 session.set("username", data.username);
                 session.set("userid", data.userid);
                 session.set("access_token", data.access_token);
-                state.set("authenticated", true);
+
                 contiueSignup(data.username);
             },
             error: function (err, tp, code) {
@@ -727,34 +734,39 @@ var account;
                         break;
 
                     case "UNAUTHORIZED":
-                        $.ajax({
-                            url: createUrl,
-                            type: "POST",
-                            contentType: "application/json",
-                            dataType: "json",
-                            data: JSON.stringify({ "username": email, "password": "-" }),
-                            beforeSend: function (xhr) {
-                                xhr.setRequestHeader("X-Simperium-API-Key", api_key);
-                            },
-                            success: function (data) {
-                                $scope.signup.message = "";
-                                session.set("username", data.username);
-                                session.set("userid", data.userid);
-                                session.set("access_token", data.access_token);
-                                state.set("authenticated", true);
-                                contiueSignup(email);
-                            },
-                            error: function (err, tp, code) {
-                                switch (err.status) {
-                                    case 400:
-                                        $scope.signup.message = err.responseJSON.message;
+                        if (err.responseText == "invalid password") {
+                            session.set("password", true);
+                        } else
+                            $.ajax({
+                                url: createUrl,
+                                type: "POST",
+                                contentType: "application/json",
+                                dataType: "json",
+                                data: JSON.stringify({ "username": email, "password": "-" }),
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("X-Simperium-API-Key", api_key);
+                                },
+                                success: function (data) {
+                                    $scope.signup.message = "";
+                                    session.set("username", data.username);
+                                    session.set("userid", data.userid);
+                                    session.set("access_token", data.access_token);
 
-                                        break;
+                                    contiueSignup(email);
+                                },
+                                error: function (err, tp, code) {
+                                    switch (err.status) {
+                                        case 400:
+                                            $scope.signup.message = err.responseJSON.message;
+
+                                            break;
+                                        case 409:
+                                            break;
+                                    }
+
+                                    console.log("Failed to create user for", email);
                                 }
-
-                                console.log("Failed to create user for", email);
-                            }
-                        });
+                            });
                         break;
                 }
             }
@@ -771,12 +783,22 @@ var account;
         account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
+            $scope.$safeDigest = function () {
+                switch (this.$root.$$phase) {
+                    case "$apply":
+                    case "$digest":
+                        break;
+                    default:
+                        this.$digest();
+                }
+            };
+
             $scope.session = session();
             session.on("change", function () {
-                $scope.$digest();
+                $scope.$safeDigest();
             });
             state.on("change", function (ev) {
-                $scope.$digest();
+                $scope.$safeDigest();
             });
 
             $scope.access = account.BookAccess();
@@ -1192,10 +1214,8 @@ if (window["angular"]) {
 }
 
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (ev) {
-    Resolver("document").set("essential.session.username", "");
-    Resolver("document").set("essential.session.access_token", "");
     Resolver("document").set("essential.state.authenticated", false);
-    Resolver("document").set("essential.state.authorised", false);
+    Resolver("page").set("state.expanded", false);
 
     return false;
 });
