@@ -10353,7 +10353,18 @@ Resolver("page::state.managed").on("change",function(ev) {
 		MutableEvent = Resolver("essential::MutableEvent::"),
 		EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
 		Placement = Resolver("essential::ElementPlacement::"),
-		HTMLElement = Resolver("essential::HTMLElement::");
+		HTMLElement = Resolver("essential::HTMLElement::"),
+		state = Resolver("document::essential.state");
+
+	state.declare({});
+	state.declare("authenticated",true);
+	state.declare("authorised",true);
+	state.on("change",function(ev) {
+		Resolver("page").set("state.authenticated", ev.base.authenticated);
+		Resolver("page").set("state.authorised", ev.base.authorised);
+	});
+	state.set("authenticated",false);
+	state.set("authorised",false);
 
 	var	geoip = Resolver("document::essential.geoip");
 		geoip.declare({});
@@ -10418,8 +10429,17 @@ Resolver("page::state.managed").on("change",function(ev) {
 		}
 	});
 
-	document.essential.user_name = "";
-	document.essential.access_token = "";
+	var session = Resolver("document::essential.session");
+	session.declare({
+		userid: "",
+		username: "",
+		access_token: ""
+	});
+	session.stored("load change","session");
+	session.on("change",function(ev) {
+		var session = ev.symbol=="session"? ev.value:ev.base;
+		state.set("authenticated",!!session.access_token);
+	});
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 

@@ -669,17 +669,13 @@ var account;
         "CH25": account.OUR_CITIES.zurich
     };
 
-    var access_token = Resolver("document::essential.access_token"), user_name = access_token = Resolver("document::essential.user_name"), geoip = Resolver("document::essential.geoip");
-    access_token.declare("");
-    access_token.stored("load change", "session");
-    user_name.declare("");
-    user_name.stored("load change", "session");
-    var console = Resolver("essential::console::")();
+    var state = Resolver("document::essential.state"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
 
     account.BookAccess = Generator(function () {
-        if (access_token()) {
-        } else {
-        }
+        this.simperium = null;
+        this.session = session();
+        this.state = state();
+        this.updateAuthenticated();
     }).restrict({ singleton: true, lifecycle: "page" });
 
     account.BookAccess.angularProvider = function (module, name) {
@@ -691,9 +687,10 @@ var account;
     };
 
     account.BookAccess.prototype.updateAuthenticated = function () {
-        this.authenticated = !!access_token();
-        if (this.authenticated) {
-            this.simperium = new Simperium(document.essential.fluentbook_simperium_app_id, { token: access_token() });
+        if (this.state.authenticated) {
+            if (this.simperium == null)
+                this.simperium = new Simperium(document.essential.fluentbook_simperium_app_id, { token: session("access_token") });
+        } else {
         }
     };
 
@@ -717,11 +714,11 @@ var account;
             },
             success: function (data) {
                 $scope.signup.message = "";
-                user_name.set(email);
-
-                access_token.set(data.access_token);
-                $scope.authenticated = true;
-                contiueSignup(email);
+                session.set("username", data.username);
+                session.set("userid", data.userid);
+                session.set("access_token", data.access_token);
+                state.set("authenticated", true);
+                contiueSignup(data.username);
             },
             error: function (err, tp, code) {
                 switch (code) {
@@ -741,9 +738,10 @@ var account;
                             },
                             success: function (data) {
                                 $scope.signup.message = "";
-                                user_name.set(email);
-                                access_token.set(data.access_token);
-                                $scope.authenticated = true;
+                                session.set("username", data.username);
+                                session.set("userid", data.userid);
+                                session.set("access_token", data.access_token);
+                                state.set("authenticated", true);
                                 contiueSignup(email);
                             },
                             error: function (err, tp, code) {
@@ -765,7 +763,7 @@ var account;
     account.startSignUp = startSignUp;
 
     function contiueSignup(email) {
-        console.log("continuing", email, "signup", "using token", access_token());
+        console.log("continuing", email, "signup", "using token", session("access_token"));
     }
 
     if (window["angular"]) {
@@ -773,8 +771,15 @@ var account;
         account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
+            $scope.session = session();
+            session.on("change", function () {
+                $scope.$digest();
+            });
+            state.on("change", function (ev) {
+                $scope.$digest();
+            });
+
             $scope.access = account.BookAccess();
-            $scope.access.updateAuthenticated();
 
             Resolver("document::essential.geoip").intoAngularScope($scope, {
                 'city': 'city',
@@ -789,8 +794,7 @@ var account;
             $scope.iLiveIn = iLiveIn;
 
             $scope.start = function () {
-                startSignUp(this.signup.email, this);
-                console.log("signing up", this.signup.email);
+                startSignUp(this.access.session.username, this);
             };
         });
     }
@@ -1188,7 +1192,10 @@ if (window["angular"]) {
 }
 
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (ev) {
-    Resolver("document").set("essential.access_token", "");
+    Resolver("document").set("essential.session.username", "");
+    Resolver("document").set("essential.session.access_token", "");
+    Resolver("document").set("essential.state.authenticated", false);
+    Resolver("document").set("essential.state.authorised", false);
 
     return false;
 });

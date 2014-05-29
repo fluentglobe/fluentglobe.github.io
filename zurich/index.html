@@ -30,14 +30,14 @@ og-images:
       <fieldset>
       {% include intro/do-you-live-in.html %}
 
-      <div ng-show="city && !access.authenticated">
-      <input placeholder="e-mail" name="email" type="email" size="15" ng-model="signup.email" required>
+      <div ng-show="city && !access.state.authenticated">
+      <input placeholder="e-mail" name="username" type="email" size="15" ng-model="access.session.username" required>
       <button class="btn primary double-corner" type="submit" value="Tailor" ng-disabled="!signup.$valid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ signup.message }}</p>
       </div>
 
-      <div ng-show="city && access.authenticated">
-        <p lang="en">You are signed in as {( signup.email )}</p>
+      <div ng-show="city && access.state.authenticated">
+        <p lang="en">You are signed in as {( access.session.username )}</p>
       </div>
 
       <div ng-show="!city">
@@ -47,7 +47,8 @@ og-images:
 
       </fieldset>
       { % if site.debug % }
-      <pre>signup = {( signup | json )}</pre>
+      <pre>state = {( access.state | json )}</pre>
+      <pre>session = {( access.session | json )}</pre>
       <pre> {( region_code )} {( region_name )} {( city )}</pre>
       { % endif % }
     </form>
