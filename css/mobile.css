@@ -2680,7 +2680,7 @@ body.lesson.state-expanded #intro {
 body.screen.state-expanded article,
 body.splash.state-expanded article,
 body.lesson.state-expanded article {
-  padding-left: 160px;
+  margin-left: 160px;
 }
 body.screen.state-expanded article > header,
 body.splash.state-expanded article > header,
