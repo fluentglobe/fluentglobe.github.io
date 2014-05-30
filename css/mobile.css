@@ -4155,7 +4155,7 @@ html body.splash-zurich .bg-tracer {
     background-size: auto 100%;
   }
 }
-html body.splash-zurich .we-love .forward-looking {
+html body.splash-zurich #intro .we-love .forward-looking {
   color: transparent;
 }
 html body.splash-fluentbook #intro:before {
@@ -4414,9 +4414,28 @@ html body.lesson-color .bg-tracer {
 html.body.splash-desktop {
   background-color: white;
 }
-.splash-zurich.authenticated #intro .story,
-.splash-zurich.authenticated #intro .benefits {
+.splash.splash-zurich.authenticated #intro .we-love {
+  height: 175px;
+}
+.splash.splash-zurich.authenticated #intro .we-love figure {
+  -webkit-transform: scale(0.4, 0.4);
+  -ms-transform: scale(0.4, 0.4);
+  transform: scale(0.4, 0.4);
+}
+.splash.splash-zurich.authenticated #intro .story,
+.splash.splash-zurich.authenticated #intro .benefits {
   display: none;
+}
+.splash.splash-zurich.authenticated #intro .form-and-story {
+  top: 0;
+}
+.splash.splash-zurich.authenticated #intro .signup {
+  top: 0;
+  margin-top: 10em;
+}
+.splash.splash-zurich.authenticated #intro footer {
+  margin-top: 0;
+  height: 0;
 }
 img.left-side {
   float: left;

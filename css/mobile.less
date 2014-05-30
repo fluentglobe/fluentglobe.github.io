@@ -63,6 +63,7 @@ body {
 
 @import "article";
 
+// menu expand/collapse
 body {
 
     &.open-book {
@@ -509,7 +510,7 @@ html body.splash-zurich {
     .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
 
     //temp
-    .we-love .forward-looking {
+    #intro .we-love .forward-looking {
         color: transparent;
     }
 }    
@@ -553,11 +554,30 @@ html.body.splash-desktop {
 
 }
 
-.splash-zurich.authenticated {
+.splash.splash-zurich.authenticated {
     #intro {
+        .we-love {
+            figure {
+                .scale(.4,.4);
+            }
+            height: 175px;
+        }
         .story,
         .benefits {
             display:none;
+        }
+
+        .form-and-story {
+            top: 0;
+        }
+        .signup {
+            top: 0;
+            margin-top: 10em;
+        }
+
+        footer {
+            margin-top: 0;
+            height: 0;
         }
     }
 }
