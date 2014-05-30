@@ -715,7 +715,7 @@ var account;
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({ "username": email, "password": "--" }),
+            data: JSON.stringify({ "username": email, "password": "-" }),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("X-Simperium-API-Key", api_key);
             },
