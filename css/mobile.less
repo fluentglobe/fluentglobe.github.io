@@ -71,7 +71,7 @@ body {
 
     &.screen.state-expanded,
     &.splash.state-expanded,
-    &.lesson.state-expanded {
+    &.lesson.state-expanded { // refactor to general app vs info vs splash  bodies
         #intro {
             left: @menu-width;
             margin-right: -@menu-width;
@@ -150,90 +150,7 @@ body {
     }
 }
 
-.lesson #intro {
-	position: absolute;
-	top: 0; bottom: 0;
-	min-height: 0;
-    // better keep same level for clickability: no, z-index: -1;
-
-    //TODO increase z-index for content elements
-}
-
-body.lesson .menu {
-    nav.flag {
-        label {
-            display: none;
-        }
-    }
-}
-
-.lesson article {
-
-    position: absolute;
-    left:0; right:0; top:0; bottom:0;
-    overflow-x: auto;
-    border-left: 0;
-    background-color: white;
-    
-    section {
-        position: relative;
-        left: 0;
-        // height: 100%;
-        width: @col-max-width;
-        overflow: visible;
-        margin: 0; padding: 0;
-        height: 100%;
-    }
-    div.column {
-        position:absolute;
-        top:0;
-        margin-left: 40px;
-        width: 100%;
-        height: 100%;
-        padding: 10px;
-        background-color: white;
-        overflow: hidden;
-    }
-    .c1 {
-        left:0;
-    }
-    .c2 {
-        left:100%;
-    }
-    .c3 {
-        left:200%;
-    }
-    .c4 {
-        left:300%;
-    }
-    .c5 {
-        left:400%;
-    }
-    .c6 {
-        left:500%;
-    }
-    .c7 {
-        left:600%;
-    }
-    .c8 {
-        left:700%;
-    }
-    .c9 {
-        left:800%;
-    }
-
-    p {
-    }
-
-    .mejs-container {
-    }
-    
-    .videoapp {
-    	display: block;
-	    width: 320px;
-	    height: 240px;
-    }
-}
+@import "lesson";
 
 .splash #intro {
 
