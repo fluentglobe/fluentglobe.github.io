@@ -96,20 +96,8 @@ body {
         .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
         .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
         .transition(.3s ease-in-out left);
-
-        nav.flag {
-            width: 13em;
-
-            label {
-                border-radius: @border-radius-base;
-                border: 1px solid @app-menu-bg;
-                padding: 5px 9px 4px 9px;
-                min-width: 5em;
-                output { color: @app-menu-bg; }
-            }
-        }
+        .site-menu-flag(13em, @app-menu-bg);
     }
-
 }
 
 @import (less) "../book-reader/libs/world-flags-sprite/stylesheets/flags16.css";
@@ -151,28 +139,6 @@ body {
 }
 
 @import "lesson";
-
-.splash {
-
-    // general
-    .we-love .forward-looking {
-        display: block;
-        font-family: "rocksalt";
-        font-size: 24px;
-        color: @fluent-red;
-        margin-left: 9em;
-        margin-top: 1.5em;
-    }
-
-    .benefits .forward-looking {
-        display: block;
-        font-family: "rocksalt";
-        font-size: 24px;
-        color: @fluent-red;
-        // margin-top: 16px;
-    }
-
-}
 
 .splash article {
 

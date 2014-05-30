@@ -2506,6 +2506,16 @@ html[lang=ch] body [lang=ar] {
 .splash #intro .btn.primary {
   background: #fb441b;
 }
+.splash #intro .we-love .forward-looking {
+  margin-left: 9em;
+  margin-top: 1.5em;
+}
+.splash #intro .scribbles {
+  display: block;
+  font-family: "rocksalt";
+  font-size: 24px;
+  color: #fb441b;
+}
 .bookspread .bk-origin .bk-front img {
   width: 100%;
 }
@@ -3719,20 +3729,6 @@ body.lesson .menu nav.flag label {
   display: block;
   width: 320px;
   height: 240px;
-}
-.splash .we-love .forward-looking {
-  display: block;
-  font-family: "rocksalt";
-  font-size: 24px;
-  color: #fb441b;
-  margin-left: 9em;
-  margin-top: 1.5em;
-}
-.splash .benefits .forward-looking {
-  display: block;
-  font-family: "rocksalt";
-  font-size: 24px;
-  color: #fb441b;
 }
 .splash article {
   z-index: 100;
