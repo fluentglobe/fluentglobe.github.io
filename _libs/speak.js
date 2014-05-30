@@ -1,7 +1,7 @@
 require('../components/angular-route/angular-route.js');
 require('../components/angular-toggle-switch/angular-toggle-switch.min.js');
 
-var books = require('../components/book-reader/controllers.js');
+var books = require('../../book-reader/controllers.js');
 
 var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {

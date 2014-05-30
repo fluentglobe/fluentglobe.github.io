@@ -38,8 +38,8 @@ module.exports = function(grunt) {
           '_libs/impl.js',
           '_libs/form.js',
           'components/angular-toggle-switch/angular-toggle-switch.min.js',
-          'components/book-reader/books.js',
-          'components/book-reader/controllers.js',
+          '../book-reader/books.js',
+          '../book-reader/controllers.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
