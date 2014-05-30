@@ -2461,6 +2461,51 @@ html[lang=ch] body [lang=ar] {
   width: 10em;
   text-align: center;
 }
+.splash #intro .benefits ul {
+  padding-bottom: 1em;
+}
+.splash #intro .story {
+  margin-bottom: 3em;
+}
+.splash #intro h1,
+.splash #intro h2,
+.splash #intro h3,
+.splash #intro h4,
+.splash #intro h5,
+.splash #intro h6 {
+  font-weight: 300;
+}
+.splash #intro h3 {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.6em;
+  text-shadow: 0px 1px 1px black;
+  font-weight: 300;
+  color: #fb441b;
+}
+.splash #intro p {
+  position: relative;
+  text-shadow: 0px 1px 1px black;
+}
+.splash #intro p em {
+  font-style: normal;
+  color: #fb441b;
+}
+.splash #intro fieldset {
+  position: relative;
+  text-align: center;
+}
+.splash #intro fieldset input[type=email],
+.splash #intro fieldset input[type=text] {
+  width: 220px;
+  height: 28px;
+  vertical-align: baseline;
+  padding: 1px 10px;
+}
+.splash #intro .btn.primary {
+  background: #fb441b;
+}
 .bookspread .bk-origin .bk-front img {
   width: 100%;
 }
@@ -3675,51 +3720,6 @@ body.lesson .menu nav.flag label {
   width: 320px;
   height: 240px;
 }
-.splash #intro .benefits ul {
-  padding-bottom: 1em;
-}
-.splash #intro .story {
-  margin-bottom: 3em;
-}
-.splash #intro h1,
-.splash #intro h2,
-.splash #intro h3,
-.splash #intro h4,
-.splash #intro h5,
-.splash #intro h6 {
-  font-weight: 300;
-}
-.splash #intro h3 {
-  position: relative;
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.6em;
-  text-shadow: 0px 1px 1px black;
-  font-weight: 300;
-  color: #fb441b;
-}
-.splash #intro p {
-  position: relative;
-  text-shadow: 0px 1px 1px black;
-}
-.splash #intro p em {
-  font-style: normal;
-  color: #fb441b;
-}
-.splash #intro fieldset {
-  position: relative;
-  text-align: center;
-}
-.splash #intro fieldset input[type=email],
-.splash #intro fieldset input[type=text] {
-  width: 220px;
-  height: 28px;
-  vertical-align: baseline;
-  padding: 1px 10px;
-}
-.splash #intro .btn.primary {
-  background: #fb441b;
-}
 .splash .we-love .forward-looking {
   display: block;
   font-family: "rocksalt";
@@ -4159,6 +4159,9 @@ html body.splash-zurich .bg-tracer {
     background-size: auto 100%;
   }
 }
+html body.splash-zurich .we-love .forward-looking {
+  color: transparent;
+}
 html body.splash-fluentbook #intro:before {
   content: " ";
   position: absolute;
@@ -4414,6 +4417,10 @@ html body.lesson-color .bg-tracer {
 }
 html.body.splash-desktop {
   background-color: white;
+}
+.splash-zurich.authenticated #intro .story,
+.splash-zurich.authenticated #intro .benefits {
+  display: none;
 }
 img.left-side {
   float: left;

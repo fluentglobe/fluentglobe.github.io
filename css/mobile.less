@@ -152,61 +152,6 @@ body {
 
 @import "lesson";
 
-.splash #intro {
-
-    .benefits ul { padding-bottom: 1em; }
-    .story { margin-bottom: 3em; }
-
-    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
-
-    h3 {
-        position: relative;
-        // left: 700px;
-        margin-top: 0;
-        margin-bottom: 10px;
-        //text-align: center;
-        font-size: 1.6em;
-        text-shadow: 0px 1px 1px black;
-        font-weight: 300;
-        color: @fluent-red;
-    }
-    p {
-        position: relative;
-        // left: 700px;
-        // font-size: 1.2em;
-        // width: 680px;
-        //margin: 0 auto;
-        text-shadow: 0px 1px 1px black;
-    }
-    p em {
-        font-style: normal; 
-        color: @fluent-red;
-    }
-
-
-    fieldset {
-        position: relative;
-        text-align: center;
-
-        input[type=email],
-        input[type=text] {
-            width: 220px;
-            height: 28px;
-            vertical-align: baseline;
-            padding: 1px 10px;
-        }
-    }
-
-    input,textarea {
-        // padding: 3px 6px;
-    }
-
-    .btn.primary {
-        background: @fluent-red;
-    }
-    
-}
-
 .splash {
 
     // general
@@ -597,6 +542,10 @@ html body.splash-zurich {
 
     .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
 
+    //temp
+    .we-love .forward-looking {
+        color: transparent;
+    }
 }    
 
 html body.splash-fluentbook {
@@ -632,6 +581,19 @@ html body.lesson-color {
 html.body.splash-desktop {
 //TODO image?
     background-color: white;
+}
+
+.splash-zurich.login {
+
+}
+
+.splash-zurich.authenticated {
+    #intro {
+        .story,
+        .benefits {
+            display:none;
+        }
+    }
 }
 
 //@import "animated";
