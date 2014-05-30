@@ -3,15 +3,15 @@
 /// <reference path="../../HTML-Widgets/DefinitelyTyped/angularjs/angular.d.ts"/>
 
 /// <reference path="head.d.ts"/>
-/// <reference path="../components/book-reader/fluent-app-def.ts"/>
+/// <reference path="../../book-reader/fluent-app-def.ts"/>
 // in head:  <reference path="resolved.ts"/>
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
-/// <reference path="../components/book-reader/account.ts"/>
-/// <reference path="../components/book-reader/survey.ts"/>
-/// <reference path="../components/book-reader/reader.ts"/>
-/// <reference path="../components/book-reader/slider.ts"/>
+/// <reference path="../../book-reader/account.ts"/>
+/// <reference path="../../book-reader/survey.ts"/>
+/// <reference path="../../book-reader/reader.ts"/>
+/// <reference path="../../book-reader/slider.ts"/>
 
 function enhance_book(el,role,config) {
 
