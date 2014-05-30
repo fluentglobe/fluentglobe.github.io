@@ -483,6 +483,10 @@ var fluentglobe;
 
         this.on("change", this, function (ev) {
             ev.data.copyToScope(scope, names, adjuster);
+            if (scope.$safeDigest)
+                scope.$safeDigest();
+            else
+                scope.$digest();
         });
     };
 

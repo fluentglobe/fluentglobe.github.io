@@ -35,6 +35,8 @@ Resolver("document::essential.geoip").intoAngularScope = function(scope,names,ad
     // changes to angular model goes to resolver
     this.on("change",this,function(ev) {
         ev.data.copyToScope(scope,names,adjuster);
+        if (scope.$safeDigest) scope.$safeDigest();
+        else scope.$digest();
     });
 
     // changes to resolver goes to angular model
