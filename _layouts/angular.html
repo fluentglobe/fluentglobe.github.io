@@ -6,8 +6,14 @@ base-body-class:
 <!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" ng-app="{{ page.app-name }}"><!--<![endif]-->
 
 <head>
-  {% include ipad_friendly_html5_head.html %}
+  <script type="application/config">
+  declare("body",{});
+  declare("body.layouter","intro-plus-article");
+  Resolver("document").declare("essential.fluentbook_simperium_app_id", "{{ site.fluentbook_simperium_app_id }}");
+  Resolver("document").declare("essential.fluentbook_simperium_api_key","{{ site.fluentbook_simperium_api_key }}");
+  </script>
 
+  {% include ipad_friendly_html5_head.html %}
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
 {% if site.y_key %}

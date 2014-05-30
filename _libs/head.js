@@ -161,7 +161,7 @@
 		//TODO move to lib
 		if (ev.value == "complete" || ev.value == "interactive") {
 			var body = Resolver("essential::DescriptorQuery::")(document.body);
-			body[0].conf.sizingElement = true;
+			if (body.length) body[0].conf.sizingElement = true;
 			body.enhance();
 		}
 	});
