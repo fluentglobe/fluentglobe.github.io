@@ -17,12 +17,12 @@
     text-align: center;
 }
 
-.splash #intro {
+// white/orange on dark picture
+.on-dark-picture-bg {
 
-    .benefits ul { padding-bottom: 1em; }
-    .story { margin-bottom: 3em; }
-
-    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; 
+        color: white;
+    }
 
     h3 {
         position: relative;
@@ -41,12 +41,22 @@
         // font-size: 1.2em;
         // width: 680px;
         //margin: 0 auto;
+        color: white;
         text-shadow: 0px 1px 1px black;
     }
     p em {
         font-style: normal; 
         color: @fluent-red;
     }
+    ul, ol {
+        color: white;
+    }
+}
+
+.splash #intro {
+
+    .benefits ul { padding-bottom: 1em; }
+    .story { margin-bottom: 3em; }
 
 
     fieldset {
@@ -85,6 +95,277 @@
         // margin-top: 16px;
     }
 
+    .white-card {
+        position: absolute;
+        top: 5em;
+        left: 50%;
+        width: 320px;
+    }
+
+    .lead-question {
+        /*
+        position: absolute;
+        right: 0;
+        width: 50%;
+        */
+
+        border-radius: 10px;
+        padding: 2em;
+        background-color: white;//rgba(255,255,255, .5);
+
+    }
 }
+
+@we-love-width: 383px;
+@we-love-height: 431px;
+
+
+
+html body.splash { 
+
+    #intro {
+
+        .we-love {
+            // position: absolute; top:0px; 
+            position: relative;
+            // height: @we-love-height;
+            height: @we-love-height / 2;
+            margin-left: @col1-left;
+            width: 100% - (2*@col1-left);
+
+            figure {
+                position: absolute;
+                top: 0; 
+                left: 0; //-100px; 
+                // z-index: -9999;
+                width: @we-love-width;
+                height: @we-love-height;
+                // width: (@we-love-width / 2);
+                // height: (@we-love-height / 2);
+                margin: 0;
+                //zoom: .5; TODO do this for IE
+                .scale(.5,.5);
+                -ms-transform-origin: left top;
+                -webkit-transform-origin: left top;
+                transform-origin: left top;
+
+                background-image: url(../images/around-globe.png);
+                background-repeat: no-repeat;
+            }
+            h3 {
+                padding-top: 1em;
+                padding-left: 100px;
+            }
+            p {
+                padding-left: 100px;
+            }
+        }
+        .benefits {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+
+            // position: absolute;
+            // left: 50px;
+            // top: 80px;
+            // width: 30%;
+        }
+
+        .story {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+        }
+
+
+        .signup {
+            position: relative;
+            margin-left: @col1-left;
+            width: @col1-width;
+            max-width: @col-max-width;
+
+            input, select, textarea {
+                color: black;
+            }
+
+            .btn {
+                margin: 1em;
+            }
+
+            iframe {
+                position: absolute;
+                border: 0 none;
+                top: 2em;
+                height: 150px;
+                width: 100%;
+            }
+        }
+
+        // the footer is used to set start of article when intro is fixed
+        > footer {
+            position: relative;
+            // top: 0;
+            height: 50px;
+        }
+    }
+
+}
+
+// Phone < 5:
+@media screen and (device-aspect-ratio: 2/3) {
+
+    // optional body.splash
+    #intro {
+        height:100%;
+        min-height: initial;
+        max-height: initial;
+    }
+}
+
+// iPhone 5 portrait
+@media screen and (device-aspect-ratio: 40/71) and (orientation:portrait) {
+
+}
+
+// iPhone 5 landscape and squashed browser:
+@media screen and (device-aspect-ratio: 40/71) and (orientation:landscape),
+        only screen and (max-height:321px) {
+
+    // optional body.splash
+    #intro {
+        height:100%;
+        min-height: initial;
+        max-height: initial;
+    }
+}
+
+// bigger phones, horz iPad, narrow browser
+@media only screen and (min-width: 400px) and (max-width: 799px) {
+
+    html body.splash {
+
+        #intro {
+
+            .we-love {
+
+            }
+            .benefits {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+
+            .signup {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+
+            .story {
+                left: 50%;
+                margin-left: -.5 * @col-max-width;
+                width: @col-max-width;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1099px) {
+    html body.splash #intro {
+        .form-and-story {
+            position: absolute;
+            top: @intro-top-gap + 175px;
+            left: 50%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1100px) and (max-width: 2048px) {
+    html body.splash #intro {
+        @signup-height: 175px;
+
+        .we-love {
+            width: 32%;
+        }
+        .benefits {
+            width: 32%;
+        }
+        .signup {
+            position: absolute;
+            width: (@col-max-width - 20px);
+            top: 50%;
+            left: 50%;
+            margin-top: -0.5 * @signup-height;
+            margin-left: -.5 * (@col-max-width - 20px);
+        }
+
+        .story {
+            position: absolute;
+            right: @col1-right;
+            width: 32%;
+            bottom: @intro-top-gap;
+        }
+
+        footer {
+            margin-top: 110px;
+        }
+    }
+}
+
+// iPad:
+@media screen and (device-aspect-ratio: 3/4) {}
+
+html body.splash-zurich {
+    #intro:before {
+        content: " ";
+        // z-index: -9999;
+        position: absolute;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        background-image: url(../images/05.png);
+    }
+
+    .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
+
+    //temp
+    #intro .we-love .forward-looking {
+        color: transparent;
+    }
+}    
+
+
+/// Background image by page
+
+html body.splash-fluentbook {
+    #intro:before {
+        content: " ";
+        // z-index: -9999;
+        position: absolute;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        background-image: url(../images/05.png);
+    }
+
+    .intro-on-body(url(../images/lawn-1024-bare.jpg),url(../images/lawn-360-bare.jpg));
+}    
+
+html body.splash-garden {
+
+    .intro-on-body(url(../images/garden-reading-ipad.jpg),url(../images/garden-reading-ipad.jpg));
+
+}
+html body.splash-color {
+
+    .intro-on-body(url(../images/color-1024-bare.jpg),url(../images/color-360-bare.jpg));
+
+}    
+
+html body.lesson-color {
+
+    .intro-on-body(url(../images/color-1024-bare.jpg),url(../images/color-360-bare.jpg));
+
+}    
 
 
