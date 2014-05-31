@@ -93,38 +93,53 @@ og-images:
   </header>
 
   <section class="main-text-section main-text" ng-controller="user-survey as survey">
-    <form name="surveyForm" ng-submit="save()">
+    <form name="surveyForm" ng-show="authenticated" ng-submit="save()">
+        <h3>Tell us a bit about you ({{ no }} of 5)</h3>
+
+      <fieldset ng-show="study == 'why'">
+        <p>Why do you want to learn German?</p>
+        <p><input type="radio" name="study-why" value="speak-swiss-work" ng-model="survey.why"> We speak Swiss German at work</p>
+        <p><input type="radio" name="study-why" value="write-work" ng-model="survey.why"> I correspond with e-mail/documents</p>
+        <p><input type="radio" name="study-why" value="speak-relatives" ng-model="survey.why"> My relatives speak Swiss German</p>
+        <p><input type="radio" name="study-why" value="speak-socieal" ng-model="survey.why"> I want it for socialising and/or daily life</p>
+        <p><input type="radio" name="study-why" value="foolish" ng-model="survey.why"> I feel foolish for not being able to</p>
+
+        <button type="button" ng-click="next()">Next</button>
+      </fieldset>
+
       <fieldset ng-show="study == 'already'">
-        <h3>Tell us a bit about you</h3>
-        <p>Do you study already (1 of 5)</p>
+        <p>Do you study already?</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="private"> Yes, with private tutor.</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="intensive"> Yes, intensive language class.</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="weekly"> Yes, in classroom weekly.</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="selfstudy"> Yes, selfstudy</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="groups"> Yes, study groups/meetups</p>
-        <p><input type="radio" name="study-already" ng-model="survey.already" value="manu"> Yes, in many ways.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="many"> Yes, in many ways.</p>
         <p><input type="radio" name="study-already" ng-model="survey.already" value="no"> No, not yet</p>
 
-        <button ng-click="next">Next</button>
+        <button type="button" ng-click="next()">Next</button>
       </fieldset>
 
       <fieldset ng-show="study == 'progress'">
-        <p>How is your progress? (2 of 5)</p>
+        <p>How is your progress?</p>
         <p><input type="checkbox" name="study-progress"> I would like to learn a more practical German</p>
         <p><input type="checkbox" name="study-progress"> I forget a lot between sessions</p>
         <p><input type="checkbox" name="study-progress"> I need to understand the local dialect better.</p>
         <p><input type="checkbox" name="study-progress"> I find pronunciation very difficult</p>
         <p><input type="checkbox" name="study-progress"> It is too slow, but I don't have spare time</p>
         <p><input type="checkbox" name="study-progress"> I'm happy with my progress</p>
+
+        <button type="button" ng-click="next()">Next</button>
       </fieldset>
 
-      <fieldset ng-show="study == 'why'">
-        <p>Why are you learning German (3 of 5)</p>
-
-        I need it at work
-        I want to speak with family
-        I feel foolish for not being able to
+      <fieldset ng-show="study == 'speed'">
+        <p>How quickly would you like to learn German?</p>
+        <p><input type="radio" name="study-asap"> As Soon As Possible</p>
+        <p><input type="radio" name="study-onemonth"> I want the essentials in a month, and then take it slow</p>
+        <p><input type="radio" name="study-halfyear"> I want to be speaking in 6 months</p>
+        <p><input type="radio" name="study-norush"> There is no rush</p>
       </fieldset>
+
     </form>
 
     <pre>study = {( study | json )}</pre>

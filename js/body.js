@@ -846,14 +846,15 @@ var survey;
                             break;
 
                         case "already":
-                            $scope.study = "progress";
-                            break;
-
-                        case "progress":
                             if ($scope.survey.already == "no") {
+                                $scope.study = "speed";
                             } else {
                                 $scope.study = "progress";
                             }
+                            break;
+
+                        case "progress":
+                            $scope.study = "speed";
                             break;
 
                         case "speed":
