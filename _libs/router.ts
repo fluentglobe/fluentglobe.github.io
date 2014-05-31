@@ -16,7 +16,7 @@ var global = Resolver(), essential = Resolver("essential"),
 
 var baseUrl = location.href.substring(0,location.href.lastIndexOf("/")+1);
 
-Resolver("document::essential.geoip").copyToScope = function(scope,names,adjuster) {
+Resolver("document::essential.state").copyToScope = Resolver("document::essential.geoip").copyToScope = function(scope,names,adjuster) {
     var v = {};
     for(var n in names) {
         v[ n ] = this.get( n );
@@ -28,7 +28,7 @@ Resolver("document::essential.geoip").copyToScope = function(scope,names,adjuste
 }
 
 //TODO apply to all references, pluggable references
-Resolver("document::essential.geoip").intoAngularScope = function(scope,names,adjuster) {
+Resolver("document::essential.state").intoAngularScope = Resolver("document::essential.geoip").intoAngularScope = function(scope,names,adjuster) {
 
     this.copyToScope(scope,names,adjuster);
 

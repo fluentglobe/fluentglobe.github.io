@@ -466,7 +466,7 @@ var fluentglobe;
 
     var baseUrl = location.href.substring(0, location.href.lastIndexOf("/") + 1);
 
-    Resolver("document::essential.geoip").copyToScope = function (scope, names, adjuster) {
+    Resolver("document::essential.state").copyToScope = Resolver("document::essential.geoip").copyToScope = function (scope, names, adjuster) {
         var v = {};
         for (var n in names) {
             v[n] = this.get(n);
@@ -478,7 +478,7 @@ var fluentglobe;
         }
     };
 
-    Resolver("document::essential.geoip").intoAngularScope = function (scope, names, adjuster) {
+    Resolver("document::essential.state").intoAngularScope = Resolver("document::essential.geoip").intoAngularScope = function (scope, names, adjuster) {
         this.copyToScope(scope, names, adjuster);
 
         this.on("change", this, function (ev) {
@@ -832,7 +832,56 @@ var survey;
 
         module.controller("user-survey", [
             '$scope', function ($scope) {
-                $scope.study = "already";
+                Resolver("document::essential.state").intoAngularScope($scope, {
+                    'authenticated': 'authenticated',
+                    'authorised': 'authorised'
+                });
+
+                $scope.study = "why";
+
+                $scope.next = function () {
+                    switch ($scope.study) {
+                        case "why":
+                            $scope.study = "already";
+                            break;
+
+                        case "already":
+                            $scope.study = "progress";
+                            break;
+
+                        case "progress":
+                            if ($scope.survey.already == "no") {
+                            } else {
+                                $scope.study = "progress";
+                            }
+                            break;
+
+                        case "speed":
+                            $scope.study = "time";
+                            break;
+
+                        case "time":
+                            break;
+                    }
+
+                    switch ($scope.study) {
+                        case "why":
+                            $scope.no = "1";
+                            break;
+                        case "already":
+                            $scope.no = "2";
+                            break;
+                        case "progress":
+                            $scope.no = "3";
+                            break;
+                        case "speed":
+                            $scope.no = "4";
+                            break;
+                        case "time":
+                            $scope.no = "5";
+                            break;
+                    }
+                };
 
                 $scope.save = function () {
                     console.log("TODO save survey");
