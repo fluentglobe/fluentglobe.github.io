@@ -366,7 +366,7 @@ module.exports = function(grunt) {
         options: {
           keepalive: true,
           hostname: '*',
-          livereload: true,
+          // livereload: true,
           base: '../fluentglobe_site/',
           port: 4000
         }
