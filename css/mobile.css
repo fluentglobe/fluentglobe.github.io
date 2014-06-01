@@ -2455,6 +2455,12 @@ html[lang=ch] body [lang=ar] {
   -webkit-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
 }
+#intro .intro-column {
+  position: relative;
+  margin-left: 3%;
+  width: 94%;
+  max-width: 400px;
+}
 .narrow-blurp {
   margin: 40px auto 0 auto;
   border: 0;
@@ -2500,7 +2506,6 @@ html[lang=ch] body [lang=ar] {
 }
 .splash #intro fieldset {
   position: relative;
-  text-align: center;
 }
 .splash #intro fieldset input[type=email],
 .splash #intro fieldset input[type=text] {
@@ -2566,24 +2571,6 @@ html body.splash #intro .we-love h3 {
 }
 html body.splash #intro .we-love p {
   padding-left: 100px;
-}
-html body.splash #intro .benefits {
-  position: relative;
-  margin-left: 3%;
-  width: 94%;
-  max-width: 400px;
-}
-html body.splash #intro .story {
-  position: relative;
-  margin-left: 3%;
-  width: 94%;
-  max-width: 400px;
-}
-html body.splash #intro .signup {
-  position: relative;
-  margin-left: 3%;
-  width: 94%;
-  max-width: 400px;
 }
 html body.splash #intro .signup input,
 html body.splash #intro .signup select,

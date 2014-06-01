@@ -6,6 +6,14 @@
     min-height: @min-height-intro;
 
     .transition(.3s ease-in-out left);
+
+    .intro-column {
+        position: relative;
+        margin-left: @col1-left;
+        width: @col1-width;
+        max-width: @col-max-width;
+    }
+
 }
 
 // review link in intro
@@ -61,7 +69,7 @@
 
     fieldset {
         position: relative;
-        text-align: center;
+        // text-align: center;
 
         input[type=email],
         input[type=text] {
@@ -160,32 +168,8 @@ html body.splash {
                 padding-left: 100px;
             }
         }
-        .benefits {
-            position: relative;
-            margin-left: @col1-left;
-            width: @col1-width;
-            max-width: @col-max-width;
-
-            // position: absolute;
-            // left: 50px;
-            // top: 80px;
-            // width: 30%;
-        }
-
-        .story {
-            position: relative;
-            margin-left: @col1-left;
-            width: @col1-width;
-            max-width: @col-max-width;
-        }
-
 
         .signup {
-            position: relative;
-            margin-left: @col1-left;
-            width: @col1-width;
-            max-width: @col-max-width;
-
             input, select, textarea {
                 color: black;
             }
