@@ -31,13 +31,22 @@ module.exports = function(grunt) {
         dest: 'js/modernizr+essential.js'
       },
 
+      mods: {
+        src: [
+          'components/angular-toggle-switch/angular-toggle-switch.min.js',
+          'components/tv4/tv4.js',
+          'components/angular-schema-form/dist/schema-form.min.js',
+          'compoents/angular-schema-form/dist/bootstrap-decorator.js'
+        ],
+        dest: 'js/angular-mods.js'
+      },
+
       app: {
         src: [
           // 'components/essentialjs/app/js/spin.min.js',
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
-          'components/angular-toggle-switch/angular-toggle-switch.min.js',
           '../book-reader/books.js',
           '../book-reader/controllers.js',
           '_libs/app.js'
@@ -61,20 +70,14 @@ module.exports = function(grunt) {
         }
       },
 
-      app: {
+      mods: {
         files: {
-          'js/uri+impl+form+app.min.js': [
-            '_libs/uri.js',
-            '_libs/impl.js',
-            '_libs/form.js',
-            '_libs/app.js'
+          'js/angular-mods.min.js': [
+            'components/angular-toggle-switch/angular-toggle-switch.min.js',
+            'components/tv4/tv4.js',
+            'components/angular-schema-form/dist/schema-form.min.js',
+            'compoents/angular-schema-form/dist/bootstrap-decorator.js'
           ]
-        }
-      },
-
-      jquery: {
-        files: {
-          'js/jquery.min.js': 'components/jquery/jquery.js'
         }
       },
 
@@ -98,10 +101,12 @@ module.exports = function(grunt) {
           { src: 'components/angular/angular.min.js', dest: 'js/angular.min.js' },
           { src: 'components/angular/angular.min.js.map', dest: 'js/angular.min.js.map' },
           { src: 'components/jquery/jquery.js', dest: 'js/jquery.js' },
-          { src: 'components/jquery/jquery.min.js', dest: 'js/jquery.min.js' }
+          { src: 'components/jquery/jquery.min.js', dest: 'js/jquery.min.js' },
+          { src: 'components/jquery/jquery.min.js.map', dest: 'js/jquery.min.js.map' }
         ]
       },
 
+      //TODO build maps
       app_map: {
         files: [
           { src: 'components/es5-shim/es5-shim.js', dest: 'js/es5-shim.js' },
@@ -219,13 +224,17 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      // options: {
+      //   livereload: true
+      // },
+
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
       },
 
       html: {
-        files: ['**/*.html','!_site/**/*.html'],
+        files: ['**/*.html','js/*.js'],
         tasks: ['jekyll:dist']
       },
 
@@ -246,7 +255,9 @@ module.exports = function(grunt) {
         tasks: [
           //'jshint',
           'browserify',
-          'concat:essential','concat:app'],
+          'concat:essential','concat:mods'
+          ],
+
         options: {
           spawn: false
         }
@@ -404,9 +415,9 @@ module.exports = function(grunt) {
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy',
+    'browserify','copy','uglify',
     'less:dev','less:dist',
-    'concat:essential','concat:app','typescript','jekyll:dev',
+    'concat:essential','concat:mods','typescript','jekyll:dev',
     'concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
