@@ -224,6 +224,11 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
 
+      html: {
+        files: ['**/*.html','!_site/**/*.html'],
+        tasks: ['jekyll:dist']
+      },
+
       less: {
         files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","components/**/*.less"],
         tasks: ['less:dev','less:dist']
@@ -317,16 +322,48 @@ module.exports = function(grunt) {
     },
 
     jekyll: {
+      options: {
+        // bundleExec: true
+        // ,src: '<%= app %>'
+      },
+
       dev: {
         options: {
+          dest: '../fluentglobe_site',
+          config: ['_config.yml','_config_dev.yml']
+        }
+      },
+
+      dist: {
+        options: {
+          dest: '../fluentglobe_site',
+          config: '_config.yml'
+        }
+      },
+
+      serve: {
+        options: {
           serve: true,
+          drafts: true,
           watch: true
         }
       }
     },
 
+    connect: {
+      server: {
+        options: {
+          keepalive: true,
+          hostname: '*',
+          livereload: true,
+          base: '../fluentglobe_site/',
+          port: 4000
+        }
+      }
+    },
+
     concurrent: {
-      tasks: ['watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript', 'jekyll:dev'],
+      tasks: ['connect:server' ,'watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript', 'watch:html'],
       options: {
         logConcurrentOutput: true
       }
@@ -348,6 +385,7 @@ module.exports = function(grunt) {
   grunt.initConfig(config);
 
   // Load Plugins
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -362,13 +400,19 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-typescript');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy','less:dev','less:dist','concat:essential','concat:app','typescript','concurrent']
+    'browserify','copy',
+    'less:dev','less:dist',
+    'concat:essential','concat:app','typescript','jekyll:dev',
+    'concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
-  grunt.registerTask('build', ['modernizr','jshint','copy:mediaelement',
-    'qunit','concat','uglify']);
-  grunt.registerTask('serve', ['jekyll:dev']);
+  grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
+    'qunit','concat',
+    'uglify','typescript','jekyll:dist'
+    ]);
+  grunt.registerTask('serve', ['jekyll:serve']);
 };
