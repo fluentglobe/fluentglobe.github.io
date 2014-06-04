@@ -234,13 +234,13 @@ module.exports = function(grunt) {
       },
 
       html: {
-        files: ['**/*.html','js/*.js'],
-        tasks: ['jekyll:dist']
+        files: ['**/*.html','js/*.js','css/*.css','assets','fonts','images'],
+        tasks: ['jekyll:dev']
       },
 
       less: {
         files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","components/**/*.less"],
-        tasks: ['less:dev','less:dist']
+        tasks: ['less:dev','less:dist','jekyll:dev']
       },
       sass: {
         files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
@@ -248,14 +248,15 @@ module.exports = function(grunt) {
       },
       typescript: {
         files: ['**/*.ts'],
-        tasks: ['typescript']
+        tasks: ['typescript','jekyll:dev']
       },
       scripts: {
         files: ['_libs/*.js', 'assets/lib/**/*.js','components/**/*.js'],
         tasks: [
           //'jshint',
-          'browserify',
-          'concat:essential','concat:mods'
+          'browserify', //TODO gotta go
+          'concat:essential','concat:mods',
+          'jekyll:dev'
           ],
 
         options: {
@@ -374,7 +375,7 @@ module.exports = function(grunt) {
     },
 
     concurrent: {
-      tasks: ['connect:server' ,'watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript', 'watch:html'],
+      tasks: ['connect:server' , 'watch:html', 'watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript'],
       options: {
         logConcurrentOutput: true
       }
