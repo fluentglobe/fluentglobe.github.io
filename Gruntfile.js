@@ -217,6 +217,8 @@ module.exports = function(grunt) {
         src: ['_libs/body.ts'],
         dest: 'js/body.js',
         options: {
+          // watch: true,
+          // after: [tasks]
           basePath: '_libs',
           target: 'es5' //or es3
         }
@@ -242,19 +244,19 @@ module.exports = function(grunt) {
         files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","components/**/*.less"],
         tasks: ['less:dev','less:dist','jekyll:dev']
       },
-      sass: {
-        files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
-        tasks: 'sass:dev'
-      },
+      // sass: {
+      //   files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
+      //   tasks: 'sass:dev'
+      // },
       typescript: {
-        files: ['**/*.ts'],
+        files: ['Gruntfile.js','**/*.ts'],
         tasks: ['typescript','jekyll:dev']
       },
       scripts: {
-        files: ['_libs/*.js', 'assets/lib/**/*.js','components/**/*.js'],
+        files: ['_libs/*.js', 'assets/lib/**/*.js' /*,'components/** /*.js'*/],
         tasks: [
           //'jshint',
-          'browserify', //TODO gotta go
+          // 'browserify', //TODO gotta go
           'concat:essential','concat:mods',
           'jekyll:dev'
           ],
@@ -375,7 +377,7 @@ module.exports = function(grunt) {
     },
 
     concurrent: {
-      tasks: ['connect:server' , 'watch:html', 'watch:less',/*'watch:sass',*/ 'watch:scripts','watch:typescript'],
+      tasks: ['connect:server' , 'watch'],
       options: {
         logConcurrentOutput: true
       }
@@ -418,13 +420,14 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'browserify','copy','uglify',
     'less:dev','less:dist',
-    'concat:essential','concat:mods','typescript','jekyll:dev',
+    'typescript',
+    'concat:essential','concat:mods','jekyll:dev',
     'concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
     'qunit','concat',
-    'uglify','typescript','jekyll:dist'
+    'uglify','typescript','jekyll:dist' //TODO should there be a dist typescript build
     ]);
   grunt.registerTask('serve', ['jekyll:serve']);
 };
