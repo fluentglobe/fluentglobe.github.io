@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-05-30
+/*! Fluent Globe - v0.1.0 - 2014-06-06
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 window.html5 = {

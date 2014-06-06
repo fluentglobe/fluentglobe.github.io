@@ -1,7 +1,34 @@
-/*! Fluent Globe - v0.1.0 - 2014-06-01
+/*! Fluent Globe - v0.1.0 - 2014-06-06
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
-angular.module("toggle-switch",["ng"]).directive("toggleSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=",disabled:"@",onLabel:"@",offLabel:"@",knobLabel:"@"},template:'<div class="switch" ng-click="toggle()" ng-class="{ \'disabled\': disabled }"><div class="switch-animate" ng-class="{\'switch-off\': !model, \'switch-on\': model}"><span class="switch-left" ng-bind="onLabel"></span><span class="knob" ng-bind="knobLabel"></span><span class="switch-right" ng-bind="offLabel"></span></div></div>',controller:["$scope",function($scope){$scope.toggle=function(){$scope.disabled||($scope.model=!$scope.model)}}],compile:function(element,attrs){attrs.onLabel||(attrs.onLabel="On"),attrs.offLabel||(attrs.offLabel="Off"),attrs.knobLabel||(attrs.knobLabel=" "),attrs.disabled||(attrs.disabled=!1)}}});
+angular.module('toggle-switch', ['ng']).directive('toggleSwitch', function () {
+  return {
+    restrict: 'EA',
+    replace: true,
+    scope: {
+      model: '=',
+      disabled: '@',
+      onLabel: '@',
+      offLabel: '@',
+      knobLabel: '@'
+    },
+    template: '<div class="switch" ng-click="toggle()" ng-class="{ \'disabled\': disabled }"><div class="switch-animate" ng-class="{\'switch-off\': !model, \'switch-on\': model}"><span class="switch-left" ng-bind="onLabel"></span><span class="knob" ng-bind="knobLabel"></span><span class="switch-right" ng-bind="offLabel"></span></div></div>',
+    controller: function($scope) {
+      $scope.toggle = function toggle() {
+        if(!$scope.disabled) {
+          $scope.model = !$scope.model;
+        }
+      };
+    },
+    compile: function(element, attrs) {
+      if (!attrs.onLabel) { attrs.onLabel = 'On'; }
+      if (!attrs.offLabel) { attrs.offLabel = 'Off'; }
+      if (!attrs.knobLabel) { attrs.knobLabel = '\u00a0'; }
+      if (!attrs.disabled) { attrs.disabled = false; }
+    },
+  };
+});
+
 (function (global, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -1378,4 +1405,748 @@ tv4.tv4 = tv4;
 return tv4; // used by _header.js to globalise.
 
 }));
-angular.module("schemaForm",[]),angular.module("schemaForm").provider("schemaFormDecorators",["$compileProvider",function(e){var r="",t={},n=function(e,n){"sfDecorator"===e&&(e=r);for(var a=t[e],i=a.rules,o=0;o<i.length;o++){var u=i[o](n);if(u)return u}return a.mappings[n.type]?a.mappings[n.type]:a.mappings["default"]},a=function(r){e.directive(r,["$parse","$compile","$http","$templateCache",function(e,t,a,i){return{restrict:"AE",replace:!0,transclude:!1,scope:!0,require:"?^sfSchema",link:function(e,o,u,c){var l=e.$watch(u.form,function(u){if(u){e.form=u;var c=n(r,u);a.get(c,{cache:i}).then(function(r){var n=r.data.replace(/\$\$value\$\$/g,"model."+(u.key||""));t(n)(e,function(e){o.replaceWith(e)})}),l()}});e.showTitle=function(){return e.form&&e.form.notitle!==!0&&e.form.title},e.checkboxValuesToList=function(e){var r=[];return angular.forEach(e,function(e,t){e&&r.push(t)}),r},e.buttonClick=function(r,t){angular.isFunction(t.onClick)?t.onClick(r,t):angular.isString(t.onClick)&&(c?c.evalInParentScope(t.onClick,{$event:r,form:t}):e.$eval(t.onClick,{$event:r,form:t}))},e.evalExpr=function(r,t){return c?c.evalInParentScope(r,t):e.$eval(r,t)},e.errorMessage=function(r){return e.form.validationMessage?r?angular.isString(e.form.validationMessage)?e.form.validationMessage:e.form.validationMessage[r.code]||e.form.validationMessage["default"]:e.form.validationMessage.required||e.form.validationMessage["default"]||e.form.validationMessage:r?r.message:"Required"}}}}])},i=function(r,t,n){n=angular.isDefined(n)?n:!1,e.directive("sf"+angular.uppercase(r[0])+r.substr(1),function(){return{restrict:"EAC",scope:!0,replace:!0,transclude:n,template:'<sf-decorator form="form"></sf-decorator>',link:function(e,t,n){var a={items:"c",titleMap:"c",schema:"c"},i={type:r},o=!0;angular.forEach(n,function(r,t){if("$"!==t[0]&&0!==t.indexOf("ng")&&"sfField"!==t){var u=function(r){angular.isDefined(r)&&r!==i[t]&&(i[t]=r,o&&i.type&&(i.key||angular.isUndefined(n.key))&&(e.form=i,o=!1))};"model"===t?e.$watch(r,function(r){r&&e.model!==r&&(e.model=r)}):"c"===a[t]?e.$watchCollection(r,u):n.$observe(t,u)}})}}})};this.createDecorator=function(e,n,i){t[e]={mappings:n||{},rules:i||[]},t[r]||(r=e),a(e)},this.createDirective=i,this.createDirectives=function(e){angular.forEach(e,function(e,r){i(r,e)})},this.directive=function(e){return e=e||r,t[e]},this.$get=function(){return{directive:function(e){return t[e]},defaultDecorator:r}},a("sfDecorator")}]),angular.module("schemaForm").provider("schemaForm",[function(){var e=function(e,r,t){var n=l[r.type];if(n)for(var a,i=0;i<n.length;i++)if(a=n[i](e,r,t))return a},r=function(e,r){var t={};return e.title&&(t.title=e.title),e.description&&(t.description=e.description),(r.required===!0||e.required===!0)&&(t.required=!0),e.default&&(t.default=e.default),e.maxLength&&(t.maxlength=e.maxLength),e.minLength&&(t.minlength=e.maxLength),(e.readOnly||e.readonly)&&(t.readonly=e.readOnly||e.readonly),e.minimum&&(t.minimum=e.minimum+(e.exclusiveMinimum?1:0)),e.maximum&&(t.maximum=e.maximum-(e.exclusiveMaximum?1:0)),e.validationMessage&&(t.validationMessage=e.validationMessage),e.enumNames&&(t.titleMap=e.enumNames),t.schema=e,t},t=function(e,t,n){if("string"===t.type&&!t.enum){var a=r(t,n);return a.key=n.path,a.type="text",n.lookup[n.path]=a,a}},n=function(e,t,n){if("number"===t.type){var a=r(t,n);return a.key=n.path,a.type="number",n.lookup[n.path]=a,a}},a=function(e,t,n){if("integer"===t.type){var a=r(t,n);return a.key=n.path,a.type="number",n.lookup[n.path]=a,a}},i=function(e,t,n){if("boolean"===t.type){var a=r(t,n);return a.key=n.path,a.type="checkbox",n.lookup[n.path]=a,a}},o=function(e,t,n){if("string"===t.type&&t.enum){var a=r(t,n);return a.key=n.path,a.type="select",a.titleMap||(a.titleMap={},t.enum.forEach(function(e){a.titleMap[e]=e})),n.lookup[n.path]=a,a}},u=function(e,t,n){if("array"===t.type&&t.items&&t.items.enum){var a=r(t,n);return a.key=n.path,a.type="checkboxes",a.titleMap||(a.titleMap={},t.items.enum.forEach(function(e){a.titleMap[e]=e})),n.lookup[n.path]=a,a}},c=function(t,n,a){if("object"===n.type){var i=r(n,a);return i.type="fieldset",i.items=[],a.lookup[a.path]=i,angular.forEach(n.properties,function(r,t){var o=a.path+"."+t;if(a.ignore[o]!==!0){var u=n.required&&-1!==n.required.indexOf(t),c=e(t,r,{path:o,required:u||!1,lookup:a.lookup,ignore:a.ignore});c&&i.items.push(c)}}),i}},l={string:[o,t],object:[c],number:[n],integer:[a],"boolean":[i],array:[u]};this.defaults=l,this.appendRule=function(e,r){l[e]||(l[e]=[]),l[e].push(r)},this.prependRule=function(e,r){l[e]||(l[e]=[]),l[e].unshift(r)},this.createStandardForm=r,this.$get=function(){var r={};return r.merge=function(e,t,n){t=t||["*"];var a=r.defaults(e,n),i=t.indexOf("*");if(-1!==i)return t=t.slice(0,i).concat(a.form).concat(t.slice(i+1));var o=a.lookup;return t.map(function(t){return"string"==typeof t&&(t={key:t}),t.items&&(t.items=r.merge(e,t.items,n)),t.key&&o[t.key]?angular.extend(o[t.key],t):t})},r.defaults=function(r,t){var n=[],a={};if(t=t||{},"object"!==r.type)throw new Error('Not implemented. Only type "object" allowed at root level of schema.');return angular.forEach(r.properties,function(i,o){if(t[o]!==!0){var u=r.required&&-1!==r.required.indexOf(o),c=e(o,i,{path:o,lookup:a,ignore:t,required:u});c&&n.push(c)}}),{form:n,lookup:a}},r}}]),angular.module("schemaForm").directive("sfSchema",["$compile","schemaForm","schemaFormDecorators",function(e,r,t){function n(e,r){return r=r||"_",e.replace(i,function(e,t){return(t?r:"")+e.toLowerCase()})}var a=function(e,r,t){t=t||"",r(e,t),angular.forEach(e.properties,function(e,n){a(e,r,""===t?n:t+"."+n)})},i=/[A-Z]/g;return{scope:{schema:"=sfSchema",initialForm:"=sfForm",model:"=sfModel"},controller:["$scope",function(e){this.evalInParentScope=function(r,t){return e.$parent.$eval(r,t)}}],replace:!1,restrict:"A",transclude:!0,require:"?form",link:function(i,o,u,c,l){i.formCtrl=c;var f={};l(i,function(e){e.addClass("schema-form-ignore"),o.prepend(e),o.find("[ng-model]").each(function(){var e=this.getAttribute("ng-model");f[e.substring(e.indexOf(".")+1)]=!0})});var s={};i.$watch(function(){var c=i.schema,l=i.initialForm||["*"];if(l&&c&&c.type&&(s.form!==l||s.schema!==c)){s.schema=c,s.form=l;var m=r.merge(c,l,f),p=document.createDocumentFragment();i.schemaForm={form:m,schema:c},angular.forEach(m,function(e,r){var a=document.createElement(u.sfDecorator||n(t.defaultDecorator,"-"));a.setAttribute("form","schemaForm.form["+r+"]"),p.appendChild(a)}),o.children(":not(.schema-form-ignore)").remove(),o[0].appendChild(p),e(o.children())(i),a(c,function(e,r){angular.isDefined(e["default"])&&i.$eval("model."+r+" = model."+r+" || defaltValue",{defaltValue:e["default"]})})}})}}}]),angular.module("schemaForm").directive("schemaValidate",function(){return{restrict:"A",scope:!1,require:"ngModel",link:function(e,r,t,n){e.ngModel=n;var a=null,i=e.$eval(t.schemaValidate);n.$parsers.unshift(function(r){if(i||(i=e.$eval(t.schemaValidate)),!i)return r;if(angular.isUndefined(r))return void 0;var o=r;"integer"===i.type?o=parseInt(o,10):"number"===i.type?o=parseFloat(o,10):"boolean"===i.type&&"string"==typeof r&&("true"===r?o=!0:"false"===r&&(o=!1));var u=tv4.validateResult(o,i);return u.valid?(n.$setValidity("schema",!0),a=null,r):(n.$setValidity("schema",!1),void(a=u.error))}),e.hasError=function(){return e.ngModel.$invalid&&!e.ngModel.$pristine},e.schemaError=function(){return a}}}});
+angular.module('schemaForm',[]);
+angular.module('schemaForm').provider('schemaFormDecorators',['$compileProvider',function($compileProvider){
+  var defaultDecorator = '';
+  var directives = {};
+
+  var templateUrl = function(name,form) {
+    //schemaDecorator is alias for whatever is set as default
+    if (name === 'sfDecorator') {
+      name = defaultDecorator;
+    }
+
+    var directive = directives[name];
+
+    //rules first
+    var rules = directive.rules;
+    for (var i = 0; i< rules.length; i++) {
+      var res = rules[i](form);
+      if (res) {
+        return res;
+      }
+    }
+
+    //then check mapping
+    if (directive.mappings[form.type]) {
+      return directive.mappings[form.type];
+    }
+
+    //try default
+    return directive.mappings['default'];
+  };
+
+
+  var createDirective = function(name){
+    $compileProvider.directive(name,['$parse','$compile','$http','$templateCache',
+      function($parse,  $compile,  $http,  $templateCache){
+
+        return {
+          restrict: 'AE',
+          replace: true,
+          transclude: false,
+          scope: true,
+          require: '?^sfSchema',
+          link: function(scope,element,attrs,sfSchema) {
+            //rebind our part of the form to the scope.
+            var once = scope.$watch(attrs.form,function(form){
+
+              if (form) {
+                scope.form  = form;
+
+                //ok let's replace that template!
+                //We do this manually since we need to bind ng-model properly and also
+                //for fieldsets to recurse properly.
+                var url = templateUrl(name,form);
+                $http.get(url,{ cache: $templateCache }).then(function(res){
+                  var template = res.data.replace(/\$\$value\$\$/g,'model.'+(form.key || ""));
+                  $compile(template)(scope,function(clone){
+                    element.replaceWith(clone);
+                  });
+                });
+                once();
+              }
+            });
+
+            //Keep error prone logic from the template
+            scope.showTitle = function() {
+              return scope.form && scope.form.notitle !== true && scope.form.title;
+            };
+
+            scope.checkboxValuesToList = function(values){
+              var lst = [];
+              angular.forEach(values,function(v,k){
+                if (v) {
+                  lst.push(k);
+                }
+              });
+              return lst;
+            };
+
+            scope.buttonClick = function($event,form) {
+              if (angular.isFunction(form.onClick)) {
+                form.onClick($event,form);
+              } else if (angular.isString(form.onClick)) {
+                if (sfSchema) {
+                  //evaluating in scope outside of sfSchemas isolated scope
+                  sfSchema.evalInParentScope(form.onClick,{'$event':$event,form:form});
+                } else {
+                  scope.$eval(form.onClick,{'$event':$event,form:form});
+                }
+              }
+            };
+
+            /**
+             * Evaluate an expression, i.e. scope.$eval
+             * but do it in sfSchemas parent scope sf-schema directive is used
+             * @param {string} expression
+             * @param {Object} locals (optional)
+             * @return {Any} the result of the expression
+             */
+            scope.evalExpr = function(expression,locals) {
+              if (sfSchema) {
+                //evaluating in scope outside of sfSchemas isolated scope
+                return sfSchema.evalInParentScope(expression,locals);
+              }
+
+              return scope.$eval(expression,locals);
+            };
+
+            /**
+             * Error message handler
+             * An error can either be a schema validation message or a angular js validtion
+             * error (i.e. required)
+             */
+            scope.errorMessage = function(schemaError) {
+              //User has supplied validation messages
+              if (scope.form.validationMessage) {
+                if (schemaError) {
+                  if (angular.isString(scope.form.validationMessage)) {
+                    return scope.form.validationMessage;
+                  }
+
+                  return scope.form.validationMessage[schemaError.code] || scope.form.validationMessage['default'];
+                } else {
+                  return scope.form.validationMessage.required || scope.form.validationMessage['default'] || scope.form.validationMessage;
+                }
+              }
+
+              //No user supplied validation message.
+              if (schemaError) {
+                return schemaError.message; //use tv4.js validation message
+              }
+
+              //Otherwise we only use required so it must be it.
+              return "Required";
+
+            };
+          }
+        };
+      }]);
+  };
+
+  var createManualDirective = function(type,templateUrl,transclude) {
+    transclude = angular.isDefined(transclude)? transclude : false;
+    $compileProvider.directive('sf'+angular.uppercase(type[0])+type.substr(1), function(){
+      return {
+        restrict: "EAC",
+        scope: true,
+        replace: true,
+        transclude: transclude,
+        template: '<sf-decorator form="form"></sf-decorator>',
+        link: function(scope,element,attrs) {
+          var watchThis = {
+            'items': 'c',
+            'titleMap': 'c',
+            'schema': 'c'
+          };
+          var form = { type: type };
+          var once = true;
+          angular.forEach(attrs,function(value,name){
+            if (name[0] !== '$' && name.indexOf('ng') !== 0 && name !== 'sfField') {
+
+              var updateForm = function(val){
+                if (angular.isDefined(val) && val !== form[name]) {
+                  form[name] = val;
+
+                  //when we have type, and if specified key we apply it on scope.
+                  if (once && form.type && (form.key || angular.isUndefined(attrs.key))) {
+                    scope.form = form;
+                    once = false;
+                  }
+                }
+              };
+
+              if (name === 'model') {
+                //"model" is bound to scope under the name "model" since this is what the decorators
+                //know and love.
+                scope.$watch(value,function(val){
+                  if (val && scope.model !== val) {
+                    scope.model = val;
+                  }
+                });
+              } else if (watchThis[name] === 'c') {
+                //watch collection
+                scope.$watchCollection(value,updateForm);
+              } else {
+                //$observe
+                attrs.$observe(name,updateForm);
+              }
+            }
+          });
+        }
+      };
+    });
+  };
+
+
+
+  /**
+   * Create a decorator directive and its sibling "manual" use directives.
+   * The directive can be used to create form fields or other form entities.
+   * It can be used in conjunction with <schema-form> directive in which case the decorator is
+   * given it's configuration via a the "form" attribute.
+   *
+   * ex. Basic usage
+   *   <sf-decorator form="myform"></sf-decorator>
+   **
+   * @param {string} name directive name (CamelCased)
+   * @param {Object} mappings, an object that maps "type" => "templateUrl"
+   * @param {Array}  rules (optional) a list of functions, function(form){}, that are each tried in turn,
+   *                 if they return a string then that is used as the templateUrl. Rules come before
+   *                 mappings.
+   */
+  this.createDecorator = function(name,mappings,rules){
+    directives[name] = {
+      mappings: mappings || {},
+      rules:    rules    || []
+    };
+
+    if (!directives[defaultDecorator]) {
+      defaultDecorator = name;
+    }
+    createDirective(name);
+  };
+
+  /**
+   * Creates a directive of a decorator
+   * Usable when you want to use the decorators without using <schema-form> directive.
+   * Specifically when you need to reuse styling.
+   *
+   * ex. createDirective('text','...')
+   *  <sf-text title="foobar" model="person" key="name" schema="schema"></sf-text>
+   *
+   * @param {string}  type The type of the directive, resulting directive will have sf- prefixed
+   * @param {string}  templateUrl
+   * @param {boolean} transclude (optional) sets transclude option of directive, defaults to false.
+   */
+  this.createDirective = createManualDirective;
+
+  /**
+   * Same as createDirective, but takes an object where key is 'type' and value is 'templateUrl'
+   * Useful for batching.
+   * @param {Object} mappings
+   */
+  this.createDirectives = function(mappings) {
+    angular.forEach(mappings,function(url,type){
+      createManualDirective(type,url);
+    });
+  };
+
+  /**
+   * Getter for directive mappings
+   * Can be used to override a mapping or add a rule
+   * @param {string} name (optional) defaults to defaultDecorator
+   * @return {Object} rules and mappings { rules: [],mappings: {}}
+   */
+  this.directive = function(name) {
+    name = name || defaultDecorator;
+    return directives[name];
+  };
+
+
+  //Service is just a getter for directive mappings and rules
+  this.$get = function(){
+    return {
+      directive: function(name) {
+        return directives[name];
+      },
+      defaultDecorator: defaultDecorator
+    };
+  };
+
+
+  //Create a default directive
+  createDirective('sfDecorator');
+
+}]);
+angular.module('schemaForm').provider('schemaForm',[function(){
+
+  var defaultFormDefinition = function(name,schema,options){
+    var rules = defaults[schema.type];
+    if (rules) {
+      var def;
+      for (var i=0;i<rules.length; i++) {
+        def = rules[i](name,schema,options);
+        //first handler in list that actually returns something is our handler!
+        if (def) {
+          return def;
+        }
+      }
+    }
+  };
+
+  //Creates a form object with all common properties
+  var stdFormObj = function(schema,options) {
+    var f = {};
+    if (schema.title) f.title = schema.title;
+    if (schema.description) f.description = schema.description;
+    if (options.required === true || schema.required === true) f.required = true;
+    if (schema.default) f.default = schema.default;
+    if (schema.maxLength) f.maxlength = schema.maxLength;
+    if (schema.minLength) f.minlength = schema.maxLength;
+    if (schema.readOnly || schema.readonly)  f.readonly  = schema.readOnly || schema.readonly;
+    if (schema.minimum) f.minimum = schema.minimum + (schema.exclusiveMinimum?1:0);
+    if (schema.maximum) f.maximum = schema.maximum - (schema.exclusiveMaximum?1:0);
+
+    //Non standard attributes
+    if (schema.validationMessage) f.validationMessage = schema.validationMessage;
+    if (schema.enumNames) f.titleMap = schema.enumNames;
+    f.schema = schema;
+    return f;
+  };
+
+
+  var text = function(name,schema,options) {
+    if (schema.type === 'string' && !schema.enum) {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'text';
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+  //default in json form for number and integer is a text field
+  //input type="number" would be more suitable don't ya think?
+  var number = function(name,schema,options) {
+    if (schema.type === 'number') {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'number';
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+  var integer = function(name,schema,options) {
+    if (schema.type === 'integer') {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'number';
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+  var checkbox = function(name,schema,options) {
+    if (schema.type === 'boolean') {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'checkbox';
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+
+  var select = function(name,schema,options) {
+    if (schema.type === 'string' && schema.enum) {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'select';
+      if (!f.titleMap) {
+        f.titleMap = {};
+        schema.enum.forEach(function(name){
+          f.titleMap[name] = name;
+        });
+      }
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+  var checkboxes = function(name,schema,options) {
+    if (schema.type === 'array' && schema.items && schema.items.enum) {
+      var f = stdFormObj(schema,options);
+      f.key  = options.path;
+      f.type = 'checkboxes';
+      if (!f.titleMap) {
+        f.titleMap = {};
+        schema.items.enum.forEach(function(name){
+          f.titleMap[name] = name;
+        });
+      }
+      options.lookup[options.path] = f;
+      return f;
+    }
+  };
+
+  var fieldset = function(name,schema,options){
+
+    if (schema.type === "object") {
+      var f   = stdFormObj(schema,options);
+      f.type  = 'fieldset';
+      f.items = [];
+      options.lookup[options.path] = f;
+
+      //recurse down into properties
+      angular.forEach(schema.properties,function(v,k){
+        var path = options.path+'.'+k;
+        if (options.ignore[path] !== true) {
+          var required = schema.required && schema.required.indexOf(k) !== -1;
+
+          var def = defaultFormDefinition(k,v,{
+            path: path,
+            required: required || false,
+            lookup: options.lookup,
+            ignore: options.ignore
+          });
+          if (def) {
+            f.items.push(def);
+          }
+        }
+      });
+
+      return f;
+    }
+
+  };
+
+  //First sorted by schema type then a list.
+  //Order has importance. First handler returning an form snippet will be used.
+  var defaults = {
+    string:  [ select, text ],
+    object:  [ fieldset],
+    number:  [ number ],
+    integer: [ integer ],
+    boolean: [ checkbox ],
+    array:   [ checkboxes ]
+  };
+
+
+
+  /**
+   * Provider API
+   */
+  this.defaults   = defaults;
+
+  /**
+   * Append default form rule
+   * @param {string}   type json schema type
+   * @param {Function} rule a function(propertyName,propertySchema,options) that returns a form definition or undefined
+   */
+  this.appendRule = function(type,rule) {
+    if (!defaults[type]) {
+      defaults[type] = [];
+    }
+    defaults[type].push(rule);
+  };
+
+  /**
+   * Prepend default form rule
+   * @param {string}   type json schema type
+   * @param {Function} rule a function(propertyName,propertySchema,options) that returns a form definition or undefined
+   */
+  this.prependRule = function(type,rule) {
+    if (!defaults[type]) {
+      defaults[type] = [];
+    }
+    defaults[type].unshift(rule);
+  };
+
+  /**
+   * Utility function to create a standard form object.
+   * This does *not* set the type of the form but rather all shared attributes.
+   * You probably want to start your rule with creating the form with this method
+   * then setting type and any other values you need.
+   * @param {Object} schema
+   * @param {Object} options
+   * @return {Object} a form field defintion
+   */
+  this.createStandardForm = stdFormObj;
+  /* End Provider API */
+
+
+  this.$get = function(){
+
+    var service = {};
+
+    service.merge = function(schema,form,ignore) {
+      form  = form || ["*"];
+
+      var stdForm = service.defaults(schema,ignore);
+
+      //simple case, we have a "*", just put the stdForm there
+      var idx = form.indexOf("*");
+      if (idx !== -1) {
+        form  = form.slice(0,idx)
+                    .concat(stdForm.form)
+                    .concat(form.slice(idx+1));
+        return form;
+      }
+
+      //ok let's merge!
+      //We look at the supplied form and extend it with schema standards
+      var lookup = stdForm.lookup;
+      return form.map(function(obj){
+
+        //handle the shortcut with just a name
+        if (typeof obj === 'string') {
+          obj = { key: obj };
+        }
+
+        //if it's a type with items, merge 'em!
+        if (obj.items) {
+          obj.items = service.merge(schema,obj.items,ignore);
+        }
+
+
+        //extend with std form from schema.
+        if (obj.key && lookup[obj.key]) {
+          return angular.extend(lookup[obj.key],obj);
+        }
+
+        return obj;
+      });
+    };
+
+
+
+    /**
+     * Create form defaults from schema
+     */
+    service.defaults = function(schema,ignore) {
+      var form   = [];
+      var lookup = {}; //Map path => form obj for fast lookup in merging
+      ignore = ignore || {};
+
+      if (schema.type === "object") {
+        angular.forEach(schema.properties,function(v,k){
+            if (ignore[k] !== true) {
+              var required = schema.required && schema.required.indexOf(k) !== -1;
+              var def = defaultFormDefinition(k,v,{
+                path: k,        //path to this property in dot notation. Root object has no name
+                lookup: lookup,    //extra map to register with. Optimization for merger.
+                ignore: ignore,    //The ignore list of paths (sans root level name)
+                required: required //Is it required? (v4 json schema style)
+              });
+              if (def) {
+                form.push(def);
+              }
+            }
+        });
+
+      } else {
+        throw new Error('Not implemented. Only type "object" allowed at root level of schema.');
+      }
+
+      return { form: form, lookup: lookup };
+    };
+
+
+    return service;
+  };
+
+}]);
+
+angular.module('schemaForm')
+       .directive('sfSchema',
+       ['$compile','schemaForm','schemaFormDecorators',
+function($compile,  schemaForm,  schemaFormDecorators){
+
+  //recurse through the entire schema.
+  //FIXME: no support for arrays
+  var traverse = function(schema,fn,path) {
+    path = path || "";
+    fn(schema,path);
+    angular.forEach(schema.properties,function(prop,name){
+      traverse(prop,fn,path===""?name:path+'.'+name);
+    });
+  };
+
+  var SNAKE_CASE_REGEXP = /[A-Z]/g;
+  function snake_case(name, separator){
+    separator = separator || '_';
+    return name.replace(SNAKE_CASE_REGEXP, function(letter, pos) {
+      return (pos ? separator : '') + letter.toLowerCase();
+    });
+  }
+
+  return {
+    scope: {
+      schema: '=sfSchema',
+      initialForm: '=sfForm',
+      model: '=sfModel'
+    },
+    controller: ['$scope',function($scope){
+      this.evalInParentScope = function(expr,locals){
+        return $scope.$parent.$eval(expr,locals);
+      };
+    }],
+    replace: false,
+    restrict: "A",
+    transclude: true,
+    require: '?form',
+    link: function(scope,element,attrs,formCtrl,transclude) {
+
+      //expose form controller on scope so that we don't force authors to use name on form
+      scope.formCtrl = formCtrl;
+
+      //We'd like to handle existing markup,
+      //besides using it in our template we also
+      //check for ng-model and add that to an ignore list
+      //i.e. even if form has a definition for it or form is ["*"]
+      //we don't generate it.
+      var ignore = {};
+      transclude(scope,function(clone){
+        clone.addClass('schema-form-ignore');
+        element.prepend(clone);
+        element.find('[ng-model]').each(function(){
+          var key = this.getAttribute('ng-model');
+          //skip first part before .
+          ignore[key.substring(key.indexOf('.')+1)] = true;
+        });
+
+      });
+      //Since we are dependant on up to three
+      //attributes we'll do a common watch
+      var lastDigest = {};
+
+      scope.$watch(function(){
+
+        var schema = scope.schema;
+        var form   = scope.initialForm || ['*'];
+
+        //The check for schema.type is to ensure that schema is not {}
+        if (form && schema && schema.type && (lastDigest.form !== form || lastDigest.schema !== schema)) {
+          lastDigest.schema = schema;
+          lastDigest.form = form;
+
+          //FIXME: traverse schema and model and set default values.
+
+          var merged = schemaForm.merge(schema,form,ignore);
+          var frag = document.createDocumentFragment();
+
+          //make the form available to decorators
+          scope.schemaForm  = { form:  merged, schema: schema };
+
+          //Create directives from the form definition
+          angular.forEach(merged,function(obj,i){
+            var n = document.createElement(attrs.sfDecorator || snake_case(schemaFormDecorators.defaultDecorator,'-'));
+            n.setAttribute('form','schemaForm.form['+i+']');
+            frag.appendChild(n);
+          });
+
+          //clean all but pre existing html.
+          element.children(':not(.schema-form-ignore)').remove();
+
+          element[0].appendChild(frag);
+
+          //compile only children
+          $compile(element.children())(scope);
+
+          //ok, now that that is done let's set any defaults
+          traverse(schema,function(prop,path){
+            //This is probably not so fast, but a simple solution.
+            if (angular.isDefined(prop['default'])) {
+              scope.$eval('model.'+path+' = model.'+path+' || defaltValue',{ defaltValue: prop['default']});
+            }
+          });
+
+        }
+      });
+    }
+  };
+}]);
+
+
+
+
+
+
+
+
+angular.module('schemaForm').directive('schemaValidate',function(){
+  return {
+    restrict: 'A',
+    scope: false,
+    require: 'ngModel',
+    link: function(scope,element,attrs,ngModel) {
+      scope.ngModel = ngModel;
+      var error = null;
+      var schema  = scope.$eval(attrs.schemaValidate);
+
+      ngModel.$parsers.unshift(function(viewValue) {
+        if (!schema) {
+          schema = scope.$eval(attrs.schemaValidate);
+        }
+
+        //Still might be undefined, especially if form has no schema...
+        if (!schema) {
+          return viewValue;
+        }
+
+        //required is handled by ng-required
+        if (angular.isUndefined(viewValue)) {
+          return undefined;
+        }
+
+        //Type cast and validate against schema.
+        //Basic types of json schema sans array and object
+        var value = viewValue;
+        if (schema.type === 'integer') {
+          value = parseInt(value,10);
+        } else if (schema.type === 'number') {
+          value = parseFloat(value,10);
+        } else if (schema.type === 'boolean' && typeof viewValue === 'string') {
+          if (viewValue === 'true') {
+            value = true;
+          } else if (viewValue === 'false') {
+            value = false;
+          }
+        }
+
+        var result = tv4.validateResult(value,schema);
+
+        if (result.valid) {
+          // it is valid
+          ngModel.$setValidity('schema', true);
+          error = null;
+          return viewValue;
+        } else {
+          // it is invalid, return undefined (no model update)
+          ngModel.$setValidity('schema', false);
+          error = result.error;
+          return undefined;
+        }
+      });
+
+      //This works since we now we're inside a decorator and that this is the decorators scope.
+      scope.hasError = function(){
+        return scope.ngModel.$invalid && !scope.ngModel.$pristine;
+      };
+
+      scope.schemaError = function() {
+        return error;
+      };
+
+    }
+  };
+});
+// added at end
+
+// angular.module('schemaForm').config(["schemaFormDecoratorsProvider", function(schemaFormDecoratorsProvider) {
+
+	// schemaFormDecoratorsProvider.$get().defaultDecorator = "div";	
+// }]);

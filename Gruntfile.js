@@ -33,10 +33,9 @@ module.exports = function(grunt) {
 
       mods: {
         src: [
-          'components/angular-toggle-switch/angular-toggle-switch.min.js',
+          'components/angular-toggle-switch/angular-toggle-switch.js',
           'components/tv4/tv4.js',
-          'components/angular-schema-form/dist/schema-form.min.js',
-          'compoents/angular-schema-form/dist/bootstrap-decorator.js'
+          '_libs/angular-mods.js'
         ],
         dest: 'js/angular-mods.js'
       },
@@ -75,8 +74,7 @@ module.exports = function(grunt) {
           'js/angular-mods.min.js': [
             'components/angular-toggle-switch/angular-toggle-switch.min.js',
             'components/tv4/tv4.js',
-            'components/angular-schema-form/dist/schema-form.min.js',
-            'compoents/angular-schema-form/dist/bootstrap-decorator.js'
+            '_libs/angular-mods.js'
           ]
         }
       },
