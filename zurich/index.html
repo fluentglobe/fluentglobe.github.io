@@ -23,9 +23,11 @@ og-images:
 
   {% include intro/benefits-tailored.html %}
 
-  <div class="form-and-story on-dark-picture-bg" ng-controller="signup">
+  <div ng-controller="signup">
 
-    <div class="signup">
+  <div fg-card name="signup" class="white-card signup-questions intro-column"></div>
+
+  <div class="signup intro-column on-dark-picture-bg">
       {% include intro/do-you-live-in.html %}
 
       <fieldset ng-show="!city">
@@ -71,9 +73,11 @@ og-images:
     <pre> {( region_code )} {( region_name )} {( city )}</pre>
     {% endif %}
 
-    </div>
+  </div>
 
+    <div class=" on-dark-picture-bg" hidden>
     {% include intro/story-local.html %}
+    </div>
   </div>
 
   <footer></footer>
@@ -168,6 +172,10 @@ http://tinypic.com/r/1zptdud/8
 
 {% include site-menu.html %}
 {% include book-layout.html %}
+
+<script type="text/ng-template" id="/partials/signup.html">
+{% include cards/signup.html %}
+</script>
 
 <script>
 /*
