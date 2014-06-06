@@ -2528,20 +2528,45 @@ html[lang=ch] body [lang=ar] {
   color: #fb441b;
 }
 .splash #intro .white-card {
-  position: absolute;
-  top: 5em;
-  left: 50%;
-  width: 320px;
+  min-height: 60%;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: white;
 }
-.splash #intro .lead-question {
+.splash #intro .white-card input[type=radio] {
+  margin-top: -3px;
+}
+.splash #intro .white-card header {
+  position: relative;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+.splash #intro .white-card header:before,
+.splash #intro .white-card header:after {
+  content: " ";
+  display: table;
+}
+.splash #intro .white-card header:after {
+  clear: both;
+}
+.splash #intro .white-card header .right {
+  float: right;
+}
+.splash #intro .white-card header .orange {
+  color: #fb441b;
+}
+.splash #intro .white-card footer {
+  position: relative;
+}
+.splash #intro .white-card footer .center {
+  text-align: center;
+}
+.splash #intro .signup-questions {
   /*
         position: absolute;
         right: 0;
         width: 50%;
         */
-  border-radius: 10px;
-  padding: 2em;
-  background-color: white;
 }
 html body.splash #intro .we-love {
   position: relative;
@@ -2621,11 +2646,21 @@ html body.splash #intro > footer {
     margin-left: -200px;
     width: 400px;
   }
+  html body.splash #intro .signup-questions {
+    width: 370px;
+    left: 50%;
+    margin-left: -185px;
+  }
 }
 @media only screen and (min-width: 800px) and (max-width: 1099px) {
   html body.splash #intro .form-and-story {
     position: absolute;
     top: 225px;
+    left: 50%;
+  }
+  html body.splash #intro .signup-questions {
+    position: absolute;
+    top: 5em;
     left: 50%;
   }
 }
@@ -2649,6 +2684,13 @@ html body.splash #intro > footer {
     right: 3%;
     width: 32%;
     bottom: 50px;
+  }
+  html body.splash #intro .signup-questions {
+    position: absolute;
+    top: 5em;
+    left: 75%;
+    margin-left: -185px;
+    width: 370px;
   }
   html body.splash #intro footer {
     margin-top: 110px;

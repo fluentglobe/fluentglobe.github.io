@@ -49,8 +49,124 @@ if (window["angular"]) {
         }
     ]);
 
+    fluentApp.run(['$templateCache', '$http', function($templateCache,$http) {
+        // $http.get('/partials/signup.html', { cache: $templateCache });
+    }]);
+
     fluentApp.controller("add-review",['$scope', function($scope) {
         $scope.device = 'off';//'iPad';
+    }]);
+
+    fluentApp.directive('fgChoices',['$compile',function($compile) {
+
+        var radios = '<label class="" ng-repeat="option in __.options">'+
+            '<input type="radio" name="{{ __.name }}" value="{{ option.value }}">{{ option.text }}</label>';
+
+        function link(scope, jqElement, attrs) {
+            // debugger;
+
+            var out, langContext = attrs.langContext, __ = {
+                name: attrs.name,
+                options: []
+            };
+            scope.__ = __;
+            for(var e,i=0; e = jqElement[0][i]; ++i) {
+                // option
+                __.options.push({
+                    value: e.value || '',
+                    text: e.label || e.innerHTML || ''
+                });
+            }
+
+            switch(attrs.fgChoices) {
+                case "radio":
+                case "radios":
+                    out = $compile(angular.element(radios))(scope);
+                    break;
+            }
+            scope.__ = undefined;
+
+            jqElement.replaceWith(out);
+        }
+
+        return {
+            scope: {
+                langContext: "="
+            },
+            // controller: function($scope) {
+
+            // },
+            link:link
+        };
+    }]);
+
+    fluentApp.directive('fgStep', ['$animate', function($animate) {
+        function link(scope, elq, attrs) {
+            //TODO assert attrs.nextStep
+            var thisStep = attrs.fgStep, nextStep = attrs.nextStep;
+            if (scope.steps[thisStep] == undefined) scope.steps[thisStep] = {};
+            scope.steps[thisStep].nextStep = nextStep;
+            //TODO value dependent
+
+            if (scope.firstStep == undefined) scope.firstStep = thisStep;
+            scope.$watch('currentStep',function fgStepShowStep(value) {
+                $animate[value == thisStep? 'removeClass':'addClass'](elq, 'ng-hide');
+            });
+        }
+
+        return {
+            // require: '^fgCard', directive not controller
+            link: link
+        }
+    }]);
+
+    fluentApp.directive('fgCard', ['$compile','$http','$templateCache',function($compile,$http,$templateCache) {
+
+        //TODO consider using dedicated CARD cache
+
+        function getTemplate(type) {
+            var templateLoader, baseUrl = "/partials/";
+            var templateUrl = baseUrl + type + ".html";
+            templateLoader = $http.get(templateUrl, {cache: $templateCache});
+
+            return templateLoader;
+        }
+
+        function link(scope, jqElement, attrs) {
+            scope.steps = {};
+
+            scope.nextStep = function() {
+                var cur = scope.steps[scope.currentStep];
+                if (cur && cur.nextStep) {
+                    scope.currentStep = cur.nextStep;
+                }
+            };
+
+            var loader = getTemplate(scope.name);
+            var promise = loader.success(function(html) {
+                //TODO preprocess added info, inject controller logic
+                //TODO somewhat strange, shouldn't this work without setting the template HTML, or at least compiling the element
+                jqElement.html(html);
+            }).then(function(response) {
+                jqElement.replaceWith($compile(jqElement.html()) (scope));
+
+                //TODO post-proc steps
+                scope.currentStep = scope.firstStep;
+            });
+
+            // scope.step = "understood"; //TODO dynamic determined from session info
+            console.log("card scope",scope);
+        }
+        return {
+            // restrict: 'A',// attribute only
+            // link:link,
+            scope: {
+                //TODO = state
+                "class": "@", // class of replaced element
+                name: "@"  // name of html file
+            },
+            link: link
+        }
     }]);
 }
 

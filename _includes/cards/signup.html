@@ -1,0 +1,97 @@
+<div class="{(class)}">
+
+<header>
+	<h5 class="right"><a> Sign In </a></h5>
+	<h4 class="orange">Living in Zürich</h4>
+</header>
+
+<form novalidate>
+
+	<fieldset fg-step="understood" next-step="email">
+		<p>Would it help if you understood Swiss German?</p>
+		<!-- select fg-choices="radio" name="understood-swiss" lang-context="fg">
+
+			<option value="daily-life">Yes, it would make my daily life much easier</option>
+			<option value="relatives">Yes, my relatives only speak Swiss German</option>
+			<option value="belong">Yes, I'd like to feel like I belong here</option>
+			<option value="socially">Yes, It's good socially</option>
+			<option value="no-german">No, I would rather speak german German</option>
+			<option value="english">No, English is fine</option>
+		</select -->
+
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="daily-life"> Yes, it would make my daily life much easier</p>
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="relatives"> Yes, my relatives only speak Swiss German</p>
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="belong"> Yes, I'd like to feel like I belong here</p>
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="socially"> Yes, It's good socially</p>
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="no-german"> No, I would rather speak german German</p>
+		<p><input type="radio" ng-model="understood" name="understood-swiss" value="english"> No, English is fine</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()">Next</button>
+	</fieldset>
+
+  <fieldset fg-step="email" next-step="why">
+      <div ng-show="city && !access.state.authenticated && !access.session.password">
+      <input placeholder="e-mail" name="username" type="email" size="15" ng-model="access.session.username" required>
+      <button class="btn primary double-corner" type="submit" value="Tailor" ng-disabled="!signup.$valid"> {% include intro/next-step-button.html %} </button>
+      <p lang="en">{{ signup.message }}</p>
+      </div>
+
+      <div ng-show="city && access.state.authenticated">
+        <p lang="en">You are signed in as {( access.session.username )}</p>
+      </div>
+
+      <button type="button" ng-click="nextStep()">Next</button>
+  </fieldset>
+
+      <fieldset fg-step="why" next-step="already">
+        <p>Why do you want to learn German?</p>
+        <p><input type="radio" name="study-why" value="speak-swiss-work" ng-model="survey.why"> We speak Swiss German at work</p>
+        <p><input type="radio" name="study-why" value="write-work" ng-model="survey.why"> I correspond with e-mail/documents</p>
+        <p><input type="radio" name="study-why" value="speak-relatives" ng-model="survey.why"> My relatives speak Swiss German</p>
+        <p><input type="radio" name="study-why" value="speak-socieal" ng-model="survey.why"> I want it for socialising and/or daily life</p>
+        <p><input type="radio" name="study-why" value="foolish" ng-model="survey.why"> I feel foolish for not being able to</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()">Next</button>
+      </fieldset>
+
+      <fieldset fg-step="already" next-step="progress">
+        <p>Do you study already?</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="private"> Yes, with private tutor.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="intensive"> Yes, intensive language class.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="weekly"> Yes, in classroom weekly.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="selfstudy"> Yes, selfstudy</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="groups"> Yes, study groups/meetups</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="many"> Yes, in many ways.</p>
+        <p><input type="radio" name="study-already" ng-model="survey.already" value="no" next-step="speed"> No, not yet</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()">Next</button>
+      </fieldset>
+
+      <fieldset fg-step="progress" next-step="speed">
+        <p>How is your progress?</p>
+        <p><input type="checkbox" name="study-progress"> I would like to learn a more practical German</p>
+        <p><input type="checkbox" name="study-progress"> I forget a lot between sessions</p>
+        <p><input type="checkbox" name="study-progress"> I need to understand the local dialect better.</p>
+        <p><input type="checkbox" name="study-progress"> I find pronunciation very difficult</p>
+        <p><input type="checkbox" name="study-progress"> It is too slow, but I don't have spare time</p>
+        <p><input type="checkbox" name="study-progress"> I'm happy with my progress</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()">Next</button>
+      </fieldset>
+
+      <fieldset fg-step="speed" next-step="time">
+        <p>How quickly would you like to learn German?</p>
+        <p><input type="radio" name="study-asap"> As Soon As Possible</p>
+        <p><input type="radio" name="study-onemonth"> I want the essentials in a month, and then take it slow</p>
+        <p><input type="radio" name="study-halfyear"> I want to be speaking in 6 months</p>
+        <p><input type="radio" name="study-norush"> There is no rush</p>
+      </fieldset>
+
+</form>
+
+<!-- <form sf-schema="schema" sf-form="form" sf-model="data" sf-decorator="div"></form> -->
+
+<footer>
+	<h5 class="center"><a>More Information</a></h5>
+</footer>
+</div>

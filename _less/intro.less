@@ -104,22 +104,50 @@
     }
 
     .white-card {
-        position: absolute;
-        top: 5em;
-        left: 50%;
-        width: 320px;
+        // position: relative;
+        //TODO for iPhone width: 320px;
+
+        min-height: 60%; // experimental for taking up space of #intro
+
+        border-radius: 10px;
+        padding: 15px;
+        background-color: white;//rgba(255,255,255, .5);
+
+        input[type=radio] {
+            margin-top: -3px; // fixing radio button offset (TODO integrate)
+        }
+
+        header {
+            .clearfix;
+            position: relative;
+
+            border-bottom:1px solid #eee;
+            margin-bottom: 10px;
+
+            .right {
+                float:right;
+            }
+
+            .orange {
+                color: @fluent-red;
+            }
+        }
+        footer {
+            position: relative;
+
+            .center {
+                text-align: center;
+            }
+        }
     }
 
-    .lead-question {
+    .signup-questions {
         /*
         position: absolute;
         right: 0;
         width: 50%;
         */
 
-        border-radius: 10px;
-        padding: 2em;
-        background-color: white;//rgba(255,255,255, .5);
 
     }
 }
@@ -252,6 +280,12 @@ html body.splash {
                 margin-left: -.5 * @col-max-width;
                 width: @col-max-width;
             }
+
+            .signup-questions {
+                width: 370px;
+                left: 50%;
+                margin-left: -185px;
+            }
         }
     }
 }
@@ -262,6 +296,13 @@ html body.splash {
             position: absolute;
             top: @intro-top-gap + 175px;
             left: 50%;
+        }
+
+        .signup-questions {
+            position: absolute;
+            top: 5em;
+            left: 50%;
+
         }
     }
 }
@@ -290,6 +331,15 @@ html body.splash {
             right: @col1-right;
             width: 32%;
             bottom: @intro-top-gap;
+        }
+
+        .signup-questions {
+            position: absolute;
+            top: 5em;
+            left: 75%;
+            // right: @col1-right;
+            margin-left: -185px;
+            width: 370px;
         }
 
         footer {

@@ -787,6 +787,8 @@ var account;
         account.BookAccess.angularProvider(module, "Access");
 
         module.controller("signup", function ($scope) {
+            $scope.decorator = "div";
+
             $scope.$safeDigest = function () {
                 switch (this.$root.$$phase) {
                     case "$apply":
@@ -822,6 +824,27 @@ var account;
             $scope.start = function () {
                 startSignUp(this.access.session.username, this);
             };
+
+            $scope.schema = {
+                type: "object",
+                properties: {
+                    name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
+                    title: {
+                        type: "string",
+                        enum: ['dr', 'jr', 'sir']
+                    }
+                }
+            };
+
+            $scope.form = [
+                '*',
+                {
+                    type: "submit",
+                    title: "Save"
+                }
+            ];
+
+            $scope.data = {};
         });
     }
 })(account || (account = {}));
@@ -838,6 +861,7 @@ var survey;
                 });
 
                 $scope.study = "why";
+                $scope.no = "1";
 
                 $scope.next = function () {
                     switch ($scope.study) {
@@ -1261,9 +1285,109 @@ if (window["angular"]) {
         }
     ]);
 
+    fluentApp.run([
+        '$templateCache', '$http', function ($templateCache, $http) {
+        }]);
+
     fluentApp.controller("add-review", [
         '$scope', function ($scope) {
             $scope.device = 'off';
+        }]);
+
+    fluentApp.directive('fgChoices', [
+        '$compile', function ($compile) {
+            var radios = '<label class="" ng-repeat="option in __.options">' + '<input type="radio" name="{{ __.name }}" value="{{ option.value }}">{{ option.text }}</label>';
+
+            function link(scope, jqElement, attrs) {
+                var out, langContext = attrs.langContext, __ = {
+                    name: attrs.name,
+                    options: []
+                };
+                scope.__ = __;
+                for (var e, i = 0; e = jqElement[0][i]; ++i) {
+                    __.options.push({
+                        value: e.value || '',
+                        text: e.label || e.innerHTML || ''
+                    });
+                }
+
+                switch (attrs.fgChoices) {
+                    case "radio":
+                    case "radios":
+                        out = $compile(angular.element(radios))(scope);
+                        break;
+                }
+                scope.__ = undefined;
+
+                jqElement.replaceWith(out);
+            }
+
+            return {
+                scope: {
+                    langContext: "="
+                },
+                link: link
+            };
+        }]);
+
+    fluentApp.directive('fgStep', [
+        '$animate', function ($animate) {
+            function link(scope, elq, attrs) {
+                var thisStep = attrs.fgStep, nextStep = attrs.nextStep;
+                if (scope.steps[thisStep] == undefined)
+                    scope.steps[thisStep] = {};
+                scope.steps[thisStep].nextStep = nextStep;
+
+                if (scope.firstStep == undefined)
+                    scope.firstStep = thisStep;
+                scope.$watch('currentStep', function fgStepShowStep(value) {
+                    $animate[value == thisStep ? 'removeClass' : 'addClass'](elq, 'ng-hide');
+                });
+            }
+
+            return {
+                link: link
+            };
+        }]);
+
+    fluentApp.directive('fgCard', [
+        '$compile', '$http', '$templateCache', function ($compile, $http, $templateCache) {
+            function getTemplate(type) {
+                var templateLoader, baseUrl = "/partials/";
+                var templateUrl = baseUrl + type + ".html";
+                templateLoader = $http.get(templateUrl, { cache: $templateCache });
+
+                return templateLoader;
+            }
+
+            function link(scope, jqElement, attrs) {
+                scope.steps = {};
+
+                scope.nextStep = function () {
+                    var cur = scope.steps[scope.currentStep];
+                    if (cur && cur.nextStep) {
+                        scope.currentStep = cur.nextStep;
+                    }
+                };
+
+                var loader = getTemplate(scope.name);
+                var promise = loader.success(function (html) {
+                    jqElement.html(html);
+                }).then(function (response) {
+                    jqElement.replaceWith($compile(jqElement.html())(scope));
+
+                    scope.currentStep = scope.firstStep;
+                });
+
+                console.log("card scope", scope);
+            }
+            return {
+                scope: {
+                    "class": "@",
+                    name: "@"
+                },
+                link: link
+            };
         }]);
 }
 
