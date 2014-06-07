@@ -4520,28 +4520,33 @@ html body.splash-zurich #intro .we-love .forward-looking {
 html.body.splash-desktop {
   background-color: white;
 }
-.splash.splash-zurich.authenticated #intro .we-love {
-  height: 175px;
-}
-.splash.splash-zurich.authenticated #intro .we-love figure {
-  -webkit-transform: scale(0.4, 0.4);
-  -ms-transform: scale(0.4, 0.4);
-  transform: scale(0.4, 0.4);
-}
-.splash.splash-zurich.authenticated #intro .story,
-.splash.splash-zurich.authenticated #intro .benefits {
-  display: none;
-}
-.splash.splash-zurich.authenticated #intro .form-and-story {
-  top: 0;
-}
-.splash.splash-zurich.authenticated #intro .signup {
-  top: 0;
-  margin-top: 10em;
-}
-.splash.splash-zurich.authenticated #intro footer {
-  margin-top: 0;
-  height: 0;
+.splash.splash-zurich.authenticated #intro {
+  /* squashing the header
+
+        .we-love {
+            figure {
+                .scale(.4,.4);
+            }
+            height: 175px;
+        }
+        .story,
+        .benefits {
+            display:none;
+        }
+
+        .form-and-story {
+            top: 0;
+        }
+        .signup {
+            top: 0;
+            margin-top: 10em;
+        }
+
+        footer {
+            margin-top: 0;
+            height: 0;
+        }
+        */
 }
 img.left-side {
   float: left;
