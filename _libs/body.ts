@@ -120,7 +120,7 @@ if (window["angular"]) {
         }
     }]);
 
-    fluentApp.directive('fgCard', ['$compile','$http','$templateCache',function($compile,$http,$templateCache) {
+    fluentApp.directive('fgCard', ['$compile','$http','$templateCache','Access',function($compile,$http,$templateCache,Access) {
 
         //TODO consider using dedicated CARD cache
 
@@ -134,6 +134,7 @@ if (window["angular"]) {
 
         function link(scope, jqElement, attrs) {
             scope.steps = {};
+            scope.Access = Access;
 
             scope.nextStep = function() {
                 var cur = scope.steps[scope.currentStep];
@@ -155,7 +156,7 @@ if (window["angular"]) {
             });
 
             // scope.step = "understood"; //TODO dynamic determined from session info
-            console.log("card scope",scope);
+            // console.log("card scope",scope);
         }
         return {
             // restrict: 'A',// attribute only

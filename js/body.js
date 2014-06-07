@@ -1351,7 +1351,7 @@ if (window["angular"]) {
         }]);
 
     fluentApp.directive('fgCard', [
-        '$compile', '$http', '$templateCache', function ($compile, $http, $templateCache) {
+        '$compile', '$http', '$templateCache', 'Access', function ($compile, $http, $templateCache, Access) {
             function getTemplate(type) {
                 var templateLoader, baseUrl = "/partials/";
                 var templateUrl = baseUrl + type + ".html";
@@ -1362,6 +1362,7 @@ if (window["angular"]) {
 
             function link(scope, jqElement, attrs) {
                 scope.steps = {};
+                scope.Access = Access;
 
                 scope.nextStep = function () {
                     var cur = scope.steps[scope.currentStep];
@@ -1378,8 +1379,6 @@ if (window["angular"]) {
 
                     scope.currentStep = scope.firstStep;
                 });
-
-                console.log("card scope", scope);
             }
             return {
                 scope: {
