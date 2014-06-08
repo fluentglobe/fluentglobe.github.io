@@ -8,6 +8,7 @@
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
+/// <reference path="../../book-reader/cards.ts"/>
 /// <reference path="../../book-reader/account.ts"/>
 /// <reference path="../../book-reader/survey.ts"/>
 /// <reference path="../../book-reader/reader.ts"/>
@@ -100,75 +101,10 @@ if (window["angular"]) {
         };
     }]);
 
-    fluentApp.directive('fgStep', ['$animate', function($animate) {
-        function link(scope, elq, attrs) {
-            //TODO assert attrs.nextStep
-            var thisStep = attrs.fgStep, nextStep = attrs.nextStep;
-            if (scope.steps[thisStep] == undefined) scope.steps[thisStep] = {};
-            scope.steps[thisStep].nextStep = nextStep;
-            //TODO value dependent
+    fluentApp.directive('fgStep', $FgStepDirective);
 
-            if (scope.firstStep == undefined) scope.firstStep = thisStep;
-            scope.$watch('currentStep',function fgStepShowStep(value) {
-                $animate[value == thisStep? 'removeClass':'addClass'](elq, 'ng-hide');
-            });
-        }
+    fluentApp.directive('fgCard', $FgCardDirective);
 
-        return {
-            // require: '^fgCard', directive not controller
-            link: link
-        }
-    }]);
-
-    fluentApp.directive('fgCard', ['$compile','$http','$templateCache','Access',function($compile,$http,$templateCache,Access) {
-
-        //TODO consider using dedicated CARD cache
-
-        function getTemplate(type) {
-            var templateLoader, baseUrl = "/partials/";
-            var templateUrl = baseUrl + type + ".html";
-            templateLoader = $http.get(templateUrl, {cache: $templateCache});
-
-            return templateLoader;
-        }
-
-        function link(scope, jqElement, attrs) {
-            scope.steps = {};
-            scope.Access = Access;
-
-            scope.nextStep = function() {
-                var cur = scope.steps[scope.currentStep];
-                if (cur && cur.nextStep) {
-                    scope.currentStep = cur.nextStep;
-                }
-            };
-
-            var loader = getTemplate(scope.name);
-            var promise = loader.success(function(html) {
-                //TODO preprocess added info, inject controller logic
-                //TODO somewhat strange, shouldn't this work without setting the template HTML, or at least compiling the element
-                jqElement.html(html);
-            }).then(function(response) {
-                jqElement.replaceWith($compile(jqElement.html()) (scope));
-
-                //TODO post-proc steps
-                scope.currentStep = scope.firstStep;
-            });
-
-            // scope.step = "understood"; //TODO dynamic determined from session info
-            // console.log("card scope",scope);
-        }
-        return {
-            // restrict: 'A',// attribute only
-            // link:link,
-            scope: {
-                //TODO = state
-                "class": "@", // class of replaced element
-                name: "@"  // name of html file
-            },
-            link: link
-        }
-    }]);
 }
 
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {

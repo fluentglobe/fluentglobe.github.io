@@ -662,6 +662,115 @@ var fluentglobe;
 
     essentialRef.declare("router", new Router());
 })(fluentglobe || (fluentglobe = {}));
+var $FgStepDirective = [
+    '$animate', function ($animate) {
+        function modelsIn(elq, prefix) {
+            var withModels = elq.find("[ng-model]"), names = {}, r = [];
+            for (var i = 0, input; input = withModels[i]; ++i) {
+                var m = input.getAttribute("ng-model"), k;
+                if (m.indexOf(prefix + ".") == 0)
+                    k = m.substring(prefix.length + 1);
+                if (k)
+                    names[k] = true;
+            }
+            for (var n in names)
+                r.push(n);
+
+            return r;
+        }
+
+        function link(scope, elq, attrs) {
+            var thisStep = scope.steps[attrs.fgStep], thisName = attrs.fgStep, nextStep = attrs.nextStep, results = attrs.results || "results";
+            if (thisStep == undefined)
+                scope.steps[attrs.fgStep] = thisStep = { name: attrs.fgStep };
+            thisStep.results = results;
+            if (scope[results] === undefined)
+                scope[results] = {};
+            thisStep.models = modelsIn(elq, results);
+            if (nextStep)
+                thisStep.nextStep = nextStep;
+            var valueStep = thisStep.valueStep = [];
+
+            var options = elq.find('[next-step]');
+            for (var i = 0, o; o = options[i]; ++i) {
+                var ns = o.getAttribute("next-step"), v = o.value, model = o.getAttribute("ng-model");
+                switch (o.type) {
+                    case "radio":
+                        valueStep.push({ name: (o.name || o.getAttribute("name")), value: v, next: ns, model: model });
+                        break;
+                }
+            }
+
+            if (scope.firstStep == undefined)
+                scope.firstStep = attrs.fgStep;
+            scope.$watch('currentStep', function fgStepShowStep(value) {
+                $animate[value == thisName ? 'removeClass' : 'addClass'](elq, 'ng-hide');
+            });
+        }
+
+        return {
+            link: link
+        };
+    }];
+
+var $FgCardDirective = [
+    '$compile', '$http', '$templateCache', 'Access', function ($compile, $http, $templateCache, Access) {
+        function getTemplate(type) {
+            var templateLoader, baseUrl = "/partials/";
+            var templateUrl = baseUrl + type + ".html";
+            templateLoader = $http.get(templateUrl, { cache: $templateCache });
+
+            return templateLoader;
+        }
+
+        function link(scope, jqElement, attrs) {
+            scope.steps = {};
+            scope.Access = Access;
+
+            scope.allowNext = false;
+            scope.currentStep = null;
+
+            var resultsWatch;
+
+            function resultsChanged(results, old) {
+                scope.allowNext = true;
+                var step = scope.steps[scope.currentStep];
+                if (step) {
+                    for (var i = 0, n; n = step.models[i]; ++i) {
+                        if (results[n] === undefined)
+                            scope.allowNext = false;
+                    }
+                }
+            }
+
+            scope.nextStep = function () {
+                var cur = scope.steps[scope.currentStep];
+                if (cur && cur.nextStep) {
+                    scope.currentStep = cur.nextStep;
+                    if (resultsWatch)
+                        resultsWatch();
+                    resultsWatch = scope.$watchCollection(scope.steps[scope.currentStep].results, resultsChanged);
+                }
+            };
+
+            var loader = getTemplate(scope.name);
+            var promise = loader.success(function (html) {
+                jqElement.html(html);
+            }).then(function (response) {
+                jqElement.replaceWith($compile(jqElement.html())(scope));
+
+                scope.currentStep = scope.firstStep;
+                resultsWatch = scope.$watchCollection(scope.steps[scope.currentStep].results, resultsChanged);
+            });
+        }
+        return {
+            scope: {
+                "class": "@",
+                name: "@"
+            },
+            link: link
+        };
+    }];
 var account;
 (function (account) {
     account.OUR_CITIES = {
@@ -824,27 +933,6 @@ var account;
             $scope.start = function () {
                 startSignUp(this.access.session.username, this);
             };
-
-            $scope.schema = {
-                type: "object",
-                properties: {
-                    name: { type: "string", minLength: 2, title: "Name", description: "Name or alias" },
-                    title: {
-                        type: "string",
-                        enum: ['dr', 'jr', 'sir']
-                    }
-                }
-            };
-
-            $scope.form = [
-                '*',
-                {
-                    type: "submit",
-                    title: "Save"
-                }
-            ];
-
-            $scope.data = {};
         });
     }
 })(account || (account = {}));
@@ -1330,64 +1418,9 @@ if (window["angular"]) {
             };
         }]);
 
-    fluentApp.directive('fgStep', [
-        '$animate', function ($animate) {
-            function link(scope, elq, attrs) {
-                var thisStep = attrs.fgStep, nextStep = attrs.nextStep;
-                if (scope.steps[thisStep] == undefined)
-                    scope.steps[thisStep] = {};
-                scope.steps[thisStep].nextStep = nextStep;
+    fluentApp.directive('fgStep', $FgStepDirective);
 
-                if (scope.firstStep == undefined)
-                    scope.firstStep = thisStep;
-                scope.$watch('currentStep', function fgStepShowStep(value) {
-                    $animate[value == thisStep ? 'removeClass' : 'addClass'](elq, 'ng-hide');
-                });
-            }
-
-            return {
-                link: link
-            };
-        }]);
-
-    fluentApp.directive('fgCard', [
-        '$compile', '$http', '$templateCache', 'Access', function ($compile, $http, $templateCache, Access) {
-            function getTemplate(type) {
-                var templateLoader, baseUrl = "/partials/";
-                var templateUrl = baseUrl + type + ".html";
-                templateLoader = $http.get(templateUrl, { cache: $templateCache });
-
-                return templateLoader;
-            }
-
-            function link(scope, jqElement, attrs) {
-                scope.steps = {};
-                scope.Access = Access;
-
-                scope.nextStep = function () {
-                    var cur = scope.steps[scope.currentStep];
-                    if (cur && cur.nextStep) {
-                        scope.currentStep = cur.nextStep;
-                    }
-                };
-
-                var loader = getTemplate(scope.name);
-                var promise = loader.success(function (html) {
-                    jqElement.html(html);
-                }).then(function (response) {
-                    jqElement.replaceWith($compile(jqElement.html())(scope));
-
-                    scope.currentStep = scope.firstStep;
-                });
-            }
-            return {
-                scope: {
-                    "class": "@",
-                    name: "@"
-                },
-                link: link
-            };
-        }]);
+    fluentApp.directive('fgCard', $FgCardDirective);
 }
 
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (ev) {
