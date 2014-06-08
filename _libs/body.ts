@@ -10,7 +10,7 @@
 /// <reference path="router.ts"/>
 /// <reference path="../../book-reader/cards.ts"/>
 /// <reference path="../../book-reader/account.ts"/>
-/// <reference path="../../book-reader/survey.ts"/>
+// no <reference path="../../book-reader/survey.ts"/>
 /// <reference path="../../book-reader/reader.ts"/>
 /// <reference path="../../book-reader/slider.ts"/>
 
@@ -44,7 +44,7 @@ Resolver("page").set("handlers.discard.slider", function(el,role,instance) {
 
 if (window["angular"]) {
 
-    var fluentApp = angular.module('fluentApp', [ "fluentAccount","fluentSurvey" ]);
+    var fluentApp = angular.module('fluentApp', [ "fluentAccount" ]);
     fluentApp.config(['$interpolateProvider', function($interpolateProvider) {
           return $interpolateProvider.startSymbol('{(').endSymbol(')}');
         }
