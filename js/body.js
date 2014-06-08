@@ -940,77 +940,11 @@ var account;
             $scope.iLiveIn = iLiveIn;
 
             $scope.start = function () {
-                startSignUp(this.access.session.username, this);
+                this.access.startSignup(this);
             };
         });
     }
 })(account || (account = {}));
-var survey;
-(function (survey) {
-    if (window["angular"]) {
-        var module = angular.module('fluentSurvey', ["fluentAccount"]);
-
-        module.controller("user-survey", [
-            '$scope', function ($scope) {
-                Resolver("document::essential.state").intoAngularScope($scope, {
-                    'authenticated': 'authenticated',
-                    'authorised': 'authorised'
-                });
-
-                $scope.study = "why";
-                $scope.no = "1";
-
-                $scope.next = function () {
-                    switch ($scope.study) {
-                        case "why":
-                            $scope.study = "already";
-                            break;
-
-                        case "already":
-                            if ($scope.survey.already == "no") {
-                                $scope.study = "speed";
-                            } else {
-                                $scope.study = "progress";
-                            }
-                            break;
-
-                        case "progress":
-                            $scope.study = "speed";
-                            break;
-
-                        case "speed":
-                            $scope.study = "time";
-                            break;
-
-                        case "time":
-                            break;
-                    }
-
-                    switch ($scope.study) {
-                        case "why":
-                            $scope.no = "1";
-                            break;
-                        case "already":
-                            $scope.no = "2";
-                            break;
-                        case "progress":
-                            $scope.no = "3";
-                            break;
-                        case "speed":
-                            $scope.no = "4";
-                            break;
-                        case "time":
-                            $scope.no = "5";
-                            break;
-                    }
-                };
-
-                $scope.save = function () {
-                    console.log("TODO save survey");
-                };
-            }]);
-    }
-})(survey || (survey = {}));
 !function (window) {
     var essential = Resolver("essential"), pageResolver = Resolver("page"), ApplicationConfig = essential("ApplicationConfig"), console = essential("console"), StatefulResolver = essential("StatefulResolver"), addEventListeners = essential("addEventListeners"), MutableEvent = essential("MutableEvent"), EnhancedDescriptor = essential("EnhancedDescriptor"), DescriptorQuery = essential("DescriptorQuery"), ElementPlacement = essential("ElementPlacement"), Layouter = essential("Layouter"), Laidout = essential("Laidout"), HTMLElement = essential("HTMLElement"), DialogAction = essential("DialogAction");
 
@@ -1375,7 +1309,7 @@ Resolver("page").set("handlers.discard.slider", function (el, role, instance) {
 });
 
 if (window["angular"]) {
-    var fluentApp = angular.module('fluentApp', ["fluentAccount", "fluentSurvey"]);
+    var fluentApp = angular.module('fluentApp', ["fluentAccount"]);
     fluentApp.config([
         '$interpolateProvider', function ($interpolateProvider) {
             return $interpolateProvider.startSymbol('{(').endSymbol(')}');
