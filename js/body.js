@@ -668,10 +668,14 @@ var $FgStepDirective = [
             var withModels = elq.find("[ng-model]"), names = {}, r = [];
             for (var i = 0, input; input = withModels[i]; ++i) {
                 var m = input.getAttribute("ng-model"), k;
-                if (m.indexOf(prefix + ".") == 0)
-                    k = m.substring(prefix.length + 1);
-                if (k)
-                    names[k] = true;
+                switch (input.type) {
+                    case "radio":
+                        if (m.indexOf(prefix + ".") == 0)
+                            k = m.substring(prefix.length + 1);
+                        if (k)
+                            names[k] = true;
+                        break;
+                }
             }
             for (var n in names)
                 r.push(n);
@@ -735,7 +739,7 @@ var $FgCardDirective = [
             function resultsChanged(results, old) {
                 scope.allowNext = true;
                 var step = scope.steps[scope.currentStep];
-                if (step) {
+                if (step && results) {
                     for (var i = 0, n; n = step.models[i]; ++i) {
                         if (results[n] === undefined)
                             scope.allowNext = false;
@@ -747,6 +751,11 @@ var $FgCardDirective = [
                 var cur = scope.steps[scope.currentStep];
                 if (cur && cur.nextStep) {
                     scope.currentStep = cur.nextStep;
+
+                    for (var i = 0, vs; vs = cur.valueStep[i]; ++i)
+                        if (vs.value == scope.$eval(vs.model))
+                            scope.currentStep = vs.next;
+
                     if (resultsWatch)
                         resultsWatch();
                     resultsWatch = scope.$watchCollection(scope.steps[scope.currentStep].results, resultsChanged);

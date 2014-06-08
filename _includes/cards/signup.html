@@ -29,7 +29,7 @@
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="belong"> Yes, I'd like to feel like I belong here</p>
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="socially"> Yes, It's good socially</p>
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="no-german"> No, I would rather speak german German</p>
-		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="english"> No, English is fine</p>
+		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="english" next-step="english"> No, English is fine</p>
 
         <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
 	</fieldset>
@@ -103,8 +103,35 @@
         <p><input type="radio" name="study-speed" value="onemonth"> I want the essentials in a month, and then take it slow</p>
         <p><input type="radio" name="study-speed" value="halfyear"> I want to be speaking in 6 months</p>
         <p><input type="radio" name="study-speed" value="norush"> There is no rush</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
+      <fieldset fg-step="time" next-step="phone" results="survey">
+        <p>At what time of the day do you have time to study?</p>
+        <p><input type="radio" name="study-time" value="morning"> Morning</p>
+        <p><input type="radio" name="study-time" value="afternoon"> Afternoon</p>
+        <p><input type="radio" name="study-time" value="evening"> Evening (after work)</p>
+        <p><input type="radio" name="study-time" value="weekends"> Weekends</p>
+        <p><input type="radio" name="study-time" value="traveling"> While traveling</p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+      </fieldset>
+
+      <fieldset fg-step="phone">
+        <p>We will send your exersises to your phone. Type in the number and we will send you a link to our app.</p>
+
+        <p><input type="number" name="phone" ng-model="Access.session.phone"></p>
+        <p><button class="btn primary double-corner">Send It!</button></p>
+
+        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+      </fieldset>
+
+      <fieldset fg-step="english">
+        <p>English is many things. If you want to refine your skill we have a great book
+        <a href="/speak/english-in-london">Speak English in London</a>
+        </p>
+      </fieldset>
 </form>
 
 <!-- <form sf-schema="schema" sf-form="form" sf-model="data" sf-decorator="div"></form> -->
