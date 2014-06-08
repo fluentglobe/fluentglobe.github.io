@@ -49,13 +49,6 @@ og-images:
       </div>
       </fieldset>
     </form>
-
-    {% if site.debug %}
-    <pre>state = {( access.state | json )}</pre>
-    <pre>session = {( access.session | json )}</pre>
-    <pre> {( region_code )} {( region_name )} {( city )}</pre>
-    {% endif %}
-
   </div>
 
     <div class=" on-dark-picture-bg" hidden>
@@ -70,19 +63,10 @@ og-images:
 <main>
 <article role="presenter" data-role="'laidout':'shifted-article'">
 	<header id="more-to-tell">
-<!--         <div class="contact">
-        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
-
-        <h4>U.K. +44-2036088053 </h4>
-        </div>
- -->
-        {% include site-follow.html %}
+    {% include zurich-follow.html %}
   </header>
 
-  <section class="main-text-section main-text">
-  </section>
-
-  <section style="display:none;">
+  <section class="main-text-section main-text" style="display:none;">
   <!-- 
 
 <a href="http://tinypic.com?ref=1zptdud" target="_blank"><img src="http://i60.tinypic.com/1zptdud.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
