@@ -808,29 +808,13 @@ var account;
         });
     };
 
-    account.BookAccess.prototype.updateAuthenticated = function () {
-        if (this.state.authenticated) {
-            if (this.simperium == null)
-                this.simperium = new Simperium(document.essential.fluentbook_simperium_app_id, { token: session("access_token") });
-        } else {
-        }
-    };
+    account.BookAccess.prototype.app_id = document.essential.fluentbook_simperium_app_id;
+    account.BookAccess.prototype.api_key = document.essential.fluentbook_simperium_api_key;
 
-    account.BookAccess.prototype.forgetUser = function () {
-        setTimeout(function () {
-            session.set("username", "");
-            session.set("password", false);
-        }, 0);
-    };
+    account.BookAccess.prototype.startSignUp = function ($scope) {
+        var url = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", this.app_id), createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", this.app_id);
 
-    function iLiveIn(city) {
-        if (account.OUR_CITIES[city])
-            this.city = account.OUR_CITIES[city];
-    }
-
-    function startSignUp(email, $scope) {
-        var app_id = document.essential.fluentbook_simperium_app_id, api_key = document.essential.fluentbook_simperium_api_key;
-        var url = "https://auth.simperium.com/1/" + app_id + "/authorize/", createUrl = "https://auth.simperium.com/1/" + app_id + "/create/";
+        var email = this.session.username;
 
         $.ajax({
             url: url,
@@ -839,15 +823,13 @@ var account;
             dataType: "json",
             data: JSON.stringify({ "username": email, "password": "-" }),
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("X-Simperium-API-Key", api_key);
+                xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
             },
             success: function (data) {
                 $scope.signup.message = "";
                 session.set("username", data.username);
                 session.set("userid", data.userid);
                 session.set("access_token", data.access_token);
-
-                contiueSignup(data.username);
             },
             error: function (err, tp, code) {
                 switch (code) {
@@ -866,15 +848,13 @@ var account;
                                 dataType: "json",
                                 data: JSON.stringify({ "username": email, "password": "-" }),
                                 beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("X-Simperium-API-Key", api_key);
+                                    xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
                                 },
                                 success: function (data) {
                                     $scope.signup.message = "";
                                     session.set("username", data.username);
                                     session.set("userid", data.userid);
                                     session.set("access_token", data.access_token);
-
-                                    contiueSignup(email);
                                 },
                                 error: function (err, tp, code) {
                                     switch (err.status) {
@@ -893,8 +873,27 @@ var account;
                 }
             }
         });
+    };
+
+    account.BookAccess.prototype.updateAuthenticated = function () {
+        if (this.state.authenticated) {
+            if (this.simperium == null)
+                this.simperium = new Simperium(this.app_id, { token: session("access_token") });
+        } else {
+        }
+    };
+
+    account.BookAccess.prototype.forgetUser = function () {
+        setTimeout(function () {
+            session.set("username", "");
+            session.set("password", false);
+        }, 0);
+    };
+
+    function iLiveIn(city) {
+        if (account.OUR_CITIES[city])
+            this.city = account.OUR_CITIES[city];
     }
-    account.startSignUp = startSignUp;
 
     function contiueSignup(email) {
         console.log("continuing", email, "signup", "using token", session("access_token"));
