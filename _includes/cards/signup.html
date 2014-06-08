@@ -121,7 +121,7 @@
       <fieldset fg-step="phone">
         <p>We will send your exersises to your phone. Type in the number and we will send you a link to our app.</p>
 
-        <p><input type="number" name="phone" ng-model="Access.session.phone"></p>
+        <p><input type="tel" name="phone" size="15" placeholder="Phone No." ng-model="Access.session.phone"></p>
         <p><button class="btn primary double-corner">Send It!</button></p>
 
         <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
