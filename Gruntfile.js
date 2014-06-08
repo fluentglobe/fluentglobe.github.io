@@ -247,7 +247,7 @@ module.exports = function(grunt) {
       //   tasks: 'sass:dev'
       // },
       typescript: {
-        files: ['Gruntfile.js','**/*.ts'],
+        files: ['Gruntfile.js','**/*.ts','../book-reader/*.ts'],
         tasks: ['typescript','jekyll:dev']
       },
       scripts: {
