@@ -895,10 +895,6 @@ var account;
             this.city = account.OUR_CITIES[city];
     }
 
-    function contiueSignup(email) {
-        console.log("continuing", email, "signup", "using token", session("access_token"));
-    }
-
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
         account.BookAccess.angularProvider(module, "Access");

@@ -1,13 +1,15 @@
 <div class="{(class)}">
 
 <header>
-	<h5 class="right" ng-hide="Access.state.authenticated"><a> Sign In </a></h5>
+	<h5 class="right" ng-show="!Access.state.authenticated"><a> Sign In </a></h5>
 	<h4 class="orange">Living in Zürich</h4>
 </header>
 
   <fieldset ng-show="!$parent.city">
       <p>You seem to be in {( region_name )}. </p>
-      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">I live in Zürich</button>
+      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">
+        <span lang="en">I live in Zürich</span>
+        </button>
   </fieldset>
 
 <form name="signup" novalidate ng-show="$parent.city">
@@ -31,22 +33,22 @@
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="no-german"> No, I would rather speak german German</p>
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="english" next-step="english"> No, English is fine</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+    <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
 	</fieldset>
 
   <fieldset fg-step="email" next-step="why" not-if="Access.state.authenticated" results="survey">
 
-      <div ng-show="$parent.city && !Access.state.authenticated && !Access.session.password">
+    <div ng-show="$parent.city && !Access.state.authenticated && !Access.session.password">
       <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.session.username" required>
-      <button class="btn primary double-corner" type="button" ng-click="Access.startSignup(this)" ng-disabled="!signup.$valid"> {% include intro/next-step-button.html %} </button>
+      <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp(this)" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ signup.message }}</p>
-      </div>
+    </div>
 
-      <div ng-show="$parent.city && Access.state.authenticated">
-        <p lang="en">You are signed in as {( Access.session.username )}</p>
-      </div>
+    <div ng-show="$parent.city && Access.state.authenticated">
+      <p lang="en">You are signed in as {( Access.session.username )}</p>
+    </div>
 
-      <button type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+    <button type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
   </fieldset>
 
       <fieldset fg-step="why" next-step="already" results="survey">
