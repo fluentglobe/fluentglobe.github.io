@@ -684,7 +684,7 @@ var $FgStepDirective = [
         }
 
         function link(scope, elq, attrs) {
-            var thisStep = scope.steps[attrs.fgStep], thisName = attrs.fgStep, nextStep = attrs.nextStep, results = attrs.results || "results";
+            var thisStep = scope.steps[attrs.fgStep], thisName = attrs.fgStep, nextStep = attrs.nextStep, notIf = attrs.notIf, results = attrs.results || "results";
             if (thisStep == undefined)
                 scope.steps[attrs.fgStep] = thisStep = { name: attrs.fgStep };
             thisStep.results = results;
@@ -693,6 +693,8 @@ var $FgStepDirective = [
             thisStep.models = modelsIn(elq, results);
             if (nextStep)
                 thisStep.nextStep = nextStep;
+            if (notIf)
+                thisStep.notIf = notIf;
             var valueStep = thisStep.valueStep = [];
 
             var options = elq.find('[next-step]');
@@ -748,18 +750,31 @@ var $FgCardDirective = [
             }
 
             scope.nextStep = function () {
-                var cur = scope.steps[scope.currentStep];
-                if (cur && cur.nextStep) {
-                    scope.currentStep = cur.nextStep;
+                var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
+                do {
+                    scope.currentStep = nextStep;
 
-                    for (var i = 0, vs; vs = cur.valueStep[i]; ++i)
-                        if (vs.value == scope.$eval(vs.model))
-                            scope.currentStep = vs.next;
+                    if (cur) {
+                        for (var i = 0, vs; vs = cur.valueStep[i]; ++i)
+                            if (vs.value == scope.$eval(vs.model))
+                                scope.currentStep = vs.next;
+                    }
 
-                    if (resultsWatch)
-                        resultsWatch();
-                    resultsWatch = scope.$watchCollection(scope.steps[scope.currentStep].results, resultsChanged);
-                }
+                    var step = scope.steps[scope.currentStep];
+                    if (step) {
+                        if (step.notIf) {
+                            ok = !scope.$eval(step.notIf);
+                        } else
+                            ok = true;
+
+                        nextStep = step.nextStep;
+                        cur = step;
+                    }
+                } while(nextStep && !ok);
+
+                if (resultsWatch)
+                    resultsWatch();
+                resultsWatch = scope.$watchCollection(step.results, resultsChanged);
             };
 
             var loader = getTemplate(scope.name);
@@ -767,13 +782,12 @@ var $FgCardDirective = [
                 jqElement.html(html);
             }).then(function (response) {
                 jqElement.replaceWith($compile(jqElement.html())(scope));
-
-                scope.currentStep = scope.firstStep;
-                resultsWatch = scope.$watchCollection(scope.steps[scope.currentStep].results, resultsChanged);
+                scope.nextStep();
             });
         }
         return {
             scope: {
+                "iLiveIn": "&",
                 "class": "@",
                 name: "@"
             },
@@ -931,12 +945,6 @@ var account;
                 var city = account.GEO2CITY[values.country_code + values.region_code];
                 values.city = city;
             });
-
-            $scope.iLiveIn = iLiveIn;
-
-            $scope.start = function () {
-                this.access.startSignup(this);
-            };
         });
     }
 })(account || (account = {}));
