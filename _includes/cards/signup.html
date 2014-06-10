@@ -5,15 +5,15 @@
 	<h4 class="orange">Living in Zürich</h4>
 </header>
 
-  <fieldset ng-show="!$parent.city">
+  <fieldset ng-show="!Access.city">
       <p>You seem to be in {( region_name )}. </p>
-      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">
+      <button type="button" class="btn primary double-corner"  ng-click="Access.iLiveIn('zurich')">
         <span lang="en">I live in Zürich</span>
         </button>
   </fieldset>
 
-<form name="signup" novalidate ng-show="$parent.city">
-<!-- {( $parent.city.name )} -->
+<form name="signup" novalidate ng-show="Access.city">
+<!-- {( Access.city.name )} -->
 	<fieldset fg-step="understood" next-step="email" results="survey">
 		<p>Would it help if you understood Swiss German?</p>
 		<!-- select fg-choices="radio" name="understood-swiss" lang-context="fg">
@@ -38,13 +38,13 @@
 
   <fieldset fg-step="email" next-step="why" not-if="Access.state.authenticated" results="survey">
 
-    <div ng-show="$parent.city && !Access.state.authenticated && !Access.session.password">
+    <div ng-show="Access.city && !Access.state.authenticated && !Access.session.password">
       <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.session.username" required>
       <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp(this)" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ signup.message }}</p>
     </div>
 
-    <div ng-show="$parent.city && Access.state.authenticated">
+    <div ng-show="Access.city && Access.state.authenticated">
       <p lang="en">You are signed in as {( Access.session.username )}</p>
     </div>
 

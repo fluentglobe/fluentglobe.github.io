@@ -812,6 +812,13 @@ var account;
         this.session = session();
         this.state = state();
         this.updateAuthenticated();
+        this.city = null;
+
+        Resolver("document::essential.geoip").on("bind change", this, function (ev) {
+            var base = ev.symbol == "geoip" ? ev.value : ev.base;
+            var city = account.GEO2CITY[base.country_code + base.region_code];
+            ev.data.city = city;
+        });
     }).restrict({ singleton: true, lifecycle: "page" });
 
     account.BookAccess.angularProvider = function (module, name) {
@@ -904,10 +911,10 @@ var account;
         }, 0);
     };
 
-    function iLiveIn(city) {
+    account.BookAccess.prototype.iLiveIn = function (city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
-    }
+    };
 
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
