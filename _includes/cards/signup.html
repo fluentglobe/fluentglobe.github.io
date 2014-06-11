@@ -41,7 +41,7 @@
     <div ng-show="Access.city && !Access.state.authenticated && !Access.session.password">
       <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.user.email" required>
       <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp(this)" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
-      <p lang="en">{{ signup.message }}</p>
+      <p lang="en">{{ Access.message }}</p>
     </div>
 
     <div ng-show="Access.city && Access.state.authenticated">

@@ -817,6 +817,7 @@ var account;
                 ev.data.updateAuthenticated();
         });
         this.city = null;
+        this.message = null;
 
         Resolver("document::essential.geoip").on("bind change", this, function (ev) {
             var base = ev.symbol == "geoip" ? ev.value : ev.base;
@@ -851,7 +852,7 @@ var account;
                 xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
             },
             success: function (data) {
-                $scope.signup.message = "";
+                account.BookAccess().message = "";
                 session.set("username", data.username);
                 session.set("userid", data.userid);
                 session.set("access_token", data.access_token);
@@ -859,7 +860,7 @@ var account;
             error: function (err, tp, code) {
                 switch (code) {
                     case "BAD REQUEST":
-                        $scope.signup.message = err.responseJSON.message;
+                        account.BookAccess().message = err.responseJSON.message;
                         break;
 
                     case "UNAUTHORIZED":
@@ -876,7 +877,7 @@ var account;
                                     xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
                                 },
                                 success: function (data) {
-                                    $scope.signup.message = "";
+                                    account.BookAccess().message = "";
                                     session.set("username", data.username);
                                     session.set("userid", data.userid);
                                     session.set("access_token", data.access_token);
@@ -884,7 +885,7 @@ var account;
                                 error: function (err, tp, code) {
                                     switch (err.status) {
                                         case 400:
-                                            $scope.signup.message = err.responseJSON.message;
+                                            account.BookAccess().message = err.responseJSON.message;
 
                                             break;
                                         case 409:
