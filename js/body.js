@@ -910,7 +910,7 @@ var account;
             if (this.simperium == null) {
                 this.simperium = new Simperium(this.app_id, { token: session("access_token") });
 
-                var bucket = this.simperium.bucket("user");
+                var bucket = this.userBucket = this.simperium.bucket("user");
                 bucket.on('notify', function (id, data) {
                     user.mixin(data);
                 });
@@ -936,6 +936,7 @@ var account;
 
         if (!this.state.authenticated) {
             this.simperium = null;
+            this.userBucket = null;
         }
     };
 
@@ -953,8 +954,9 @@ var account;
     };
 
     account.BookAccess.prototype.applyPhone = function () {
-        var bucket = this.simperium.bucket("user");
-        bucket.update(user());
+        if (this.simperium) {
+            this.userBucket.update("basic");
+        }
     };
 
     if (window["angular"]) {
