@@ -40,6 +40,20 @@ module.exports = function(grunt) {
         dest: 'js/angular-mods.js'
       },
 
+      serverDev: {
+        src: [
+          '../book-reader/libs/simperium-js/simperium-dev.js'
+        ],
+        dest: 'js/server.js'
+      },
+
+      server: {
+        src: [
+          '../book-reader/libs/simperium-js/simperium.js'
+        ],
+        dest: 'js/server.min.js'
+      },
+
       app: {
         src: [
           // 'components/essentialjs/app/js/spin.min.js',
@@ -255,7 +269,7 @@ module.exports = function(grunt) {
         tasks: [
           //'jshint',
           // 'browserify', //TODO gotta go
-          'concat:essential','concat:mods',
+          'concat:essential','concat:mods', 'concat:server', 'concat:serverDev',
           'jekyll:dev'
           ],
 
@@ -419,7 +433,7 @@ module.exports = function(grunt) {
     'browserify','copy','uglify',
     'less:dev','less:dist',
     'typescript',
-    'concat:essential','concat:mods','jekyll:dev',
+    'concat:essential','concat:mods','concat:server','concat:serverDev','jekyll:dev',
     'concurrent']
     );
   grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);

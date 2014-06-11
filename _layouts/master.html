@@ -65,7 +65,8 @@ base-body-class:
 </script>{% endif %}
 
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
-<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
+{% if site.hostedSimperiumJs %}<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
+{% else %}<script type="text/javascript" {% if site.debug %}src="/js/server.js"{% else %}src="/js/server.min.js"{% endif %}></script>{% endif %}
 
 </body>
 </html>
