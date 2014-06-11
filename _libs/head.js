@@ -6,25 +6,26 @@
 		EnhancedDescriptor = Resolver("essential::EnhancedDescriptor::"),
 		Placement = Resolver("essential::ElementPlacement::"),
 		HTMLElement = Resolver("essential::HTMLElement::"),
+		pageState = Resolver("page::state"),
 		state = Resolver("document::essential.state");
 
 	state.declare({});
-	state.declare("authenticated",true);
-	state.declare("authorised",true);
-	state.on("change",function(ev) {
-		if (ev.symbol == "authenticated" && !ev.value) {
-		    Resolver("document").set("essential.session.username","");
-		    Resolver("document").set("essential.session.access_token","");
-		    Resolver("document").set("essential.session.password",false);
-		    Resolver("document").set("essential.state.authorised",false);
-		    //TODO (essential.session).wipeStored()
-		}
-
-		Resolver("page").set("state.authenticated", ev.base.authenticated);
-		Resolver("page").set("state.authorised", ev.base.authorised);
-	});
 	state.set("authenticated",false);
 	state.set("authorised",false);
+	pageState.set("authenticated",false);
+	pageState.set("authorised",false);
+	state.on("change",function(ev) {
+		if (ev.symbol == "authenticated" && !ev.value) {
+			session.set("username","");
+			session.set("access_token","");
+			session.set("password",false);
+			state.set("authorised",false);
+
+		    //TODO (essential.session).wipeStored()
+		}
+		pageState.set("authenticated", ev.base.authenticated);
+		pageState.set("authorised", ev.base.authorised);
+	});
 
 	var	geoip = Resolver("document::essential.geoip");
 		geoip.declare({});
@@ -88,6 +89,14 @@
 			case "jp": language.set("日本人"); break;
 		}
 	});
+
+	var user = Resolver("document::essential.user");
+	user.declare({
+		name: "",
+		email: "",
+		phone: ""
+	});
+	user.stored("load change","session"); //TODO on app local storage
 
 	var session = Resolver("document::essential.session");
 	session.declare({
