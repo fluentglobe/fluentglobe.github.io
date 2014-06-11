@@ -110,7 +110,7 @@ if (window["angular"]) {
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.expanded",false);
-    //TODO collapse site-menu
+    //TODO reset signup form
 
     return false;
 });

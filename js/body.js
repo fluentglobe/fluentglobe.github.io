@@ -774,7 +774,9 @@ var $FgCardDirective = [
 
                 if (resultsWatch)
                     resultsWatch();
-                resultsWatch = scope.$watchCollection(step.results, resultsChanged);
+                if (step) {
+                    resultsWatch = scope.$watchCollection(step.results, resultsChanged);
+                }
             };
 
             var loader = getTemplate(scope.name);
