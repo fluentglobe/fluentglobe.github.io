@@ -39,16 +39,18 @@
   <fieldset fg-step="email" next-step="why" not-if="Access.state.authenticated" results="survey">
 
     <div ng-show="Access.city && !Access.state.authenticated && !Access.session.password">
-      <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.session.username" required>
+      <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.user.email" required>
       <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp(this)" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ signup.message }}</p>
     </div>
 
     <div ng-show="Access.city && Access.state.authenticated">
-      <p lang="en">You are signed in as {( Access.session.username )}</p>
+      <p lang="en">You are signed in as {( Access.user.email )}</p>
+
+      <button class="btn primary double-corner" 
+        type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
     </div>
 
-    <button type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
   </fieldset>
 
       <fieldset fg-step="why" next-step="already" results="survey">
@@ -59,7 +61,8 @@
         <p><input type="radio" name="study-why" value="speak-socieal" ng-model="survey.why"> I want it for socialising and/or daily life</p>
         <p><input type="radio" name="study-why" value="foolish" ng-model="survey.why"> I feel foolish for not being able to</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+        <button class="btn primary double-corner" 
+          type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
       <fieldset fg-step="already" next-step="progress" results="survey">
@@ -79,7 +82,8 @@
         <p><input type="radio" name="study-already" 
             ng-model="survey.already" value="no" next-step="speed"> No, not yet</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+        <button class="btn primary double-corner" 
+          type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
       <fieldset fg-step="progress" next-step="speed" results="survey">
@@ -96,7 +100,8 @@
         <p><input type="checkbox" name="study-happy-progress" 
           ng-model="survey.progress.happy"> I'm happy with my progress</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+        <button class="btn primary double-corner" 
+          type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
       <fieldset fg-step="speed" next-step="time" results="survey">
@@ -106,7 +111,8 @@
         <p><input type="radio" name="study-speed" value="halfyear"> I want to be speaking in 6 months</p>
         <p><input type="radio" name="study-speed" value="norush"> There is no rush</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+        <button class="btn primary double-corner" 
+          type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
       <fieldset fg-step="time" next-step="phone" results="survey">
@@ -117,15 +123,17 @@
         <p><input type="radio" name="study-time" value="weekends"> Weekends</p>
         <p><input type="radio" name="study-time" value="traveling"> While traveling</p>
 
-        <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+        <button class="btn primary double-corner" 
+          type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
       <fieldset fg-step="phone">
         <p>We will send your exersises to your phone. Type in the number and we will send you a link to our app.</p>
 
         <p>
-          <input type="tel" name="phone" size="30" placeholder="Phone No." ng-model="Access.session.phone">
-          <button class="btn primary double-corner">Send It!</button>
+          <input type="tel" name="phone" size="30" placeholder="Phone No." ng-model="Access.user.phone">
+          <button class="btn primary double-corner" 
+            type="button" ng-click="Access.applyPhone()" ng-disabled="signup.phone.$invalid">Send It!</button>
         </p>
       </fieldset>
 

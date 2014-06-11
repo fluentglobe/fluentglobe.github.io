@@ -29,11 +29,6 @@ og-images:
 
   <div class="signup intro-column on-dark-picture-bg">
 
-      <fieldset ng-show="!city">
-      <p>You seem to be in {( region_name )}. </p>
-      <button type="button" class="btn primary double-corner"  ng-click="iLiveIn('zurich')">I live in Zürich</button>
-      </fieldset>
-
     <form name="signin">
       <fieldset>
       <div ng-show="city && !access.state.authenticated && access.session.password">

@@ -805,17 +805,23 @@ var account;
         "CH25": account.OUR_CITIES.zurich
     };
 
-    var state = Resolver("document::essential.state"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
+    var state = Resolver("document::essential.state"), user = Resolver("document::essential.user"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
 
     account.BookAccess = Generator(function () {
         this.simperium = null;
+        this.user = user();
         this.session = session();
         this.state = state();
-        this.updateAuthenticated();
+        state.on("bind change", this, function (ev) {
+            if (ev.symbol == "authenticated")
+                ev.data.updateAuthenticated();
+        });
         this.city = null;
 
         Resolver("document::essential.geoip").on("bind change", this, function (ev) {
             var base = ev.symbol == "geoip" ? ev.value : ev.base;
+
+            ev.data.region_name = base.region_name;
             var city = account.GEO2CITY[base.country_code + base.region_code];
             ev.data.city = city;
         });
@@ -835,14 +841,12 @@ var account;
     account.BookAccess.prototype.startSignUp = function ($scope) {
         var url = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", this.app_id), createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", this.app_id);
 
-        var email = this.session.username;
-
         $.ajax({
             url: url,
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({ "username": email, "password": "-" }),
+            data: JSON.stringify({ "username": this.user.email, "password": "-" }),
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
             },
@@ -867,7 +871,7 @@ var account;
                                 type: "POST",
                                 contentType: "application/json",
                                 dataType: "json",
-                                data: JSON.stringify({ "username": email, "password": "-" }),
+                                data: JSON.stringify({ "username": this.user.email, "password": "-" }),
                                 beforeSend: function (xhr) {
                                     xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
                                 },
@@ -887,7 +891,7 @@ var account;
                                             break;
                                     }
 
-                                    console.log("Failed to create user for", email);
+                                    console.log("Failed to create user for", this.user.email);
                                 }
                             });
                         break;
@@ -898,14 +902,36 @@ var account;
 
     account.BookAccess.prototype.updateAuthenticated = function () {
         if (this.state.authenticated) {
-            if (this.simperium == null)
+            if (this.simperium == null) {
                 this.simperium = new Simperium(this.app_id, { token: session("access_token") });
-        } else {
+
+                var bucket = this.simperium.bucket("user");
+                bucket.on('notify', function (id, data) {
+                    user.mixin(data);
+                });
+                bucket.on('local', function (id) {
+                    return user();
+                });
+                bucket.on('error', function (errortype) {
+                    console.log("got error:", errortype);
+                    if (errortype == "auth") {
+                        console.log("auth error, need to reauth");
+                    }
+                });
+                bucket.start();
+                var u = user();
+                bucket.update("defaults", u);
+            }
+        }
+
+        if (!this.state.authenticated) {
+            this.simperium = null;
         }
     };
 
     account.BookAccess.prototype.forgetUser = function () {
         setTimeout(function () {
+            user.set({});
             session.set("username", "");
             session.set("password", false);
         }, 0);
@@ -914,6 +940,11 @@ var account;
     account.BookAccess.prototype.iLiveIn = function (city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
+    };
+
+    account.BookAccess.prototype.applyPhone = function () {
+        var bucket = this.simperium.bucket("user");
+        bucket.update(user());
     };
 
     if (window["angular"]) {
