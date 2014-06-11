@@ -10418,7 +10418,8 @@ Resolver("page::state.managed").on("change",function(ev) {
 	countryCode.declare("uk");
 
 	geoip.on("change",function(ev) {
-		countryCode.set(ev.value.country_code.toLowerCase());
+		var base = ev.symbol == "geoip"? ev.value:ev.base;
+		if (typeof base.country_code == "string") countryCode.set(base.country_code.toLowerCase());
 	});
 
 	Resolver("document::essential.lang").on("change",function(ev) {
