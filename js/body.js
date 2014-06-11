@@ -811,9 +811,11 @@ var account;
         this.simperium = null;
         this.user = user();
         this.session = session();
+        if (this.session.username)
+            user.set("email", this.session.username);
         this.state = state();
         state.on("bind change", this, function (ev) {
-            if (ev.symbol == "authenticated")
+            if (ev.binding || ev.symbol == "authenticated")
                 ev.data.updateAuthenticated();
         });
         this.city = null;
@@ -911,7 +913,11 @@ var account;
                     user.mixin(data);
                 });
                 bucket.on('local', function (id) {
-                    return user();
+                    switch (id) {
+                        case "basic":
+                            return user();
+                            break;
+                    }
                 });
                 bucket.on('error', function (errortype) {
                     console.log("got error:", errortype);
@@ -919,9 +925,10 @@ var account;
                         console.log("auth error, need to reauth");
                     }
                 });
+                bucket.on('ready', function () {
+                    bucket.update("basic");
+                });
                 bucket.start();
-                var u = user();
-                bucket.update("defaults", u);
             }
         }
 
