@@ -720,7 +720,7 @@ var $FgStepDirective = [
     }];
 
 var $FgCardDirective = [
-    '$compile', '$http', '$templateCache', 'Access', function ($compile, $http, $templateCache, Access) {
+    '$compile', '$http', '$templateCache', 'Access', '$bucketsResolver', function ($compile, $http, $templateCache, Access, $bucketsResolver) {
         function getTemplate(type) {
             var templateLoader, baseUrl = "/partials/";
             var templateUrl = baseUrl + type + ".html";
@@ -730,8 +730,22 @@ var $FgCardDirective = [
         }
 
         function link(scope, jqElement, attrs) {
+            scope.$safeDigest = function () {
+                switch (this.$root.$$phase) {
+                    case "$apply":
+                    case "$digest":
+                        break;
+                    default:
+                        this.$digest();
+                }
+            };
+
             scope.steps = {};
             scope.Access = Access;
+            if (attrs.bucket) {
+                scope.bucketName = attrs.bucket;
+                scope.bucket = $bucketsResolver.getBucket(attrs.bucket);
+            }
 
             scope.allowNext = false;
             scope.currentStep = null;
@@ -751,6 +765,14 @@ var $FgCardDirective = [
 
             scope.nextStep = function () {
                 var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
+
+                if (cur && scope.bucket) {
+                    Resolver("buckets").declare([scope.bucketName, cur.results], {});
+                    Resolver("buckets").reference([scope.bucketName, cur.results]).mixin(scope[cur.results]);
+
+                    scope.bucket.update(cur.results);
+                }
+
                 do {
                     scope.currentStep = nextStep;
 
@@ -784,6 +806,21 @@ var $FgCardDirective = [
                 jqElement.html(html);
             }).then(function (response) {
                 jqElement.replaceWith($compile(jqElement.html())(scope));
+                var results = {};
+                for (var n in scope.steps) {
+                    var step = scope.steps[n];
+                    if (step.results)
+                        results[step.results] = true;
+                }
+                scope.results = [];
+                for (var n in results)
+                    scope.results.push(n);
+
+                if (attrs.bucket)
+                    for (var i = 0, r; r = scope.results[i]; ++i) {
+                        scope[r] = Resolver("buckets")([attrs.bucket, r]);
+                    }
+                scope.$safeDigest();
                 scope.nextStep();
             });
         }
@@ -798,6 +835,60 @@ var $FgCardDirective = [
     }];
 var account;
 (function (account) {
+    Resolver.angularProvider = function (namespace, module, providerName) {
+        var resolver = Resolver.bind(null, namespace);
+
+        module.provider(providerName, function ResolverProvider() {
+            this.$get = [resolver];
+        });
+    };
+
+    var buckets = Resolver("buckets");
+    buckets.getSimperium = function () {
+        if (this.simperium == undefined)
+            this.simperium = new Simperium(this.app_id, { token: session("access_token") });
+        return this.simperium;
+    };
+
+    buckets.getBucket = function (name) {
+        var bn = name + "Bucket", simperium = this.getSimperium();
+
+        this.declare(name, {});
+        if (simperium == null)
+            return null;
+
+        if (this.get(bn, "null") == null) {
+            var bucket = this.set(bn, simperium.bucket(name));
+            bucket.on('notify', function (id, data) {
+                buckets.set([name, id], data);
+            });
+            bucket.on('local', function (id) {
+                return buckets([name, id], "null");
+            });
+            bucket.on('error', function (errortype) {
+                console.log("got error:", errortype);
+                if (errortype == "auth") {
+                    console.log("auth error, need to reauth");
+                }
+            });
+            bucket.on('ready', function () {
+                var names = buckets(name);
+                for (var n in names)
+                    bucket.update(n);
+            });
+            bucket.start();
+        }
+        return this.get(bn);
+    };
+    buckets.clear = function () {
+        this.simperium = null;
+        for (var n in this.namespace) {
+            this.set(n, null);
+            ;
+        }
+    };
+    buckets.simperium = null;
+
     account.OUR_CITIES = {
         "zurich": { code: "zurich", name: "Zürich" }
     };
@@ -807,16 +898,15 @@ var account;
         "CH25": account.OUR_CITIES.zurich
     };
 
-    var state = Resolver("document::essential.state"), user = Resolver("document::essential.user"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
+    var state = Resolver("document::essential.state"), basic = Resolver("buckets::user.basic"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
 
     account.BookAccess = Generator(function () {
-        this.simperium = null;
-        this.user = user();
+        this.user = basic();
         this.session = session();
         if (this.session.username)
-            user.set("email", this.session.username);
+            basic.set("email", this.session.username);
         this.state = state();
-        state.on("bind change", this, function (ev) {
+        state.on("change", this, function (ev) {
             if (ev.binding || ev.symbol == "authenticated")
                 ev.data.updateAuthenticated();
         });
@@ -840,7 +930,7 @@ var account;
         });
     };
 
-    account.BookAccess.prototype.app_id = document.essential.fluentbook_simperium_app_id;
+    buckets.app_id = account.BookAccess.prototype.app_id = document.essential.fluentbook_simperium_app_id;
     account.BookAccess.prototype.api_key = document.essential.fluentbook_simperium_api_key;
 
     account.BookAccess.prototype.startSignUp = function ($scope) {
@@ -907,42 +997,19 @@ var account;
 
     account.BookAccess.prototype.updateAuthenticated = function () {
         if (this.state.authenticated) {
-            if (this.simperium == null) {
-                this.simperium = new Simperium(this.app_id, { token: session("access_token") });
-
-                var bucket = this.userBucket = this.simperium.bucket("user");
-                bucket.on('notify', function (id, data) {
-                    user.mixin(data);
-                });
-                bucket.on('local', function (id) {
-                    switch (id) {
-                        case "basic":
-                            return user();
-                            break;
-                    }
-                });
-                bucket.on('error', function (errortype) {
-                    console.log("got error:", errortype);
-                    if (errortype == "auth") {
-                        console.log("auth error, need to reauth");
-                    }
-                });
-                bucket.on('ready', function () {
-                    bucket.update("basic");
-                });
-                bucket.start();
+            if (buckets.simperium == null) {
+                var bucket = buckets.getBucket("user");
             }
         }
 
         if (!this.state.authenticated) {
-            this.simperium = null;
-            this.userBucket = null;
+            buckets.clear();
         }
     };
 
     account.BookAccess.prototype.forgetUser = function () {
         setTimeout(function () {
-            user.set({});
+            basic.set({});
             session.set("username", "");
             session.set("password", false);
         }, 0);
@@ -954,14 +1021,15 @@ var account;
     };
 
     account.BookAccess.prototype.applyPhone = function () {
-        if (this.simperium) {
-            this.userBucket.update("basic");
+        if (buckets.simperium) {
+            buckets.getBucket("user").update("basic");
         }
     };
 
     if (window["angular"]) {
         var module = angular.module("fluentAccount", []);
         account.BookAccess.angularProvider(module, "Access");
+        Resolver.angularProvider("buckets", module, "$bucketsResolver");
 
         module.controller("signup", function ($scope) {
             $scope.decorator = "div";
