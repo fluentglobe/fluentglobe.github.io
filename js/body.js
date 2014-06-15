@@ -766,8 +766,11 @@ var $FgCardDirective = [
                 }
             }
 
-            scope.nextStep = function () {
+            scope.nextStep = function (explicit) {
                 var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
+
+                if (explicit)
+                    nextStep = scope.steps[explicit] ? explicit : nextStep;
 
                 if (cur && scope.bucketName) {
                     Resolver("buckets").declare([scope.bucketName, cur.results], {});
