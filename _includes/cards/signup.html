@@ -106,10 +106,14 @@
 
       <fieldset fg-step="speed" next-step="time" results="survey">
         <p>How quickly would you like to learn German?</p>
-        <p><input type="radio" name="study-speed" value="asap"> As Soon As Possible</p>
-        <p><input type="radio" name="study-speed" value="onemonth"> I want the essentials in a month, and then take it slow</p>
-        <p><input type="radio" name="study-speed" value="halfyear"> I want to be speaking in 6 months</p>
-        <p><input type="radio" name="study-speed" value="norush"> There is no rush</p>
+        <p><input type="radio" name="study-speed"
+          ng-model="survey.speed" value="asap"> As Soon As Possible</p>
+        <p><input type="radio" name="study-speed"
+          ng-model="survey.speed" value="onemonth"> I want the essentials in a month, and then take it slow</p>
+        <p><input type="radio" name="study-speed"
+          ng-model="survey.speed" value="halfyear"> I want to be speaking in 6 months</p>
+        <p><input type="radio" name="study-speed"
+          ng-model="survey.speed" value="norush"> There is no rush</p>
 
         <button class="btn primary double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
@@ -117,11 +121,16 @@
 
       <fieldset fg-step="time" next-step="phone" results="survey">
         <p>At what time of the day do you have time to study?</p>
-        <p><input type="radio" name="study-time" value="morning"> Morning</p>
-        <p><input type="radio" name="study-time" value="afternoon"> Afternoon</p>
-        <p><input type="radio" name="study-time" value="evening"> Evening (after work)</p>
-        <p><input type="radio" name="study-time" value="weekends"> Weekends</p>
-        <p><input type="radio" name="study-time" value="traveling"> While traveling</p>
+        <p><input type="radio" name="study-time"
+          ng-model="survey.time" value="morning"> Morning</p>
+        <p><input type="radio" name="study-time"
+          ng-model="survey.time" value="afternoon"> Afternoon</p>
+        <p><input type="radio" name="study-time"
+          ng-model="survey.time" value="evening"> Evening (after work)</p>
+        <p><input type="radio" name="study-time"
+          ng-model="survey.time" value="weekends"> Weekends</p>
+        <p><input type="radio" name="study-time"
+          ng-model="survey.time" value="traveling"> While traveling</p>
 
         <button class="btn primary double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
