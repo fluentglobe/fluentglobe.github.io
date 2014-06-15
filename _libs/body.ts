@@ -10,7 +10,6 @@
 /// <reference path="router.ts"/>
 /// <reference path="../../book-reader/cards.ts"/>
 /// <reference path="../../book-reader/account.ts"/>
-// no <reference path="../../book-reader/survey.ts"/>
 /// <reference path="../../book-reader/reader.ts"/>
 /// <reference path="../../book-reader/slider.ts"/>
 
