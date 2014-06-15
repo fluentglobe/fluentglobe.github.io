@@ -589,9 +589,13 @@ var fluentglobe;
 
         for (var i = 0, path; path = this.hrefs[i]; ++i) {
             if (href.indexOf(path.href) == 0) {
-                var prevent = path.fn(href, "open");
-                if (prevent == false)
-                    return false;
+                try  {
+                    var prevent = path.fn(href, "open");
+                    if (prevent == false)
+                        return false;
+                } catch (ex) {
+                    debugger;
+                }
             }
         }
     };
@@ -744,7 +748,6 @@ var $FgCardDirective = [
             scope.Access = Access;
             if (attrs.bucket) {
                 scope.bucketName = attrs.bucket;
-                scope.bucket = $bucketsResolver.getBucket(attrs.bucket);
             }
 
             scope.allowNext = false;
@@ -766,11 +769,12 @@ var $FgCardDirective = [
             scope.nextStep = function () {
                 var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
 
-                if (cur && scope.bucket) {
+                if (cur && scope.bucketName) {
                     Resolver("buckets").declare([scope.bucketName, cur.results], {});
-                    Resolver("buckets").reference([scope.bucketName, cur.results]).mixin(scope[cur.results]);
+                    Resolver("buckets").reference([scope.bucketName, cur.results].join(".")).mixin(scope[cur.results]); //TODO reference doesn't support array yet
 
-                    scope.bucket.update(cur.results);
+                    var bucket = Resolver("buckets").getBucket(scope.bucketName);
+                    if (bucket) bucket.update(cur.results);
                 }
 
                 do {
@@ -819,8 +823,11 @@ var $FgCardDirective = [
                 if (attrs.bucket)
                     for (var i = 0, r; r = scope.results[i]; ++i) {
                         scope[r] = Resolver("buckets")([attrs.bucket, r]);
+                        Resolver("buckets").getBucket(attrs.bucket, function (name, bucket) {
+                            scope.$safeDigest();
+                        });
+                        console.log("bucket apply:", r, scope[r]);
                     }
-                scope.$safeDigest();
                 scope.nextStep();
             });
         }
@@ -850,7 +857,7 @@ var account;
         return this.simperium;
     };
 
-    buckets.getBucket = function (name) {
+    buckets.getBucket = function (name, onReady) {
         var bn = name + "Bucket", simperium = this.getSimperium();
 
         this.declare(name, {});
@@ -861,23 +868,36 @@ var account;
             var bucket = this.set(bn, simperium.bucket(name));
             bucket.on('notify', function (id, data) {
                 buckets.set([name, id], data);
+                console.warn("setting...", name, id, data);
             });
             bucket.on('local', function (id) {
                 return buckets([name, id], "null");
             });
             bucket.on('error', function (errortype) {
-                console.log("got error:", errortype);
                 if (errortype == "auth") {
-                    console.log("auth error, need to reauth");
+                    Resolver("document").set("essential.session.access_token", null);
+
+                    if (session("username"))
+                        buckets.authenticate(session("username"), buckets.lastPassword || '-', {});
+                    return;
                 }
+
+                console.log("got error:", errortype);
             });
             bucket.on('ready', function () {
                 var names = buckets(name);
                 for (var n in names)
                     bucket.update(n);
+                if (onReady)
+                    onReady(name, bucket);
+                console.warn('Bucket', name, 'ready.');
             });
             bucket.start();
+        } else {
+            if (onReady)
+                onReady(name, bucket);
         }
+
         return this.get(bn);
     };
     buckets.clear = function () {
@@ -888,6 +908,59 @@ var account;
         }
     };
     buckets.simperium = null;
+
+    buckets.api_key = document.essential.fluentbook_simperium_api_key;
+    buckets.app_id = document.essential.fluentbook_simperium_app_id;
+    buckets.authUrl = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", buckets.app_id);
+    buckets.createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", buckets.app_id);
+
+    buckets.authenticate = function (username, password, opts) {
+        function success(data) {
+            buckets.lastPassword = password;
+
+            account.BookAccess().message = "";
+            session.set("username", data.username);
+            session.set("userid", data.userid);
+            session.set("access_token", data.access_token);
+
+            if (opts.success)
+                opts.success(data);
+        }
+
+        function error(err, tp, code) {
+            switch (code) {
+                case "BAD REQUEST":
+                    account.BookAccess().message = err.responseJSON.message;
+                    break;
+
+                case "UNAUTHORIZED":
+                    if (err.responseText == "invalid password") {
+                        if (opts.invalidPassword)
+                            opts.invalidPassword(err, tp, code);
+                        session.set("password", true);
+                    } else {
+                        if (opts.unknown)
+                            opts.unknown(err, tp, code);
+                    }
+                    break;
+            }
+            if (opts.error)
+                opts.error(err, tp, code);
+        }
+
+        $.ajax({
+            url: opts.create ? buckets.createUrl : buckets.authUrl,
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ "username": username, "password": password }),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("X-Simperium-API-Key", buckets.api_key);
+            },
+            success: success,
+            error: error
+        });
+    };
 
     account.OUR_CITIES = {
         "zurich": { code: "zurich", name: "Zürich" }
@@ -930,67 +1003,26 @@ var account;
         });
     };
 
-    buckets.app_id = account.BookAccess.prototype.app_id = document.essential.fluentbook_simperium_app_id;
-    account.BookAccess.prototype.api_key = document.essential.fluentbook_simperium_api_key;
-
     account.BookAccess.prototype.startSignUp = function ($scope) {
-        var url = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", this.app_id), createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", this.app_id);
+        var password = "-";
 
-        $.ajax({
-            url: url,
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify({ "username": this.user.email, "password": "-" }),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
-            },
-            success: function (data) {
-                account.BookAccess().message = "";
-                session.set("username", data.username);
-                session.set("userid", data.userid);
-                session.set("access_token", data.access_token);
-            },
-            error: function (err, tp, code) {
-                switch (code) {
-                    case "BAD REQUEST":
-                        account.BookAccess().message = err.responseJSON.message;
-                        break;
+        buckets.authenticate(this.user.email, password, {
+            unknown: function (err, tp, code) {
+                buckets.authenticate(this.user.email, password, {
+                    create: true,
+                    error: function (err, tp, code) {
+                        switch (err.status) {
+                            case 400:
+                                account.BookAccess().message = err.responseJSON.message;
 
-                    case "UNAUTHORIZED":
-                        if (err.responseText == "invalid password") {
-                            session.set("password", true);
-                        } else
-                            $.ajax({
-                                url: createUrl,
-                                type: "POST",
-                                contentType: "application/json",
-                                dataType: "json",
-                                data: JSON.stringify({ "username": this.user.email, "password": "-" }),
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("X-Simperium-API-Key", account.BookAccess().api_key);
-                                },
-                                success: function (data) {
-                                    account.BookAccess().message = "";
-                                    session.set("username", data.username);
-                                    session.set("userid", data.userid);
-                                    session.set("access_token", data.access_token);
-                                },
-                                error: function (err, tp, code) {
-                                    switch (err.status) {
-                                        case 400:
-                                            account.BookAccess().message = err.responseJSON.message;
+                                break;
+                            case 409:
+                                break;
+                        }
 
-                                            break;
-                                        case 409:
-                                            break;
-                                    }
-
-                                    console.log("Failed to create user for", this.user.email);
-                                }
-                            });
-                        break;
-                }
+                        console.log("Failed to create user for", this.user.email);
+                    }
+                });
             }
         });
     };

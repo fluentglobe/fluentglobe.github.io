@@ -107,9 +107,13 @@
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
-	session.on("change",function(ev) {
-		var session = ev.symbol=="session"? ev.value:ev.base;
-		state.set("authenticated",!!session.access_token);
+
+	Resolver("document").on("change","readyState", function(ev) {
+		switch(ev.value) {
+			case "interactive":
+				state.set("authenticated", !!session("access_token"));
+				break;
+		}
 	});
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
