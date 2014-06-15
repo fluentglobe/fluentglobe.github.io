@@ -769,12 +769,11 @@ var $FgCardDirective = [
             scope.nextStep = function () {
                 var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
 
-                if (cur && scope.bucketName) {
+                if (cur && scope.bucket) {
                     Resolver("buckets").declare([scope.bucketName, cur.results], {});
-                    Resolver("buckets").reference([scope.bucketName, cur.results].join(".")).mixin(scope[cur.results]); //TODO reference doesn't support array yet
+                    Resolver("buckets").reference([scope.bucketName, cur.results]).mixin(scope[cur.results]);
 
-                    var bucket = Resolver("buckets").getBucket(scope.bucketName);
-                    if (bucket) bucket.update(cur.results);
+                    scope.bucket.update(cur.results);
                 }
 
                 do {
@@ -820,14 +819,18 @@ var $FgCardDirective = [
                 for (var n in results)
                     scope.results.push(n);
 
-                if (attrs.bucket)
+                if (attrs.bucket) {
                     for (var i = 0, r; r = scope.results[i]; ++i) {
-                        scope[r] = Resolver("buckets")([attrs.bucket, r]);
-                        Resolver("buckets").getBucket(attrs.bucket, function (name, bucket) {
+                        var ref = Resolver("buckets").reference([attrs.bucket, r].join("."));
+                        ref.on("bind change", function (ev) {
+                            scope[ev.symbol] = ev.resolver(ev.selector);
                             scope.$safeDigest();
                         });
-                        console.log("bucket apply:", r, scope[r]);
                     }
+                    Resolver("buckets").getBucket(attrs.bucket, function (name, bucket) {
+                        scope.$safeDigest();
+                    });
+                }
                 scope.nextStep();
             });
         }
@@ -868,7 +871,6 @@ var account;
             var bucket = this.set(bn, simperium.bucket(name));
             bucket.on('notify', function (id, data) {
                 buckets.set([name, id], data);
-                console.warn("setting...", name, id, data);
             });
             bucket.on('local', function (id) {
                 return buckets([name, id], "null");
@@ -890,7 +892,6 @@ var account;
                     bucket.update(n);
                 if (onReady)
                     onReady(name, bucket);
-                console.warn('Bucket', name, 'ready.');
             });
             bucket.start();
         } else {
@@ -974,7 +975,9 @@ var account;
     var state = Resolver("document::essential.state"), basic = Resolver("buckets::user.basic"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
 
     account.BookAccess = Generator(function () {
-        this.user = basic();
+        basic.on("bind change", this, function (ev) {
+            ev.data.user = basic();
+        });
         this.session = session();
         if (this.session.username)
             basic.set("email", this.session.username);
