@@ -769,11 +769,10 @@ var $FgCardDirective = [
             scope.nextStep = function () {
                 var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
 
-                if (cur && scope.bucket) {
+                if (cur && scope.bucketName) {
                     Resolver("buckets").declare([scope.bucketName, cur.results], {});
                     Resolver("buckets").reference([scope.bucketName, cur.results]).mixin(scope[cur.results]);
-
-                    scope.bucket.update(cur.results);
+                    Resolver("buckets").getBucket(scope.bucketName).update(cur.results);
                 }
 
                 do {
