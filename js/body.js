@@ -833,11 +833,9 @@ var $FgCardDirective = [
                         scope.$safeDigest();
                     });
                 }
-
                 scope.nextStep();
             });
         }
-
         return {
             scope: {
                 "iLiveIn": "&",
