@@ -767,15 +767,15 @@ var $FgCardDirective = [
             }
 
             scope.nextStep = function (explicit) {
-                var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, ok = true;
+                var cur = (scope.currentStep == undefined) ? null : scope.steps[scope.currentStep], nextStep = cur == null ? scope.firstStep : cur.nextStep, bucket = scope.bucketName ? Resolver("buckets").getBucket(scope.bucketName) : null, ok = true;
 
                 if (explicit)
                     nextStep = scope.steps[explicit] ? explicit : nextStep;
 
-                if (cur && scope.bucketName) {
+                if (cur && bucket) {
                     Resolver("buckets").declare([scope.bucketName, cur.results], {});
                     Resolver("buckets").reference([scope.bucketName, cur.results]).mixin(scope[cur.results]);
-                    Resolver("buckets").getBucket(scope.bucketName).update(cur.results);
+                    bucket.update(cur.results);
                 }
 
                 do {
@@ -817,13 +817,13 @@ var $FgCardDirective = [
                     if (step.results)
                         results[step.results] = true;
                 }
-                scope.results = [];
+                scope.resultsList = [];
                 for (var n in results)
-                    scope.results.push(n);
+                    scope.resultsList.push(n);
 
-                if (attrs.bucket) {
-                    for (var i = 0, r; r = scope.results[i]; ++i) {
-                        var ref = Resolver("buckets").reference([attrs.bucket, r].join("."));
+                if (scope.bucketName) {
+                    for (var i = 0, r; r = scope.resultsList[i]; ++i) {
+                        var ref = Resolver("buckets").reference([scope.bucketName, r].join("."));
                         ref.on("bind change", function (ev) {
                             scope[ev.symbol] = ev.resolver(ev.selector);
                             scope.$safeDigest();
@@ -833,9 +833,11 @@ var $FgCardDirective = [
                         scope.$safeDigest();
                     });
                 }
+
                 scope.nextStep();
             });
         }
+
         return {
             scope: {
                 "iLiveIn": "&",
@@ -857,8 +859,12 @@ var account;
 
     var buckets = Resolver("buckets");
     buckets.getSimperium = function () {
-        if (this.simperium == undefined)
-            this.simperium = new Simperium(this.app_id, { token: session("access_token") });
+        if (this.simperium == undefined) {
+            var access_token = session('access_token');
+            if (!access_token)
+                return null;
+            this.simperium = new Simperium(this.app_id, { token: access_token });
+        }
         return this.simperium;
     };
 
@@ -897,8 +903,10 @@ var account;
             });
             bucket.on('ready', function () {
                 var names = buckets(name);
-                for (var n in names)
-                    bucket.update(n);
+
+                if (buckets.created)
+                    for (var n in names)
+                        bucket.update(n);
                 if (onReady)
                     onReady(name, bucket);
             });
@@ -927,6 +935,7 @@ var account;
     buckets.authenticate = function (username, password, opts) {
         function success(data) {
             buckets.lastPassword = password;
+            buckets.created = opts.create;
 
             account.BookAccess().message = "";
             session.set("username", data.username);
@@ -936,10 +945,11 @@ var account;
             state.set("authenticated", true);
 
             if (opts.success)
-                opts.success(data);
+                opts.success(data, opts);
         }
 
         function error(err, tp, code) {
+            buckets.created = null;
             switch (code) {
                 case "BAD REQUEST":
                     account.BookAccess().message = err.responseJSON.message;
@@ -948,16 +958,16 @@ var account;
                 case "UNAUTHORIZED":
                     if (err.responseText == "invalid password") {
                         if (opts.invalidPassword)
-                            opts.invalidPassword(err, tp, code);
+                            opts.invalidPassword(err, tp, code, opts);
                         session.set("password", true);
                     } else {
                         if (opts.unknown)
-                            opts.unknown(err, tp, code);
+                            opts.unknown(err, tp, code, opts);
                     }
                     break;
             }
             if (opts.error)
-                opts.error(err, tp, code);
+                opts.error(err, tp, code, opts);
         }
 
         $.ajax({
@@ -1073,7 +1083,9 @@ var account;
 
     account.BookAccess.prototype.applyPhone = function () {
         if (buckets.simperium) {
-            buckets.getBucket("user").update("basic");
+            var bucket = buckets.getBucket("user");
+            if (bucket)
+                bucket.update("basic");
         }
     };
 

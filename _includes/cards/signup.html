@@ -40,7 +40,7 @@
     <div ng-show="Access.city && !Access.state.authenticated && !Access.session.password">
       <p>The learning will tailored specifically to you. If you wish you can protect the plan with a password later</p>
       <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.user.email" required>
-      <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp(this)" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
+      <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp()" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ Access.message }}</p>
     </div>
 

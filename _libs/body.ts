@@ -109,6 +109,7 @@ if (window["angular"]) {
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.expanded",false);
+    // BookAccess().forgetUser();
     //TODO reset signup form
 
     return false;
