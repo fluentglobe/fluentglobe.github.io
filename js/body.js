@@ -862,6 +862,13 @@ var account;
         return this.simperium;
     };
 
+    buckets.stop = function () {
+        if (this.simperium) {
+            this.simperium.stop();
+            this.simperium = null;
+        }
+    };
+
     buckets.getBucket = function (name, onReady) {
         var bn = name + "Bucket", simperium = this.getSimperium();
 
@@ -925,6 +932,8 @@ var account;
             session.set("username", data.username);
             session.set("userid", data.userid);
             session.set("access_token", data.access_token);
+            session.set("password", buckets.lastPassword == "-");
+            state.set("authenticated", true);
 
             if (opts.success)
                 opts.success(data);
@@ -1008,7 +1017,10 @@ var account;
         });
     };
 
-    account.BookAccess.prototype.startSignUp = function ($scope) {
+    account.BookAccess.prototype.startSignUp = function () {
+        if (state("authenticated"))
+            return;
+
         var password = "-";
 
         buckets.authenticate(this.user.email, password, {
@@ -1041,6 +1053,8 @@ var account;
 
         if (!this.state.authenticated) {
             buckets.clear();
+            buckets.stop();
+            this.forgetUser();
         }
     };
 
