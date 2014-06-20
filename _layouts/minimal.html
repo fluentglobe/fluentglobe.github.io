@@ -1,0 +1,67 @@
+---
+base-body-class:
+---
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" {% if page.app-name %}ng-app="{{ page.app-name }}"{% endif %}><!--<![endif]-->
+
+<head
+{% if page.og-namespace %}prefix="vertical: {{ page.og-namespace }}" {% endif %}
+>
+  <meta name="p:domain_verify" content="3b56841eaf51184a3ddc7b704a471e45"/>
+  <script type="application/config">
+  declare("body",{});
+  declare("body.layouter","intro-plus-article");
+  Resolver("document").declare("essential.fluentbook_simperium_app_id", "{{ site.fluentbook_simperium_app_id }}");
+  Resolver("document").declare("essential.fluentbook_simperium_api_key","{{ site.fluentbook_simperium_api_key }}");
+  </script>
+
+  {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
+  {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
+  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
+  {% endfor %}{% endif %}
+  {% if page.og-images %}{% for image in page.og-images %}<meta property="og:image" content="{{ image }}">
+  <meta property="twitter:image" content="{{ image }}">
+  {% endfor %}{% endif %}
+  {% include ipad_friendly_html5_head.html %}
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+{% if site.y_key %}
+  <META name="y_key" content="{{ site.y_key }}" />
+{% endif %}
+</head>
+
+<body class="{{ page.base-body-class }}{{ page.body-class }}"
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
+>
+  {% if page.og-images %}{% for image in page.og-images %}<img src="{{ image }}" rel="image_src" class="principal-pic" alt="{{ page.title }} - Principal Picture">
+  {% endfor %}{% endif %}
+
+{{ content }}
+
+  <script src="/js/jquery.min.js"></script>  
+  <script {%if page.debug %}src="/js/angular.js"{% else %}src="/js/angular.min.js"{% endif %}></script>  
+  <script {%if page.debug %}src="/js/angular-mods.js"{% else %}src="/js/angular-mods.min.js"{% endif %}></script>  
+
+  {% if page.js-bundle %}
+  <script src="{{ page.js-bundle }}"></script>
+  {% else %}
+  <script src="/js/uri+impl+form+app.js"></script>
+  {% endif %}
+
+  {% if site.analytics_id %}<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '{{ site.analytics_id }}', '{{ site.domain }}');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+</script>{% endif %}
+
+{% if site.hostedSimperiumJs %}<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
+{% else %}<script type="text/javascript" {% if site.debug %}src="/js/server.js"{% else %}src="/js/server.min.js"{% endif %}></script>{% endif %}
+
+</body>
+</html>
