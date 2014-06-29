@@ -6981,6 +6981,15 @@ h6 {
     background-image: url(../images/badge_ibooks-lrg.svg);
   }
 }
+.download-on-appstore {
+  display: inline-block;
+  text-align: center;
+  overflow: hidden;
+  background: url(../images/badge_appstore-lrg.png) no-repeat;
+  width: 135px;
+  height: 40px;
+  margin: 20px;
+}
 /*
 	* Style settings of LayerSlider
 	*
