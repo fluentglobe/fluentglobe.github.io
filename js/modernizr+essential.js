@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-06-10
+/*! Fluent Globe - v0.1.0 - 2014-06-18
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 window.html5 = {
@@ -10455,9 +10455,13 @@ Resolver("page::state.managed").on("change",function(ev) {
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
-	session.on("change",function(ev) {
-		var session = ev.symbol=="session"? ev.value:ev.base;
-		state.set("authenticated",!!session.access_token);
+
+	Resolver("document").on("change","readyState", function(ev) {
+		switch(ev.value) {
+			case "interactive":
+				state.set("authenticated", !!session("access_token"));
+				break;
+		}
 	});
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
