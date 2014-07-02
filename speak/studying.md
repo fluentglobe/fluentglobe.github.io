@@ -2,7 +2,7 @@
 layout: lesson
 theme: main
 blog-link: no
-body-class: lesson lesson-color
+body-class: with-menu lesson lesson-color
 ---
 
 Studying

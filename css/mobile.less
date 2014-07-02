@@ -70,6 +70,7 @@ body {
         overflow: hidden;
     }
 
+    &.with-menu.state-expanded, // TODO include this on all with menu
     &.screen.state-expanded,
     &.splash.state-expanded,
     &.lesson.state-expanded { // refactor to general app vs info vs splash  bodies
@@ -94,11 +95,17 @@ body {
     }
 
     .menu {
-        .side-menu(@menu-width,@menu-edge-width,@fluent-red,darken(@fluent-red,5%),#c00,#c0c0c0,white);
+        .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
         .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
         .transition(.3s ease-in-out left);
         .site-menu-flag(13em, @app-menu-bg);
     }
+}
+
+.black-menu .menu {
+    //TODO background matching ?
+    .side-menu-color(@black-app-menu-bg,@black-app-menu-group-bg,#c00,#e0e0e0,white);
+    .site-menu-flag(13em, @black-app-menu-bg);
 }
 
 @import (less) "../book-reader/libs/world-flags-sprite/stylesheets/flags16.css";

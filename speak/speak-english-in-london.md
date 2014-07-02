@@ -2,7 +2,7 @@
 layout: book
 theme: main
 blog-link: no
-body-class: lesson lesson-color
+body-class: with-menu lesson lesson-color
 title: Speak English in London
 author: Caterine Apruzzese
 permalink: /speak/speak-english-in-london.html

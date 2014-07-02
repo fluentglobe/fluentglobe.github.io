@@ -3172,27 +3172,32 @@ article section header img.feature {
 body.open-book {
   overflow: hidden;
 }
+body.with-menu.state-expanded #intro,
 body.screen.state-expanded #intro,
 body.splash.state-expanded #intro,
 body.lesson.state-expanded #intro {
   left: 160px;
   margin-right: -160px;
 }
+body.with-menu.state-expanded article,
 body.screen.state-expanded article,
 body.splash.state-expanded article,
 body.lesson.state-expanded article {
   margin-left: 160px;
 }
+body.with-menu.state-expanded article > header,
 body.screen.state-expanded article > header,
 body.splash.state-expanded article > header,
 body.lesson.state-expanded article > header {
   left: 160px;
 }
+body.with-menu.state-expanded article > section,
 body.screen.state-expanded article > section,
 body.splash.state-expanded article > section,
 body.lesson.state-expanded article > section {
   position: relative;
 }
+body.with-menu.state-expanded .menu,
 body.screen.state-expanded .menu,
 body.splash.state-expanded .menu,
 body.lesson.state-expanded .menu {
@@ -3360,6 +3365,75 @@ body .menu nav.flag label {
 }
 body .menu nav.flag label output {
   color: #f83104;
+}
+.black-menu .menu {
+  border-color: #000000;
+  background-color: #000000;
+  color: #e0e0e0;
+}
+.black-menu .menu nav.flag button.show-menu {
+  background-color: #000000;
+  color: #e0e0e0;
+  font-size: 18px;
+  vertical-align: top;
+}
+.black-menu .menu nav.flag button.show-menu:hover {
+  color: #ffffff;
+}
+.black-menu .menu nav.flag button.show-menu label {
+  color: #e0e0e0;
+  font-size: 1.2em;
+}
+.black-menu .menu ul li > ul {
+  border-top: 1px solid #040404;
+}
+.black-menu .menu ul li > ul > li a,
+.black-menu .menu ul li > ul > li q {
+  background-color: #000000;
+  border-color: #040404;
+  border-top: none;
+}
+.black-menu .menu ul a,
+.black-menu .menu ul q {
+  background-color: #040404;
+  border: 1px solid #000000;
+  color: #e0e0e0;
+}
+.black-menu .menu > ul {
+  border: 1px solid #000000;
+}
+.black-menu .menu > ul > li:not( :last-child ) > a,
+.black-menu .menu > ul > li:not( :last-child ) > q {
+  border-right: 1px solid #040404;
+}
+.black-menu .menu > ul > li:hover > a,
+.black-menu .menu > ul:not ( :hover ) > li.active > a,
+.black-menu .menu > ul > li:hover > q,
+.black-menu .menu > ul:not ( :hover ) > li.active > q {
+  background-color: #040404;
+}
+.black-menu .menu li ul {
+  background-color: #040404;
+}
+.black-menu .menu li ul a,
+.black-menu .menu li ul q {
+  border-top: 1px solid #000000;
+}
+.black-menu .menu li ul li a:hover,
+.black-menu .menu li ul:not( :hover ) li.active a {
+  background-color: #000000;
+}
+.black-menu .menu nav.flag {
+  width: 13em;
+}
+.black-menu .menu nav.flag label {
+  border-radius: 1px;
+  border: 1px solid #000000;
+  padding: 5px 9px 4px 9px;
+  min-width: 5em;
+}
+.black-menu .menu nav.flag label output {
+  color: #000000;
 }
 .f16 .flag {
   display: inline-block;
