@@ -1,53 +1,187 @@
 ---
-layout: angular
-body-class: splash splash-desktop
-app-name: speakApp
-body-controller: SpeakController
-js-bundle: /js/speak.js
+title: Learn to Speak English as in London
+layout: frontpage
+js-bundle: ../js/product-app.js
+app-name: fluentApp
 debug: true
+facebook-like-title: Going to Brazil?
+facebook-fan-page-url: https://www.facebook.com/FluentGlobeSpeak
+og-namespace: http://ogp.me/ns/book#
+og-type: book
+no-og-author: http://fluentglobe.com/people/caterine-apruzzese
+og-tags: 
+- Londres
+- London
+- English Language
+- Habla Ingles
+og-images: 
+- http://fluentglobe.com/images/seil-cover.jpg
+plus-author: 116691201522610578456
 ---
-<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" ng-view>
+
+<div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
+
+  <section class="left-col on-dark-picture-bg" style="color:#bbb;">
+    <h2 style="text-align:center;">Available Now</h2>
+
+    <h4 style="text-align:center;">
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store" class="download-on-ibooks"></a>
+    <br>
+    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" target="itunes_store">For iPad and Mac on iTunes</a>
+    </h4>
+
+    <blockquote class="narrow-blurp orange-anchors">
+      <a href="#review">
+      <p>Your review and Likes would be much appreciated</p>
+      <img src="/images/fb-thumbs-up.png" width="50">
+      <img src="/images/itunes-store.png" width="50">
+      </a>
+    </blockquote>
+  </section>
+
+  <div class="right-col clearfix">
+    <div role="book" class="book-center" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true">
+    {% include book/seil-info.html %}
+    </div>
+  </div>
+
+  <footer></footer>
 </div>
 
-{% include lesson-menu.html %}
-
 <main>
-<article>
-    <header>
-    </header>
+<article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">
+    <header id="more-to-tell">
+<!--         <div class="contact">
+        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
 
-    <section class="first">
-      <div class="bg"></div>
+        <h4>U.K. +44-2036088053 </h4>
+        </div>
+ -->
+        {% include site-follow.html %}
+  </header>
 
-    </section>
+  <section role="slider" data-role="'autoStart':false,'pauseOnHover':false,'autoPlayVideos':false, 'skinsPath':'../assets/skins/', 'skin':'fullwidthdark'" class="with-slider main-text-section main-text" style="width:1024px; height:748px; max-width:1024px;">
 
-    <section class="second even">
+      <div class="ls-slide" data-ls="slidedelay:5000;">
+        <img src="slides/introductions.jpg" style="height: 748px;" class="ls-bg" alt="Slide background">
+        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
-    </section>
+        <div hidden>
+          <h3>Recipes for Visiting Brazil</h3>
+          <p lang="en">Have you chosen where in Brazil you are going for the World Cup?</p>
+          <p lang="en">Each of the hosting cities are unique and a very different experience from what you are used to.</p>
+          <p lang="en">From North to South, you'll experience different landscapes, weather, food, and music. Only one thing remains the same: The passion for football.</p>
+          <p></p>
+          <ul lang="en" style="width: 30em;">
+            <li>Football is more than a sport.</li>
+            <li>Football unifies a nation.</li>
+            <li>Watching football people experience moments of joy and excitement.</li>
+          </ul>
+        </div>
 
-    <footer></footer>
+        <div class="ls-l" style="top:50%; left:50%;">
+          <!-- <a src="#reviews">Reviews</a> -->
+        </div>
+
+        <div class="ls-l"></div>
+
+        <div class="ls-l flip-corner" style="top: 87%; left:75%; width:25%; height: 13%;">
+          <span>
+          Flip for more....
+          </span>
+          <figure></figure>
+        </div>
+      </div>
+
+      <!-- real spoken -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:spoken;" data-role="'set-hash':'spoken'">
+        <img src="slides/p12.png" class="ls-bg" alt="Slide background">
+      </div>
+
+      <!-- cultural -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:cultural;" data-role="'set-hash':'cultural'">
+        <img src="slides/p170.png" class="ls-bg" alt="Slide background">
+      </div>
+
+      <!-- british expressions -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:expressions;" data-role="'set-hash':'expressions'">
+        <img src="slides/p32.png" class="ls-bg" alt="Slide background">
+      </div>
+
+      <!-- immersion -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:immersion;" data-role="'set-hash':'immersion'">
+        <img src="slides/p172.png" class="ls-bg" alt="Slide background">
+        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
+
+      </div>
+
+      <!-- listening -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:listening;" data-role="'set-hash':'listening'">
+        <img src="slides/p177.png" class="ls-bg" alt="Slide background">
+        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
+
+      </div>
+
+      <!-- tips -->
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:tips;" data-role="'set-hash':'tips'">
+        <img src="slides/p142.png" class="ls-bg" alt="Slide background">
+        <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
+
+      </div>
+
+      <!--
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92;">
+        <img src="sliderimages/jellyfish-blur.jpg" class="ls-bg" alt="Slide background"/>
+        <img src="sliderimages/jellyfish.png" class="ls-l" style="top:117px;left:578px;white-space: nowrap;" data-ls="offsetxin:0;durationin:4000;delayin:1500;easingin:easeInOutQuad;scalexin:1.1;scaleyin:1.1;offsetxout:0;durationout:1000;scalexout:0.9;scaleyout:0.9;">
+
+        <h1 class="ls-l" style="top:150px;left:50px;font-size:50px;color:#ddb7eb;white-space: nowrap;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">
+          Jellyfish
+        </h1>
+
+        <div class="ls-l" style="top:220px;left:50px; text-align: justify;width:500px;font-size:20px;color:#def2ff;" data-ls="offsetxin:-150;durationin:2000;delayin:500;easingin:easeInOutQuart;rotateyin:-40;offsetxout:-150;durationout:1000;rotateyout:-40;">
+          Jellyfish or jellies are the major non-polyp form of individuals of the phylum Cnidaria. They are typified as free-swimming marine animals consisting of a gelatinous umbrella-shaped bell and trailing tentacles. The bell can pulsate for locomotion, while stinging tentacles can be used to capture prey. Jellyfish are found in every ocean, from the surface to the deep sea. A few jellyfish inhabit freshwater. Large, often colorful, jellyfish are common in coastal zones worldwide. Jellyfish have roamed the seas for at least 500 million years, and possibly 700 million years or more, making them the oldest multi-organ animal.
+        </div>
+      </div>
+      -->
+
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; deeplink:review;" data-role="'set-hash':'review'">
+        <img src="slides/ipad-review-p1.jpg" class="ls-bg" alt="Slide background"/>
+      </div>
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; ">
+        <img src="slides/ipad-review-p2.jpg" class="ls-bg" alt="Slide background"/>
+      </div>
+  </section>
+
+  <section class="main-text-section main-text" ng-controller="add-review as add">
+    <div id="suitcase" data-role="'require-hash':'suitcase'">{% include book/brazil-pack-article.html %}</div>
+    <div id="food" data-role="'require-hash':'food'">{% include book/brazil-food-article.html %}</div>
+    <div id="language" data-role="'require-hash':'language'">{% include book/brazil-language-article.html %}</div>
+    <div id="safety" data-role="'require-hash':'safety'">{% include book/brazil-safety-article.html %}</div>
+    <div id="cities" data-role="'require-hash':'cities'">{% include book/brazil-cities-article.html %}</div>
+    <div id="review" data-role="'require-hash':'review'">{% include book/review-article.html %}</div>
+
+  </section>
+
+  <section style="display:none;">
+  <!-- 
+
+<a href="http://tinypic.com?ref=1zptdud" target="_blank"><img src="http://i60.tinypic.com/1zptdud.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
+
+[IMG]http://i60.tinypic.com/1zptdud.jpg[/IMG]
+
+e-mail link
+http://tinypic.com/r/1zptdud/8
+
+
+  -->
+  </section>
+
+    <footer class="constrained">
+    {% include book/footer.html %}
+        {% include page-footer-copyright.html %}
+    </footer>
 </article>
 </main>
-    
 
+{% include site-menu.html %}
 {% include book-layout.html %}
-
-<script>
-function fudgeUrl(el) {
-	var file = el.querySelector("select[data-name=file]");
-
-	el.action = el.action + file.value;
-}
-
-Resolver("page").set("map.class.state.scrolled","state-scrolled");
-
-var scrollThreshold = 50;
-
-// debugger;
-Resolver("essential::addEventListeners::")(window, {
-    "scroll": function() {
-        var offset = scrollY;
-        Resolver("page").set("state.scrolled", offset > scrollThreshold);
-    }
-});
-</script>
