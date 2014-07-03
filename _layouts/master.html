@@ -66,6 +66,10 @@ base-body-class:
 </script>{% endif %}
 
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+{% if page.fresh-button %}
+<script type="text/javascript">
+    FreshWidget.init("", {"queryString": "&widgetType=popup", "widgetType": "popup", "buttonText": "Help", "buttonColor": "white", "buttonBg": "#E73A00", "backgroundImage": "", "alignment": "3", "offset": "20px", "formHeight": "450px", "url": "http://help.fluentglobe.com"} );
+</script>{% endif %}
 {% if site.hostedSimperiumJs %}<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
 {% else %}<script type="text/javascript" {% if site.debug %}src="/js/server.js"{% else %}src="/js/server.min.js"{% endif %}></script>{% endif %}
 

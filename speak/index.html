@@ -1,6 +1,6 @@
 ---
 title: Learn to Speak English as in London
-layout: frontpage
+layout: ibook-product
 js-bundle: ../js/product-app.js
 app-name: fluentApp
 debug: true
@@ -19,46 +19,40 @@ og-images:
 plus-author: 116691201522610578456
 ---
 
-<div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
+<main>
+<article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">
+<!--    <header id="more-to-tell">
+         <div class="contact">
+        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
 
-  <section class="left-col on-dark-picture-bg" style="color:#bbb;">
-    <h2 style="text-align:center;">Available Now</h2>
+        <h4>U.K. +44-2036088053 </h4>  
+        </div>
+        {% include site-follow.html %}
+  </header>
+-->
+ 
+  <div role="book" class="product-sidebox" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true">
+  {% include book/seil-info.html %}
+  </div>
 
-    <h4 style="text-align:center;">
-    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store" class="download-on-ibooks"></a>
-    <br>
+  <div class="product-buynow" style="text-align:center;">
+
+    <h2>Available Now</h2>
+
+    <a class="download-on-ibooks" href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store"></a>
+
+    <h4>
     <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" target="itunes_store">For iPad and Mac on iTunes</a>
     </h4>
 
-    <blockquote class="narrow-blurp orange-anchors">
+    <blockquote class="narrow-blurp orange-anchors" style="display:none">
       <a href="#review">
       <p>Your review and Likes would be much appreciated</p>
       <img src="/images/fb-thumbs-up.png" width="50">
       <img src="/images/itunes-store.png" width="50">
       </a>
     </blockquote>
-  </section>
-
-  <div class="right-col clearfix">
-    <div role="book" class="book-center" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true">
-    {% include book/seil-info.html %}
-    </div>
   </div>
-
-  <footer></footer>
-</div>
-
-<main>
-<article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">
-    <header id="more-to-tell">
-<!--         <div class="contact">
-        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
-
-        <h4>U.K. +44-2036088053 </h4>
-        </div>
- -->
-        {% include site-follow.html %}
-  </header>
 
   <section role="slider" data-role="'autoStart':false,'pauseOnHover':false,'autoPlayVideos':false, 'skinsPath':'../assets/skins/', 'skin':'fullwidthdark'" class="with-slider main-text-section main-text" style="width:1024px; height:748px; max-width:1024px;">
 
@@ -168,7 +162,7 @@ plus-author: 116691201522610578456
 
 <a href="http://tinypic.com?ref=1zptdud" target="_blank"><img src="http://i60.tinypic.com/1zptdud.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
 
-[IMG]http://i60.tinypic.com/1zptdud.jpg[/IMG]
+[IMG]http://i60.tinypic.com/1zptdud.jpg[/IMG]   
 
 e-mail link
 http://tinypic.com/r/1zptdud/8
@@ -178,7 +172,6 @@ http://tinypic.com/r/1zptdud/8
   </section>
 
     <footer class="constrained">
-    {% include book/footer.html %}
         {% include page-footer-copyright.html %}
     </footer>
 </article>

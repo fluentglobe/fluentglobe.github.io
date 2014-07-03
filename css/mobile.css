@@ -3061,7 +3061,7 @@ html body.lesson-color .bg-tracer {
 article {
   position: relative;
   width: 100%;
-  border-left: 4px solid #f83104;
+  border-left: 4px solid transparent;
   overflow: visible;
   -webkit-transition: .3s ease-in-out left,.3s ease-in-out margin-top;
   transition: .3s ease-in-out left,.3s ease-in-out margin-top;
@@ -7854,4 +7854,117 @@ body * .ls-container .ls-webkit-hack,
   height: 200px;
   border: 6px solid #fb441b;
   border-radius: 100px;
+}
+body.ibook-product .product-sidebox {
+  position: relative;
+  left: 50px;
+  top: 65px;
+  width: 270px;
+  height: 410px;
+  -webkit-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  transform: rotate(5deg);
+  z-index: 10;
+}
+body.ibook-product .product-buynow {
+  position: relative;
+  padding: 20px 10px 5px;
+}
+body.ibook-product .product-buynow h2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+body.ibook-product .product-buynow .download-on-ibooks {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.ibook-product .product-buynow h4 {
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 23px;
+}
+body.ibook-product article footer {
+  margin-top: 40px;
+}
+body.ibook-product article .with-slider {
+  padding: 0;
+  margin: 0 auto;
+}
+body.ibook-product article .with-slider .white-bg {
+  color: #ffa724;
+}
+body.ibook-product article .with-slider h1 {
+  font-size: 50px;
+  white-space: nowrap;
+}
+body.ibook-product article .with-slider .ls-l {
+  font-size: 20px;
+  color: #fff5e5;
+}
+body.ibook-product article .with-slider .flip-corner {
+  /*
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            */
+  color: #ff0046;
+}
+body.ibook-product article .with-slider .flip-corner span {
+  position: absolute;
+  display: block;
+  height: 1em;
+  right: 100px;
+  bottom: 1.75em;
+  white-space: nowrap;
+}
+body.ibook-product article .with-slider .flip-corner figure {
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+  width: 90px;
+  height: 90px;
+  margin: 0;
+  background-repeat: no-repeat;
+  background: url(../images/slide-90.png) bottom right;
+}
+body.ibook-product article .with-slider .rounded-link img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 6px solid #fb441b;
+  border-radius: 100px;
+}
+@media only screen and (min-width: 500px) {
+  body.ibook-product .product-sidebox {
+    position: absolute;
+    left: 10px;
+    top: 55px;
+  }
+  body.ibook-product .product-buynow {
+    margin-left: 260px;
+    padding-top: 150px;
+    height: 450px;
+  }
+  body.ibook-product .product-buynow .download-on-ibooks {
+    display: inline-block;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  body.ibook-product .product-sidebox {
+    position: absolute;
+  }
+  body.ibook-product .product-buynow {
+    position: absolute;
+    padding-top: 20px;
+    height: auto;
+    width: 250px;
+    left: 10px;
+    margin: 0;
+    top: 440px;
+  }
+  body.ibook-product article .with-slider {
+    margin-left: 270px;
+    padding-top: 10px;
+  }
 }

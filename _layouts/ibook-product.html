@@ -1,0 +1,43 @@
+---
+layout: master
+theme: main
+blog-link: no
+body-class: with-menu ibook-product black-menu
+fresh-button: E73A00
+---
+<div id="fb-root"></div>
+
+{{ content }}
+
+<script>
+   // window.fbAsyncInit = function() {
+   //      FB.init({
+   //        appId      : '266550166850505',
+   //        xfbml      : true,
+   //        version    : 'v2.0'
+   //      });
+   //    };
+
+
+//TODO <link rel="subresource">
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=266550166850505&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+    <!--
+    <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+    <style type="text/css" media="screen, projection">
+        @import url(http://assets.freshdesk.com/widget/freshwidget.css);
+        .freshwidget-button {
+        	z-index: -5000;
+        } 
+    </style> 
+    <script type="text/javascript">
+        FreshWidget.init("", {"queryString": "&widgetType=popup", "widgetType": "popup", "buttonText": "Support", "buttonColor": "white", "buttonBg": "#13BE5A", "backgroundImage": "", "alignment": "2", "offset": "135px", "formHeight": "500px", "url": "http://help.fluentglobe.com"} );
+    </script>
+    -->
