@@ -3187,12 +3187,11 @@ body.screen.state-expanded article,
 body.splash.state-expanded article,
 body.lesson.state-expanded article {
   margin-left: 160px;
-}
-body.with-menu.state-expanded article > header,
-body.screen.state-expanded article > header,
-body.splash.state-expanded article > header,
-body.lesson.state-expanded article > header {
-  left: 160px;
+  /*
+            > header {
+                left: @menu-width;
+            }
+            */
 }
 body.with-menu.state-expanded article > section,
 body.screen.state-expanded article > section,
