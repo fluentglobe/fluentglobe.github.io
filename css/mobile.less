@@ -567,13 +567,27 @@ body.ibook-product {
 
     .endorse {
         position:relative;
-        margin: 0 auto;
-            max-width: 960px;
+        margin: 10px auto 50px auto;
+        max-width: 960px;
+
 
         video {
             width: 100%;
             // height: auto;
             max-width: 960px;
+            min-height: 240px;
+        }
+
+        @media (device-width:768px) {
+            video {
+                min-height: 400px;
+            }
+        }
+        @media (device-width:1024px) {
+            video {
+                max-width: 880px;
+                min-height: 520px;
+            }
         }
     }
 
@@ -699,3 +713,6 @@ body.ibook-product {
 
 @import (less) "/components/mediaelement/src/css/mediaelementplayer.css";
 
+.mejs-container {
+    background-color: transparent !important;
+}
