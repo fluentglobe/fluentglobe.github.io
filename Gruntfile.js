@@ -138,6 +138,24 @@ module.exports = function(grunt) {
       }
     },
 
+    responsive_videos: {
+      assets: {
+        options: {
+          sizes: [
+            {name:"small",width:320,filter:'',poster:true},
+            {name:"480p", width:960, height:480,filter:'',poster:true},
+            {name:"720p", width:1920, height:720,filter:'',poster:true}
+          ]
+        },
+        files: {
+          expand: true,
+          cwd: 'assets/',
+          src: 'max/*.{mp4,mov}',
+          dest: 'video/'
+        } 
+      }
+    },
+
     browserify: {
       product: {
         src: '_libs/product-app.js',
@@ -398,6 +416,9 @@ module.exports = function(grunt) {
     exec: {
       bowerinstall: {
         cmd:"bower install"
+      },
+      ffmpeg: {
+        cmd: "brew install ffmpeg --with-libvorbis --with-nonfreee --with-gpl --with-libvpx --with-pthreads --with-libx264 --with-libfaac --with-theora --with-libogg"
       }
     }
 
@@ -427,6 +448,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-responsive-videos');
 
   // Default Task
   grunt.registerTask('default', [
@@ -436,7 +458,7 @@ module.exports = function(grunt) {
     'concat:essential','concat:mods','concat:server','concat:serverDev','jekyll:dev',
     'concurrent']
     );
-  grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement']);
+  grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement','exec:ffmpeg']);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
     'qunit','concat',
     'uglify','typescript','jekyll:dist' //TODO should there be a dist typescript build

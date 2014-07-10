@@ -7881,6 +7881,15 @@ body.ibook-product .product-buynow h4 {
   margin-right: auto;
   line-height: 23px;
 }
+body.ibook-product .endorse {
+  position: relative;
+  margin: 0 auto;
+  max-width: 960px;
+}
+body.ibook-product .endorse video {
+  width: 100%;
+  max-width: 960px;
+}
 body.ibook-product .book-turned {
   -webkit-transform: rotate(5deg);
   -ms-transform: rotate(5deg);
