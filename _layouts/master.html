@@ -47,9 +47,23 @@ base-body-class:
   <!-- LayerSlider script files -->
   <script src="/js/layerslider.transitions.js" type="text/javascript"></script>
   <script src="/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
-  <script>$('.with-me video').mediaelement({
+  <!--
+  <script>$('.with-me video').each(function(el) {
+    var q = new MediaElement(el
+    //   ,{
+    //     iPhoneUseNativeControls:true,
+    //     iPadUseNativeControls:true
+    // }
+    );  
+  });
+  </script>
+  -->
+  <script>
+  $(document).ready(function(){
+    $('.with-me video').mediaelementplayer({
         iPhoneUseNativeControls:true,
         iPadUseNativeControls:true
+    });
   });
   </script>
   {% if page.js-bundle %}
