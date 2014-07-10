@@ -17,50 +17,58 @@ og-tags:
 og-images: 
 - http://fluentglobe.com/images/seil-cover.jpg
 plus-author: 116691201522610578456
+itunes-url: https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804
 ---
 
 <main>
 <article role="presenter" data-role="'laidout':'shifted-article'" style="background:white;">
-<!--    <header id="more-to-tell">
-         <div class="contact">
-        <h4>Schweiz/Suisse +41-435081057 &nbsp; * </h4>
-
-        <h4>U.K. +44-2036088053 </h4>  
-        </div>
-        {% include site-follow.html %}
-  </header>
--->
- 
-  <div role="book" class="product-sidebox" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true">
-  {% include book/seil-info.html %}
-  </div>
 
   <div class="slogan">
-    <h3>Finally... <br><br>The book that will teach you how to speak real English and enjoy London fully </h3>
+    <h3 lang="en">Finally... <br><br>The book that will teach you how to speak real English and enjoy London fully </h3>
+    <h3 lang="es">Finally... <br><br>The book that will teach you how to speak real English and enjoy London fully </h3>
+    <h3 lang="de">Finally... <br><br>The book that will teach you how to speak real English and enjoy London fully </h3>
   </div>
 
-  <div class="product-buynow" style="text-align:center;">
+  <div class="product-buynow">
 
-    <a class="download-on-ibooks" href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804?mt=11&uo=4" target="itunes_store"></a>
+    <a class="download-on-ibooks" href="{{ page.itunes-url }}?mt=11&uo=4" target="itunes_store"></a>
 
-    <h2>Available Now</h2>
-
-    <h4>
-    <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" target="itunes_store">For iPad and Mac on iTunes</a>
-    </h4>
-
-    <blockquote class="narrow-blurp orange-anchors" style="display:none">
-      <a href="#review">
-      <p>Your review and Likes would be much appreciated</p>
-      <img src="/images/fb-thumbs-up.png" width="50">
-      <img src="/images/itunes-store.png" width="50">
-      </a>
-    </blockquote>
   </div>
 
-  <section role="slider" data-role="'autoStart':false,'pauseOnHover':false,'autoPlayVideos':false, 'skinsPath':'../assets/skins/', 'skin':'fullwidthdark2'" class="with-slider main-text-section main-text" style="width:1024px; height:748px; max-width:1024px;">
+  <section role="slider" data-role="'autoStart':false,'pauseOnHover':false,'autoPlayVideos':false, 'skinsPath':'../assets/skins/', 'skin':'fullwidthdark2'" class="with-slider" style="width:1024px; height:748px; max-width:1024px;">
 
-      <div class="ls-slide" data-ls="slidedelay:5000;">
+      <!-- show book -->
+      <div class="ls-slide">
+        <div class="ls-l" style="top:45%;left:535px; white-space:nowrap;" data-ls="offsetxin:0;durationin:2000;delayin:0;rotateyin:60;transformoriginin:right 50% 0;">
+          <img lang="en" src="../images/seil-cover.jpg" class="book-turned">
+          <img lang="de" src="../images/seil-cover.jpg" class="book-turned">
+          <img lang="es" src="../images/seil-cover.jpg" class="book-turned">
+        </div>
+
+        <div class="ls-l" style="left:25%;top:30%;" data-ls="offsetxin:0;durationin:1000;rotateyin:60;transformoriginin:right 50% 0;">
+        <a class="download-on-ibooks" href="{{ page.itunes-url }}?mt=11&uo=4" target="itunes_store"></a>
+        </div>
+
+        <div class="ls-l" style="left:25%;top:40%;" data-ls="offsetxin:0;durationin:1500;rotateyin:60;transformoriginin:right 50% 0;">        
+          <h2>Available Now</h2>
+        </div>
+
+        <div class="ls-l" style="left:25%;top:50%;" data-ls="offsetxin:50;durationin:2000;rotateyin:60;transformoriginin:right 50% 0;">
+          <h3>
+          <a href="https://itunes.apple.com/us/book/recipes-for-visiting-brazil/id850307804" target="itunes_store">For iPad and Mac on iTunes</a>
+          </h3>
+
+          <blockquote class="narrow-blurp orange-anchors" style="display:none">
+            <a href="#review">
+            <p>Your review and Likes would be much appreciated</p>
+            <img src="/images/fb-thumbs-up.png" width="50">
+            <img src="/images/itunes-store.png" width="50">
+            </a>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="ls-slide" data-ls="slidedelay:5000; deeplink:london;">
         <img src="slides/introductions.jpg" style="height: 748px;" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
@@ -92,39 +100,76 @@ plus-author: 116691201522610578456
       </div>
 
       <!-- real spoken -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:spoken;" data-role="'set-hash':'spoken'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:3000;transition2d:92; deeplink:spoken;">
         <img src="slides/p12.png" class="ls-bg" alt="Slide background">
       </div>
 
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-spoken-article.html %}
+        </div>
+      </div>
+
       <!-- cultural -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:cultural;" data-role="'set-hash':'cultural'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:cultural;">
         <img src="slides/p170.png" class="ls-bg" alt="Slide background">
       </div>
 
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-cultural-article.html %}
+        </div>
+      </div>
+
       <!-- british expressions -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:expressions;" data-role="'set-hash':'expressions'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:expressions;">
         <img src="slides/p32.png" class="ls-bg" alt="Slide background">
       </div>
 
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-expressions-article.html %}
+        </div>
+      </div>
+
       <!-- immersion -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:immersion;" data-role="'set-hash':'immersion'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:immersion;">
         <img src="slides/p172.png" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
       </div>
 
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-immersion-article.html %}
+        </div>
+      </div>
+
       <!-- listening -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:listening;" data-role="'set-hash':'listening'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:listening;">
         <img src="slides/p177.png" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
       </div>
 
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-listening-article.html %}
+        </div>
+      </div>
+
+
       <!-- tips -->
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:tips;" data-role="'set-hash':'tips'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:92; deeplink:tips;">
         <img src="slides/p142.png" class="ls-bg" alt="Slide background">
         <h1 style="top:150px;left:730px;" data-ls="offsetxin:0;durationin:3000;delayin:2000;easingin:easeOutElastic;rotatexin:90;transformoriginin:50% bottom 0;offsetxout:0;rotatexout:90;transformoriginout:50% bottom 0;">Whats inside</h1>
 
+      </div>
+
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/london-tips-article.html %}
+        </div>
       </div>
 
       <!--
@@ -142,38 +187,22 @@ plus-author: 116691201522610578456
       </div>
       -->
 
-      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; deeplink:review;" data-role="'set-hash':'review'">
+      <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; deeplink:review;">
         <img src="slides/ipad-review-p1.jpg" class="ls-bg" alt="Slide background"/>
       </div>
+
+      <div class="ls-slide white-bg">
+        <div class="ls-l" style="left:50%;left:50%;top:50%;height:50%;">
+    {% include book/review-article.html %}
+        </div>
+      </div>
+
+
       <div class="ls-slide white-bg" data-ls="slidedelay:5000;transition2d:104; ">
         <img src="slides/ipad-review-p2.jpg" class="ls-bg" alt="Slide background"/>
       </div>
   </section>
 
-  <section class="main-text-section main-text" ng-controller="add-review as add">
-    <div id="spoken" data-role="'require-hash':'spoken'">{% include book/london-spoken-article.html %}</div>
-    <div id="cultural" data-role="'require-hash':'cultural'">{% include book/london-cultural-article.html %}</div>
-    <div id="expressions" data-role="'require-hash':'expressions'">{% include book/london-expressions-article.html %}</div>
-    <div id="immersion" data-role="'require-hash':'immersion'">{% include book/london-immersion-article.html %}</div>
-    <div id="listening" data-role="'require-hash':'listening'">{% include book/london-listening-article.html %}</div>
-    <div id="tips" data-role="'require-hash':'tips'">{% include book/london-tips-article.html %}</div>
-    <div id="review" data-role="'require-hash':'review'">{% include book/review-article.html %}</div>
-
-  </section>
-
-  <section style="display:none;">
-  <!-- 
-
-<a href="http://tinypic.com?ref=1zptdud" target="_blank"><img src="http://i60.tinypic.com/1zptdud.jpg" border="0" alt="Image and video hosting by TinyPic"></a>
-
-[IMG]http://i60.tinypic.com/1zptdud.jpg[/IMG]   
-
-e-mail link
-http://tinypic.com/r/1zptdud/8
-
-
-  -->
-  </section>
 
     <footer class="constrained">
         {% include page-footer-copyright.html %}
