@@ -7860,6 +7860,7 @@ body * .ls-container .ls-webkit-hack,
 body.ibook-product .slogan {
   position: relative;
   padding-top: 40px;
+  padding-bottom: 25px;
   text-align: center;
 }
 body.ibook-product .product-buynow {
@@ -7883,7 +7884,8 @@ body.ibook-product .product-buynow h4 {
 }
 body.ibook-product .endorse {
   position: relative;
-  margin: 10px auto 50px auto;
+  padding-top: 55px;
+  margin: 0 auto 30px auto;
   max-width: 960px;
 }
 body.ibook-product .endorse video {
@@ -8775,5 +8777,5 @@ body.ibook-product article .with-slider .rounded-link img {
 }
 /* End: Postroll */
 .mejs-container {
-  background-color: white !important;
+  background-color: transparent !important;
 }
