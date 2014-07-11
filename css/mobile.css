@@ -8005,11 +8005,15 @@ body * .ls-container .ls-webkit-hack,
   border: 6px solid #fb441b;
   border-radius: 100px;
 }
+body.ibook-product .with-sound .icon-play-circle {
+  font-size: 300%;
+}
 body.ibook-product .slogan {
   position: relative;
-  padding-top: 40px;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
   text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d0d0d0;
 }
 body.ibook-product .product-buynow {
   position: absolute;
@@ -8060,6 +8064,7 @@ body.ibook-product .book-turned {
 body.ibook-product article .with-slider {
   padding: 0;
   margin: 0 auto;
+  background-color: #F0F1EB;
   /*
 
         h1 {
@@ -8070,9 +8075,6 @@ body.ibook-product article .with-slider {
             font-size:20px;color:#fff5e5;
         }
         */
-}
-body.ibook-product article .with-slider .white-bg {
-  color: #fb441b;
 }
 body.ibook-product article .with-slider .flip-corner {
   /*
