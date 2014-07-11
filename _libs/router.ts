@@ -142,10 +142,23 @@ Router.prototype.onAnchorClick = function(href,attributes) {
     if (href.indexOf(origin) == 0) href = href.substring(origin.length);
     if (href.indexOf(this.root) == 0) href = href.substring(this.root.length);
 
+    //TODO perhaps support prefetch
+    if (this.player && attributes['rel'] && attributes['rel'].value == "audio" && (href.indexOf('.mp3')>=0 || href.indexOf('.m4a')>=0 || href.indexOf('.mp4')>=0 || href.indexOf('.wav')>=0)) {
+        this.player.setSrc(href);
+        //TODO alt src depending on browser support
+        this.player.play();
+        return false;
+    }
+
     for(var i=0,path; path = this.hrefs[i]; ++i) {
         if (href.indexOf(path.href) == 0) {
-            var prevent = path.fn(href,"open");
-            if (prevent == false) return false;
+            try {
+                var prevent = path.fn(href,"open");
+                if (prevent == false) return false;
+            } catch(ex) {
+                //TODO cmd failed
+                debugger;
+            }
         }
     }
 };
@@ -172,6 +185,16 @@ Router.prototype._hideIfNotHash = function(el,config) {
     var id = el.id, hash = location.hash.replace("#","");
     if (typeof config["require-hash"] == "string") id = config["require-hash"];
     el.stateful.set("state.hidden", id !== hash);
+};
+
+Router.prototype.linkPlayButtons = function() {
+    if (window['mejs']) {
+        //TODO review raw mediaelement hook
+
+        this.player = window['mejs'].$("#page-audio").mediaelementplayer()[0].player;
+
+        //TODO config
+    }
 };
 
 
@@ -206,9 +229,13 @@ Resolver("document").elementsWithConfig = function() {
     return els;
 };
 
-// Handle elements that require hash
 Resolver("document").on("change","readyState",function(ev) {
     if (ev.value == "complete") {
+
+        // link play buttons to mediaelement audio player
+        document.essential.router.linkPlayButtons();
+
+        // Handle elements that require hash
         var els = Resolver("document").elementsWithConfig();
         for(var i=0,el; el = els[i]; ++i) {
             var config = Resolver.config(el);

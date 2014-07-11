@@ -587,6 +587,13 @@ var fluentglobe;
         if (href.indexOf(this.root) == 0)
             href = href.substring(this.root.length);
 
+        if (this.player && attributes['rel'] && attributes['rel'].value == "audio" && (href.indexOf('.mp3') >= 0 || href.indexOf('.m4a') >= 0 || href.indexOf('.mp4') >= 0 || href.indexOf('.wav') >= 0)) {
+            this.player.setSrc(href);
+
+            this.player.play();
+            return false;
+        }
+
         for (var i = 0, path; path = this.hrefs[i]; ++i) {
             if (href.indexOf(path.href) == 0) {
                 try  {
@@ -625,6 +632,12 @@ var fluentglobe;
         el.stateful.set("state.hidden", id !== hash);
     };
 
+    Router.prototype.linkPlayButtons = function () {
+        if (window['mejs']) {
+            this.player = window['mejs'].$("#page-audio").mediaelementplayer()[0].player;
+        }
+    };
+
     addEventListeners(document.documentElement, {
         "click": function (ev) {
             ev = MutableEvent(ev).withActionInfo();
@@ -655,6 +668,8 @@ var fluentglobe;
 
     Resolver("document").on("change", "readyState", function (ev) {
         if (ev.value == "complete") {
+            document.essential.router.linkPlayButtons();
+
             var els = Resolver("document").elementsWithConfig();
             for (var i = 0, el; el = els[i]; ++i) {
                 var config = Resolver.config(el);
