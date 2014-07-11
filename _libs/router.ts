@@ -142,6 +142,7 @@ Router.prototype.onAnchorClick = function(href,attributes) {
     if (href.indexOf(origin) == 0) href = href.substring(origin.length);
     if (href.indexOf(this.root) == 0) href = href.substring(this.root.length);
 
+    //TODO other tags to link audio
     //TODO perhaps support prefetch
     if (this.player && attributes['rel'] && attributes['rel'].value == "audio" && (href.indexOf('.mp3')>=0 || href.indexOf('.m4a')>=0 || href.indexOf('.mp4')>=0 || href.indexOf('.wav')>=0)) {
         this.player.setSrc(href);
@@ -191,9 +192,14 @@ Router.prototype.linkPlayButtons = function() {
     if (window['mejs']) {
         //TODO review raw mediaelement hook
 
-        this.player = window['mejs'].$("#page-audio").mediaelementplayer()[0].player;
+        var mediaelement = window['mejs'].$("#page-audio").mediaelementplayer();
+        if (mediaelement.length) {
+            var mep = document.getElementById(mediaelement.data().mediaelementplayer.id);
+            mep.className += " page-audio";
+            this.player = mediaelement[0].player;
 
-        //TODO config
+            //TODO config
+        }
     }
 };
 

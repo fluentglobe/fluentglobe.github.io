@@ -8005,6 +8005,12 @@ body * .ls-container .ls-webkit-hack,
   border: 6px solid #fb441b;
   border-radius: 100px;
 }
+.mejs-audio.page-audio {
+  position: absolute;
+  left: 180px;
+  top: 10px;
+  z-index: 100;
+}
 body.ibook-product .with-sound .icon-play-circle {
   font-size: 300%;
 }

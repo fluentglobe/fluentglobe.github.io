@@ -634,7 +634,12 @@ var fluentglobe;
 
     Router.prototype.linkPlayButtons = function () {
         if (window['mejs']) {
-            this.player = window['mejs'].$("#page-audio").mediaelementplayer()[0].player;
+            var mediaelement = window['mejs'].$("#page-audio").mediaelementplayer();
+            if (mediaelement.length) {
+                var mep = document.getElementById(mediaelement.data().mediaelementplayer.id);
+                mep.className += " page-audio";
+                this.player = mediaelement[0].player;
+            }
         }
     };
 
