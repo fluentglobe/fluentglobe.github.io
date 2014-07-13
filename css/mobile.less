@@ -524,9 +524,18 @@ img.right-side-80 {
 
 .mejs-audio.page-audio {
     position: absolute;
-    left: 180px;
+    left: 50%;
+    margin-left: -100px;
     top: 10px;
     z-index: 100;
+
+    .mejs-controls {
+        background: transparent;
+
+        .mejs-button button {
+            background: transparent url(controls-blk.png) no-repeat;
+        }
+    }
 }
 
 body.ibook-product {
