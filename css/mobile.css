@@ -8007,8 +8007,8 @@ body * .ls-container .ls-webkit-hack,
 }
 .mejs-audio.page-audio {
   position: absolute;
-  left: 8px;
-  top: 45px;
+  right: 8px;
+  top: 5px;
   z-index: 100;
 }
 .mejs-audio.page-audio .mejs-controls {
