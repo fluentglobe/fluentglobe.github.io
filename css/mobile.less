@@ -524,16 +524,26 @@ img.right-side-80 {
 
 .mejs-audio.page-audio {
     position: absolute;
-    left: 50%;
-    margin-left: -50px;
-    top: 10px;
+    left: 8px;
+    // left: 15px;
+    top: 45px;
+    // left: 50%;
+    // margin-left: -50px;
+    // top: 10px;
     z-index: 100;
 
     .mejs-controls {
         background: transparent;
 
         .mejs-button button {
-            background: transparent url(controls-blk.png) no-repeat;
+            background-color: transparent;
+            background-image: url(controls-blk.png);
+            background-repeat: no-repeat;
+        }
+        .mejs-time-rail {
+            .mejs-time-loaded {
+                background: transparent;
+            }
         }
     }
 }

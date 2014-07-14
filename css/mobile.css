@@ -8007,16 +8007,20 @@ body * .ls-container .ls-webkit-hack,
 }
 .mejs-audio.page-audio {
   position: absolute;
-  left: 50%;
-  margin-left: -50px;
-  top: 10px;
+  left: 8px;
+  top: 45px;
   z-index: 100;
 }
 .mejs-audio.page-audio .mejs-controls {
   background: transparent;
 }
 .mejs-audio.page-audio .mejs-controls .mejs-button button {
-  background: transparent url(controls-blk.png) no-repeat;
+  background-color: transparent;
+  background-image: url(controls-blk.png);
+  background-repeat: no-repeat;
+}
+.mejs-audio.page-audio .mejs-controls .mejs-time-rail .mejs-time-loaded {
+  background: transparent;
 }
 body.ibook-product .top-fade {
   position: fixed;
