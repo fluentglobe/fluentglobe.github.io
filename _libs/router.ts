@@ -193,6 +193,7 @@ Router.prototype.linkPlayButtons = function() {
         //TODO review raw mediaelement hook
 
         var mediaelement = window['mejs'].$("#page-audio").mediaelementplayer({
+            audioWidth:  100,
             features: ['playpause','progress']
         });
         if (mediaelement.length) {

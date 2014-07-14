@@ -525,7 +525,7 @@ img.right-side-80 {
 .mejs-audio.page-audio {
     position: absolute;
     left: 50%;
-    margin-left: -100px;
+    margin-left: -50px;
     top: 10px;
     z-index: 100;
 
@@ -539,6 +539,23 @@ img.right-side-80 {
 }
 
 body.ibook-product {
+
+    .top-fade {
+        position: fixed;
+        z-index: 2;
+        top:0; height:50px;
+        left:0; right:0;
+        // background: transparent url(/images/gradients.png) top left repeat;
+        background-color: #ffffffff;
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,1),rgba(0,0,0,0));
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,1),rgba(0,0,0,0));
+        background-image: -webkit-linear-gradient(linear,0 0,100% 0, from(rgba(255,255,255,1)),to(rgba(0,0,0,0)));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,1),rgba(0,0,0,0));
+        background-image: -o-linear-gradient(top, rgba(255,255,255,1),rgba(0,0,0,0));
+        background-image: linear-gradient(top, rgba(255,255,255,1),rgba(0,0,0,0));
+        background-repeat: repeat-y;
+        filter:progid:DXImageTransform.Microsoft.gradient(GradientType=2,startColorstr='rgba(255,255,255,1)',endColorstr='rgba(0,0,0,0)');
+    }
 
     .with-sound {
 
@@ -571,6 +588,7 @@ body.ibook-product {
         position: absolute;
         top:0; right:0;
         padding: 10px;
+        z-index: 3;// above top-fade
 
         h2 {
             margin-left: auto;

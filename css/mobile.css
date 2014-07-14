@@ -8008,7 +8008,7 @@ body * .ls-container .ls-webkit-hack,
 .mejs-audio.page-audio {
   position: absolute;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -50px;
   top: 10px;
   z-index: 100;
 }
@@ -8017,6 +8017,23 @@ body * .ls-container .ls-webkit-hack,
 }
 .mejs-audio.page-audio .mejs-controls .mejs-button button {
   background: transparent url(controls-blk.png) no-repeat;
+}
+body.ibook-product .top-fade {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  height: 50px;
+  left: 0;
+  right: 0;
+  background-color: #ffffffff;
+  background-image: -moz-linear-gradient(top, #ffffff, rgba(0, 0, 0, 0));
+  background-image: -ms-linear-gradient(top, #ffffff, rgba(0, 0, 0, 0));
+  background-image: -webkit-linear-gradient(linear, 0 0, 100% 0, from(#ffffff), to(rgba(0, 0, 0, 0)));
+  background-image: -webkit-linear-gradient(top, #ffffff, rgba(0, 0, 0, 0));
+  background-image: -o-linear-gradient(top, #ffffff, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(top, #ffffff, rgba(0, 0, 0, 0));
+  background-repeat: repeat-y;
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=2, startColorstr='rgba(255,255,255,1)', endColorstr='rgba(0,0,0,0)');
 }
 body.ibook-product .with-sound .icon-play-circle {
   font-size: 300%;
@@ -8033,6 +8050,7 @@ body.ibook-product .product-buynow {
   top: 0;
   right: 0;
   padding: 10px;
+  z-index: 3;
 }
 body.ibook-product .product-buynow h2 {
   margin-left: auto;
