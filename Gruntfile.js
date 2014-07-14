@@ -154,7 +154,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'assets/',
           src: 'max/*.{mp4,mov}',
-          dest: 'video/'
+          dest: 'assets/video/'
         }] 
       }
     },
