@@ -18,6 +18,7 @@ og-images:
 - http://fluentglobe.com/images/seil-cover.jpg
 plus-author: 116691201522610578456
 itunes-url: https://itunes.apple.com/us/book/habla-ingles-en-londres/id898743935
+assets-cache-prefix: http://cache.fluentglobe.com/assets
 ---
 
 <main>
@@ -33,10 +34,10 @@ itunes-url: https://itunes.apple.com/us/book/habla-ingles-en-londres/id898743935
  -->
   <div class="endorse with-me">
   <video xautoplay preload="auto" controls="controls" 
-    poster="/assets/video/raquel-london-small.jpg"
+    poster="{{ page.assets-cache-prefix }}/video/raquel-london-small.jpg"
     width="640" height="360">
-    <source type="video/mp4" src="/assets/video/raquel-london-small.mp4">
-    <source type="video/webm" src="/assets/video/raquel-london-small.webm">
+    <source type="video/mp4" src="{{ page.assets-cache-prefix }}/video/raquel-london-small.mp4">
+    <source type="video/webm" src="{{ page.assets-cache-prefix }}/video/raquel-london-small.webm">
     <caption>Carolina</caption>
   </video>
   </div>
