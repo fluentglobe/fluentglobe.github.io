@@ -140,19 +140,22 @@ module.exports = function(grunt) {
 
     responsive_videos: {
       assets: {
+
         options: {
           sizes: [
             {name:"small",width:320,filter:'',poster:true},
-            {name:"480p", width:960, height:480,filter:'',poster:true},
-            {name:"720p", width:1920, height:720,filter:'',poster:true}
+            {name:"480p", width:960, height:480,filter:'',poster:true}
+            // ,
+            // {name:"720p", width:1920, height:720,filter:'',poster:true}
           ]
         },
-        files: {
+
+        files: [{
           expand: true,
           cwd: 'assets/',
           src: 'max/*.{mp4,mov}',
           dest: 'video/'
-        } 
+        }] 
       }
     },
 
