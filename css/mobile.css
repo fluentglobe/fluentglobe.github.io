@@ -7964,6 +7964,10 @@ body * .ls-container .ls-webkit-hack,
 #ls-global .splash article .with-slider .white-bg {
   color: #ffa724;
 }
+#ls-global .splash article .with-slider .dark-bg {
+  color: white;
+  text-shadow: 0px 0px 6px white;
+}
 #ls-global .splash article .with-slider h1 {
   font-size: 50px;
   white-space: nowrap;
