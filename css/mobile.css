@@ -7957,6 +7957,14 @@ body * .ls-container .ls-webkit-hack,
     height: 3px;
   }
 }
+#ls-global .ibook-product article .with-slider .dark-bg {
+  color: white;
+  text-shadow: 0px 0px 6px white;
+}
+#ls-global .ibook-product article .with-slider .dark-bg-extra-padded {
+  padding: 30px;
+  background: rgba(0, 0, 0, 0.5);
+}
 #ls-global .splash article .with-slider {
   padding: 0;
   margin: 0 auto;
