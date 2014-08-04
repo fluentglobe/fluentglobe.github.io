@@ -1,38 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-!function() {
-  var HTMLElement = Resolver("essential::HTMLElement::");
-
-var speakControllers = angular.module('speakControllers',[]);
-
-// speakControllers.controller()
-
-function ShelfController($scope) {
-  var ngView = document.querySelector("[ng-view]");
-  HTMLElement.query(ngView).withBranch().queue();
-} 
-
-function PickBookController($scope,$routeParams) {
-  var ngView = document.querySelector("[ng-view]");
-  HTMLElement.query(ngView).withBranch().queue();
-}
-
-function EnableBookController($scope,$routeParams) {
-  // $routeParams.key name
-}
-
-speakControllers
-  // .controller('SpeakController',SpeakController)
-  .controller('ShelfController',['$scope',ShelfController])
-  .controller('PickBookController',['$scope','$routeParams',PickBookController])
-  .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
-
-}();
-
-},{}],2:[function(require,module,exports){
 require('../components/angular-route/angular-route.js');
 require('../components/angular-toggle-switch/angular-toggle-switch.min.js');
 
-var books = require('../../book-reader/controllers.js');
+var books = require('../../libs/book-reader/controllers.js');
 
 var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
@@ -96,9 +66,9 @@ speakApp.config(['$routeProvider','$locationProvider',
 
 }();
 
-},{"../../book-reader/controllers.js":1,"../components/angular-route/angular-route.js":3,"../components/angular-toggle-switch/angular-toggle-switch.min.js":4}],3:[function(require,module,exports){
+},{"../../libs/book-reader/controllers.js":4,"../components/angular-route/angular-route.js":2,"../components/angular-toggle-switch/angular-toggle-switch.min.js":3}],2:[function(require,module,exports){
 /**
- * @license AngularJS v1.2.15
+ * @license AngularJS v1.2.21
  * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -126,7 +96,7 @@ var ngRouteModule = angular.module('ngRoute', ['ng']).
 /**
  * @ngdoc provider
  * @name $routeProvider
- * @function
+ * @kind function
  *
  * @description
  *
@@ -572,9 +542,7 @@ function $RouteProvider(){
       for (var i = 1, len = m.length; i < len; ++i) {
         var key = keys[i - 1];
 
-        var val = 'string' == typeof m[i]
-              ? decodeURIComponent(m[i])
-              : m[i];
+        var val = m[i];
 
         if (key && val) {
           params[key.name] = val;
@@ -731,7 +699,7 @@ ngRouteModule.provider('$routeParams', $RouteParamsProvider);
  *  // Route: /Chapter/:chapterId/Section/:sectionId
  *  //
  *  // Then
- *  $routeParams ==> {chapterId:1, sectionId:2, search:'moby'}
+ *  $routeParams ==> {chapterId:'1', sectionId:'2', search:'moby'}
  * ```
  */
 function $RouteParamsProvider() {
@@ -1025,6 +993,36 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
+},{}],3:[function(require,module,exports){
+angular.module("toggle-switch",["ng"]).directive("toggleSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=",disabled:"@",onLabel:"@",offLabel:"@",knobLabel:"@"},template:'<div class="switch" ng-class="{ \'disabled\': disabled }"><div class="switch-animate" ng-class="{\'switch-off\': !model, \'switch-on\': model}"><span class="switch-left" ng-bind="onLabel"></span><span class="knob" ng-bind="knobLabel"></span><span class="switch-right" ng-bind="offLabel"></span></div></div>',link:function(scope,element,attrs){attrs.onLabel||(attrs.onLabel="On"),attrs.offLabel||(attrs.offLabel="Off"),attrs.knobLabel||(attrs.knobLabel=" "),attrs.disabled||(attrs.disabled=!1),element.on("click",function(){scope.$apply(scope.toggle)}),scope.toggle=function(){scope.disabled||(scope.model=!scope.model)}}}});
 },{}],4:[function(require,module,exports){
-angular.module("toggle-switch",["ng"]).directive("toggleSwitch",function(){return{restrict:"EA",replace:!0,scope:{model:"=",disabled:"@",onLabel:"@",offLabel:"@",knobLabel:"@"},template:'<div class="switch" ng-click="toggle()" ng-class="{ \'disabled\': disabled }"><div class="switch-animate" ng-class="{\'switch-off\': !model, \'switch-on\': model}"><span class="switch-left" ng-bind="onLabel"></span><span class="knob" ng-bind="knobLabel"></span><span class="switch-right" ng-bind="offLabel"></span></div></div>',controller:["$scope",function($scope){$scope.toggle=function(){$scope.disabled||($scope.model=!$scope.model)}}],compile:function(element,attrs){attrs.onLabel||(attrs.onLabel="On"),attrs.offLabel||(attrs.offLabel="Off"),attrs.knobLabel||(attrs.knobLabel=" "),attrs.disabled||(attrs.disabled=!1)}}});
-},{}]},{},[2]);
+!function() {
+  var HTMLElement = Resolver("essential::HTMLElement::");
+
+var speakControllers = angular.module('speakControllers',[]);
+
+// speakControllers.controller()
+
+function ShelfController($scope) {
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
+} 
+
+function PickBookController($scope,$routeParams) {
+  var ngView = document.querySelector("[ng-view]");
+  HTMLElement.query(ngView).withBranch().queue();
+}
+
+function EnableBookController($scope,$routeParams) {
+  // $routeParams.key name
+}
+
+speakControllers
+  // .controller('SpeakController',SpeakController)
+  .controller('ShelfController',['$scope',ShelfController])
+  .controller('PickBookController',['$scope','$routeParams',PickBookController])
+  .controller('EnableBookController',['$scope','$routeParams',EnableBookController]);
+
+}();
+
+},{}]},{},[1])
