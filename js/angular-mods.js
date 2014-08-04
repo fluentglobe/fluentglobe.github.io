@@ -1,4 +1,4 @@
-/*! Fluent Globe - v0.1.0 - 2014-06-06
+/*! Fluent Globe - v0.1.0 - 2014
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
 angular.module('toggle-switch', ['ng']).directive('toggleSwitch', function () {
