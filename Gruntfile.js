@@ -42,14 +42,14 @@ module.exports = function(grunt) {
 
       serverDev: {
         src: [
-          '../book-reader/libs/simperium-js/simperium-dev.js'
+          '../libs/book-reader/libs/simperium-js/simperium-dev.js'
         ],
         dest: 'js/server.js'
       },
 
       server: {
         src: [
-          '../book-reader/libs/simperium-js/simperium.js'
+          '../libs/book-reader/libs/simperium-js/simperium.js'
         ],
         dest: 'js/server.min.js'
       },
@@ -60,8 +60,8 @@ module.exports = function(grunt) {
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
-          '../book-reader/books.js',
-          '../book-reader/controllers.js',
+          '../libs/book-reader/books.js',
+          '../libs/book-reader/controllers.js',
           '_libs/app.js'
         ],
         dest: 'js/uri+impl+form+app.js'
@@ -282,7 +282,7 @@ module.exports = function(grunt) {
       //   tasks: 'sass:dev'
       // },
       typescript: {
-        files: ['Gruntfile.js','**/*.ts','../book-reader/*.ts'],
+        files: ['Gruntfile.js','**/*.ts','../libs/book-reader/*.ts'],
         tasks: ['typescript','jekyll:dev']
       },
       scripts: {

@@ -1,17 +1,17 @@
-/// <reference path="../../HTML-Widgets/DefinitelyTyped/essentialjs/essential.d.ts"/>
-/// <reference path="../../HTML-Widgets/DefinitelyTyped/jquery/jquery.d.ts"/>
-/// <reference path="../../HTML-Widgets/DefinitelyTyped/angularjs/angular.d.ts"/>
+/// <reference path="../../libs/DefinitelyTyped/essentialjs/essential.d.ts"/>
+/// <reference path="../../libs/DefinitelyTyped/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/DefinitelyTyped/angularjs/angular.d.ts"/>
 
 /// <reference path="head.d.ts"/>
-/// <reference path="../../book-reader/fluent-app-def.ts"/>
+/// <reference path="../../libs/book-reader/fluent-app-def.ts"/>
 // in head:  <reference path="resolved.ts"/>
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
-/// <reference path="../../book-reader/cards.ts"/>
-/// <reference path="../../book-reader/account.ts"/>
-/// <reference path="../../book-reader/reader.ts"/>
-/// <reference path="../../book-reader/slider.ts"/>
+/// <reference path="../../libs/book-reader/cards.ts"/>
+/// <reference path="../../libs/book-reader/account.ts"/>
+/// <reference path="../../libs/book-reader/reader.ts"/>
+/// <reference path="../../libs/book-reader/slider.ts"/>
 
 function enhance_book(el,role,config) {
 
