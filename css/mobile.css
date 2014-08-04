@@ -8976,3 +8976,36 @@ body.ibook-product article .with-slider .rounded-link img {
 .mejs-container {
   background-color: transparent !important;
 }
+.press-mentions {
+  text-align: center;
+}
+.press-mentions .marie-claire {
+  display: inline-block;
+  position: relative;
+  width: 258px;
+  height: 57px;
+  background-image: url(/images/press-mentions.png);
+  background-position: -242px 0;
+  transform: scale(0.5);
+  margin-right: -100px;
+}
+.press-mentions .reuters {
+  display: inline-block;
+  position: relative;
+  width: 258px;
+  height: 57px;
+  background-image: url(/images/press-mentions.png);
+  background-position: -500px 0;
+  transform: scale(0.5);
+  margin-right: -100px;
+}
+.press-mentions .daily-news {
+  display: inline-block;
+  position: relative;
+  width: 243px;
+  height: 57px;
+  background-image: url(/images/press-mentions.png);
+  background-position: 0 0;
+  transform: scale(0.5);
+  margin-right: -100px;
+}
