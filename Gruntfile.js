@@ -404,7 +404,7 @@ module.exports = function(grunt) {
           hostname: '*',
           // livereload: true,
           base: '../fluentglobe_site/',
-          port: 4000
+          port: 4400
         }
       }
     },
