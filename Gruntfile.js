@@ -42,14 +42,14 @@ module.exports = function(grunt) {
 
       serverDev: {
         src: [
-          '../libs/book-reader/libs/simperium-js/simperium-dev.js'
+          '../libs/simperium-js/simperium-dev.js'
         ],
         dest: 'js/server.js'
       },
 
       server: {
         src: [
-          '../libs/book-reader/libs/simperium-js/simperium.js'
+          '../libs/simperium-js/simperium.js'
         ],
         dest: 'js/server.min.js'
       },
@@ -420,6 +420,10 @@ module.exports = function(grunt) {
       bowerinstall: {
         cmd:"bower install"
       },
+      simperiuminstall: {
+        cmd:"cd ../libs/simperium-js;make"
+      },
+    
       ffmpeg: {
         cmd: "brew install ffmpeg --with-libvorbis --with-nonfreee --with-gpl --with-libvpx --with-pthreads --with-libx264 --with-libfaac --with-theora --with-libogg"
       }
@@ -461,7 +465,10 @@ module.exports = function(grunt) {
     'concat:essential','concat:mods','concat:server','concat:serverDev','jekyll:dev',
     'concurrent']
     );
-  grunt.registerTask('install', ['exec:bowerinstall','modernizr','copy:mediaelement','exec:ffmpeg']);
+  grunt.registerTask('install', [
+    'exec:bowerinstall','exec:simperiuminstall',
+    'modernizr','copy:mediaelement','exec:ffmpeg'
+    ]);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
     'qunit','concat',
     'uglify','typescript','jekyll:dist' //TODO should there be a dist typescript build
