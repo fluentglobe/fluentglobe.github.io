@@ -16,6 +16,7 @@
     "angular-toggle-switch": "~0.3.0",
     "swiper": "~2.4.1",
     "angular-socialshare": "*",
-    "swiper-3d-flow": "~2.1.0"
+    "swiper-3d-flow": "~2.1.0",
+    "angular-route": "~1.2.21"
   }
 }
