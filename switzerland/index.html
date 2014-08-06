@@ -1,0 +1,67 @@
+---
+layout: frontpage
+base-body-class: with-menu 
+js-bundle: js/body.js
+og-tags:
+- Language Learning
+- Learning German
+- Learning Portuguese
+og-images:
+- http://fluentglobe.com/images/icon.jpg
+---
+
+<script type="application/config">{% include signup-config.js %}</script>
+
+<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+
+  <aside class="we-love on-dark-picture-bg"><figure></figure> {% include intro/we-love.html %} </aside>
+
+  {% include intro/benefits.html %}
+
+  <div class="form-and-story on-dark-picture-bg">
+
+  <form id="signup" class="signup intro-column" role="form"
+    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
+    method="post"
+    enctype="application/x-www-form-urlencoded"
+    >
+
+    <fieldset>
+    {% include intro/start-learning.html %}
+
+    <input type="hidden" name="from-country">
+    <input type="hidden" name="native-language">
+    <input placeholder="Your Name" name="name" type="text" size="15" required>
+    <input placeholder="e-mail" name="email" type="email" size="15" required>
+    <button class="btn primary double-corner"> {% include intro/plan-button.html %} </button>
+    </fieldset>
+  </form>
+
+  {% include intro/story.html %}
+  </div>
+
+  <footer></footer>
+
+</div>
+
+
+<main>
+
+  <article>
+  	<header id="more-to-tell">
+      {% include site-follow.html %}
+    </header>
+
+    <section class="first" style="background-color: white;">
+      {% include intro/switzerland-offer.html %}
+    </section>
+
+		<footer class="constrained bookspread">
+      {% include page-footer-etc.html %}
+			{% include page-footer-copyright.html %}
+		</footer>
+    </article>
+</main>
+
+{% include site-menu.html %}
+<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
