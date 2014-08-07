@@ -32,18 +32,8 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
   <div style="display:none">{% include intro/benefits.html %}</div>
 
-  <div class="form-and-story on-dark-picture-bg">
-
-    <form id="signup" class="signup intro-column" role="form"
-      action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-      method="post"
-      enctype="application/x-www-form-urlencoded"
-      >
-      {% include intro/know-secret-form.html %}
-
-    </form>
-
-    <div style="display:none">{% include intro/story.html %}</div>
+  <div class="know-secret">
+    {% include intro/know-secret-form.html %}
   </div>
 
   <footer></footer>

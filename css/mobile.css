@@ -9128,6 +9128,26 @@ body.ibook-product article .with-slider .rounded-link img {
 .mejs-container {
   background-color: transparent !important;
 }
+.know-secret {
+  position: absolute;
+  top: 15%;
+  width: 440px;
+  left: 65%;
+  margin-left: -220px;
+  margin-bottom: 100px;
+  background-color: white;
+}
+.know-secret::before,
+.know-secret::after {
+  content: "";
+  display: block;
+  height: 5px;
+  width: 100%;
+  background-image: url(/images/red-blue.png);
+}
+.know-secret .secret-signup {
+  padding: 20px;
+}
 .press-mentions {
   text-align: center;
 }
@@ -9194,4 +9214,7 @@ body.ibook-product article .with-slider .rounded-link img {
 }
 .signup-phrases .extra-space {
   margin: 30px 0;
+}
+body {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
