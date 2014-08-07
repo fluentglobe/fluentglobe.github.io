@@ -30,28 +30,20 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
   <aside class="we-love on-dark-picture-bg"><figure></figure> {% include intro/understood-networked.html %} </aside>
 
-  {% include intro/benefits.html %}
+  <div style="display:none">{% include intro/benefits.html %}</div>
 
   <div class="form-and-story on-dark-picture-bg">
 
-  <form id="signup" class="signup intro-column" role="form"
-    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-    method="post"
-    enctype="application/x-www-form-urlencoded"
-    >
+    <form id="signup" class="signup intro-column" role="form"
+      action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
+      method="post"
+      enctype="application/x-www-form-urlencoded"
+      >
+      {% include intro/know-secret-form.html %}
 
-    <fieldset>
-    {% include intro/start-learning.html %}
+    </form>
 
-    <input type="hidden" name="from-country">
-    <input type="hidden" name="native-language">
-    <input placeholder="Your Name" name="name" type="text" size="15" required>
-    <input placeholder="e-mail" name="email" type="email" size="15" required>
-    <button class="btn primary double-corner"> {% include intro/plan-button.html %} </button>
-    </fieldset>
-  </form>
-
-  {% include intro/story.html %}
+    <div style="display:none">{% include intro/story.html %}</div>
   </div>
 
   <footer></footer>
@@ -79,46 +71,25 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
       {% include intro/publications.html %}
     </section>
 
-    <section style="text-align: center; display:none;">
+    <section class="fourth even ">
+    	<div class="left-col">
+          <div style="position:relative;left:50%; width:100px;">
+          <img width="100" src="/images/katty-head.jpg" style="margin-left:30px; border-radius:50px;">
+          <!-- <div style="text-align:center;">Caterine Apruzzese</div> -->
+          </div>
 
-        <h3>It starts with a few words</h3>
-<p lang="en">We have lived in 7 different countries,
-and haven't settled yet.
-</p>
-<p lang="es">Hemos vivido en 7 países diferentes, y sin embargo no se han instalado.</p>
+    	{% include katty-short.html %}
+    	</div>
+    	
+    	<div class="right-col">
+          <div style="position:relative;left:50%; width:100px;margin-left:-150px;">
+          <img width="100" src="/images/henrik-head.jpg" style="margin-left:30px; border-radius:50px;">
+          <!-- <div style="text-align:center;">Henrik Vendelbo</div> -->
+          </div>
 
-<p lang="en">We want <em>you</em> to enjoy the places you visit and experience "<em>The Real Thing</em>".
-To be an insider not an outsider.
-</p>
-<p lang="es">Queremos que <em> </em> para disfrutar de los lugares que visitar y experimentar "<em>The Real Thing</em>". Para ser un iniciado no un extraño.</p>
-
-<p lang="en">It starts with a few words in a strange language.</p>
-<p lang="es">Se inicia con unas palabras en un idioma extraño.</p>
-
-<p></p>
-
-            <img src="images/ipad_frame.png">
-        </section>
-
-        <section class="fourth even ">
-        	<div class="left-col">
-              <div style="position:relative;left:50%; width:100px;">
-              <img width="100" src="/images/katty-head.jpg" style="margin-left:30px; border-radius:50px;">
-              <!-- <div style="text-align:center;">Caterine Apruzzese</div> -->
-              </div>
-
-        	{% include katty-short.html %}
-        	</div>
-        	
-        	<div class="right-col">
-              <div style="position:relative;left:50%; width:100px;margin-left:-150px;">
-              <img width="100" src="/images/henrik-head.jpg" style="margin-left:30px; border-radius:50px;">
-              <!-- <div style="text-align:center;">Henrik Vendelbo</div> -->
-              </div>
-
-        	{% include henrik-short.html %}
-        	</div>
-        </section>
+    	{% include henrik-short.html %}
+    	</div>
+    </section>
 
 		<footer class="constrained bookspread">
       {% include page-footer-etc.html %}
