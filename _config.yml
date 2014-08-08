@@ -38,7 +38,7 @@ exclude:
 
 #- images 
 #- fonts
-
+fb_admins: 739870725
 lsi: false
 pygments: true
 markdown: redcarpet
