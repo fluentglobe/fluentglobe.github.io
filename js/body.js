@@ -379,7 +379,7 @@ var fluentbook;
 
         if (clicked.commandElement && clicked.commandName) {
             fireAction(clicked);
-        } else {
+        } else if (clicked.actionElement) {
             var actionDesc = EnhancedDescriptor(clicked.actionElement);
             if (actionDesc && actionDesc.instance)
                 actionDesc.instance.submit(clicked, clicked.actionElement);
