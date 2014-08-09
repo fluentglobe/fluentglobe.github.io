@@ -55,3 +55,14 @@
       }
     }
   });
+  declare("stress-free",{
+    defaultAction: "new-stress-free-subscriber",
+    submittedButtonText: "Subscribing ...",
+
+    // showSubmitResult: false,
+
+    actions: {
+      mapName: { name:"cm-name", email:"cm-wjjul-wjjul" },
+      path: "/t/i/s/wjjul/"
+    }
+  });

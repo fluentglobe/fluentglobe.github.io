@@ -4658,7 +4658,6 @@ body.lesson .menu nav.flag label {
   padding-bottom: 3em;
   width: 100%;
   margin: 0 auto;
-  box-shadow: 0 5px 5px #454545;
   color: #474747;
 }
 .splash article section .bg,
@@ -9218,12 +9217,22 @@ body.ibook-product article .with-slider .rounded-link img {
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+#stress-free .when-subscribed,
 #signup .when-subscribed {
   display: none;
 }
+#stress-free.state-subscribed .when-unsubscribed,
 #signup.state-subscribed .when-unsubscribed {
   display: none;
 }
+#stress-free.state-subscribed .when-subscribed,
 #signup.state-subscribed .when-subscribed {
   display: block;
+}
+#stress-free {
+  min-height: 37em;
+}
+#stress-free iframe {
+  width: 100%;
+  height: 320px;
 }
