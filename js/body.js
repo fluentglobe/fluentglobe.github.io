@@ -310,17 +310,22 @@ var fluentbook;
     }
 
     EnhancedForm.prototype.planIframeSubmit = function (el) {
-        if (this.iframeId == undefined) {
-            this.iframeId = "form-target-" + (newIframeId++);
+        this.iframeId = el.target || "form-target-" + (newIframeId++);
+        var eFrame = document[this.iframeId] ? document[this.iframeId].frameElement : document.getElementById(this.iframeId);
 
+        if (eFrame == null) {
             this.targetIframe = HTMLElement("iframe", {
-                "id": this.iframeId, "frameborder": "0", "border": "0",
+                "id": this.iframeId, "name": this.iframeId,
+                "frameborder": "0", "border": "0",
                 "make stateful": true,
                 "append to": el
             });
-            this.targetIframe.stateful.set("state.hidden", true);
-            this.targetIframe.onload = onIframeLoad;
+        } else {
+            this.targetIframe = eFrame;
+            StatefulResolver(eFrame, true);
         }
+        this.targetIframe.stateful.set("state.hidden", true);
+        this.targetIframe.onload = onIframeLoad;
 
         el.target = this.iframeId;
         this.actionParts.protocol = this.actionParts.protocol.replace("client+http", "http");
