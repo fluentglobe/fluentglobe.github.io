@@ -198,6 +198,10 @@ var fluentbook;
 
         this.namedElements = {};
 
+        this.stateful = el.stateful;
+        this.stateful.set("map.class.state.subscribed", "state-subscribed");
+        this.stateful.set("state.subscribed", false);
+
         var strategyRole = el.stateful("strategy.role", "undefined") || effectiveRole;
         for (var i = 0, node; node = el.elements[i]; ++i) {
             if (node.accessor == undefined) {
@@ -312,6 +316,7 @@ var fluentbook;
         if (this.showSubmitResult) {
             ev.target.stateful.set("state.hidden", false);
         }
+        this.stateful.set("state.subscribed", true);
     }
 
     EnhancedForm.prototype.planIframeSubmit = function (el) {

@@ -9218,3 +9218,12 @@ body.ibook-product article .with-slider .rounded-link img {
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+#signup .when-subscribed {
+  display: none;
+}
+#signup.state-subscribed .when-unsubscribed {
+  display: none;
+}
+#signup.state-subscribed .when-subscribed {
+  display: block;
+}

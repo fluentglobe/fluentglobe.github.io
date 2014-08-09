@@ -104,6 +104,10 @@ function EnhancedForm(el,config) {
 
 	this.namedElements = {};
 
+	this.stateful = el.stateful;
+	this.stateful.set("map.class.state.subscribed","state-subscribed")
+	this.stateful.set("state.subscribed",false); // for clarity
+
 	// Strategy determines if element should be stateful and the effective role
 	var strategyRole = el.stateful("strategy.role","undefined") || effectiveRole;
 	for(var i=0,node; node = el.elements[i]; ++i) {
@@ -235,6 +239,7 @@ function onIframeLoad(ev) {
 		ev.target.stateful.set("state.hidden",false);
 		//TODO pop it up
 	}
+	this.stateful.set("state.subscribed",true);
 }
 
 EnhancedForm.prototype.planIframeSubmit = function(el) {
