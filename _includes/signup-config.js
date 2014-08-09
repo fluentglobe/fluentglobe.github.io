@@ -59,7 +59,7 @@
     defaultAction: "new-stress-free-subscriber",
     submittedButtonText: "Subscribing ...",
 
-    // showSubmitResult: false,
+    showSubmitResult: true,
 
     actions: {
       mapName: { name:"cm-name", email:"cm-wjjul-wjjul" },
