@@ -243,6 +243,8 @@ var fluentbook;
                 break;
         }
 
+        this.showSubmitResult = config.showSubmitResult;
+
         this.actions = config.actions;
         if (config.defaultAction) {
             this.applyAction(el, config.defaultAction);
@@ -306,7 +308,10 @@ var fluentbook;
     };
 
     function onIframeLoad(ev) {
-        this.stateful.set("state.hidden", false);
+        ev = MutableEvent(ev);
+        if (this.showSubmitResult) {
+            ev.target.stateful.set("state.hidden", false);
+        }
     }
 
     EnhancedForm.prototype.planIframeSubmit = function (el) {
@@ -325,7 +330,7 @@ var fluentbook;
             StatefulResolver(eFrame, true);
         }
         this.targetIframe.stateful.set("state.hidden", true);
-        this.targetIframe.onload = onIframeLoad;
+        this.targetIframe.onload = onIframeLoad.bind(this);
 
         el.target = this.iframeId;
         this.actionParts.protocol = this.actionParts.protocol.replace("client+http", "http");

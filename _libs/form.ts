@@ -161,6 +161,9 @@ function EnhancedForm(el,config) {
 			break;
 	}
 
+	// pop up the results after submit
+	this.showSubmitResult = config.showSubmitResult;
+
 	// prepare form for default submit
 	this.actions = config.actions;
 	if (config.defaultAction) {
@@ -227,8 +230,11 @@ EnhancedForm.prototype.jsonSubmit = function(ev,el) {
 };
 
 function onIframeLoad(ev) {
-	//TODO pop it up
-	this.stateful.set("state.hidden",false);
+	ev = MutableEvent(ev);
+	if (this.showSubmitResult) {
+		ev.target.stateful.set("state.hidden",false);
+		//TODO pop it up
+	}
 }
 
 EnhancedForm.prototype.planIframeSubmit = function(el) {
@@ -249,7 +255,7 @@ EnhancedForm.prototype.planIframeSubmit = function(el) {
 		StatefulResolver(eFrame,true);		
 	}
 	this.targetIframe.stateful.set("state.hidden",true);
-	this.targetIframe.onload = onIframeLoad;
+	this.targetIframe.onload = onIframeLoad.bind(this);
 
 	el.target = this.iframeId;
 	this.actionParts.protocol = this.actionParts.protocol.replace("client+http","http");

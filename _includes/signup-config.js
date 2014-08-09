@@ -1,6 +1,7 @@
   declare("signup",{
     defaultAction: "new-beta-subscriber",
     submittedButtonText: "Subscribing ...",
+    showSubmitResult: false,
 
     actions: {
       "new-beta-subscriber": {
