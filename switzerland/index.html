@@ -16,28 +16,10 @@ og-images:
 
   <aside class="we-love on-dark-picture-bg"><figure></figure> {% include intro/understood-networked.html %} </aside>
 
-  {% include intro/benefits.html %}
+  <div style="display:none">{% include intro/benefits.html %}</div>
 
-  <div class="form-and-story on-dark-picture-bg">
-
-  <form id="signup" class="signup intro-column" role="form"
-    action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-    method="post"
-    enctype="application/x-www-form-urlencoded"
-    >
-
-    <fieldset>
-    {% include intro/start-learning.html %}
-
-    <input type="hidden" name="from-country">
-    <input type="hidden" name="native-language">
-    <input placeholder="Your Name" name="name" type="text" size="15" required>
-    <input placeholder="e-mail" name="email" type="email" size="15" required>
-    <button class="btn primary double-corner"> {% include intro/plan-button.html %} </button>
-    </fieldset>
-  </form>
-
-  {% include intro/story.html %}
+  <div class="know-secret">
+    {% include intro/know-secret-form.html %}
   </div>
 
   <footer></footer>
