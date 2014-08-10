@@ -577,14 +577,58 @@ img.right-side-80 {
 }
 
 .feature-dvd {
-    float: right;
     margin-top: 50px;
     width: 240px;
 }
 
+.signup-phrases {
+    background-color: white;
+
+    p {
+        font-size: 1.5em;
+        line-height: 1.5;
+    }
+
+    em {
+        color: @fluent-red;
+    }
+
+    input[type=text],
+    input[type=email] {
+        border-width: 0 0 1px 0;
+        border-style: dashed;
+    }
+
+    .right-aligned {
+        display: block;
+        text-align: right;
+    }
+
+    .extra-space {
+        margin: 30px 0;
+    }
+}
+
+@media only screen and (max-width: 499px) {
+    .feature-dvd {
+        display: block;
+        margin: 0 auto;
+    }
+}
 @media only screen and (min-width: 500px) {
     .feature-dvd {
+        float: right;
         width: 300px;
+    }
+
+    .signup-phrases {
+        .signup-box {
+            border: 1px solid #d8d8d8;
+            padding: 30px;
+            // width: 550px;
+            margin: 20px;
+        }
+
     }
 }
 
@@ -594,29 +638,6 @@ img.right-side-80 {
 
 .mejs-container {
     background-color: transparent !important;
-}
-
-.know-secret {
-    position:absolute;
-    top: 15%;
-    width: 440px; // 300px
-    left: 65%;
-    margin-left: -220px;
-    margin-bottom: 100px;
-
-    background-color: white;
-
-    &::before,
-    &::after {
-        content: "";
-        display:block;
-        height: 5px;
-        width:100%;
-        background-image: url(/images/red-blue.png);
-    }
-    .secret-signup {
-        padding: 20px;
-    }
 }
 
 .press-mentions {
@@ -658,46 +679,7 @@ img.right-side-80 {
 }
 
 
-.feature-dvd {
-    float: right;
-    margin-top: 50px;
-}
-
-.signup-phrases {
-    background-color: white;
-
-    .signup-box {
-        border: 1px solid #d8d8d8;
-        padding: 30px;
-        // width: 550px;
-        margin: 20px;
-    }
-
-    p {
-        font-size: 1.5em;
-        line-height: 1.5;
-    }
-
-    em {
-        color: @fluent-red;
-    }
-
-    input[type=text],
-    input[type=email] {
-        border-width: 0 0 1px 0;
-        border-style: dashed;
-    }
-
-    .right-aligned {
-        display: block;
-        text-align: right;
-    }
-
-    .extra-space {
-        margin: 30px 0;
-    }
-}
-
+// better IE scrollbar styling
 body {
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }

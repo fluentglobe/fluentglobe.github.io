@@ -221,6 +221,27 @@ html body.splash {
 
 }
 
+.know-secret {
+    position: relative;
+    width: 310px;
+    margin-left: 3px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background-color: white;
+
+    &::before,
+    &::after {
+        content: "";
+        display:block;
+        height: 5px;
+        width:100%;
+        background-image: url(/images/red-blue.png);
+    }
+    .secret-signup {
+        padding: 10px;
+    }
+}
+
 // Phone < 5:
 @media screen and (device-aspect-ratio: 2/3) {
 
@@ -284,6 +305,16 @@ html body.splash {
             }
         }
     }
+
+    .know-secret {
+        left: 50px;
+        width: 440px;
+        margin-bottom: 100px;
+        .secret-signup {
+            padding: 20px;
+        }
+    }
+
 }
 
 @media only screen and (min-width: 800px) and (max-width: 1099px) {
@@ -299,6 +330,16 @@ html body.splash {
             top: 5em;
             left: 50%;
 
+        }
+    }
+    html body .know-secret {
+        position:absolute;
+        top: 150px;
+        width: 440px; 
+        left: 250px;
+        margin-bottom: 100px;
+        .secret-signup {
+            padding: 20px;
         }
     }
 }
@@ -340,6 +381,17 @@ html body.splash {
 
         footer {
             margin-top: 110px;
+        }
+    }
+    html body .know-secret {
+        position:absolute;
+        top: 15%;
+        width: 440px; 
+        left: 65%;
+        margin-left: -220px;
+        margin-bottom: 100px;
+        .secret-signup {
+            padding: 20px;
         }
     }
 }

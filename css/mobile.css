@@ -2810,9 +2810,6 @@ html[lang=ch] body [lang=ar] {
   vertical-align: baseline;
   padding: 1px 10px;
 }
-.splash #intro .btn.primary {
-  background: #fb441b;
-}
 .splash #intro .we-love .forward-looking {
   margin-left: 9em;
   margin-top: 1.5em;
@@ -2913,6 +2910,25 @@ html body.splash #intro > footer {
   position: relative;
   height: 50px;
 }
+.know-secret {
+  position: relative;
+  width: 310px;
+  margin-left: 3px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background-color: white;
+}
+.know-secret::before,
+.know-secret::after {
+  content: "";
+  display: block;
+  height: 5px;
+  width: 100%;
+  background-image: url(/images/red-blue.png);
+}
+.know-secret .secret-signup {
+  padding: 10px;
+}
 @media screen and (device-aspect-ratio: 2/3) {
   #intro {
     height: 100%;
@@ -2948,6 +2964,14 @@ html body.splash #intro > footer {
     left: 50%;
     margin-left: -185px;
   }
+  .know-secret {
+    left: 50px;
+    width: 440px;
+    margin-bottom: 100px;
+  }
+  .know-secret .secret-signup {
+    padding: 20px;
+  }
 }
 @media only screen and (min-width: 800px) and (max-width: 1099px) {
   html body.splash #intro .form-and-story {
@@ -2959,6 +2983,16 @@ html body.splash #intro > footer {
     position: absolute;
     top: 5em;
     left: 50%;
+  }
+  html body .know-secret {
+    position: absolute;
+    top: 150px;
+    width: 440px;
+    left: 250px;
+    margin-bottom: 100px;
+  }
+  html body .know-secret .secret-signup {
+    padding: 20px;
   }
 }
 @media only screen and (min-width: 1100px) and (max-width: 2048px) {
@@ -2991,6 +3025,17 @@ html body.splash #intro > footer {
   }
   html body.splash #intro footer {
     margin-top: 110px;
+  }
+  html body .know-secret {
+    position: absolute;
+    top: 15%;
+    width: 440px;
+    left: 65%;
+    margin-left: -220px;
+    margin-bottom: 100px;
+  }
+  html body .know-secret .secret-signup {
+    padding: 20px;
   }
 }
 html body.splash-zurich #intro:before {
@@ -8187,6 +8232,49 @@ body * .ls-container .ls-webkit-hack,
 .mejs-audio.page-audio .mejs-controls .mejs-time-rail .mejs-time-loaded {
   background: transparent;
 }
+.feature-dvd {
+  margin-top: 50px;
+  width: 240px;
+}
+.signup-phrases {
+  background-color: white;
+}
+.signup-phrases p {
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+.signup-phrases em {
+  color: #fb441b;
+}
+.signup-phrases input[type=text],
+.signup-phrases input[type=email] {
+  border-width: 0 0 1px 0;
+  border-style: dashed;
+}
+.signup-phrases .right-aligned {
+  display: block;
+  text-align: right;
+}
+.signup-phrases .extra-space {
+  margin: 30px 0;
+}
+@media only screen and (max-width: 499px) {
+  .feature-dvd {
+    display: block;
+    margin: 0 auto;
+  }
+}
+@media only screen and (min-width: 500px) {
+  .feature-dvd {
+    float: right;
+    width: 300px;
+  }
+  .signup-phrases .signup-box {
+    border: 1px solid #d8d8d8;
+    padding: 30px;
+    margin: 20px;
+  }
+}
 body.ibook-product .top-fade {
   position: fixed;
   z-index: 2;
@@ -9130,26 +9218,6 @@ body.ibook-product article .with-slider .rounded-link img {
 .mejs-container {
   background-color: transparent !important;
 }
-.know-secret {
-  position: absolute;
-  top: 15%;
-  width: 440px;
-  left: 65%;
-  margin-left: -220px;
-  margin-bottom: 100px;
-  background-color: white;
-}
-.know-secret::before,
-.know-secret::after {
-  content: "";
-  display: block;
-  height: 5px;
-  width: 100%;
-  background-image: url(/images/red-blue.png);
-}
-.know-secret .secret-signup {
-  padding: 20px;
-}
 .press-mentions {
   text-align: center;
 }
@@ -9185,37 +9253,6 @@ body.ibook-product article .with-slider .rounded-link img {
   transform: scale(0.5);
   margin-left: -100px;
   margin-right: -50px;
-}
-.feature-dvd {
-  float: right;
-  margin-top: 50px;
-}
-.signup-phrases {
-  background-color: white;
-}
-.signup-phrases .signup-box {
-  border: 1px solid #d8d8d8;
-  padding: 30px;
-  margin: 20px;
-}
-.signup-phrases p {
-  font-size: 1.5em;
-  line-height: 1.5;
-}
-.signup-phrases em {
-  color: #fb441b;
-}
-.signup-phrases input[type=text],
-.signup-phrases input[type=email] {
-  border-width: 0 0 1px 0;
-  border-style: dashed;
-}
-.signup-phrases .right-aligned {
-  display: block;
-  text-align: right;
-}
-.signup-phrases .extra-space {
-  margin: 30px 0;
 }
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
