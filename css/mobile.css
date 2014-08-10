@@ -2738,6 +2738,9 @@ html[lang=ch] body [lang=ar] {
   background: rgba(255, 0, 70, 0.8);
   color: white;
 }
+.btn.tinted {
+  background: #fb441b;
+}
 #intro {
   position: relative;
   border-left: 4px solid #fb441b;

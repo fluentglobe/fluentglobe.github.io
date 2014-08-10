@@ -7,7 +7,7 @@
 
   <fieldset ng-show="!Access.city">
       <p>You seem to be in {( Access.region_name )}. </p>
-      <button type="button" class="btn primary double-corner"  ng-click="Access.iLiveIn('zurich')">
+      <button type="button" class="btn tinted double-corner"  ng-click="Access.iLiveIn('zurich')">
         <span lang="en">I live in Zürich</span>
         </button>
   </fieldset>
@@ -33,21 +33,21 @@
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="no-german"> No, I would rather speak german German</p>
 		<p><input type="radio" ng-model="survey.understood" name="understood-swiss" value="english" next-step="english"> No, English is fine</p>
 
-    <button class="btn primary double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
+    <button class="btn tinted double-corner" type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
 	</fieldset>
 
   <fieldset fg-step="email" next-step="why" not-if="Access.state.authenticated" results="survey">
     <div ng-show="Access.city && !Access.state.authenticated && !Access.session.password">
       <p>The learning will tailored specifically to you. If you wish you can protect the plan with a password later</p>
       <input placeholder="e-mail" name="username" type="email" size="30" ng-model="Access.user.email" required>
-      <button class="btn primary double-corner" type="button" ng-click="Access.startSignUp()" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
+      <button class="btn tinted double-corner" type="button" ng-click="Access.startSignUp()" ng-disabled="signup.username.$invalid"> {% include intro/next-step-button.html %} </button>
       <p lang="en">{{ Access.message }}</p>
     </div>
 
     <div ng-show="Access.city && Access.state.authenticated">
       <p lang="en">You are signed in as {( Access.user.email )}</p>
 
-      <button class="btn primary double-corner" 
+      <button class="btn tinted double-corner" 
         type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
     </div>
 
@@ -61,7 +61,7 @@
         <p><input type="radio" name="study-why" value="speak-social" ng-model="survey.why"> I want it for socialising and/or daily life</p>
         <p><input type="radio" name="study-why" value="foolish" ng-model="survey.why"> I feel foolish for not being able to</p>
 
-        <button class="btn primary double-corner" 
+        <button class="btn tinted double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
@@ -82,7 +82,7 @@
         <p><input type="radio" name="study-already" 
             ng-model="survey.already" value="no" next-step="speed"> No, not yet</p>
 
-        <button class="btn primary double-corner" 
+        <button class="btn tinted double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
@@ -100,7 +100,7 @@
         <p><input type="checkbox" name="study-happy-progress" 
           ng-model="survey.progress.happy"> I'm happy with my progress</p>
 
-        <button class="btn primary double-corner" 
+        <button class="btn tinted double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
@@ -115,7 +115,7 @@
         <p><input type="radio" name="study-speed"
           ng-model="survey.speed" value="norush"> There is no rush</p>
 
-        <button class="btn primary double-corner" 
+        <button class="btn tinted double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
@@ -132,7 +132,7 @@
         <p><input type="radio" name="study-time"
           ng-model="survey.time" value="traveling"> While traveling</p>
 
-        <button class="btn primary double-corner" 
+        <button class="btn tinted double-corner" 
           type="button" ng-click="nextStep()" ng-disabled="!allowNext">Next</button>
       </fieldset>
 
@@ -141,7 +141,7 @@
 
         <p>
           <input type="tel" name="phone" size="30" placeholder="Phone No." ng-model="Access.user.phone">
-          <button class="btn primary double-corner" 
+          <button class="btn tinted double-corner" 
             type="button" ng-click="Access.applyPhone()" ng-disabled="signup.phone.$invalid">Send It!</button>
         </p>
       </fieldset>
