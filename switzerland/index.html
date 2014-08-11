@@ -1,33 +1,27 @@
 ---
-layout: frontpage
+layout: master
+theme: main
+blog-link: no
 base-body-class: with-menu 
 js-bundle: /js/body.js
+app-name: fluentApp
 og-tags:
 - Language Learning
 - Learning German
-- Learning Portuguese
+- Learning French
+- Learning Italian
+- Expatriates
 og-images:
 - http://fluentglobe.com/images/icon.jpg
 ---
 
 <script type="application/config">{% include signup-config.js %}</script>
 
-<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+<main class="with-lead-and-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
 
-  <aside class="we-love on-dark-picture-bg"><figure></figure> {% include intro/understood-networked.html %} </aside>
-
-  <div style="display:none">{% include intro/benefits.html %}</div>
-
-  <div class="know-secret">
-    {% include intro/know-secret-form.html %}
-  </div>
-
-  <footer></footer>
-
-</div>
-
-
-<main>
+  <header>
+  {% include intro/understood-networked.html %}
+  </header>
 
   <article>
   	<header id="more-to-tell">
@@ -43,6 +37,7 @@ og-images:
 			{% include page-footer-copyright.html %}
 		</footer>
     </article>
+
+  {% include site-menu.html %}
 </main>
 
-{% include site-menu.html %}

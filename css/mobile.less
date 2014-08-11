@@ -339,8 +339,45 @@ html body.splash-zurich {
 
     .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
 
+}
+
+// logo and message top left
+.understood-networked {
+
+    position: relative;
+    height: @we-love-height / 2;
+    margin-left: @col1-left;
+    width: 100% - (2*@col1-left);
+
+    figure {
+        position: absolute;
+        top: 0; 
+        left: 0; //-100px; 
+        // z-index: -9999;
+        width: @we-love-width;
+        height: @we-love-height;
+        // width: (@we-love-width / 2);
+        // height: (@we-love-height / 2);
+        margin: 0;
+        //zoom: .5; TODO do this for IE
+        .scale(.5,.5);
+        -ms-transform-origin: left top;
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+
+        background-image: url(../images/around-globe.png);
+        background-repeat: no-repeat;
+    }
+    h3 {
+        padding-top: 1em;
+        padding-left: 100px;
+    }
+    p {
+        padding-left: 100px;
+    }
+
     //temp
-    #intro .we-love .forward-looking {
+    .forward-looking {
         color: transparent;
     }
 }    

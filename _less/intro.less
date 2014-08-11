@@ -148,10 +148,6 @@
     }
 }
 
-@we-love-width: 383px;
-@we-love-height: 431px;
-
-
 
 html body.splash { 
 
@@ -345,12 +341,14 @@ html body.splash {
 }
 
 @media only screen and (min-width: 1100px) and (max-width: 2048px) {
+    .understood-networked,
+    html body.splash #intro .we-love {
+        width: 32%;
+    }
+
     html body.splash #intro {
         @signup-height: 175px;
 
-        .we-love {
-            width: 32%;
-        }
         .benefits {
             width: 32%;
         }
