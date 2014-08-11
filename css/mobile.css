@@ -4657,21 +4657,21 @@ body.lesson .menu nav.flag label {
 .splash article {
   z-index: 100;
 }
-.splash article h1,
-.splash article h2,
-.splash article h3,
-.splash article h4,
-.splash article h5,
-.splash article h6 {
+main.fluid article h1,
+main.fluid article h2,
+main.fluid article h3,
+main.fluid article h4,
+main.fluid article h5,
+main.fluid article h6 {
   font-weight: 300;
 }
-.splash article > header .follow {
+main.fluid article > header .follow {
   position: absolute;
   top: 12px;
   right: 20px;
   text-align: right;
 }
-.splash article > header .follow h4 {
+main.fluid article > header .follow h4 {
   display: inline-block;
   font-size: 15px;
   padding: 10px 10px 5px 0;
@@ -4679,10 +4679,10 @@ body.lesson .menu nav.flag label {
   vertical-align: top;
   color: #888;
 }
-.splash article > header .follow nav {
+main.fluid article > header .follow nav {
   display: inline-block;
 }
-.splash article > header .follow h4 {
+main.fluid article > header .follow h4 {
   display: inline-block;
   font-size: 15px;
   margin: 0;
@@ -4690,17 +4690,17 @@ body.lesson .menu nav.flag label {
   vertical-align: top;
   color: #888888;
 }
-.splash article > header .follow .social-icon {
+main.fluid article > header .follow .social-icon {
   font-family: "socialicoregular";
   font-size: 40px;
   color: #888;
   text-decoration: none;
   line-height: 1;
 }
-.splash article > header .follow .social-icon:hover {
+main.fluid article > header .follow .social-icon:hover {
   color: #0088cc;
 }
-.splash article section {
+main.fluid article section {
   position: relative;
   padding-top: 3em;
   padding-bottom: 3em;
@@ -4708,8 +4708,8 @@ body.lesson .menu nav.flag label {
   margin: 0 auto;
   color: #474747;
 }
-.splash article section .bg,
-.splash article section > :first-child:before {
+main.fluid article section .bg,
+main.fluid article section > :first-child:before {
   display: block;
   position: absolute;
   left: 0;
@@ -4720,27 +4720,27 @@ body.lesson .menu nav.flag label {
   background-color: #ffffff;
   z-index: -1000;
 }
-.splash article section h3 {
+main.fluid article section h3 {
   text-align: center;
   font-size: 2em;
 }
-.splash article section p {
+main.fluid article section p {
   word-wrap: normal;
   overflow-wrap: break-word;
 }
-.splash article section.even {
+main.fluid article section.even {
   background-color: #f3f3f3;
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
 }
-.splash article > footer {
+main.fluid article > footer {
   position: relative;
   padding: 20px 0 25px 0;
   background-color: #1d1d1d;
   color: #888888;
   line-height: 1.5;
 }
-.splash article > footer a {
+main.fluid article > footer a {
   color: #fb441b;
   text-decoration: none;
 }
