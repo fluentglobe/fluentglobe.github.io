@@ -523,11 +523,11 @@ body {
   background-color: #f83104;
 }
 a {
-  color: #428bca;
+  color: #fb441b;
   text-decoration: none;
 }
 a:hover {
-  color: #2a6496;
+  color: #c62703;
   text-decoration: underline;
 }
 .container {
@@ -1366,10 +1366,10 @@ mark,
   color: #999999;
 }
 .text-primary {
-  color: #428bca;
+  color: #fb441b;
 }
 a.text-primary:hover {
-  color: #3071a9;
+  color: #df2c04;
 }
 .text-success {
   color: #3c763d;
@@ -1397,10 +1397,10 @@ a.text-danger:hover {
 }
 .bg-primary {
   color: #fff;
-  background-color: #428bca;
+  background-color: #fb441b;
 }
 a.bg-primary:hover {
-  background-color: #3071a9;
+  background-color: #df2c04;
 }
 .bg-success {
   background-color: #dff0d8;
@@ -1647,8 +1647,8 @@ fieldset[disabled] .btn-default.active {
 }
 .btn-primary {
   color: #ffffff;
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #fb441b;
+  border-color: #f83104;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -1656,8 +1656,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #3071a9;
-  border-color: #285e8e;
+  background-color: #df2c04;
+  border-color: #bc2503;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -1679,11 +1679,11 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-  background-color: #428bca;
-  border-color: #357ebd;
+  background-color: #fb441b;
+  border-color: #f83104;
 }
 .btn-primary .badge {
-  color: #428bca;
+  color: #fb441b;
   background-color: #ffffff;
 }
 .btn-success {
@@ -1851,7 +1851,7 @@ fieldset[disabled] .btn-danger.active {
   background-color: #ffffff;
 }
 .btn-link {
-  color: #428bca;
+  color: #fb441b;
   font-weight: normal;
   cursor: pointer;
   border-radius: 0;
@@ -1872,7 +1872,7 @@ fieldset[disabled] .btn-link {
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #2a6496;
+  color: #c62703;
   text-decoration: underline;
   background-color: transparent;
 }
