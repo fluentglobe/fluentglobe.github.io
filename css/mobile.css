@@ -8272,7 +8272,8 @@ body * .ls-container .ls-webkit-hack,
   .signup-phrases .signup-box {
     border: 1px solid #d8d8d8;
     padding: 30px;
-    margin: 20px;
+    margin: -20px;
+    max-width: 420px;
   }
 }
 body.ibook-product .top-fade {
