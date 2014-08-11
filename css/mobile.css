@@ -9219,6 +9219,9 @@ body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -webkit-overflow-scrolling: touch;
 }
+.with-lead-and-menu {
+  position: relative;
+}
 .with-lead-and-menu > header {
   position: relative;
   padding-top: 50px;
