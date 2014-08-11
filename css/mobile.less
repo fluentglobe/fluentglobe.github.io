@@ -74,11 +74,18 @@ body {
     &.open-book {
         overflow: hidden;
     }
+}
 
-    &.with-menu.state-expanded, // TODO include this on all with menu
-    &.screen.state-expanded,
-    &.splash.state-expanded,
-    &.lesson.state-expanded { // refactor to general app vs info vs splash  bodies
+.with-menu {
+    .menu {
+        .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
+        .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
+        .transition(.3s ease-in-out left);
+        .site-menu-flag(13em, @app-menu-bg);
+    }
+
+    &.state-expanded {
+
         #intro {
             left: @menu-width;
             margin-right: -@menu-width;
@@ -100,12 +107,13 @@ body {
             left: 0;
         }
     }
-
-    .menu {
-        .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
-        .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
-        .transition(.3s ease-in-out left);
-        .site-menu-flag(13em, @app-menu-bg);
+}
+main.with-menu {
+    &.state-expanded {
+        > header {
+            left: @menu-width;
+            margin-right: -@menu-width;
+        }
     }
 }
 

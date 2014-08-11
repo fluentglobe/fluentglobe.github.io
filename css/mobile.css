@@ -3473,14 +3473,6 @@ article > footer {
   text-align: center;
 }
 #intro .left-col,
-.splash article .left-col {
-  padding: 0 30px;
-}
-#intro .right-col,
-.splash article .right-col {
-  padding: 0 30px;
-}
-#intro .left-col,
 #intro .right-col {
   margin-top: 3em;
 }
@@ -3522,37 +3514,7 @@ article > footer {
 body.open-book {
   overflow: hidden;
 }
-body.with-menu.state-expanded #intro,
-body.screen.state-expanded #intro,
-body.splash.state-expanded #intro,
-body.lesson.state-expanded #intro {
-  left: 160px;
-  margin-right: -160px;
-}
-body.with-menu.state-expanded article,
-body.screen.state-expanded article,
-body.splash.state-expanded article,
-body.lesson.state-expanded article {
-  margin-left: 160px;
-  /*
-            > header {
-                left: @menu-width;
-            }
-            */
-}
-body.with-menu.state-expanded article > section,
-body.screen.state-expanded article > section,
-body.splash.state-expanded article > section,
-body.lesson.state-expanded article > section {
-  position: relative;
-}
-body.with-menu.state-expanded .menu,
-body.screen.state-expanded .menu,
-body.splash.state-expanded .menu,
-body.lesson.state-expanded .menu {
-  left: 0;
-}
-body .menu {
+.with-menu .menu {
   position: absolute;
   top: 0;
   bottom: 0;
