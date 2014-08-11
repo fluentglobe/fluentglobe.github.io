@@ -3470,154 +3470,176 @@ body.open-book {
   -o-transition: 0.3s ease-in-out left;
   transition: 0.3s ease-in-out left;
 }
-body .menu ol,
-body .menu ul {
+.with-menu .menu ol,
+.with-menu .menu ul {
   list-style: none;
   margin-left: 0;
 }
-body .menu li {
+.with-menu .menu li {
   text-indent: 0;
 }
-body .menu a {
+.with-menu .menu a {
   text-decoration: none;
 }
-body .menu nav.flag {
+.with-menu .menu nav.flag {
   position: absolute;
   left: 100%;
   top: 10px;
 }
-body .menu nav.flag button.show-menu {
+.with-menu .menu nav.flag button.show-menu {
   border: 0;
   display: inline-block;
   padding: 6px 8px;
   -webkit-appearance: none;
 }
-body .menu nav.flag button.show-menu:focus {
+.with-menu .menu nav.flag button.show-menu:focus {
   outline: none;
 }
-body .menu nav.flag label {
+.with-menu .menu nav.flag label {
   display: inline-block;
   margin-left: 8px;
   text-align: center;
 }
-body .menu nav.flag output {
+.with-menu .menu nav.flag output {
   display: inline-block;
   padding-top: 0;
   color: #aaa;
 }
-body .menu ul {
+.with-menu .menu ul {
   padding: 0;
 }
-body .menu ul li {
+.with-menu .menu ul li {
   min-height: 2.5em;
 }
-body .menu ul li > ul {
+.with-menu .menu ul li > ul {
   border-top: 1px solid transparent;
 }
-body .menu ul li > ul > li a,
-body .menu ul li > ul > li q {
+.with-menu .menu ul li > ul > li a,
+.with-menu .menu ul li > ul > li q {
   padding-left: 2em;
 }
-body .menu ul a,
-body .menu ul q {
+.with-menu .menu ul a,
+.with-menu .menu ul q {
   display: block;
   height: 100%;
   border: 1px solid transparent;
   padding: .5em 1em;
 }
-body .menu > ul {
+.with-menu .menu > ul {
   padding: 1em 0 0 0;
 }
-body .menu > a,
-body .menu > q {
+.with-menu .menu > a,
+.with-menu .menu > q {
   display: none;
 }
-body .menu li {
+.with-menu .menu li {
   position: relative;
 }
-body .menu li a,
-body .menu li q {
+.with-menu .menu li a,
+.with-menu .menu li q {
   color: #c0c0c0;
   display: block;
   cursor: pointer;
 }
-body .menu li a:hover,
-body .menu li q:hover {
+.with-menu .menu li a:hover,
+.with-menu .menu li q:hover {
   color: #ffffff;
 }
-body .menu li a:active,
-body .menu li q:active {
+.with-menu .menu li a:active,
+.with-menu .menu li q:active {
   background-color: #cc0000 !important;
 }
-body .menu li[selected=true] q:after {
+.with-menu .menu li[selected=true] q:after {
   position: absolute;
   right: 1em;
   top: 0.6em;
   content: "\2713";
 }
-body .menu nav.flag button.show-menu {
+.with-menu .menu nav.flag button.show-menu {
   background-color: #f83104;
   color: #e0e0e0;
   font-size: 18px;
   vertical-align: top;
 }
-body .menu nav.flag button.show-menu:hover {
+.with-menu .menu nav.flag button.show-menu:hover {
   color: #ffffff;
 }
-body .menu nav.flag button.show-menu label {
+.with-menu .menu nav.flag button.show-menu label {
   color: #e0e0e0;
   font-size: 1.2em;
 }
-body .menu ul li > ul {
+.with-menu .menu ul li > ul {
   border-top: 1px solid #fb441b;
 }
-body .menu ul li > ul > li a,
-body .menu ul li > ul > li q {
+.with-menu .menu ul li > ul > li a,
+.with-menu .menu ul li > ul > li q {
   background-color: #f83104;
   border-color: #fb441b;
   border-top: none;
 }
-body .menu ul a,
-body .menu ul q {
+.with-menu .menu ul a,
+.with-menu .menu ul q {
   background-color: #fb441b;
   border: 1px solid #f83104;
   color: #e0e0e0;
 }
-body .menu > ul {
+.with-menu .menu > ul {
   border: 1px solid #f83104;
 }
-body .menu > ul > li:not( :last-child ) > a,
-body .menu > ul > li:not( :last-child ) > q {
+.with-menu .menu > ul > li:not( :last-child ) > a,
+.with-menu .menu > ul > li:not( :last-child ) > q {
   border-right: 1px solid #fb441b;
 }
-body .menu > ul > li:hover > a,
-body .menu > ul:not ( :hover ) > li.active > a,
-body .menu > ul > li:hover > q,
-body .menu > ul:not ( :hover ) > li.active > q {
+.with-menu .menu > ul > li:hover > a,
+.with-menu .menu > ul:not ( :hover ) > li.active > a,
+.with-menu .menu > ul > li:hover > q,
+.with-menu .menu > ul:not ( :hover ) > li.active > q {
   background-color: #fb441b;
 }
-body .menu li ul {
+.with-menu .menu li ul {
   background-color: #fb441b;
 }
-body .menu li ul a,
-body .menu li ul q {
+.with-menu .menu li ul a,
+.with-menu .menu li ul q {
   border-top: 1px solid #f83104;
 }
-body .menu li ul li a:hover,
-body .menu li ul:not( :hover ) li.active a {
+.with-menu .menu li ul li a:hover,
+.with-menu .menu li ul:not( :hover ) li.active a {
   background-color: #f83104;
 }
-body .menu nav.flag {
+.with-menu .menu nav.flag {
   width: 13em;
 }
-body .menu nav.flag label {
+.with-menu .menu nav.flag label {
   border-radius: 1px;
   border: 1px solid #f83104;
   padding: 5px 9px 4px 9px;
   min-width: 5em;
 }
-body .menu nav.flag label output {
+.with-menu .menu nav.flag label output {
   color: #f83104;
+}
+.with-menu.state-expanded #intro {
+  left: 160px;
+  margin-right: -160px;
+}
+.with-menu.state-expanded article {
+  margin-left: 160px;
+  /*
+            > header {
+                left: @menu-width;
+            }
+            */
+}
+.with-menu.state-expanded article > section {
+  position: relative;
+}
+.with-menu.state-expanded .menu {
+  left: 0;
+}
+main.with-menu.state-expanded > header {
+  left: 160px;
+  margin-right: -160px;
 }
 .black-menu .menu {
   border-color: #000000;
