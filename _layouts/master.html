@@ -38,7 +38,7 @@ base-body-class:
 >
   {% if page.og-images %}{% for image in page.og-images %}<img src="{{ image }}" rel="image_src" class="principal-pic" alt="{{ page.title }} - Principal Picture">
   {% endfor %}{% endif %}
-
+  {% if page.facebook-app-id %}<div id="fb-root"></div>{% endif %}
 {{ content }}
 
   <script src="/js/jquery.min.js"></script>  
@@ -84,6 +84,26 @@ base-body-class:
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
 </script>{% endif %}
+
+{% if page.facebook-app-id %}<script>
+   // window.fbAsyncInit = function() {
+   //      FB.init({
+   //        appId      : '266550166850505',
+   //        xfbml      : true,
+   //        version    : 'v2.0'
+   //      });
+   //    };
+
+
+//TODO <link rel="subresource">
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=266550166850505&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>{% endif %}
 
 <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
 {% if page.fresh-button %}

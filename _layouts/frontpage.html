@@ -3,30 +3,9 @@ layout: master
 theme: main
 blog-link: no
 body-class: with-menu splash splash-color
+facebook-app-id: 266550166850505
 ---
-<div id="fb-root"></div>
-
 {{ content }}
-
-<script>
-   // window.fbAsyncInit = function() {
-   //      FB.init({
-   //        appId      : '266550166850505',
-   //        xfbml      : true,
-   //        version    : 'v2.0'
-   //      });
-   //    };
-
-
-//TODO <link rel="subresource">
-
-(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=266550166850505&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 
     <!--
     <script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
