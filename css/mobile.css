@@ -9256,6 +9256,7 @@ body.ibook-product article .with-slider .rounded-link img {
 }
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
 }
 #stress-free .when-subscribed,
 #signup .when-subscribed {
