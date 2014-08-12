@@ -8193,11 +8193,7 @@ body * .ls-container .ls-webkit-hack,
   background: transparent;
 }
 .feature-dvd {
-  margin-top: 50px;
   width: 240px;
-}
-.signup-phrases {
-  background-color: white;
 }
 .signup-phrases p {
   font-size: 1.5em;
@@ -8226,7 +8222,7 @@ body * .ls-container .ls-webkit-hack,
 }
 @media only screen and (min-width: 500px) {
   .feature-dvd {
-    float: right;
+    float: left;
     width: 300px;
   }
   .signup-phrases .signup-box {
@@ -9237,6 +9233,15 @@ body {
     background-size: 100% auto;
   }
 }
+main article section.first {
+  background-color: white;
+}
+.kat-henry-intro {
+  background-color: white;
+  background-size: 100% auto;
+  background-position: center right;
+  background-image: url(/images/Kat-Henry-9.jpg);
+}
 #stress-free .when-subscribed,
 #signup .when-subscribed {
   display: none;
@@ -9250,7 +9255,7 @@ body {
   display: block;
 }
 #stress-free {
-  min-height: 37em;
+  min-height: 33em;
 }
 #stress-free iframe {
   width: 100%;
