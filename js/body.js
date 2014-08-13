@@ -1498,6 +1498,41 @@ var account;
     };
     slider.Slider = Slider;
 }(window);
+!function () {
+    var HTMLElement = Resolver("essential::HTMLElement::");
+
+    Resolver("document::essential.handlers").set("enhance.audio", function (el, role, conf) {
+        if (!el.canPlayType) {
+            return null;
+        }
+
+        var cls = el.className.split(" ")[0];
+        var avail = HTMLElement("p", { "class": cls + "-audio", "hidden": false }), unavail = HTMLElement("p", { "class": cls + "-audio-unavailable", "hidden": false }, '<em class="error"><strong>Error:</strong> You will not be able to do the read-along audio because your browser is not able to play MP3, Ogg, or WAV audio formats.</em>');
+
+        el.parentNode.insertBefore(avail, el);
+        el.parentNode.insertBefore(unavail, el);
+        avail.appendChild(el);
+
+        if (el.networkState === el.NETWORK_NO_SOURCE) {
+            unavail.hidden = false;
+            throw new Error('Cannot play any of the available sources');
+        }
+
+        var args = {
+            "text_element": document.querySelector(conf.text),
+            "audio_element": avail,
+            "autofocus_current_word": conf.autofocus_current_word === undefined ? true : conf.autofocus_current_word
+        };
+
+        avail.hidden = false;
+
+        return {
+            "audio": el,
+            "avail": avail,
+            "unavail": unavail
+        };
+    });
+}();
 function enhance_book(el, role, config) {
     var book = new reader.Book(el, config);
 
