@@ -91,7 +91,9 @@ module.exports = function(grunt) {
             '_libs/angular-mods.js'
           ]
         }
-      },
+      }
+      /*
+      ,
 
       bootstrap: {
         files: {
@@ -103,6 +105,7 @@ module.exports = function(grunt) {
           ]
         }
       }
+      */
     },
 
     // --- COPY ---
