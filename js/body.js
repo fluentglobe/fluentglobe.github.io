@@ -1549,16 +1549,16 @@ function discard_book(el, role, instance) {
         instance.destroy(el);
 }
 
-Resolver("document").set("handlers.enhance.book", enhance_book);
-Resolver("document").set("handlers.layout.book", layout_book);
-Resolver("document").set("handlers.discard.book", discard_book);
+Resolver("document").set("essential.handlers.enhance.book", enhance_book);
+Resolver("document").set("essential.handlers.layout.book", layout_book);
+Resolver("document").set("essential.handlers.discard.book", discard_book);
 
-Resolver("document").set("handlers.enhance.slider", slider.enhance);
-Resolver("document").set("handlers.layout.slider", function (el, layout, instance) {
+Resolver("document").set("essential.handlers.enhance.slider", slider.enhance);
+Resolver("document").set("essential.handlers.layout.slider", function (el, layout, instance) {
     if (instance)
         return instance.layout(layout);
 });
-Resolver("document").set("handlers.discard.slider", function (el, role, instance) {
+Resolver("document").set("essential.handlers.discard.slider", function (el, role, instance) {
     if (instance)
         instance.destroy(el);
 });
