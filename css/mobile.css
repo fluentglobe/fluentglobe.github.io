@@ -2699,9 +2699,9 @@ html[lang=ch] body [lang=ar] {
   max-width: 400px;
 }
 .narrow-blurp {
-  margin: 40px auto 0 auto;
+  margin: 20px auto 0 auto;
   border: 0;
-  width: 10em;
+  width: 26em;
   text-align: center;
 }
 .on-dark-picture-bg h1,
