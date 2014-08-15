@@ -81,7 +81,7 @@ body {
         .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
         .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
         .transition(.3s ease-in-out left);
-        .site-menu-flag(13em, @app-menu-bg);
+        .site-menu-flag(13em, @app-menu-bg); //TODO on plain page
     }
 
     &.state-expanded {
@@ -339,10 +339,26 @@ html body.splash-zurich {
         left: 0; right: 0;
         top: 0; bottom: 0;
         background-image: url(../images/05.png);
+        z-index: -1000;
     }
 
     .intro-on-body(url(../images/zurich-1024-bare.jpg),url(../images/zurich-360-bare.jpg));
+}
 
+html body.splash-katty {
+
+    // adds a TV effect
+    // #intro:before {
+    //     content: " ";
+    //     // z-index: -9999;
+    //     position: absolute;
+    //     left: 0; right: 0;
+    //     top: 0; bottom: 0;
+    //     background-image: url(../images/05.png);
+    //     z-index: -1000;
+    // }
+
+    .intro-on-body(url(../images/Kat-Henry-77.jpg),url(../images/katty-360.jpg));
 }
 
 // logo and message top left

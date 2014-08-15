@@ -4805,6 +4805,7 @@ html body.splash-zurich #intro:before {
   top: 0;
   bottom: 0;
   background-image: url(../images/05.png);
+  z-index: -1000;
 }
 html body.splash-zurich #intro {
   left: 0;
@@ -4862,6 +4863,66 @@ html body.splash-zurich .bg-tracer {
 }
 @media screen and (device-aspect-ratio: 3/4) and (orientation: portrait) {
   html body.splash-zurich #stuck {
+    background-position: bottom center;
+    background-size: auto 100%;
+  }
+}
+html body.splash-katty #intro {
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  background-image: url(../images/Kat-Henry-77.jpg);
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+html body.splash-katty .bg-tracer {
+  position: fixed;
+  visibility: hidden;
+  width: 960px;
+  height: 548px;
+}
+@media only screen and (min-width: 320px) and (max-width: 360px) {
+  html body.splash-katty #intro {
+    background-image: url(../images/katty-360.jpg);
+    background-position: top center;
+    background-size: 360px auto;
+  }
+  html body.splash-katty .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media only screen and (min-width: 361px) and (max-width: 800px) {
+  html body.splash-katty #intro {
+    background-image: url(../images/katty-360.jpg);
+    background-position: top center;
+    background-size: 100% auto;
+  }
+  html body.splash-katty .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) {
+  html body.splash-katty #intro {
+    background-image: url(../images/katty-360.jpg);
+    background-position: top left;
+    background-size: 360px auto;
+  }
+  html body.splash-katty .bg-tracer {
+    position: fixed;
+    visibility: hidden;
+    width: 360px;
+    height: 920px;
+  }
+}
+@media screen and (device-aspect-ratio: 3/4) and (orientation: portrait) {
+  html body.splash-katty #stuck {
     background-position: bottom center;
     background-size: auto 100%;
   }
