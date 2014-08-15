@@ -9186,9 +9186,8 @@ body.ibook-product article .with-slider .rounded-link img {
   height: 57px;
   background-image: url(/images/press-mentions.png);
   background-position: -242px 0;
-  transform: scale(0.5);
-  margin-left: -50px;
-  margin-right: -25px;
+  zoom: .5;
+  transform-origin: 0 0;
 }
 .press-mentions .reuters {
   display: inline-block;
@@ -9197,9 +9196,8 @@ body.ibook-product article .with-slider .rounded-link img {
   height: 57px;
   background-image: url(/images/press-mentions.png);
   background-position: -500px 0;
-  transform: scale(0.5);
-  margin-left: -100px;
-  margin-right: -50px;
+  zoom: .5;
+  transform-origin: 0 0;
 }
 .press-mentions .daily-news {
   display: inline-block;
@@ -9208,9 +9206,8 @@ body.ibook-product article .with-slider .rounded-link img {
   height: 57px;
   background-image: url(/images/press-mentions.png);
   background-position: 0 0;
-  transform: scale(0.5);
-  margin-left: -100px;
-  margin-right: -50px;
+  zoom: .5;
+  transform-origin: 0 0;
 }
 body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
