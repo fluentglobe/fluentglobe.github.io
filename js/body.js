@@ -699,6 +699,22 @@ var fluentglobe;
                 if (config["require-hash"])
                     document.essential.router.requireHash(el, config);
             }
+
+            var router = document.essential.router, hash = location.hash;
+
+            if (hash) {
+                for (var i = 0, path; path = router.hrefs[i]; ++i) {
+                    if (hash.indexOf(path.href) == 1) {
+                        try  {
+                            var prevent = path.fn(path.href, "open");
+                            if (prevent == false)
+                                return false;
+                        } catch (ex) {
+                            debugger;
+                        }
+                    }
+                }
+            }
         }
     });
 
