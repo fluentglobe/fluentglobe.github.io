@@ -9281,7 +9281,7 @@ body {
   position: relative;
   padding-top: 50px;
   width: 100%;
-  height: 400px;
+  height: 350px;
   background-image: url(/images/Kat-Henry-1.jpg);
   background-position: top right;
   background-size: auto 100%;
@@ -9290,6 +9290,7 @@ body {
   .with-lead-and-menu > header {
     background-image: url(/images/Kat-Henry-86.jpg);
     background-size: 100% auto;
+    height: 500px;
   }
 }
 main article section.first {
