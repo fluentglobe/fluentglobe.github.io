@@ -24,7 +24,8 @@ module.exports = function(grunt) {
           '_libs/prefix.js',
           'components/essentialjs/js/modernizr-custom.js',
           // 'components/es5-shim/es5-shim.min.js',          
-          'components/es5-shim/es5-shim.js',          
+          'components/es5-shim/es5-shim.js',
+          'components/base64/base64.js',          
           'components/essentialjs/essential.js',
           '_libs/head.js'
         ],
@@ -36,6 +37,7 @@ module.exports = function(grunt) {
           'components/angular-toggle-switch/angular-toggle-switch.js',
           'components/tv4/tv4.js',
           '../libs/html5-audio-read-along/read-along.js',
+          'components/impress.js/js/impress.js',
           '_libs/angular-mods.js'
         ],
         dest: 'js/angular-mods.js'
@@ -79,7 +81,11 @@ module.exports = function(grunt) {
         files: {
           'js/modernizr+essential.min.js': [
             'js/modernizr-custom.js',
-            '_libs/essential.js'
+            // 'components/es5-shim/es5-shim.min.js',          
+            'components/es5-shim/es5-shim.js',
+            'components/base64/base64.js',          
+            'components/essentialjs/essential.js',
+            '_libs/head.js'
           ]
         }
       },
@@ -90,6 +96,7 @@ module.exports = function(grunt) {
             'components/angular-toggle-switch/angular-toggle-switch.min.js',
             'components/tv4/tv4.js',
             '../libs/html5-audio-read-along/read-along.js',
+            'components/impress.js/js/impress.js',
             '_libs/angular-mods.js'
           ]
         }
