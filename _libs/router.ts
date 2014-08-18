@@ -180,6 +180,7 @@ Router.prototype.hashchange = function(ev) {
         var el = this.hashDriven[i], config = this.hashDriven[i+1];
         this._hideIfNotHash(el,config);
     }
+    this.hashCall(location.hash);
 };
 
 Router.prototype._hideIfNotHash = function(el,config) {
@@ -206,6 +207,35 @@ Router.prototype.linkPlayButtons = function() {
     }
 };
 
+Router.prototype.hashCall = function(hash) {
+
+    if (hash) {
+        for(var i=0,path; path = this.hrefs[i]; ++i) {
+            if (hash.indexOf(path.href) == 1) {
+                try {
+                    var prevent = path.fn(hash.substring(1),"load");
+                    if (prevent == false) return false;
+                } catch(ex) {
+                    //TODO cmd failed
+                    debugger;
+                }
+            }
+        }
+    }
+};
+
+// by default clear additional data
+Router.prototype.clearHash = function(clearAll) {
+    if (clearAll === false) {
+        var hash = location.hash.split("=")[0].split("&")[0];
+        location.hash = hash;
+    } else if (typeof clearAll == "string") {
+        location.hash = clearAll
+    }
+    else {
+        location.hash = "";
+    }
+}
 
 addEventListeners(document.documentElement,{
     "click": function(ev) {
@@ -220,6 +250,8 @@ addEventListeners(document.documentElement,{
             if (false == router.onAnchorClick(ev.commandElement.href, ev.commandElement.attributes)) ev.preventDefault();
         }
     }
+
+    //TODO submit event for form submits
 });
 
 //TODO rethink and move to EssentialJS
@@ -254,19 +286,7 @@ Resolver("document").on("change","readyState",function(ev) {
         var router = document.essential.router,
             hash = location.hash;
 
-        if (hash) {
-            for(var i=0,path; path = router.hrefs[i]; ++i) {
-                if (hash.indexOf(path.href) == 1) {
-                    try {
-                        var prevent = path.fn(path.href,"open");
-                        if (prevent == false) return false;
-                    } catch(ex) {
-                        //TODO cmd failed
-                        debugger;
-                    }
-                }
-            }
-        }
+        router.hashCall(hash);
     }
 });
 

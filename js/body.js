@@ -638,6 +638,7 @@ var fluentglobe;
             var el = this.hashDriven[i], config = this.hashDriven[i + 1];
             this._hideIfNotHash(el, config);
         }
+        this.hashCall(location.hash);
     };
 
     Router.prototype._hideIfNotHash = function (el, config) {
@@ -658,6 +659,33 @@ var fluentglobe;
                 mep.className += " page-audio";
                 this.player = mediaelement[0].player;
             }
+        }
+    };
+
+    Router.prototype.hashCall = function (hash) {
+        if (hash) {
+            for (var i = 0, path; path = this.hrefs[i]; ++i) {
+                if (hash.indexOf(path.href) == 1) {
+                    try  {
+                        var prevent = path.fn(hash.substring(1), "load");
+                        if (prevent == false)
+                            return false;
+                    } catch (ex) {
+                        debugger;
+                    }
+                }
+            }
+        }
+    };
+
+    Router.prototype.clearHash = function (clearAll) {
+        if (clearAll === false) {
+            var hash = location.hash.split("=")[0].split("&")[0];
+            location.hash = hash;
+        } else if (typeof clearAll == "string") {
+            location.hash = clearAll;
+        } else {
+            location.hash = "";
         }
     };
 
@@ -702,19 +730,7 @@ var fluentglobe;
 
             var router = document.essential.router, hash = location.hash;
 
-            if (hash) {
-                for (var i = 0, path; path = router.hrefs[i]; ++i) {
-                    if (hash.indexOf(path.href) == 1) {
-                        try  {
-                            var prevent = path.fn(path.href, "open");
-                            if (prevent == false)
-                                return false;
-                        } catch (ex) {
-                            debugger;
-                        }
-                    }
-                }
-            }
+            router.hashCall(hash);
         }
     });
 
