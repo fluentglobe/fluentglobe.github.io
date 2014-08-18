@@ -995,8 +995,8 @@ var account;
     };
     buckets.simperium = null;
 
-    buckets.api_key = document.essential.fluentbook_simperium_api_key;
-    buckets.app_id = document.essential.fluentbook_simperium_app_id;
+    buckets.api_key = document.essential.simperium_api_key;
+    buckets.app_id = document.essential.simperium_app_id;
     buckets.authUrl = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", buckets.app_id);
     buckets.createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", buckets.app_id);
 
@@ -1099,11 +1099,11 @@ var account;
         if (state("authenticated"))
             return;
 
-        var password = "-";
+        var password = "-", _user = this.user;
 
-        buckets.authenticate(this.user.email, password, {
+        buckets.authenticate(_user.email, password, {
             unknown: function (err, tp, code) {
-                buckets.authenticate(this.user.email, password, {
+                buckets.authenticate(_user.email, password, {
                     create: true,
                     error: function (err, tp, code) {
                         switch (err.status) {
@@ -1115,7 +1115,7 @@ var account;
                                 break;
                         }
 
-                        console.log("Failed to create user for", this.user.email);
+                        console.log("Failed to create user for", _user.email);
                     }
                 });
             }
@@ -1138,7 +1138,8 @@ var account;
 
     account.BookAccess.prototype.forgetUser = function () {
         setTimeout(function () {
-            basic.set({});
+            if (buckets.get("user", null))
+                basic.set({});
             session.set("username", "");
             session.set("password", false);
         }, 0);
