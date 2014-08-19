@@ -993,6 +993,14 @@ var account;
             ;
         }
     };
+
+    buckets.resumeSession = function () {
+        var access_token = session().access_token;
+        if (access_token) {
+            this.simperium = new Simperium(this.app_id, { token: access_token });
+        }
+    };
+
     buckets.simperium = null;
 
     buckets.api_key = document.essential.simperium_api_key;
@@ -1000,7 +1008,7 @@ var account;
     buckets.authUrl = "https://auth.simperium.com/1/:app_id/authorize/".replace(":app_id", buckets.app_id);
     buckets.createUrl = "https://auth.simperium.com/1/:app_id/create/".replace(":app_id", buckets.app_id);
 
-    buckets.authenticate = function (username, password, opts) {
+    buckets.authenticate = function (username, password, that, opts) {
         function success(data) {
             buckets.lastPassword = password;
             buckets.created = opts.create;
@@ -1013,7 +1021,7 @@ var account;
             state.set("authenticated", true);
 
             if (opts.success)
-                opts.success(data, opts);
+                opts.success.call(that, data, opts);
         }
 
         function error(err, tp, code) {
@@ -1026,16 +1034,16 @@ var account;
                 case "UNAUTHORIZED":
                     if (err.responseText == "invalid password") {
                         if (opts.invalidPassword)
-                            opts.invalidPassword(err, tp, code, opts);
+                            opts.invalidPassword.call(that, err, tp, code, opts);
                         session.set("password", true);
                     } else {
                         if (opts.unknown)
-                            opts.unknown(err, tp, code, opts);
+                            opts.unknown.call(that, err, tp, code, opts);
                     }
                     break;
             }
             if (opts.error)
-                opts.error(err, tp, code, opts);
+                opts.error.call(that, err, tp, code, opts);
         }
 
         $.ajax({
@@ -1062,6 +1070,8 @@ var account;
     };
 
     var state = Resolver("document::essential.state"), basic = Resolver("buckets::user.basic"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
+
+    buckets.declare("user.basic", {});
 
     account.BookAccess = Generator(function () {
         basic.on("bind change", this, function (ev) {
@@ -1101,9 +1111,15 @@ var account;
 
         var password = "-", _user = this.user;
 
-        buckets.authenticate(_user.email, password, {
+        buckets.authenticate(_user.email, password, this, {
+            success: function () {
+                console.info("User in business! ", _user.email);
+            },
+            invalidPassword: function (err, tp, code) {
+                console.log("Unhandled .. pass", _user.email, err, tp, code);
+            },
             unknown: function (err, tp, code) {
-                buckets.authenticate(_user.email, password, {
+                buckets.authenticate(_user.email, password, this, {
                     create: true,
                     error: function (err, tp, code) {
                         switch (err.status) {
@@ -1125,7 +1141,15 @@ var account;
     account.BookAccess.prototype.updateAuthenticated = function () {
         if (this.state.authenticated) {
             if (buckets.simperium == null) {
-                var bucket = buckets.getBucket("user");
+                var bucket = buckets.getBucket("user", function (name, bucket) {
+                    var features = session().enable_features;
+                    if (typeof features == "object") {
+                        for (var n in features) {
+                            bucket.update("feature " + n, features[n]);
+                        }
+                        session.set("enable_features", null);
+                    }
+                });
             }
         }
 
@@ -1148,6 +1172,10 @@ var account;
     account.BookAccess.prototype.iLiveIn = function (city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
+    };
+
+    account.BookAccess.prototype.enableFeatures = function (features) {
+        session.set("enable_features", features);
     };
 
     account.BookAccess.prototype.applyPhone = function () {
@@ -1197,6 +1225,14 @@ var account;
             });
         });
     }
+
+    Resolver("document").on("change", "readyState", function (ev) {
+        switch (ev.value) {
+            case "interactive":
+                Resolver("buckets").resumeSession();
+                break;
+        }
+    });
 })(account || (account = {}));
 !function (window) {
     var essential = Resolver("essential"), pageResolver = Resolver("page"), ApplicationConfig = essential("ApplicationConfig"), console = essential("console"), StatefulResolver = essential("StatefulResolver"), addEventListeners = essential("addEventListeners"), MutableEvent = essential("MutableEvent"), EnhancedDescriptor = essential("EnhancedDescriptor"), DescriptorQuery = essential("DescriptorQuery"), ElementPlacement = essential("ElementPlacement"), Layouter = essential("Layouter"), Laidout = essential("Laidout"), HTMLElement = essential("HTMLElement"), DialogAction = essential("DialogAction");

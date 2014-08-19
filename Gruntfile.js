@@ -45,16 +45,12 @@ module.exports = function(grunt) {
 
       serverDev: {
         src: [
-          '../libs/simperium-js/simperium-dev.js'
+          '../libs/simperium-js/libs/jsondiff-1.0.js',
+          '../libs/simperium-js/libs/diff_match_patch_uncompressed.js',
+          '../libs/simperium-js/libs/sockjs-0.3.4.js',
+          'js/sync.js'
         ],
         dest: 'js/server.js'
-      },
-
-      server: {
-        src: [
-          '../libs/simperium-js/simperium.js'
-        ],
-        dest: 'js/server.min.js'
       },
 
       app: {
@@ -100,7 +96,18 @@ module.exports = function(grunt) {
             '_libs/angular-mods.js'
           ]
         }
+      },
+
+      server: {
+        src: [
+          '../libs/simperium-js/libs/jsondiff-1.0.js',
+          '../libs/simperium-js/libs/diff_match_patch_uncompressed.js',
+          '../libs/simperium-js/libs/sockjs-0.3.4.js',
+          'js/sync.js'
+        ],
+        dest: 'js/server.min.js'
       }
+
       /*
       ,
 
@@ -115,6 +122,14 @@ module.exports = function(grunt) {
         }
       }
       */
+    },
+
+    coffee: {
+      serverDev: {
+        files: {
+          'js/sync.js':'../libs/simperium-js/sync.coffee'
+        }
+      }
     },
 
     // --- COPY ---
@@ -302,7 +317,7 @@ module.exports = function(grunt) {
         tasks: [
           //'jshint',
           // 'browserify', //TODO gotta go
-          'concat:essential','concat:mods', 'concat:server', 'concat:serverDev',
+          'concat:essential','concat:mods',  'coffee:serverDev', 'uglify:server', 'concat:serverDev',
           'jekyll:dev'
           ],
 
@@ -454,6 +469,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -474,7 +490,7 @@ module.exports = function(grunt) {
     'browserify','copy','uglify',
     'less:dev','less:dist',
     'typescript',
-    'concat:essential','concat:mods','concat:server','concat:serverDev','jekyll:dev',
+    'concat:essential','concat:mods', 'coffee:serverDev', 'uglify:server','concat:serverDev','jekyll:dev',
     'concurrent']
     );
   grunt.registerTask('install', [
@@ -482,7 +498,7 @@ module.exports = function(grunt) {
     'modernizr','copy:mediaelement','exec:ffmpeg'
     ]);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
-    'qunit','concat',
+    'qunit','coffee','concat',
     'uglify','typescript','jekyll:dist' //TODO should there be a dist typescript build
     ]);
   grunt.registerTask('serve', ['jekyll:serve']);

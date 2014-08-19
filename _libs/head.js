@@ -108,14 +108,6 @@
 	});
 	session.stored("load change","session");
 
-	Resolver("document").on("change","readyState", function(ev) {
-		switch(ev.value) {
-			case "interactive":
-				state.set("authenticated", !!session("access_token"));
-				break;
-		}
-	});
-
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 
 		this.lowBoundsWidth = conf.lowBoundsWidth || 800;

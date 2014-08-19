@@ -1,191 +1,6728 @@
 /*! Fluent Globe - v0.1.0 - 2014
 * http://fluentglobe.com
 * Copyright (c) 2014 Henrik Vendelbo; Licensed  */
-(function(){var e,f=function(k,g){return function(){return k.apply(g,arguments)}},c={}.hasOwnProperty;e=function(){function k(){this.patch_apply_with_offsets=f(this.patch_apply_with_offsets,this);this.transform_object_diff=f(this.transform_object_diff,this);this.transform_list_diff_dmp=f(this.transform_list_diff_dmp,this);this.transform_list_diff=f(this.transform_list_diff,this);this.apply_diff=f(this.apply_diff,this);this.apply_object_diff_with_offsets=f(this.apply_object_diff_with_offsets,this);
-this.apply_object_diff=f(this.apply_object_diff,this);this.apply_list_diff_dmp=f(this.apply_list_diff_dmp,this);this.apply_list_diff=f(this.apply_list_diff,this);this.diff=f(this.diff,this);this.object_diff=f(this.object_diff,this);this._text_to_array=f(this._text_to_array,this);this._serialize_to_text=f(this._serialize_to_text,this);this.list_diff_dmp=f(this.list_diff_dmp,this);this.list_diff=f(this.list_diff,this);this._common_suffix=f(this._common_suffix,this);this._common_prefix=f(this._common_prefix,
-this);this.object_equals=f(this.object_equals,this);this.list_equals=f(this.list_equals,this);this.equals=f(this.equals,this);this.deepCopy=f(this.deepCopy,this);this.typeOf=f(this.typeOf,this);this.entries=f(this.entries,this);this.dmp=new diff_match_patch}k.prototype.entries=function(g){var d,a;a=0;for(d in g)c.call(g,d)&&a++;return a};k.prototype.typeOf=function(g){var d;d=typeof g;if(d==="object")if(g){if(typeof g.length==="number"&&typeof g.splice==="function"&&!g.propertyIsEnumerable("length"))d=
-"array"}else d="null";return d};k.prototype.deepCopy=function(g){return JSON.parse(JSON.stringify(g))};k.prototype.equals=function(g,d){var a,b;a=this.typeOf(g);b=this.typeOf(d);if(a==="boolean"&&b==="number")return Number(g)===d;if(a==="number"&&b==="boolean")return Number(d)===g;if(a!==b)return false;return a==="array"?this.list_equals(g,d):a==="object"?this.object_equals(g,d):g===d};k.prototype.list_equals=function(g,d){var a,b,h;a=g.length;if(a!==d.length)return false;for(b=h=0;0<=a?h<a:h>a;b=
-0<=a?++h:--h)if(!this.equals(g[b],d[b]))return false;return true};k.prototype.object_equals=function(g,d){for(var a in g)if(c.call(g,a)){if(!(a in d))return false;if(!this.equals(g[a],d[a]))return false}for(a in d)if(c.call(d,a))if(!(a in g))return false;return true};k.prototype._common_prefix=function(g,d){var a,b,h;b=Math.min(g.length,d.length);for(a=h=0;0<=b?h<b:h>b;a=0<=b?++h:--h)if(!this.equals(g[a],d[a]))return a;return b};k.prototype._common_suffix=function(g,d){var a,b,h,j,m;b=g.length;h=
-d.length;j=Math.min(g.length,d.length);if(j===0)return 0;for(a=m=0;0<=j?m<j:m>j;a=0<=j?++m:--m)if(!this.equals(g[b-a-1],d[h-a-1]))return a;return j};k.prototype.list_diff=function(g,d,a){var b,h,j,m,p,q,s;a=a!=null&&"item"in a?a.item:null;b={};j=g.length;m=d.length;q=this._common_prefix(g,d);h=this._common_suffix(g,d);g=g.slice(q,j-h);d=d.slice(q,m-h);j=g.length;m=d.length;p=Math.max(j,m);for(h=s=0;0<=p?s<=p:s>=p;h=0<=p?++s:--s)if(h<j&&h<m)this.equals(g[h],d[h])||(b[h+q]=this.diff(g[h],d[h],a));else if(h<
-j)b[h+q]={o:"-"};else if(h<m)b[h+q]={o:"+",v:d[h]};return b};k.prototype.list_diff_dmp=function(g,d){var a,b;a=this._serialize_to_text(g);b=this._serialize_to_text(d);a=this.dmp.diff_lineMode_(a,b);this.dmp.diff_cleanupEfficiency(a);return this.dmp.diff_toDelta(a)};k.prototype._serialize_to_text=function(g){var d,a,b,h;a="";b=0;for(h=g.length;b<h;b++){d=g[b];a+=""+JSON.stringify(d)+"\n"}return a};k.prototype._text_to_array=function(g){var d,a,b;d=[];a=g.split("\n");return d=function(){var h,j,m;m=
-[];h=0;for(j=a.length;h<j;h++){b=a[h];b.length>0&&m.push(JSON.parse(b))}return m}()};k.prototype.object_diff=function(g,d,a){var b,h,j;b={};if(a!=null&&"attributes"in a)a=a.attributes;if(g==null||d==null)return{};for(h in g)if(c.call(g,h)){j=a!=null&&h in a?a[h]:null;if(h in d)this.equals(g[h],d[h])||(b[h]=this.diff(g[h],d[h],j));else b[h]={o:"-"}}for(h in d)if(c.call(d,h))if(!(h in g)&&d[h]!=null)b[h]={o:"+",v:d[h]};return b};k.prototype.diff=function(g,d,a){var b;if(this.equals(g,d))return{};if(a!=
-null&&"attributes"in a)a=a.attributes;if(a!=null&&"otype"in a){b=a.otype;switch(b){case "replace":return{o:"r",v:d};case "list":return{o:"L",v:this.list_diff(g,d,a)};case "list_dmp":return{o:"dL",v:this.list_diff_dmp(g,d,a)};case "integer":return{o:"I",v:d-g};case "string":b=this.dmp.diff_main(g,d);b.length>2&&this.dmp.diff_cleanupEfficiency(b);if(b.length>0)return{o:"d",v:this.dmp.diff_toDelta(b)}}}b=this.typeOf(g);if(b!==this.typeOf(d))return{o:"r",v:d};switch(b){case "boolean":return{o:"r",v:d};
-case "number":return{o:"r",v:d};case "array":return{o:"r",v:d};case "object":return{o:"O",v:this.object_diff(g,d,a)};case "string":b=this.dmp.diff_main(g,d);b.length>2&&this.dmp.diff_cleanupEfficiency(b);if(b.length>0)return{o:"d",v:this.dmp.diff_toDelta(b)}}return{}};k.prototype.apply_list_diff=function(g,d){var a,b,h,j,m,p,q,s,w;p=this.deepCopy(g);j=[];a=[];for(m in d)if(c.call(d,m)){j.push(m);j.sort()}m=0;for(w=j.length;m<w;m++){h=j[m];b=d[h];q=function(){var v,u,r;r=[];v=0;for(u=a.length;v<u;v++){s=
-a[v];s<=h&&r.push(s)}return r}().length;q=h-q;switch(b.o){case "+":[].splice.apply(p,[q,q-1-q+1].concat(b.v));break;case "-":[].splice.apply(p,[q,q-q+1].concat([]));a[a.length]=q;break;case "r":p[q]=b.v;break;case "I":p[q]+=b.v;break;case "L":p[q]=this.apply_list_diff(p[q],b.v);break;case "dL":p[q]=this.apply_list_diff_dmp(p[q],b.v);break;case "O":p[q]=this.apply_object_diff(p[q],b.v);break;case "d":b=this.dmp.diff_fromDelta(p[q],b.v);b=this.dmp.patch_make(p[q],b);b=this.dmp.patch_apply(b,p[q]);p[q]=
-b[0]}}return p};k.prototype.apply_list_diff_dmp=function(g,d){var a,b;b=this._serialize_to_text(g);a=this.dmp.diff_fromDelta(b,d);return this._text_to_array(this.dmp.patch_apply(this.dmp.patch_make(b,a),b)[0])};k.prototype.apply_object_diff=function(g,d){var a,b,h;h=this.deepCopy(g);for(a in d)if(c.call(d,a)){b=d[a];if(b.o==="-")delete h[a];else h[a]=this.apply_diff(h[a],b)}return h};k.prototype.apply_object_diff_with_offsets=function(g,d,a,b){var h,j;g=this.deepCopy(g);for(j in d)if(c.call(d,j)){h=
-d[j];switch(h.o){case "+":g[j]=h.v;break;case "-":delete g[j];break;case "r":g[j]=h.v;break;case "I":g[j]+=h.v;break;case "L":g[j]=this.apply_list_diff(g[j],h.v);break;case "O":g[j]=this.apply_object_diff(g[j],h.v);break;case "d":h=this.dmp.diff_fromDelta(g[j],h.v);h=this.dmp.patch_make(g[j],h);if(j===a)g[j]=this.patch_apply_with_offsets(h,g[j],b);else{h=this.dmp.patch_apply(h,g[j]);g[j]=h[0]}}}return g};k.prototype.apply_diff=function(g,d){var a;switch(d.o){case "+":return d.v;case "-":return null;
-case "r":return d.v;case "I":return g+d.v;case "L":return this.apply_list_diff(g,d.v);case "dL":return this.apply_list_diff_dmp(g,d.v);case "O":return this.apply_object_diff(g,d.v);case "d":a=this.dmp.diff_fromDelta(g,d.v);a=this.dmp.patch_make(g,a);a=this.dmp.patch_apply(a,g);return a[0]}};k.prototype.transform_list_diff=function(g,d,a,b){var h,j,m,p,q,s,w,v,u,r;h={};m=[];j=[];b=b!=null&&"item"in b?b.item:null;for(q in d)if(c.call(d,q)){p=d[q];q=parseInt(q);p.o==="+"&&m.push(q);p.o==="-"&&j.push(q)}w=
-s=0;for(q in g)if(c.call(g,q)){p=g[q];q=parseInt(q);u=function(){var x,B,z;z=[];x=0;for(B=m.length;x<B;x++){r=m[x];r<q&&z.push(r)}return z}().length;v=function(){var x,B,z;z=[];x=0;for(B=j.length;x<B;x++){r=j[x];r<q&&z.push(r)}return z}().length;if(s+1===q)q+=w;else q=q+u-v;s=q;w=u-v;v=String(q);h[v]=p;if(v in d)if(!(p.o==="+"&&d[q].o==="+"))if(p.o==="-")d[q].o==="-"&&delete h[v];else if(d[q].o==="-"){if(p.o==="r")h[v]={o:"+",v:p.v};if(p.o===false)h[v]={o:"+",v:this.apply_object_diff(a[v],p.v)}}else{u=
-{};u[v]=p;p={};p[v]=d[q];p=this.transform_object_diff(u,p,a,b);h[v]=p[v]}}return h};k.prototype.transform_list_diff_dmp=function(g,d,a){a=this._serialize_to_text(a);g=this.dmp.patch_make(a,this.dmp.diff_fromDelta(a,g));d=this.dmp.patch_apply(this.dmp.patch_make(a,this.dmp.diff_fromDelta(a,d)),a)[0];g=this.dmp.patch_apply(g,d)[0];if(g!==d){d=this.dmp.diff_lineMode_(d,g);d.length>2&&this.dmp.diff_cleanupEfficiency(d);if(d.length>0)return this.dmp.diff_toDelta(d)}return""};k.prototype.transform_object_diff=
-function(g,d,a,b){var h,j,m,p;h=this.deepCopy(g);if(b!=null&&"attributes"in b)b=b.attributes;for(m in g)if(c.call(g,m)){j=g[m];if(m in d){if(b!=null&&"attributes"in b){b=b.attributes;b=b!=null&&m in b?b[m]:null}else b=null;g=a[m];d=d[m];if(j.o==="+"&&d.o==="+")if(this.equals(j.v,d.v))delete h[m];else h[m]=this.diff(d.v,j.v,b);else if(j.o==="-"&&d.o==="-")delete h[m];else if(d.o==="-"&&(p=j.o)!=="+"&&p!=="-"){h[m]={o:"+"};h[m].v=this.apply_diff(g,j)}else if(j.o==="O"&&d.o==="O")h[m]={o:"O",v:this.transform_object_diff(j.v,
-d.v,g,b)};else if(j.o==="L"&&d.o==="L")h[m]={o:"L",v:this.transform_list_diff(j.v,d.v,g,b)};else if(j.o==="dL"&&d.o==="dL")h[m]={o:"dL",v:this.transform_list_diff_dmp(j.v,d.v,g,b)};else if(j.o==="d"&&d.o==="d"){delete h[m];b=this.dmp.patch_make(g,this.dmp.diff_fromDelta(g,j.v));j=this.dmp.patch_make(g,this.dmp.diff_fromDelta(g,d.v));j=this.dmp.patch_apply(j,g)[0];b=this.dmp.patch_apply(b,j)[0];if(b!==j){b=this.dmp.diff_main(j,b);b.length>2&&this.dmp.diff_cleanupEfficiency(b);if(b.length>0)h[m]={o:"d",
-v:this.dmp.diff_toDelta(b)}}}return h}}};k.prototype.patch_apply_with_offsets=function(g,d,a){var b,h,j,m,p,q,s,w,v,u,r,x,B,z,I,J,E;if(g.length===0)return d;g=this.dmp.patch_deepCopy(g);u=this.dmp.patch_addPadding(g);d=u+d+u;this.dmp.patch_splitMax(g);x=B=j=0;for(I=g.length;0<=I?B<I:B>I;x=0<=I?++B:--B){p=g[x].start2+j;s=this.dmp.diff_text1(g[x].diffs);m=-1;if(s.length>this.dmp.Match_MaxBits){r=this.dmp.match_main(d,s.substring(0,this.dmp.Match_MaxBits),p);if(r!==-1){m=this.dmp.match_main(d,s.substring(s.length-
-this.dmp.Match_MaxBits),p+s.length-this.dmp.Match_MaxBits);if(m===-1||r>=m)r=-1}}else r=this.dmp.match_main(d,s,p);if(r===-1)j-=g[x].length2-g[x].length1;else{j=r-p;m=m===-1?d.substring(r,r+s.length):d.substring(r,m+this.dmp.Match_MaxBits);m=this.dmp.diff_main(s,m,false);if(!(s.length>this.dmp.Match_MaxBits&&this.dmp.diff_levenshtein(m)/s.length>this.dmp.Patch_DeleteThreshold)){q=p=s=0;for(J=g[x].diffs.length;0<=J?p<J:p>J;q=0<=J?++p:--p){v=g[x].diffs[q];if(v[0]!==0)w=this.dmp.diff_xIndex(m,s);if(v[0]===
-1){d=d.substring(0,r+w)+v[1]+d.substring(r+w);q=b=0;for(h=a.length;0<=h?b<h:b>h;q=0<=h?++b:--b)if(a[q]+u.length>r+w)a[q]+=v[1].length}else if(v[0]===-1){h=r+w;b=r+this.dmp.diff_xIndex(m,s+v[1].length);d=d.substring(0,h)+d.substring(b);q=z=0;for(E=a.length;0<=E?z<E:z>E;q=0<=E?++z:--z)if(a[q]+u.length>h)if(a[q]+u.length<b)a[q]=h-u.length;else a[q]-=b-h}if(v[0]!==-1)s+=v[1].length}}}}return d=d.substring(u.length,d.length-u.length)};return k}();window.jsondiff=e}).call(this);function diff_match_patch(){this.Diff_Timeout=1;this.Diff_EditCost=4;this.Match_Threshold=0.5;this.Match_Distance=1E3;this.Patch_DeleteThreshold=0.5;this.Patch_Margin=4;this.Match_MaxBits=32}var DIFF_DELETE=-1,DIFF_INSERT=1,DIFF_EQUAL=0;
-diff_match_patch.prototype.diff_main=function(e,f,c,k){if(typeof k=="undefined")k=this.Diff_Timeout<=0?Number.MAX_VALUE:(new Date).getTime()+this.Diff_Timeout*1E3;k=k;if(e==null||f==null)throw Error("Null input. (diff_main)");if(e==f){if(e)return[[DIFF_EQUAL,e]];return[]}if(typeof c=="undefined")c=true;var g=c,d=this.diff_commonPrefix(e,f);c=e.substring(0,d);e=e.substring(d);f=f.substring(d);d=this.diff_commonSuffix(e,f);var a=e.substring(e.length-d);e=e.substring(0,e.length-d);f=f.substring(0,f.length-
-d);e=this.diff_compute_(e,f,g,k);c&&e.unshift([DIFF_EQUAL,c]);a&&e.push([DIFF_EQUAL,a]);this.diff_cleanupMerge(e);return e};
-diff_match_patch.prototype.diff_compute_=function(e,f,c,k){if(!e)return[[DIFF_INSERT,f]];if(!f)return[[DIFF_DELETE,e]];var g=e.length>f.length?e:f,d=e.length>f.length?f:e,a=g.indexOf(d);if(a!=-1){c=[[DIFF_INSERT,g.substring(0,a)],[DIFF_EQUAL,d],[DIFF_INSERT,g.substring(a+d.length)]];if(e.length>f.length)c[0][0]=c[2][0]=DIFF_DELETE;return c}if(d.length==1)return[[DIFF_DELETE,e],[DIFF_INSERT,f]];if(g=this.diff_halfMatch_(e,f)){f=g[1];d=g[3];e=g[4];g=this.diff_main(g[0],g[2],c,k);c=this.diff_main(f,
-d,c,k);return g.concat([[DIFF_EQUAL,e]],c)}if(c&&e.length>100&&f.length>100)return this.diff_lineMode_(e,f,k);return this.diff_bisect_(e,f,k)};
-diff_match_patch.prototype.diff_lineMode_=function(e,f,c){var k=this.diff_linesToChars_(e,f);e=k.chars1;f=k.chars2;k=k.lineArray;e=this.diff_main(e,f,false,c);this.diff_charsToLines_(e,k);this.diff_cleanupSemantic(e);e.push([DIFF_EQUAL,""]);for(var g=k=f=0,d="",a="";f<e.length;){switch(e[f][0]){case DIFF_INSERT:g++;a+=e[f][1];break;case DIFF_DELETE:k++;d+=e[f][1];break;case DIFF_EQUAL:if(k>=1&&g>=1){e.splice(f-k-g,k+g);f=f-k-g;k=this.diff_main(d,a,false,c);for(g=k.length-1;g>=0;g--)e.splice(f,0,k[g]);
-f+=k.length}k=g=0;a=d=""}f++}e.pop();return e};
-diff_match_patch.prototype.diff_bisect_=function(e,f,c){for(var k=e.length,g=f.length,d=Math.ceil((k+g)/2),a=2*d,b=Array(a),h=Array(a),j=0;j<a;j++){b[j]=-1;h[j]=-1}b[d+1]=0;h[d+1]=0;j=k-g;for(var m=j%2!=0,p=0,q=0,s=0,w=0,v=0;v<d;v++){if((new Date).getTime()>c)break;for(var u=-v+p;u<=v-q;u+=2){var r=d+u,x;x=u==-v||u!=v&&b[r-1]<b[r+1]?b[r+1]:b[r-1]+1;for(var B=x-u;x<k&&B<g&&e.charAt(x)==f.charAt(B);){x++;B++}b[r]=x;if(x>k)q+=2;else if(B>g)p+=2;else if(m){r=d+j-u;if(r>=0&&r<a&&h[r]!=-1){var z=k-h[r];
-if(x>=z)return this.diff_bisectSplit_(e,f,x,B,c)}}}for(u=-v+s;u<=v-w;u+=2){r=d+u;z=u==-v||u!=v&&h[r-1]<h[r+1]?h[r+1]:h[r-1]+1;for(x=z-u;z<k&&x<g&&e.charAt(k-z-1)==f.charAt(g-x-1);){z++;x++}h[r]=z;if(z>k)w+=2;else if(x>g)s+=2;else if(!m){r=d+j-u;if(r>=0&&r<a&&b[r]!=-1){x=b[r];B=d+x-r;z=k-z;if(x>=z)return this.diff_bisectSplit_(e,f,x,B,c)}}}}return[[DIFF_DELETE,e],[DIFF_INSERT,f]]};
-diff_match_patch.prototype.diff_bisectSplit_=function(e,f,c,k,g){var d=e.substring(0,c),a=f.substring(0,k);e=e.substring(c);f=f.substring(k);d=this.diff_main(d,a,false,g);g=this.diff_main(e,f,false,g);return d.concat(g)};
-diff_match_patch.prototype.diff_linesToChars_=function(e,f){function c(b){for(var h="",j=0,m=-1,p=k.length;m<b.length-1;){m=b.indexOf("\n",j);if(m==-1)m=b.length-1;var q=b.substring(j,m+1);j=m+1;if(g.hasOwnProperty?g.hasOwnProperty(q):g[q]!==undefined)h+=String.fromCharCode(g[q]);else{h+=String.fromCharCode(p);g[q]=p;k[p++]=q}}return h}var k=[],g={};k[0]="";var d=c(e),a=c(f);return{chars1:d,chars2:a,lineArray:k}};
-diff_match_patch.prototype.diff_charsToLines_=function(e,f){for(var c=0;c<e.length;c++){for(var k=e[c][1],g=[],d=0;d<k.length;d++)g[d]=f[k.charCodeAt(d)];e[c][1]=g.join("")}};diff_match_patch.prototype.diff_commonPrefix=function(e,f){if(!e||!f||e.charAt(0)!=f.charAt(0))return 0;for(var c=0,k=Math.min(e.length,f.length),g=k,d=0;c<g;){if(e.substring(d,g)==f.substring(d,g))d=c=g;else k=g;g=Math.floor((k-c)/2+c)}return g};
-diff_match_patch.prototype.diff_commonSuffix=function(e,f){if(!e||!f||e.charAt(e.length-1)!=f.charAt(f.length-1))return 0;for(var c=0,k=Math.min(e.length,f.length),g=k,d=0;c<g;){if(e.substring(e.length-g,e.length-d)==f.substring(f.length-g,f.length-d))d=c=g;else k=g;g=Math.floor((k-c)/2+c)}return g};
-diff_match_patch.prototype.diff_commonOverlap_=function(e,f){var c=e.length,k=f.length;if(c==0||k==0)return 0;if(c>k)e=e.substring(c-k);else if(c<k)f=f.substring(0,c);c=Math.min(c,k);if(e==f)return c;k=0;for(var g=1;;){var d=e.substring(c-g);d=f.indexOf(d);if(d==-1)return k;g+=d;if(d==0||e.substring(c-g)==f.substring(0,g)){k=g;g++}}};
-diff_match_patch.prototype.diff_halfMatch_=function(e,f){function c(j,m,p){for(var q=j.substring(p,p+Math.floor(j.length/4)),s=-1,w="",v,u,r,x;(s=m.indexOf(q,s+1))!=-1;){var B=d.diff_commonPrefix(j.substring(p),m.substring(s)),z=d.diff_commonSuffix(j.substring(0,p),m.substring(0,s));if(w.length<z+B){w=m.substring(s-z,s)+m.substring(s,s+B);v=j.substring(0,p-z);u=j.substring(p+B);r=m.substring(0,s-z);x=m.substring(s+B)}}return w.length*2>=j.length?[v,u,r,x,w]:null}if(this.Diff_Timeout<=0)return null;
-var k=e.length>f.length?e:f,g=e.length>f.length?f:e;if(k.length<4||g.length*2<k.length)return null;var d=this,a=c(k,g,Math.ceil(k.length/4));k=c(k,g,Math.ceil(k.length/2));if(!a&&!k)return null;else a=k?a?a[4].length>k[4].length?a:k:k:a;var b,h;if(e.length>f.length){k=a[0];g=a[1];b=a[2];h=a[3]}else{b=a[0];h=a[1];k=a[2];g=a[3]}return[k,g,b,h,a[4]]};
-diff_match_patch.prototype.diff_cleanupSemantic=function(e){for(var f=false,c=[],k=0,g=null,d=0,a=0,b=0,h=0,j=0;d<e.length;){if(e[d][0]==DIFF_EQUAL){c[k++]=d;a=h;b=j;j=h=0;g=e[d][1]}else{if(e[d][0]==DIFF_INSERT)h+=e[d][1].length;else j+=e[d][1].length;if(g&&g.length<=Math.max(a,b)&&g.length<=Math.max(h,j)){e.splice(c[k-1],0,[DIFF_DELETE,g]);e[c[k-1]+1][0]=DIFF_INSERT;k--;k--;d=k>0?c[k-1]:-1;j=h=b=a=0;g=null;f=true}}d++}f&&this.diff_cleanupMerge(e);this.diff_cleanupSemanticLossless(e);for(d=1;d<e.length;){if(e[d-
-1][0]==DIFF_DELETE&&e[d][0]==DIFF_INSERT){f=e[d-1][1];c=e[d][1];k=this.diff_commonOverlap_(f,c);g=this.diff_commonOverlap_(c,f);if(k>=g){if(k>=f.length/2||k>=c.length/2){e.splice(d,0,[DIFF_EQUAL,c.substring(0,k)]);e[d-1][1]=f.substring(0,f.length-k);e[d+1][1]=c.substring(k);d++}}else if(g>=f.length/2||g>=c.length/2){e.splice(d,0,[DIFF_EQUAL,f.substring(0,g)]);e[d-1][0]=DIFF_INSERT;e[d-1][1]=c.substring(0,c.length-g);e[d+1][0]=DIFF_DELETE;e[d+1][1]=f.substring(g);d++}d++}d++}};
-diff_match_patch.prototype.diff_cleanupSemanticLossless=function(e){function f(p,q){if(!p||!q)return 6;var s=p.charAt(p.length-1),w=q.charAt(0),v=s.match(diff_match_patch.nonAlphaNumericRegex_),u=w.match(diff_match_patch.nonAlphaNumericRegex_),r=v&&s.match(diff_match_patch.whitespaceRegex_),x=u&&w.match(diff_match_patch.whitespaceRegex_);s=r&&s.match(diff_match_patch.linebreakRegex_);w=x&&w.match(diff_match_patch.linebreakRegex_);var B=s&&p.match(diff_match_patch.blanklineEndRegex_),z=w&&q.match(diff_match_patch.blanklineStartRegex_);
-if(B||z)return 5;else if(s||w)return 4;else if(v&&!r&&x)return 3;else if(r||x)return 2;else if(v||u)return 1;return 0}for(var c=1;c<e.length-1;){if(e[c-1][0]==DIFF_EQUAL&&e[c+1][0]==DIFF_EQUAL){var k=e[c-1][1],g=e[c][1],d=e[c+1][1],a=this.diff_commonSuffix(k,g);if(a){var b=g.substring(g.length-a);k=k.substring(0,k.length-a);g=b+g.substring(0,g.length-a);d=b+d}a=k;b=g;for(var h=d,j=f(k,g)+f(g,d);g.charAt(0)===d.charAt(0);){k+=g.charAt(0);g=g.substring(1)+d.charAt(0);d=d.substring(1);var m=f(k,g)+f(g,
-d);if(m>=j){j=m;a=k;b=g;h=d}}if(e[c-1][1]!=a){if(a)e[c-1][1]=a;else{e.splice(c-1,1);c--}e[c][1]=b;if(h)e[c+1][1]=h;else{e.splice(c+1,1);c--}}}c++}};diff_match_patch.nonAlphaNumericRegex_=/[^a-zA-Z0-9]/;diff_match_patch.whitespaceRegex_=/\s/;diff_match_patch.linebreakRegex_=/[\r\n]/;diff_match_patch.blanklineEndRegex_=/\n\r?\n$/;diff_match_patch.blanklineStartRegex_=/^\r?\n\r?\n/;
-diff_match_patch.prototype.diff_cleanupEfficiency=function(e){for(var f=false,c=[],k=0,g=null,d=0,a=false,b=false,h=false,j=false;d<e.length;){if(e[d][0]==DIFF_EQUAL){if(e[d][1].length<this.Diff_EditCost&&(h||j)){c[k++]=d;a=h;b=j;g=e[d][1]}else{k=0;g=null}h=j=false}else{if(e[d][0]==DIFF_DELETE)j=true;else h=true;if(g&&(a&&b&&h&&j||g.length<this.Diff_EditCost/2&&a+b+h+j==3)){e.splice(c[k-1],0,[DIFF_DELETE,g]);e[c[k-1]+1][0]=DIFF_INSERT;k--;g=null;if(a&&b){h=j=true;k=0}else{k--;d=k>0?c[k-1]:-1;h=j=
-false}f=true}}d++}f&&this.diff_cleanupMerge(e)};
-diff_match_patch.prototype.diff_cleanupMerge=function(e){e.push([DIFF_EQUAL,""]);for(var f=0,c=0,k=0,g="",d="",a;f<e.length;)switch(e[f][0]){case DIFF_INSERT:k++;d+=e[f][1];f++;break;case DIFF_DELETE:c++;g+=e[f][1];f++;break;case DIFF_EQUAL:if(c+k>1){if(c!==0&&k!==0){a=this.diff_commonPrefix(d,g);if(a!==0){if(f-c-k>0&&e[f-c-k-1][0]==DIFF_EQUAL)e[f-c-k-1][1]+=d.substring(0,a);else{e.splice(0,0,[DIFF_EQUAL,d.substring(0,a)]);f++}d=d.substring(a);g=g.substring(a)}a=this.diff_commonSuffix(d,g);if(a!==
-0){e[f][1]=d.substring(d.length-a)+e[f][1];d=d.substring(0,d.length-a);g=g.substring(0,g.length-a)}}if(c===0)e.splice(f-k,c+k,[DIFF_INSERT,d]);else k===0?e.splice(f-c,c+k,[DIFF_DELETE,g]):e.splice(f-c-k,c+k,[DIFF_DELETE,g],[DIFF_INSERT,d]);f=f-c-k+(c?1:0)+(k?1:0)+1}else if(f!==0&&e[f-1][0]==DIFF_EQUAL){e[f-1][1]+=e[f][1];e.splice(f,1)}else f++;c=k=0;d=g=""}e[e.length-1][1]===""&&e.pop();c=false;for(f=1;f<e.length-1;){if(e[f-1][0]==DIFF_EQUAL&&e[f+1][0]==DIFF_EQUAL)if(e[f][1].substring(e[f][1].length-
-e[f-1][1].length)==e[f-1][1]){e[f][1]=e[f-1][1]+e[f][1].substring(0,e[f][1].length-e[f-1][1].length);e[f+1][1]=e[f-1][1]+e[f+1][1];e.splice(f-1,1);c=true}else if(e[f][1].substring(0,e[f+1][1].length)==e[f+1][1]){e[f-1][1]+=e[f+1][1];e[f][1]=e[f][1].substring(e[f+1][1].length)+e[f+1][1];e.splice(f+1,1);c=true}f++}c&&this.diff_cleanupMerge(e)};
-diff_match_patch.prototype.diff_xIndex=function(e,f){var c=0,k=0,g=0,d=0,a;for(a=0;a<e.length;a++){if(e[a][0]!==DIFF_INSERT)c+=e[a][1].length;if(e[a][0]!==DIFF_DELETE)k+=e[a][1].length;if(c>f)break;g=c;d=k}if(e.length!=a&&e[a][0]===DIFF_DELETE)return d;return d+(f-g)};
-diff_match_patch.prototype.diff_prettyHtml=function(e){for(var f=[],c=/&/g,k=/</g,g=/>/g,d=/\n/g,a=0;a<e.length;a++){var b=e[a][0],h=e[a][1].replace(c,"&amp;").replace(k,"&lt;").replace(g,"&gt;").replace(d,"&para;<br>");switch(b){case DIFF_INSERT:f[a]='<ins style="background:#e6ffe6;">'+h+"</ins>";break;case DIFF_DELETE:f[a]='<del style="background:#ffe6e6;">'+h+"</del>";break;case DIFF_EQUAL:f[a]="<span>"+h+"</span>"}}return f.join("")};
-diff_match_patch.prototype.diff_text1=function(e){for(var f=[],c=0;c<e.length;c++)if(e[c][0]!==DIFF_INSERT)f[c]=e[c][1];return f.join("")};diff_match_patch.prototype.diff_text2=function(e){for(var f=[],c=0;c<e.length;c++)if(e[c][0]!==DIFF_DELETE)f[c]=e[c][1];return f.join("")};
-diff_match_patch.prototype.diff_levenshtein=function(e){for(var f=0,c=0,k=0,g=0;g<e.length;g++){var d=e[g][1];switch(e[g][0]){case DIFF_INSERT:c+=d.length;break;case DIFF_DELETE:k+=d.length;break;case DIFF_EQUAL:f+=Math.max(c,k);k=c=0}}f+=Math.max(c,k);return f};
-diff_match_patch.prototype.diff_toDelta=function(e){for(var f=[],c=0;c<e.length;c++)switch(e[c][0]){case DIFF_INSERT:f[c]="+"+encodeURI(e[c][1]);break;case DIFF_DELETE:f[c]="-"+e[c][1].length;break;case DIFF_EQUAL:f[c]="="+e[c][1].length}return f.join("\t").replace(/%20/g," ")};
-diff_match_patch.prototype.diff_fromDelta=function(e,f){for(var c=[],k=0,g=0,d=f.split(/\t/g),a=0;a<d.length;a++){var b=d[a].substring(1);switch(d[a].charAt(0)){case "+":try{c[k++]=[DIFF_INSERT,decodeURI(b)]}catch(h){throw Error("Illegal escape in diff_fromDelta: "+b);}break;case "-":case "=":var j=parseInt(b,10);if(isNaN(j)||j<0)throw Error("Invalid number in diff_fromDelta: "+b);b=e.substring(g,g+=j);if(d[a].charAt(0)=="=")c[k++]=[DIFF_EQUAL,b];else c[k++]=[DIFF_DELETE,b];break;default:if(d[a])throw Error("Invalid diff operation in diff_fromDelta: "+
-d[a]);}}if(g!=e.length)throw Error("Delta length ("+g+") does not equal source text length ("+e.length+").");return c};diff_match_patch.prototype.match_main=function(e,f,c){if(e==null||f==null||c==null)throw Error("Null input. (match_main)");c=Math.max(0,Math.min(c,e.length));return e==f?0:e.length?e.substring(c,c+f.length)==f?c:this.match_bitap_(e,f,c):-1};
-diff_match_patch.prototype.match_bitap_=function(e,f,c){function k(u,r){var x=u/f.length,B=Math.abs(c-r);if(!d.Match_Distance)return B?1:x;return x+B/d.Match_Distance}if(f.length>this.Match_MaxBits)throw Error("Pattern too long for this browser.");var g=this.match_alphabet_(f),d=this,a=this.Match_Threshold,b=e.indexOf(f,c);if(b!=-1){a=Math.min(k(0,b),a);b=e.lastIndexOf(f,c+f.length);if(b!=-1)a=Math.min(k(0,b),a)}var h=1<<f.length-1;b=-1;for(var j,m,p=f.length+e.length,q,s=0;s<f.length;s++){j=0;for(m=
-p;j<m;){if(k(s,c+m)<=a)j=m;else p=m;m=Math.floor((p-j)/2+j)}p=m;j=Math.max(1,c-m+1);var w=Math.min(c+m,e.length)+f.length;m=Array(w+2);m[w+1]=(1<<s)-1;for(w=w;w>=j;w--){var v=g[e.charAt(w-1)];m[w]=s===0?(m[w+1]<<1|1)&v:(m[w+1]<<1|1)&v|(q[w+1]|q[w])<<1|1|q[w+1];if(m[w]&h){v=k(s,w-1);if(v<=a){a=v;b=w-1;if(b>c)j=Math.max(1,2*c-b);else break}}}if(k(s+1,c)>a)break;q=m}return b};
-diff_match_patch.prototype.match_alphabet_=function(e){for(var f={},c=0;c<e.length;c++)f[e.charAt(c)]=0;for(c=0;c<e.length;c++)f[e.charAt(c)]|=1<<e.length-c-1;return f};
-diff_match_patch.prototype.patch_addContext_=function(e,f){if(f.length!=0){for(var c=f.substring(e.start2,e.start2+e.length1),k=0;f.indexOf(c)!=f.lastIndexOf(c)&&c.length<this.Match_MaxBits-this.Patch_Margin-this.Patch_Margin;){k+=this.Patch_Margin;c=f.substring(e.start2-k,e.start2+e.length1+k)}k+=this.Patch_Margin;(c=f.substring(e.start2-k,e.start2))&&e.diffs.unshift([DIFF_EQUAL,c]);(k=f.substring(e.start2+e.length1,e.start2+e.length1+k))&&e.diffs.push([DIFF_EQUAL,k]);e.start1-=c.length;e.start2-=
-c.length;e.length1+=c.length+k.length;e.length2+=c.length+k.length}};
-diff_match_patch.prototype.patch_make=function(e,f,c){var k;if(typeof e=="string"&&typeof f=="string"&&typeof c=="undefined"){k=e;f=this.diff_main(k,f,true);if(f.length>2){this.diff_cleanupSemantic(f);this.diff_cleanupEfficiency(f)}}else if(e&&typeof e=="object"&&typeof f=="undefined"&&typeof c=="undefined"){f=e;k=this.diff_text1(f)}else if(typeof e=="string"&&f&&typeof f=="object"&&typeof c=="undefined"){k=e;f=f}else if(typeof e=="string"&&typeof f=="string"&&c&&typeof c=="object"){k=e;f=c}else throw Error("Unknown call format to patch_make.");
-if(f.length===0)return[];c=[];e=new diff_match_patch.patch_obj;var g=0,d=0,a=0,b=k;k=k;for(var h=0;h<f.length;h++){var j=f[h][0],m=f[h][1];if(!g&&j!==DIFF_EQUAL){e.start1=d;e.start2=a}switch(j){case DIFF_INSERT:e.diffs[g++]=f[h];e.length2+=m.length;k=k.substring(0,a)+m+k.substring(a);break;case DIFF_DELETE:e.length1+=m.length;e.diffs[g++]=f[h];k=k.substring(0,a)+k.substring(a+m.length);break;case DIFF_EQUAL:if(m.length<=2*this.Patch_Margin&&g&&f.length!=h+1){e.diffs[g++]=f[h];e.length1+=m.length;
-e.length2+=m.length}else if(m.length>=2*this.Patch_Margin)if(g){this.patch_addContext_(e,b);c.push(e);e=new diff_match_patch.patch_obj;g=0;b=k;d=a}}if(j!==DIFF_INSERT)d+=m.length;if(j!==DIFF_DELETE)a+=m.length}if(g){this.patch_addContext_(e,b);c.push(e)}return c};
-diff_match_patch.prototype.patch_deepCopy=function(e){for(var f=[],c=0;c<e.length;c++){var k=e[c],g=new diff_match_patch.patch_obj;g.diffs=[];for(var d=0;d<k.diffs.length;d++)g.diffs[d]=k.diffs[d].slice();g.start1=k.start1;g.start2=k.start2;g.length1=k.length1;g.length2=k.length2;f[c]=g}return f};
-diff_match_patch.prototype.patch_apply=function(e,f){if(e.length==0)return[f,[]];e=this.patch_deepCopy(e);var c=this.patch_addPadding(e);f=c+f+c;this.patch_splitMax(e);for(var k=0,g=[],d=0;d<e.length;d++){var a=e[d].start2+k,b=this.diff_text1(e[d].diffs),h,j=-1;if(b.length>this.Match_MaxBits){h=this.match_main(f,b.substring(0,this.Match_MaxBits),a);if(h!=-1){j=this.match_main(f,b.substring(b.length-this.Match_MaxBits),a+b.length-this.Match_MaxBits);if(j==-1||h>=j)h=-1}}else h=this.match_main(f,b,
-a);if(h==-1){g[d]=false;k-=e[d].length2-e[d].length1}else{g[d]=true;k=h-a;a=j==-1?f.substring(h,h+b.length):f.substring(h,j+this.Match_MaxBits);if(b==a)f=f.substring(0,h)+this.diff_text2(e[d].diffs)+f.substring(h+b.length);else{a=this.diff_main(b,a,false);if(b.length>this.Match_MaxBits&&this.diff_levenshtein(a)/b.length>this.Patch_DeleteThreshold)g[d]=false;else{this.diff_cleanupSemanticLossless(a);b=0;var m;for(j=0;j<e[d].diffs.length;j++){var p=e[d].diffs[j];if(p[0]!==DIFF_EQUAL)m=this.diff_xIndex(a,
-b);if(p[0]===DIFF_INSERT)f=f.substring(0,h+m)+p[1]+f.substring(h+m);else if(p[0]===DIFF_DELETE)f=f.substring(0,h+m)+f.substring(h+this.diff_xIndex(a,b+p[1].length));if(p[0]!==DIFF_DELETE)b+=p[1].length}}}}}f=f.substring(c.length,f.length-c.length);return[f,g]};
-diff_match_patch.prototype.patch_addPadding=function(e){for(var f=this.Patch_Margin,c="",k=1;k<=f;k++)c+=String.fromCharCode(k);for(k=0;k<e.length;k++){e[k].start1+=f;e[k].start2+=f}k=e[0];var g=k.diffs;if(g.length==0||g[0][0]!=DIFF_EQUAL){g.unshift([DIFF_EQUAL,c]);k.start1-=f;k.start2-=f;k.length1+=f;k.length2+=f}else if(f>g[0][1].length){var d=f-g[0][1].length;g[0][1]=c.substring(g[0][1].length)+g[0][1];k.start1-=d;k.start2-=d;k.length1+=d;k.length2+=d}k=e[e.length-1];g=k.diffs;if(g.length==0||
-g[g.length-1][0]!=DIFF_EQUAL){g.push([DIFF_EQUAL,c]);k.length1+=f;k.length2+=f}else if(f>g[g.length-1][1].length){d=f-g[g.length-1][1].length;g[g.length-1][1]+=c.substring(0,d);k.length1+=d;k.length2+=d}return c};
-diff_match_patch.prototype.patch_splitMax=function(e){for(var f=this.Match_MaxBits,c=0;c<e.length;c++)if(!(e[c].length1<=f)){var k=e[c];e.splice(c--,1);for(var g=k.start1,d=k.start2,a="";k.diffs.length!==0;){var b=new diff_match_patch.patch_obj,h=true;b.start1=g-a.length;b.start2=d-a.length;if(a!==""){b.length1=b.length2=a.length;b.diffs.push([DIFF_EQUAL,a])}for(;k.diffs.length!==0&&b.length1<f-this.Patch_Margin;){a=k.diffs[0][0];var j=k.diffs[0][1];if(a===DIFF_INSERT){b.length2+=j.length;d+=j.length;
-b.diffs.push(k.diffs.shift());h=false}else if(a===DIFF_DELETE&&b.diffs.length==1&&b.diffs[0][0]==DIFF_EQUAL&&j.length>2*f){b.length1+=j.length;g+=j.length;h=false;b.diffs.push([a,j]);k.diffs.shift()}else{j=j.substring(0,f-b.length1-this.Patch_Margin);b.length1+=j.length;g+=j.length;if(a===DIFF_EQUAL){b.length2+=j.length;d+=j.length}else h=false;b.diffs.push([a,j]);if(j==k.diffs[0][1])k.diffs.shift();else k.diffs[0][1]=k.diffs[0][1].substring(j.length)}}a=this.diff_text2(b.diffs);a=a.substring(a.length-
-this.Patch_Margin);j=this.diff_text1(k.diffs).substring(0,this.Patch_Margin);if(j!==""){b.length1+=j.length;b.length2+=j.length;if(b.diffs.length!==0&&b.diffs[b.diffs.length-1][0]===DIFF_EQUAL)b.diffs[b.diffs.length-1][1]+=j;else b.diffs.push([DIFF_EQUAL,j])}h||e.splice(++c,0,b)}}};diff_match_patch.prototype.patch_toText=function(e){for(var f=[],c=0;c<e.length;c++)f[c]=e[c];return f.join("")};
-diff_match_patch.prototype.patch_fromText=function(e){var f=[];if(!e)return f;e=e.split("\n");for(var c=0,k=/^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/;c<e.length;){var g=e[c].match(k);if(!g)throw Error("Invalid patch string: "+e[c]);var d=new diff_match_patch.patch_obj;f.push(d);d.start1=parseInt(g[1],10);if(g[2]===""){d.start1--;d.length1=1}else if(g[2]=="0")d.length1=0;else{d.start1--;d.length1=parseInt(g[2],10)}d.start2=parseInt(g[3],10);if(g[4]===""){d.start2--;d.length2=1}else if(g[4]=="0")d.length2=
-0;else{d.start2--;d.length2=parseInt(g[4],10)}for(c++;c<e.length;){g=e[c].charAt(0);try{var a=decodeURI(e[c].substring(1))}catch(b){throw Error("Illegal escape in patch_fromText: "+a);}if(g=="-")d.diffs.push([DIFF_DELETE,a]);else if(g=="+")d.diffs.push([DIFF_INSERT,a]);else if(g==" ")d.diffs.push([DIFF_EQUAL,a]);else if(g=="@")break;else if(g!=="")throw Error('Invalid patch mode "'+g+'" in: '+a);c++}}return f};
-diff_match_patch.patch_obj=function(){this.diffs=[];this.start2=this.start1=null;this.length2=this.length1=0};
-diff_match_patch.patch_obj.prototype.toString=function(){for(var e=["@@ -"+(this.length1===0?this.start1+",0":this.length1==1?this.start1+1:this.start1+1+","+this.length1)+" +"+(this.length2===0?this.start2+",0":this.length2==1?this.start2+1:this.start2+1+","+this.length2)+" @@\n"],f,c=0;c<this.diffs.length;c++){switch(this.diffs[c][0]){case DIFF_INSERT:f="+";break;case DIFF_DELETE:f="-";break;case DIFF_EQUAL:f=" "}e[c+1]=f+encodeURI(this.diffs[c][1])+"\n"}return e.join("").replace(/%20/g," ")};
-this.diff_match_patch=diff_match_patch;this.DIFF_DELETE=DIFF_DELETE;this.DIFF_INSERT=DIFF_INSERT;this.DIFF_EQUAL=DIFF_EQUAL;var JSON;JSON||(JSON={});
-(function(){function e(j,m){var p,q,s,w,v=d,u,r=m[j];r&&typeof r=="object"&&typeof r.toJSON=="function"&&(r=r.toJSON(j));typeof h=="function"&&(r=h.call(m,j,r));switch(typeof r){case "string":return f(r);case "number":return isFinite(r)?String(r):"null";case "boolean":case "null":return String(r);case "object":if(!r)return"null";d+=a;u=[];if(Object.prototype.toString.apply(r)==="[object Array]"){w=r.length;for(p=0;p<w;p+=1)u[p]=e(p,r)||"null";s=u.length===0?"[]":d?"[\n"+d+u.join(",\n"+d)+"\n"+v+"]":
-"["+u.join(",")+"]";d=v;return s}if(h&&typeof h=="object"){w=h.length;for(p=0;p<w;p+=1)typeof h[p]=="string"&&(q=h[p],s=e(q,r),s&&u.push(f(q)+(d?": ":":")+s))}else for(q in r)Object.prototype.hasOwnProperty.call(r,q)&&(s=e(q,r),s&&u.push(f(q)+(d?": ":":")+s));s=u.length===0?"{}":d?"{\n"+d+u.join(",\n"+d)+"\n"+v+"}":"{"+u.join(",")+"}";d=v;return s}}function f(j){g.lastIndex=0;return g.test(j)?'"'+j.replace(g,function(m){var p=b[m];return typeof p=="string"?p:"\\u"+("0000"+m.charCodeAt(0).toString(16)).slice(-4)})+
-'"':'"'+j+'"'}function c(j){return j<10?"0"+j:j}typeof Date.prototype.toJSON!="function"&&(Date.prototype.toJSON=function(){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+c(this.getUTCMonth()+1)+"-"+c(this.getUTCDate())+"T"+c(this.getUTCHours())+":"+c(this.getUTCMinutes())+":"+c(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(){return this.valueOf()});var k=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-g=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,d,a,b={"\u0008":"\\b","\t":"\\t","\n":"\\n","\u000c":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},h;typeof JSON.stringify!="function"&&(JSON.stringify=function(j,m,p){var q;a=d="";if(typeof p=="number")for(q=0;q<p;q+=1)a+=" ";else typeof p=="string"&&(a=p);h=m;if(!m||typeof m=="function"||typeof m=="object"&&typeof m.length=="number")return e("",{"":j});throw Error("JSON.stringify");
-});typeof JSON.parse!="function"&&(JSON.parse=function(j,m){function p(s,w){var v,u,r=s[w];if(r&&typeof r=="object")for(v in r)Object.prototype.hasOwnProperty.call(r,v)&&(u=p(r,v),u!==undefined?r[v]=u:delete r[v]);return m.call(s,w,r)}var q;j=String(j);k.lastIndex=0;k.test(j)&&(j=j.replace(k,function(s){return"\\u"+("0000"+s.charCodeAt(0).toString(16)).slice(-4)}));if(/^[\],:{}\s]*$/.test(j.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))){q=eval("("+j+")");return typeof m=="function"?p({"":q},""):q}throw new SyntaxError("JSON.parse");})})();
-SockJS=function(){var e=document,f=window,c={},k=function(){};k.prototype.addEventListener=function(i,l){if(!this._listeners)this._listeners={};i in this._listeners||(this._listeners[i]=[]);var o=this._listeners[i];c.arrIndexOf(o,l)===-1&&o.push(l)};k.prototype.removeEventListener=function(i,l){if(this._listeners&&i in this._listeners){var o=this._listeners[i],n=c.arrIndexOf(o,l);if(n!==-1)if(o.length>1)this._listeners[i]=o.slice(0,n).concat(o.slice(n+1));else delete this._listeners[i]}};k.prototype.dispatchEvent=
-function(i){var l=i.type,o=Array.prototype.slice.call(arguments,0);this["on"+l]&&this["on"+l].apply(this,o);if(this._listeners&&l in this._listeners)for(var n=0;n<this._listeners[l].length;n++)this._listeners[l][n].apply(this,o)};var g=function(i,l){this.type=i;if(typeof l!=="undefined")for(var o in l)if(l.hasOwnProperty(o))this[o]=l[o]};g.prototype.toString=function(){var i=[],l;for(l in this)if(this.hasOwnProperty(l)){var o=this[l];if(typeof o==="function")o="[function]";i.push(l+"="+o)}return"SimpleEvent("+
-i.join(", ")+")"};var d=function(i){this._events=i||[];this._listeners={}};d.prototype.emit=function(i){this._verifyType(i);if(!this._nuked){var l=Array.prototype.slice.call(arguments,1);this["on"+i]&&this["on"+i].apply(this,l);if(i in this._listeners)for(var o=0;o<this._listeners[i].length;o++)this._listeners[i][o].apply(this,l)}};d.prototype.on=function(i,l){this._verifyType(i);if(!this._nuked){i in this._listeners||(this._listeners[i]=[]);this._listeners[i].push(l)}};d.prototype._verifyType=function(i){c.arrIndexOf(this._events,
-i)===-1&&c.log("Event "+JSON.stringify(i)+" not listed "+JSON.stringify(this._events)+" in "+this)};d.prototype.nuke=function(){this._nuked=true;for(var i=0;i<this._events.length;i++)delete this[this._events[i]];this._listeners={}};c.random_string=function(i,l){l=l||37;var o,n=[];for(o=0;o<i;o++)n.push("abcdefghijklmnopqrstuvwxyz0123456789_".substr(Math.floor(Math.random()*l),1));return n.join("")};c.random_number=function(i){return Math.floor(Math.random()*i)};c.random_number_string=function(i){var l=
-(""+(i-1)).length;return(Array(l+1).join("0")+c.random_number(i)).slice(-l)};c.getOrigin=function(i){i+="/";return i.split("/").slice(0,3).join("/")};c.isSameOriginUrl=function(i,l){if(!l)l=f.location.href;return i.split("/").slice(0,3).join("/")===l.split("/").slice(0,3).join("/")};c.getParentDomain=function(i){if(/^[0-9.]*$/.test(i))return i;if(/^\[/.test(i))return i;if(!/[.]/.test(i))return i;return i.split(".").slice(1).join(".")};c.objectExtend=function(i,l){for(var o in l)if(l.hasOwnProperty(o))i[o]=
-l[o];return i};c.polluteGlobalNamespace=function(){"_jp"in f||(f._jp={})};c.closeFrame=function(i,l){return"c"+JSON.stringify([i,l])};c.userSetCode=function(i){return i===1E3||i>=3E3&&i<=4999};c.countRTO=function(i){return i>100?3*i:i+200};c.log=function(){f.console&&console.log&&console.log.apply&&console.log.apply(console,arguments)};c.bind=function(i,l){return i.bind?i.bind(l):function(){return i.apply(l,arguments)}};c.flatUrl=function(i){return i.indexOf("?")===-1&&i.indexOf("#")===-1};c.amendUrl=
-function(i){var l=e.location;if(!i)throw Error("Wrong url for SockJS");if(!c.flatUrl(i))throw Error("Only basic urls are supported in SockJS");if(i.indexOf("//")===0)i=l.protocol+i;if(i.indexOf("/")===0)i=l.protocol+"//"+l.host+i;return i=i.replace(/[/]+$/,"")};c.arrIndexOf=function(i,l){for(var o=0;o<i.length;o++)if(i[o]===l)return o;return-1};c.arrSkip=function(i,l){var o=c.arrIndexOf(i,l);return o===-1?i.slice():i.slice(0,o).concat(i.slice(o+1))};c.isArray=Array.isArray||function(i){return{}.toString.call(i).indexOf("Array")>=
-0};c.delay=function(i,l){if(typeof i==="function"){l=i;i=0}return setTimeout(l,i)};var a=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,b={"\u0000":"\\u0000","\u0001":"\\u0001","\u0002":"\\u0002","\u0003":"\\u0003","\u0004":"\\u0004","\u0005":"\\u0005","\u0006":"\\u0006","\u0007":"\\u0007","\u0008":"\\b","\t":"\\t","\n":"\\n","\u000b":"\\u000b","\u000c":"\\f","\r":"\\r","\u000e":"\\u000e","\u000f":"\\u000f","\u0010":"\\u0010",
-"\u0011":"\\u0011","\u0012":"\\u0012","\u0013":"\\u0013","\u0014":"\\u0014","\u0015":"\\u0015","\u0016":"\\u0016","\u0017":"\\u0017","\u0018":"\\u0018","\u0019":"\\u0019","\u001a":"\\u001a","\u001b":"\\u001b","\u001c":"\\u001c","\u001d":"\\u001d","\u001e":"\\u001e","\u001f":"\\u001f",'"':'\\"',"\\":"\\\\","":"\\u007f","\u0080":"\\u0080","\u0081":"\\u0081","\u0082":"\\u0082","\u0083":"\\u0083","\u0084":"\\u0084","\u0085":"\\u0085","\u0086":"\\u0086","\u0087":"\\u0087","\u0088":"\\u0088","\u0089":"\\u0089",
-"\u008a":"\\u008a","\u008b":"\\u008b","\u008c":"\\u008c","\u008d":"\\u008d","\u008e":"\\u008e","\u008f":"\\u008f","\u0090":"\\u0090","\u0091":"\\u0091","\u0092":"\\u0092","\u0093":"\\u0093","\u0094":"\\u0094","\u0095":"\\u0095","\u0096":"\\u0096","\u0097":"\\u0097","\u0098":"\\u0098","\u0099":"\\u0099","\u009a":"\\u009a","\u009b":"\\u009b","\u009c":"\\u009c","\u009d":"\\u009d","\u009e":"\\u009e","\u009f":"\\u009f","\u00ad":"\\u00ad","\u0600":"\\u0600","\u0601":"\\u0601","\u0602":"\\u0602","\u0603":"\\u0603",
-"\u0604":"\\u0604","\u070f":"\\u070f","\u17b4":"\\u17b4","\u17b5":"\\u17b5","\u200c":"\\u200c","\u200d":"\\u200d","\u200e":"\\u200e","\u200f":"\\u200f","\u2028":"\\u2028","\u2029":"\\u2029","\u202a":"\\u202a","\u202b":"\\u202b","\u202c":"\\u202c","\u202d":"\\u202d","\u202e":"\\u202e","\u202f":"\\u202f","\u2060":"\\u2060","\u2061":"\\u2061","\u2062":"\\u2062","\u2063":"\\u2063","\u2064":"\\u2064","\u2065":"\\u2065","\u2066":"\\u2066","\u2067":"\\u2067","\u2068":"\\u2068","\u2069":"\\u2069","\u206a":"\\u206a",
-"\u206b":"\\u206b","\u206c":"\\u206c","\u206d":"\\u206d","\u206e":"\\u206e","\u206f":"\\u206f","\ufeff":"\\ufeff","\ufff0":"\\ufff0","\ufff1":"\\ufff1","\ufff2":"\\ufff2","\ufff3":"\\ufff3","\ufff4":"\\ufff4","\ufff5":"\\ufff5","\ufff6":"\\ufff6","\ufff7":"\\ufff7","\ufff8":"\\ufff8","\ufff9":"\\ufff9","\ufffa":"\\ufffa","\ufffb":"\\ufffb","\ufffc":"\\ufffc","\ufffd":"\\ufffd","\ufffe":"\\ufffe","\uffff":"\\uffff"},h=/[\x00-\x1f\ud800-\udfff\ufffe\uffff\u0300-\u0333\u033d-\u0346\u034a-\u034c\u0350-\u0352\u0357-\u0358\u035c-\u0362\u0374\u037e\u0387\u0591-\u05af\u05c4\u0610-\u0617\u0653-\u0654\u0657-\u065b\u065d-\u065e\u06df-\u06e2\u06eb-\u06ec\u0730\u0732-\u0733\u0735-\u0736\u073a\u073d\u073f-\u0741\u0743\u0745\u0747\u07eb-\u07f1\u0951\u0958-\u095f\u09dc-\u09dd\u09df\u0a33\u0a36\u0a59-\u0a5b\u0a5e\u0b5c-\u0b5d\u0e38-\u0e39\u0f43\u0f4d\u0f52\u0f57\u0f5c\u0f69\u0f72-\u0f76\u0f78\u0f80-\u0f83\u0f93\u0f9d\u0fa2\u0fa7\u0fac\u0fb9\u1939-\u193a\u1a17\u1b6b\u1cda-\u1cdb\u1dc0-\u1dcf\u1dfc\u1dfe\u1f71\u1f73\u1f75\u1f77\u1f79\u1f7b\u1f7d\u1fbb\u1fbe\u1fc9\u1fcb\u1fd3\u1fdb\u1fe3\u1feb\u1fee-\u1fef\u1ff9\u1ffb\u1ffd\u2000-\u2001\u20d0-\u20d1\u20d4-\u20d7\u20e7-\u20e9\u2126\u212a-\u212b\u2329-\u232a\u2adc\u302b-\u302c\uaab2-\uaab3\uf900-\ufa0d\ufa10\ufa12\ufa15-\ufa1e\ufa20\ufa22\ufa25-\ufa26\ufa2a-\ufa2d\ufa30-\ufa6d\ufa70-\ufad9\ufb1d\ufb1f\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40-\ufb41\ufb43-\ufb44\ufb46-\ufb4e\ufff0-\uffff]/g,
-j,m=JSON&&JSON.stringify||function(i){a.lastIndex=0;if(a.test(i))i=i.replace(a,function(l){return b[l]});return'"'+i+'"'},p=function(i){var l,o={},n=[];for(l=0;l<65536;l++)n.push(String.fromCharCode(l));i.lastIndex=0;n.join("").replace(i,function(t){o[t]="\\u"+("0000"+t.charCodeAt(0).toString(16)).slice(-4);return""});i.lastIndex=0;return o};c.quote=function(i){i=m(i);h.lastIndex=0;if(!h.test(i))return i;j||(j=p(h));return i.replace(h,function(l){return j[l]})};var q=["websocket","xdr-streaming",
-"xhr-streaming","iframe-eventsource","iframe-htmlfile","xdr-polling","xhr-polling","iframe-xhr-polling","jsonp-polling"];c.probeProtocols=function(){for(var i={},l=0;l<q.length;l++){var o=q[l];i[o]=r[o]&&r[o].enabled()}return i};c.detectProtocols=function(i,l,o){var n={},t=[];l||(l=q);for(var y=0;y<l.length;y++){var A=l[y];n[A]=i[A]}var D=function(F){var C=F.shift();if(n[C])t.push(C);else F.length>0&&D(F)};o.websocket!==false&&D(["websocket"]);if(n["xhr-streaming"]&&!o.null_origin)t.push("xhr-streaming");
-else n["xdr-streaming"]&&!o.cookie_needed&&!o.null_origin?t.push("xdr-streaming"):D(["iframe-eventsource","iframe-htmlfile"]);if(n["xhr-polling"]&&!o.null_origin)t.push("xhr-polling");else n["xdr-polling"]&&!o.cookie_needed&&!o.null_origin?t.push("xdr-polling"):D(["iframe-xhr-polling","jsonp-polling"]);return t};c.createHook=function(){var i="a"+c.random_string(8);if(!("_sockjs_global"in f)){var l={};f._sockjs_global=function(o){o in l||(l[o]={id:o,del:function(){delete l[o]}});return l[o]}}return f._sockjs_global(i)};
-c.attachMessage=function(i){c.attachEvent("message",i)};c.attachEvent=function(i,l){if(typeof f.addEventListener!=="undefined")f.addEventListener(i,l,false);else{e.attachEvent("on"+i,l);f.attachEvent("on"+i,l)}};c.detachMessage=function(i){c.detachEvent("message",i)};c.detachEvent=function(i,l){if(typeof f.addEventListener!=="undefined")f.removeEventListener(i,l,false);else{e.detachEvent("on"+i,l);f.detachEvent("on"+i,l)}};var s={},w=false,v=function(){for(var i in s){s[i]();delete s[i]}};c.attachEvent("unload",
-function(){if(!w){w=true;v()}});c.unload_add=function(i){var l=c.random_string(8);s[l]=i;w&&c.delay(v);return l};c.unload_del=function(i){i in s&&delete s[i]};c.createIframe=function(i,l){var o=e.createElement("iframe"),n,t,y=function(){clearTimeout(n);try{o.onload=null}catch(F){}o.onerror=null},A=function(){if(o){y();setTimeout(function(){o&&o.parentNode.removeChild(o);o=null},0);c.unload_del(t)}},D=function(F){if(o){A();l(F)}};o.src=i;o.style.display="none";o.style.position="absolute";o.onerror=
-function(){D("onerror")};o.onload=function(){clearTimeout(n);n=setTimeout(function(){D("onload timeout")},2E3)};e.body.appendChild(o);n=setTimeout(function(){D("timeout")},15E3);t=c.unload_add(A);return{post:function(F,C){try{o&&o.contentWindow&&o.contentWindow.postMessage(F,C)}catch(H){}},cleanup:A,loaded:y}};c.createHtmlfile=function(i,l){var o=new ActiveXObject("htmlfile"),n,t,y,A=function(){clearTimeout(n)},D=function(){if(o){A();c.unload_del(t);y.parentNode.removeChild(y);y=o=null;CollectGarbage()}};
-o.open();o.write('<html><script>document.domain="'+document.domain+'";<\/script></html>');o.close();o.parentWindow._jp=f._jp;var F=o.createElement("div");o.body.appendChild(F);y=o.createElement("iframe");F.appendChild(y);y.src=i;n=setTimeout(function(){if(o){D();l("timeout")}},15E3);t=c.unload_add(D);return{post:function(C,H){try{y&&y.contentWindow&&y.contentWindow.postMessage(C,H)}catch(N){}},cleanup:D,loaded:A}};var u=function(){};u.prototype=new d(["chunk","finish"]);u.prototype._start=function(i,
-l,o,n){var t=this;try{t.xhr=new XMLHttpRequest}catch(y){}if(!t.xhr)try{t.xhr=new f.ActiveXObject("Microsoft.XMLHTTP")}catch(A){}if(f.ActiveXObject||f.XDomainRequest)l+=(l.indexOf("?")===-1?"?":"&")+"t="+ +new Date;t.unload_ref=c.unload_add(function(){t._cleanup(true)});try{t.xhr.open(i,l,true)}catch(D){t.emit("finish",0,"");t._cleanup();return}if(!n||!n.no_credentials)t.xhr.withCredentials="true";if(n&&n.headers)for(var F in n.headers)t.xhr.setRequestHeader(F,n.headers[F]);t.xhr.onreadystatechange=
-function(){if(t.xhr){var C=t.xhr;switch(C.readyState){case 3:try{var H=C.status,N=C.responseText}catch(Y){}if(H===1223)H=204;N&&N.length>0&&t.emit("chunk",H,N);break;case 4:H=C.status;if(H===1223)H=204;t.emit("finish",H,C.responseText);t._cleanup(false)}}};t.xhr.send(o)};u.prototype._cleanup=function(i){if(this.xhr){c.unload_del(this.unload_ref);this.xhr.onreadystatechange=function(){};if(i)try{this.xhr.abort()}catch(l){}this.unload_ref=this.xhr=null}};u.prototype.close=function(){this.nuke();this._cleanup(true)};
-(c.XHRCorsObject=function(){var i=this,l=arguments;c.delay(function(){i._start.apply(i,l)})}).prototype=new u;(c.XHRLocalObject=function(i,l,o){var n=this;c.delay(function(){n._start(i,l,o,{no_credentials:true})})}).prototype=new u;u=c.XDRObject=function(i,l,o){var n=this;c.delay(function(){n._start(i,l,o)})};u.prototype=new d(["chunk","finish"]);u.prototype._start=function(i,l,o){var n=this,t=new XDomainRequest;l+=(l.indexOf("?")===-1?"?":"&")+"t="+ +new Date;var y=t.ontimeout=t.onerror=function(){n.emit("finish",
-0,"");n._cleanup(false)};t.onprogress=function(){n.emit("chunk",200,t.responseText)};t.onload=function(){n.emit("finish",200,t.responseText);n._cleanup(false)};n.xdr=t;n.unload_ref=c.unload_add(function(){n._cleanup(true)});try{n.xdr.open(i,l);n.xdr.send(o)}catch(A){y()}};u.prototype._cleanup=function(i){if(this.xdr){c.unload_del(this.unload_ref);this.xdr.ontimeout=this.xdr.onerror=this.xdr.onprogress=this.xdr.onload=null;if(i)try{this.xdr.abort()}catch(l){}this.unload_ref=this.xdr=null}};u.prototype.close=
-function(){this.nuke();this._cleanup(true)};c.isXHRCorsCapable=function(){if(f.XMLHttpRequest&&"withCredentials"in new XMLHttpRequest)return 1;if(f.XDomainRequest&&e.domain)return 2;if(G.enabled())return 3;return 4};var r=function(i,l,o){if(this===f)return new r(i,l,o);var n=this,t;n._options={devel:false,debug:false,protocols_whitelist:[],info:undefined,rtt:undefined};o&&c.objectExtend(n._options,o);n._base_url=c.amendUrl(i);n._server=n._options.server||c.random_number_string(1E3);if(n._options.protocols_whitelist&&
-n._options.protocols_whitelist.length)t=n._options.protocols_whitelist;else(t=typeof l==="string"&&l.length>0?[l]:c.isArray(l)?l:null)&&n._debug('Deprecated API: Use "protocols_whitelist" option instead of supplying protocol list as a second parameter to SockJS constructor.');n._protocols=[];n.protocol=null;n.readyState=r.CONNECTING;n._ir=X(n._base_url);n._ir.onfinish=function(y,A){n._ir=null;if(y){if(n._options.info)y=c.objectExtend(y,n._options.info);if(n._options.rtt)A=n._options.rtt;n._applyInfo(y,
-A,t);n._didClose()}else n._didClose(1002,"Can't connect to server",true)}};r.prototype=new k;r.version="0.3.4";r.CONNECTING=0;r.OPEN=1;r.CLOSING=2;r.CLOSED=3;r.prototype._debug=function(){this._options.debug&&c.log.apply(c,arguments)};r.prototype._dispatchOpen=function(){if(this.readyState===r.CONNECTING){if(this._transport_tref){clearTimeout(this._transport_tref);this._transport_tref=null}this.readyState=r.OPEN;this.dispatchEvent(new g("open"))}else this._didClose(1006,"Server lost session")};r.prototype._dispatchMessage=
-function(i){this.readyState===r.OPEN&&this.dispatchEvent(new g("message",{data:i}))};r.prototype._dispatchHeartbeat=function(){this.readyState===r.OPEN&&this.dispatchEvent(new g("heartbeat",{}))};r.prototype._didClose=function(i,l,o){var n=this;if(n.readyState!==r.CONNECTING&&n.readyState!==r.OPEN&&n.readyState!==r.CLOSING)throw Error("INVALID_STATE_ERR");if(n._ir){n._ir.nuke();n._ir=null}if(n._transport){n._transport.doCleanup();n._transport=null}var t=new g("close",{code:i,reason:l,wasClean:c.userSetCode(i)});
-if(!c.userSetCode(i)&&n.readyState===r.CONNECTING&&!o){if(n._try_next_protocol(t))return;t=new g("close",{code:2E3,reason:"All transports failed",wasClean:false,last_event:t})}n.readyState=r.CLOSED;c.delay(function(){n.dispatchEvent(t)})};r.prototype._didMessage=function(i){switch(i.slice(0,1)){case "o":this._dispatchOpen();break;case "a":i=JSON.parse(i.slice(1)||"[]");for(var l=0;l<i.length;l++)this._dispatchMessage(i[l]);break;case "m":i=JSON.parse(i.slice(1)||"null");this._dispatchMessage(i);break;
-case "c":i=JSON.parse(i.slice(1)||"[]");this._didClose(i[0],i[1]);break;case "h":this._dispatchHeartbeat()}};r.prototype._try_next_protocol=function(i){var l=this;if(l.protocol){l._debug("Closed transport:",l.protocol,""+i);l.protocol=null}if(l._transport_tref){clearTimeout(l._transport_tref);l._transport_tref=null}for(;;){i=l.protocol=l._protocols.shift();if(!i)return false;if(r[i]&&r[i].need_body===true&&(!e.body||typeof e.readyState!=="undefined"&&e.readyState!=="complete")){l._protocols.unshift(i);
-l.protocol="waiting-for-load";c.attachEvent("load",function(){l._try_next_protocol()});return true}if(!r[i]||!r[i].enabled(l._options))l._debug("Skipping transport:",i);else{l._transport_tref=c.delay((l._options.rto||0)*(r[i].roundTrips||1)||5E3,function(){l.readyState===r.CONNECTING&&l._didClose(2007,"Transport timeouted")});var o=c.random_string(8);o=l._base_url+"/"+l._server+"/"+o;l._debug("Opening transport:",i," url:"+o," RTO:"+l._options.rto);l._transport=new r[i](l,o,l._base_url);return true}}};
-r.prototype.close=function(i,l){if(i&&!c.userSetCode(i))throw Error("INVALID_ACCESS_ERR");if(this.readyState!==r.CONNECTING&&this.readyState!==r.OPEN)return false;this.readyState=r.CLOSING;this._didClose(i||1E3,l||"Normal closure");return true};r.prototype.send=function(i){if(this.readyState===r.CONNECTING)throw Error("INVALID_STATE_ERR");this.readyState===r.OPEN&&this._transport.doSend(c.quote(""+i));return true};r.prototype._applyInfo=function(i,l,o){this._options.info=i;this._options.rtt=l;this._options.rto=
-c.countRTO(l);this._options.info.null_origin=!e.domain;l=c.probeProtocols();this._protocols=c.detectProtocols(l,o,i)};u=r.websocket=function(i,l){var o=this,n=l+"/websocket";n=n.slice(0,5)==="https"?"wss"+n.slice(5):"ws"+n.slice(4);o.ri=i;o.url=n;o.ws=new (f.WebSocket||f.MozWebSocket)(o.url);o.ws.onmessage=function(t){o.ri._didMessage(t.data)};o.unload_ref=c.unload_add(function(){o.ws.close()});o.ws.onclose=function(){o.ri._didMessage(c.closeFrame(1006,"WebSocket connection broken"))}};u.prototype.doSend=
-function(i){this.ws.send("["+i+"]")};u.prototype.doCleanup=function(){var i=this.ws;if(i){i.onmessage=i.onclose=null;i.close();c.unload_del(this.unload_ref);this.unload_ref=this.ri=this.ws=null}};u.enabled=function(){return!!(f.WebSocket||f.MozWebSocket)};u.roundTrips=2;var x=function(){};x.prototype.send_constructor=function(i){this.send_buffer=[];this.sender=i};x.prototype.doSend=function(i){this.send_buffer.push(i);this.send_stop||this.send_schedule()};x.prototype.send_schedule_wait=function(){var i=
-this,l;i.send_stop=function(){i.send_stop=null;clearTimeout(l)};l=c.delay(25,function(){i.send_stop=null;i.send_schedule()})};x.prototype.send_schedule=function(){var i=this;if(i.send_buffer.length>0){var l="["+i.send_buffer.join(",")+"]";i.send_stop=i.sender(i.trans_url,l,function(o,n){i.send_stop=null;o===false?i.ri._didClose(1006,"Sending error "+n):i.send_schedule_wait()});i.send_buffer=[]}};x.prototype.send_destructor=function(){this._send_stop&&this._send_stop();this._send_stop=null};var B=
-function(i,l,o){if(!("_send_form"in this)){var n=this._send_form=e.createElement("form"),t=this._send_area=e.createElement("textarea");t.name="d";n.style.display="none";n.style.position="absolute";n.method="POST";n.enctype="application/x-www-form-urlencoded";n.acceptCharset="UTF-8";n.appendChild(t);e.body.appendChild(n)}n=this._send_form;t=this._send_area;var y="a"+c.random_string(8);n.target=y;n.action=i+"/jsonp_send?i="+y;var A;try{A=e.createElement('<iframe name="'+y+'">')}catch(D){A=e.createElement("iframe");
-A.name=y}A.id=y;n.appendChild(A);A.style.display="none";try{t.value=l}catch(F){c.log("Your browser is seriously broken. Go home! "+F.message)}n.submit();var C=function(){if(A.onerror){A.onreadystatechange=A.onerror=A.onload=null;c.delay(500,function(){A.parentNode.removeChild(A);A=null});t.value="";o(true)}};A.onerror=A.onload=C;A.onreadystatechange=function(){A.readyState=="complete"&&C()};return C},z=function(i){return function(l,o,n){(new i("POST",l+"/xhr_send",o)).onfinish=function(t){n(t===200||
-t===204,"http status "+t)};return function(t){n(false,t)}}},I=function(i,l){var o,n=e.createElement("script"),t,y=function(H){if(t){t.parentNode.removeChild(t);t=null}if(n){clearTimeout(o);n.parentNode.removeChild(n);n=n.onreadystatechange=n.onerror=n.onload=n.onclick=null;l(H);l=null}},A=false,D=null;n.id="a"+c.random_string(8);n.src=i;n.type="text/javascript";n.charset="UTF-8";n.onerror=function(){D||(D=setTimeout(function(){A||y(c.closeFrame(1006,"JSONP script loaded abnormally (onerror)"))},1E3))};
-n.onload=function(){y(c.closeFrame(1006,"JSONP script loaded abnormally (onload)"))};n.onreadystatechange=function(){if(/loaded|closed/.test(n.readyState)){if(n&&n.htmlFor&&n.onclick){A=true;try{n.onclick()}catch(H){}}n&&y(c.closeFrame(1006,"JSONP script loaded abnormally (onreadystatechange)"))}};if(typeof n.async==="undefined"&&e.attachEvent)if(/opera/i.test(navigator.userAgent)){t=e.createElement("script");t.text="try{var a = document.getElementById('"+n.id+"'); if(a)a.onerror();}catch(x){};";
-n.async=t.async=false}else{try{n.htmlFor=n.id;n.event="onclick"}catch(F){}n.async=true}if(typeof n.async!=="undefined")n.async=true;o=setTimeout(function(){y(c.closeFrame(1006,"JSONP script loaded abnormally (timeout)"))},35E3);var C=e.getElementsByTagName("head")[0];C.insertBefore(n,C.firstChild);t&&C.insertBefore(t,C.firstChild);return y};u=r["jsonp-polling"]=function(i,l){c.polluteGlobalNamespace();this.ri=i;this.trans_url=l;this.send_constructor(B);this._schedule_recv()};u.prototype=new x;u.prototype._schedule_recv=
-function(){var i=this;i._recv_stop=J(i.trans_url+"/jsonp",I,function(l){i._recv_stop=null;if(l)i._is_closing||i.ri._didMessage(l);i._is_closing||i._schedule_recv()})};u.enabled=function(){return true};u.need_body=true;u.prototype.doCleanup=function(){this._is_closing=true;this._recv_stop&&this._recv_stop();this.ri=this._recv_stop=null;this.send_destructor()};var J=function(i,l,o){var n="a"+c.random_string(6);i=i+"?c="+escape("_jp."+n);var t=0;l=l(i,function(y){switch(t){case 0:delete f._jp[n];o(y);
-break;case 1:o(y);t=2;break;case 2:delete f._jp[n]}});f._jp[n]=l;return function(){if(f._jp[n]){t=1;f._jp[n](c.closeFrame(1E3,"JSONP user aborted read"))}}};u=function(){};u.prototype=new x;u.prototype.run=function(i,l,o,n,t){this.ri=i;this.trans_url=l;this.send_constructor(z(t));this.poll=new P(i,n,l+o,t)};u.prototype.doCleanup=function(){if(this.poll){this.poll.abort();this.poll=null}};var E=r["xhr-streaming"]=function(i,l){this.run(i,l,"/xhr_streaming",L,c.XHRCorsObject)};E.prototype=new u;E.enabled=
-function(){return f.XMLHttpRequest&&"withCredentials"in new XMLHttpRequest&&!/opera/i.test(navigator.userAgent)};E.roundTrips=2;E.need_body=true;x=r["xdr-streaming"]=function(i,l){this.run(i,l,"/xhr_streaming",L,c.XDRObject)};x.prototype=new u;x.enabled=function(){return!!f.XDomainRequest};x.roundTrips=2;var Q=r["xhr-polling"]=function(i,l){this.run(i,l,"/xhr",L,c.XHRCorsObject)};Q.prototype=new u;Q.enabled=E.enabled;Q.roundTrips=2;E=r["xdr-polling"]=function(i,l){this.run(i,l,"/xhr",L,c.XDRObject)};
-E.prototype=new u;E.enabled=x.enabled;E.roundTrips=2;var G=function(){};G.prototype.i_constructor=function(i,l,o){var n=this;n.ri=i;n.origin=c.getOrigin(o);n.base_url=o;n.trans_url=l;i=o+"/iframe.html";if(n.ri._options.devel)i+="?t="+ +new Date;n.window_id=c.random_string(8);i+="#"+n.window_id;n.iframeObj=c.createIframe(i,function(t){n.ri._didClose(1006,"Unable to load an iframe ("+t+")")});n.onmessage_cb=c.bind(n.onmessage,n);c.attachMessage(n.onmessage_cb)};G.prototype.doCleanup=function(){if(this.iframeObj){c.detachMessage(this.onmessage_cb);
-try{this.iframeObj.iframe.contentWindow&&this.postMessage("c")}catch(i){}this.iframeObj.cleanup();this.onmessage_cb=this.iframeObj=this.iframeObj=null}};G.prototype.onmessage=function(i){if(i.origin===this.origin){var l=i.data.slice(0,8),o=i.data.slice(8,9);i=i.data.slice(9);if(l===this.window_id)switch(o){case "s":this.iframeObj.loaded();this.postMessage("s",JSON.stringify([r.version,this.protocol,this.trans_url,this.base_url]));break;case "t":this.ri._didMessage(i)}}};G.prototype.postMessage=function(i,
-l){this.iframeObj.post(this.window_id+i+(l||""),this.origin)};G.prototype.doSend=function(i){this.postMessage("m",i)};G.enabled=function(){var i=navigator&&navigator.userAgent&&navigator.userAgent.indexOf("Konqueror")!==-1;return(typeof f.postMessage==="function"||typeof f.postMessage==="object")&&!i};var R,S=function(i,l){parent!==f?parent.postMessage(R+i+(l||""),"*"):c.log("Can't postMessage, no parent window.",i,l)},K=function(){};K.prototype._didClose=function(i,l){S("t",c.closeFrame(i,l))};K.prototype._didMessage=
-function(i){S("t",i)};K.prototype._doSend=function(i){this._transport.doSend(i)};K.prototype._doCleanup=function(){this._transport.doCleanup()};c.parent_origin=undefined;r.bootstrap_iframe=function(){var i;R=e.location.hash.slice(1);c.attachMessage(function(l){if(l.source===parent){if(typeof c.parent_origin==="undefined")c.parent_origin=l.origin;if(l.origin===c.parent_origin){var o=l.data.slice(0,8),n=l.data.slice(8,9);l=l.data.slice(9);if(o===R)switch(n){case "s":var t=JSON.parse(l);o=t[0];n=t[1];
-l=t[2];t=t[3];o!==r.version&&c.log('Incompatibile SockJS! Main site uses: "'+o+'", the iframe: "'+r.version+'".');if(!c.flatUrl(l)||!c.flatUrl(t)){c.log("Only basic urls are supported in SockJS");break}if(!c.isSameOriginUrl(l)||!c.isSameOriginUrl(t)){c.log("Can't connect to different domain from within an iframe. ("+JSON.stringify([f.location.href,l,t])+")");break}i=new K;i._transport=new K[n](i,l,t);break;case "m":i._doSend(l);break;case "c":i&&i._doCleanup();i=null}}}});S("s")};var M=function(i,
-l){var o=this;c.delay(function(){o.doXhr(i,l)})};M.prototype=new d(["finish"]);M.prototype.doXhr=function(i,l){var o=this,n=(new Date).getTime(),t=new l("GET",i+"/info"),y=c.delay(8E3,function(){t.ontimeout()});t.onfinish=function(A,D){clearTimeout(y);y=null;if(A===200){var F=(new Date).getTime()-n,C=JSON.parse(D);if(typeof C!=="object")C={};o.emit("finish",C,F)}else o.emit("finish")};t.ontimeout=function(){t.close();o.emit("finish")}};var V=function(i){var l=this,o=function(){var n=new G;n.protocol=
-"w-iframe-info-receiver";var t=function(y){if(typeof y==="string"&&y.substr(0,1)==="m"){y=JSON.parse(y.substr(1));l.emit("finish",y[0],y[1])}else l.emit("finish");n.doCleanup();n=null};n.i_constructor({_options:{},_didClose:t,_didMessage:t},i,i)};e.body?o():c.attachEvent("load",o)};V.prototype=new d(["finish"]);var W=function(){var i=this;c.delay(function(){i.emit("finish",{},2E3)})};W.prototype=new d(["finish"]);var X=function(i){if(c.isSameOriginUrl(i))return new M(i,c.XHRLocalObject);switch(c.isXHRCorsCapable()){case 1:return new M(i,
-c.XHRLocalObject);case 2:return new M(i,c.XDRObject);case 3:return new V(i);default:return new W}};(K["w-iframe-info-receiver"]=function(i,l,o){(new M(o,c.XHRLocalObject)).onfinish=function(n,t){i._didMessage("m"+JSON.stringify([n,t]));i._didClose()}}).prototype.doCleanup=function(){};d=r["iframe-eventsource"]=function(){this.protocol="w-iframe-eventsource";this.i_constructor.apply(this,arguments)};d.prototype=new G;d.enabled=function(){return"EventSource"in f&&G.enabled()};d.need_body=true;d.roundTrips=
-3;(K["w-iframe-eventsource"]=function(i,l){this.run(i,l,"/eventsource",T,c.XHRLocalObject)}).prototype=new u;d=r["iframe-xhr-polling"]=function(){this.protocol="w-iframe-xhr-polling";this.i_constructor.apply(this,arguments)};d.prototype=new G;d.enabled=function(){return f.XMLHttpRequest&&G.enabled()};d.need_body=true;d.roundTrips=3;(K["w-iframe-xhr-polling"]=function(i,l){this.run(i,l,"/xhr",L,c.XHRLocalObject)}).prototype=new u;d=r["iframe-htmlfile"]=function(){this.protocol="w-iframe-htmlfile";
-this.i_constructor.apply(this,arguments)};d.prototype=new G;d.enabled=function(){return G.enabled()};d.need_body=true;d.roundTrips=3;(K["w-iframe-htmlfile"]=function(i,l){this.run(i,l,"/htmlfile",U,c.XHRLocalObject)}).prototype=new u;var P=function(i,l,o,n){this.ri=i;this.Receiver=l;this.recv_url=o;this.AjaxObject=n;this._scheduleRecv()};P.prototype._scheduleRecv=function(){var i=this,l=i.poll=new i.Receiver(i.recv_url,i.AjaxObject),o=0;l.onmessage=function(n){o+=1;i.ri._didMessage(n.data)};l.onclose=
-function(n){i.poll=l=l.onmessage=l.onclose=null;i.poll_is_closing||(n.reason==="permanent"?i.ri._didClose(1006,"Polling error ("+n.reason+")"):i._scheduleRecv())}};P.prototype.abort=function(){this.poll_is_closing=true;this.poll&&this.poll.abort()};var T=function(i){var l=this,o=new EventSource(i);o.onmessage=function(n){l.dispatchEvent(new g("message",{data:unescape(n.data)}))};l.es_close=o.onerror=function(n,t){var y=t?"user":o.readyState!==2?"network":"permanent";l.es_close=o.onmessage=o.onerror=
-null;o.close();o=null;c.delay(200,function(){l.dispatchEvent(new g("close",{reason:y}))})}};T.prototype=new k;T.prototype.abort=function(){this.es_close&&this.es_close({},true)};var O,U=function(i){var l=this;c.polluteGlobalNamespace();l.id="a"+c.random_string(6,26);i+=(i.indexOf("?")===-1?"?":"&")+"c="+escape("_jp."+l.id);if(O===undefined)if("ActiveXObject"in f)try{O=!!new ActiveXObject("htmlfile")}catch(o){}else O=false;var n=O?c.createHtmlfile:c.createIframe,t;f._jp[l.id]={start:function(){t.loaded()},
-message:function(y){l.dispatchEvent(new g("message",{data:y}))},stop:function(){l.iframe_close({},"network")}};l.iframe_close=function(y,A){t.cleanup();l.iframe_close=t=null;delete f._jp[l.id];l.dispatchEvent(new g("close",{reason:A}))};t=n(i,function(){l.iframe_close({},"permanent")})};U.prototype=new k;U.prototype.abort=function(){this.iframe_close&&this.iframe_close({},"user")};var L=function(i,l){var o=this,n=0;o.xo=new l("POST",i,null);o.xo.onchunk=function(t,y){if(t===200)for(;;){var A=y.slice(n),
-D=A.indexOf("\n");if(D===-1)break;n+=D+1;A=A.slice(0,D);o.dispatchEvent(new g("message",{data:A}))}};o.xo.onfinish=function(t,y){o.xo.onchunk(t,y);o.xo=null;o.dispatchEvent(new g("close",{reason:t===200?"network":"permanent"}))}};L.prototype=new k;L.prototype.abort=function(){if(this.xo){this.xo.close();this.dispatchEvent(new g("close",{reason:"user"}));this.xo=null}};r.getUtils=function(){return c};r.getIframeTransport=function(){return G};return r}();
-"_sockjs_onload"in window&&setTimeout(_sockjs_onload,1);typeof define==="function"&&define.amd&&define("sockjs",[],function(){return SockJS});(function(){var e,f,c=function(d,a){return function(){return d.apply(a,arguments)}},k={}.hasOwnProperty,g=[].indexOf||function(d){for(var a=0,b=this.length;a<b;a++)if(a in this&&this[a]===d)return a;return-1};e=function(){function d(a,b,h){this.s=a;this.name=b;this._check_pending=c(this._check_pending,this);this.pending=c(this.pending,this);this.on_changes=c(this.on_changes,this);this.retrieve_changes=c(this.retrieve_changes,this);this._send_changes=c(this._send_changes,this);this._queue_change=c(this._queue_change,
-this);this._make_change=c(this._make_change,this);this.update=c(this.update,this);this._check_update=c(this._check_update,this);this._notify_client=c(this._notify_client,this);this._index_loaded=c(this._index_loaded,this);this.on_entity_version=c(this.on_entity_version,this);this.get_version=c(this.get_version,this);this.load_versions=c(this.load_versions,this);this.on_index_error=c(this.on_index_error,this);this.on_index_page=c(this.on_index_page,this);this._refresh_store=c(this._refresh_store,this);
-this.send=c(this.send,this);this.on_data=c(this.on_data,this);this.start=c(this.start,this);this._remove_entity=c(this._remove_entity,this);this._save_entity=c(this._save_entity,this);this._load_data=c(this._load_data,this);this._verify=c(this._verify,this);this._load_meta=c(this._load_meta,this);this.show_data=c(this.show_data,this);this.on=c(this.on,this);this.jd=this.s.jd;this.options=this.jd.deepCopy(this.s.options);for(b in h)if(k.call(h,b)){a=h[b];this.options[b]=a}this.chan=this.options.n;
-this.space=""+this.options.app_id+"/"+this.name;this.username=this.options.username;this.namespace=""+this.username+":"+this.space;this.clientid=null;try{this.clientid=localStorage.getItem(""+this.namespace+"/clientid")}catch(j){this.clientid=null}if(this.clientid==null||this.clientid.indexOf("sjs")!==0){this.clientid="sjs-"+this.s.bversion+"-"+this.uuid(5);try{localStorage.setItem(""+this.namespace+"/clientid")}catch(m){console.log(""+this.name+": couldnt set clientid")}}this.cb_events=["notify",
-"notify_init","notify_version","local","get","ready","notify_pending","error"];this.cbs={};this.cb_e=this.cb_l=this.cb_ni=this.cb_np=null;this.cb_n=this.cb_nv=this.cb_r=function(){};this.authorized=this.initialized=false;this.data={last_cv:0,ccid:this.uuid(),store:{},send_queue:[],send_queue_timer:null};this.started=false;if("nostore"in this.options){console.log(""+this.name+": not loading from localstorage");this.loaded=0}else{this._load_meta();this.loaded=this._load_data();console.log(""+this.name+
-": localstorage loaded "+this.loaded+" entities")}this._last_pending=null;this._send_backoff=15E3;this._backoff_max=12E4;this._backoff_min=15E3;console.log(""+this.namespace+": bucket created: opts: "+JSON.stringify(this.options))}d.prototype.S4=function(){return((1+Math.random())*65536|0).toString(16).substring(1)};d.prototype.uuid=function(a){var b;a=a||8;for(b=this.S4();a-=1;)b+=this.S4();return b};d.prototype.now=function(){return(new Date).getTime()};d.prototype.on=function(a,b){if(g.call(this.cb_events,
-a)>=0){this.cbs[a]=b;switch(a){case "get":case "local":return this.cb_l=b;case "notify":return this.cb_n=b;case "notify_version":return this.cb_nv=b;case "notify_pending":return this.cb_np=b;case "notify_init":return this.cb_ni=b;case "ready":return this.cb_r=b;case "error":return this.cb_e=b}}else throw Error("unsupported callback event");};d.prototype.show_data=function(){var a,b,h;if(this.s.supports_html5_storage()){h=0;for(b in localStorage)if(k.call(localStorage,b)){a=localStorage[b];console.log("["+
-b+"]: "+a);h+=1}return console.log(""+h+" total")}};d.prototype._save_meta=function(){if(!this.s.supports_html5_storage())return false;console.log(""+this.name+": save_meta ccid:"+this.data.ccid+" cv:"+this.data.last_cv);try{localStorage.setItem(""+this.namespace+"/ccid",this.data.ccid);localStorage.setItem(""+this.namespace+"/last_cv",this.data.last_cv)}catch(a){return false}return true};d.prototype._load_meta=function(){var a;if(this.s.supports_html5_storage()){this.data.ccid=localStorage.getItem(""+
-this.namespace+"/ccid");if((a=this.data).ccid==null)a.ccid=1;this.data.last_cv=localStorage.getItem(""+this.namespace+"/last_cv");if((a=this.data).last_cv==null)a.last_cv=0;return console.log(""+this.name+": load_meta ccid:"+this.data.ccid+" cv:"+this.data.last_cv)}};d.prototype._verify=function(a){if(!("object"in a)||!("version"in a))return false;if(this.jd.entries(a.object)===0)return"last"in a&&this.jd.entries(a.last)>0?true:false;else if(a.version==null)return false;return true};d.prototype._load_data=
-function(){var a,b,h,j,m,p,q,s;if(this.s.supports_html5_storage()){p=""+this.namespace+"/e/";m=p.length;j=0;if(localStorage.length===0)return 0;b=q=0;for(s=localStorage.length-1;0<=s?q<=s:q>=s;b=0<=s?++q:--q){h=localStorage.key(b);if(h!=null&&h.substr(0,m)===p){b=h.substr(m,h.length-m);try{a=JSON.parse(localStorage.getItem(h))}catch(w){a=null}if(a!=null)if(this._verify(a)){a.check=null;this.data.store[b]=a;j+=1}else{console.log("ignoring CORRUPT data: "+JSON.stringify(a));this._remove_entity(b)}}}return j}};
-d.prototype._save_entity=function(a){var b,h;if(!this.s.supports_html5_storage())return false;h=""+this.namespace+"/e/"+a;a=this.data.store[a];b=JSON.stringify(a);try{localStorage.setItem(h,b)}catch(j){return false}h=JSON.parse(localStorage.getItem(h));return this.jd.equals(a,h)?true:false};d.prototype._remove_entity=function(a){if(!this.s.supports_html5_storage())return false;a=""+this.namespace+"/e/"+a;try{localStorage.removeItem(a)}catch(b){return false}return true};d.prototype.start=function(){var a,
-b;console.log(""+this.space+": started initialized: "+this.initialized+" authorized: "+this.authorized);this.namespace=""+this.username+":"+this.space;this.started=true;this.first=false;if(this.authorized)if(this.initialized){console.log(""+this.name+": retrieve changes from start");return this.retrieve_changes()}else{if(!this.first){this.notify_index={};return this._refresh_store()}}else if(this.s.connected){this.first=true;a="limit"in this.options?"i:1:::"+this.options.limit:"i:1:::40";this.irequest_time=
-this.now();this.index_request=true;this.notify_index={};b={app_id:this.options.app_id,token:this.options.token,name:this.name,clientid:this.clientid,build:this.s.bversion};if(!this.initialized)b.cmd=a;this.send("init:"+JSON.stringify(b));console.log(""+this.name+": sent init "+JSON.stringify(b)+" waiting for auth")}else console.log(""+this.name+": waiting for connect")};d.prototype.on_data=function(a){var b,h,j;if(a.substr(0,5)==="auth:"){b=a.substr(5);if(b==="expired"){console.log("auth expired");
-this.started=false;this.cb_e!=null&&this.cb_e("auth")}else{this.username=b;this.authorized=true;if(this.initialized)return this.start()}}else if(a.substr(0,4)==="cv:?"){console.log(""+this.name+": cv out of sync, refreshing index");return setTimeout(function(m){return function(){return m._refresh_store()}}(this))}else if(a.substr(0,2)==="c:"){b=JSON.parse(a.substr(2));if(this.data.last_cv==="0"&&b.length===0&&!this.cv_check){this.cv_check=true;this._refresh_store()}return this.on_changes(b)}else if(a.substr(0,
-2)==="i:"){console.log(""+this.name+":  index msg received: "+(this.now()-this.irequest_time));return this.on_index_page(JSON.parse(a.substr(2)))}else if(a.substr(0,2)==="e:"){j=a.indexOf("\n");h=a.substr(2,j-2);b=h.substr(h.lastIndexOf(".")+1);h=h.substr(0,h.lastIndexOf("."));a=a.substr(j+1);if(a==="?")return this.on_entity_version(null,h,b);else{a=JSON.parse(a);return this.on_entity_version(a.data,h,b)}}else return console.log("unknown message: "+a)};d.prototype.send=function(a){console.log("sending: "+
-this.chan+":"+a);return this.s.send(""+this.chan+":"+a)};d.prototype._refresh_store=function(){console.log(""+this.name+": _refresh_store(): loading index");this.send("limit"in this.options?"i:1:::"+this.options.limit:"i:1:::40");this.irequest_time=this.now();this.index_request=true};d.prototype.on_index_page=function(a){var b,h,j,m,p,q,s;j=this.now();console.log(""+this.name+": index response time: "+(j-this.irequest_time));console.log(""+this.name+": on_index_page(): index page received, current= "+
-a.current);console.log(a);h=0;s=a.index;p=0;for(q=s.length;p<q;p++){b=s[p];this.notify_index[b.id]=false;h++;setTimeout(function(w){return function(v){return function(){return w.on_entity_version(v.d,v.id,v.v)}}}(this)(b))}if(!("mark"in a)||"limit"in this.options){this.index_request=false;if("current"in a){this.data.last_cv=a.current;this._save_meta()}else this.data.last_cv=0;if(h===0)return this._index_loaded()}else{this.index_request=true;console.log(""+this.name+": index last process time: "+(this.now()-
-j)+", page_delay: "+this.options.page_delay);a=a.mark;m=function(w){return function(v){w.send("i:1:"+v+"::100");return w.irequest_time=w.now()}}(this);return setTimeout(function(){return function(w){return function(){return m(w)}}}(this)(a),this.options.page_delay)}};d.prototype.on_index_error=function(){return console.log(""+this.name+": index doesnt exist or other error")};d.prototype.load_versions=function(a,b){var h,j,m,p,q;if(!(a in this.data.store))return false;h=Math.max(this.data.store[a].version-
-(b+1),1);q=[];j=m=h;for(p=this.data.store[a].version-1;h<=p?m<=p:m>=p;j=h<=p?++m:--m){console.log(""+this.name+": loading version "+a+"."+j);q.push(this.send("e:"+a+"."+j))}return q};d.prototype.get_version=function(a,b){return this.send("e:"+(""+a+"."+b))};d.prototype.on_entity_version=function(a,b,h){var j,m,p;console.log(""+this.name+": on_entity_version("+a+", "+b+", "+h+")");j=a!=null?this.jd.deepCopy(a):null;p=this.initialized===false&&this.cb_ni!=null?this.cb_ni:this.cb_n;if(b in this.data.store&&
-"last"in this.data.store[b]&&this.jd.entries(this.data.store[b].last)){j=this.jd.deepCopy(this.data.store[b].last);p(b,j,null);this.notify_index[b]=true;return this._check_update(b)}else if(b in this.data.store&&h<this.data.store[b].version)return this.cb_nv(b,j,h);else{b in this.data.store||(this.data.store[b]={});this.data.store[b].id=b;this.data.store[b].object=a;this.data.store[b].version=parseInt(h);p(b,j,h);this.notify_index[b]=true;a=0;b=this.notify_index;for(m in b)k.call(b,m)&&this.notify_index[m]===
-false&&a++;if(a===0&&this.index_request===false)return this._index_loaded()}};d.prototype._index_loaded=function(){console.log(""+this.name+": index loaded, initialized: "+this.initialized);this.initialized===false&&this.cb_r();this.initialized=true;console.log(""+this.name+": retrieve changes from index loaded");return this.retrieve_changes()};d.prototype._notify_client=function(a,b,h,j,m){var p,q,s,w,v,u;console.log(""+this.name+": _notify_client("+a+", "+b+", "+h+", "+JSON.stringify(j)+")");if(this.cb_l==
-null){console.log(""+this.name+": no get callback, notifying without transform");this.cb_n(a,b,m)}else{p=this.cb_l(a);q=null;u=[];if(this.jd.typeOf(p)==="array"){s=p[2];w=p[1];p=p[0];if(q=this.s._captureCursor(s)){u[0]=q.startOffset;if("endOffset"in q)u[1]=q.endOffset}}if(p!=null&&h!=null){v=this.jd.object_diff(h,p);console.log("client/server version diff: "+JSON.stringify(v));if(this.jd.entries(v)===0){console.log("local diff 0 entries");j=j;b=h}else{console.log("o_diff");console.log(v);console.log("orig_object");
-console.log(h);console.log("c_object");console.log(p);console.log("client modified doing transform");j=this.jd.transform_object_diff(v,j,h);b=b}if(q){b=this.jd.apply_object_diff_with_offsets(b,j,w,u);if(s!=null&&"value"in s)s.value=b[w];q.startOffset=u[0];if(u.length>1){q.endOffset=u[1];if(q.startOffset>=q.endOffset)q.collapsed=true}this.s._restoreCursor(s,q)}else{console.log("in regular apply_object_diff");console.log("t_object");console.log(b);console.log("t_diff");console.log(j);b=this.jd.apply_object_diff(b,
-j)}return this.cb_n(a,b,m)}else return b?this.cb_n(a,b,m):this.cb_n(a,null,null)}};d.prototype._check_update=function(a){var b,h,j,m,p;console.log(""+this.name+": _check_update("+a+")");if(!(a in this.data.store))return false;h=this.data.store[a];if(h.change){a=false;p=this.data.send_queue;j=0;for(m=p.length;j<m;j++){b=p[j];if(b.id===h.change.id&&b.ccid===h.change.ccid)a=true}if(!a){this._queue_change(h.change);return true}return false}if(h.check!=null)return false;if("last"in h&&this.jd.equals(h.object,
-h.last)){delete h.last;this._remove_entity(a);return false}b=this._make_change(a);if(b!=null){h.change=b;this._queue_change(b)}else this._remove_entity(a);return true};d.prototype.update=function(a,b){var h,j,m,p,q;if(arguments.length===1)if(this.cb_l!=null){b=this.cb_l(a);if(this.jd.typeOf(b)==="array")b=b[0]}else throw Error("missing 'local' callback");console.log(""+this.name+": update("+a+")");if(a==null&&b==null)return false;if(a!=null){if(a.length===0||a.indexOf("/")!==-1)return false}else a=
-this.uuid();a in this.data.store||(this.data.store[a]={id:a,object:{},version:null,change:null,check:null});j=this.data.store[a];j.last=this.jd.deepCopy(b);j.modified=this.s._time();this._save_entity(a);q=this.data.send_queue;m=0;for(p=q.length;m<p;m++){h=q[m];if(String(a)===h.id){console.log(""+this.name+": update("+a+") found pending change, aborting");return null}}j.check!=null&&clearTimeout(j.check);j.check=setTimeout(function(s){return function(w,v){return function(){v.check=null;v.change=s._make_change(w);
-delete v.last;s._save_entity(w);return s._queue_change(v.change)}}}(this)(a,j),this.options.update_delay);return a};d.prototype._make_change=function(a){var b,h,j;j=this.data.store[a];h={id:String(a),ccid:this.uuid()};if(this.initialized)if(this.cb_l!=null){b=this.cb_l(a);if(this.jd.typeOf(b)==="array")b=b[0]}else if("last"in j)b=j.last;else return null;else if("last"in j)b=j.last;else return null;if(j.version!=null)h.sv=j.version;if(b===null&&j.version!=null){h.o="-";console.log(""+this.name+": deletion requested for "+
-a)}else if(b!=null&&j.object!=null){h.o="M";if("sendfull"in j){h.d=this.jd.deepCopy(b);delete j.sendfull}else{h.v=this.jd.object_diff(j.object,b);if(this.jd.entries(h.v)===0)h=null}}else h=null;return h};d.prototype._queue_change=function(a){if(a!=null){console.log("_queue_change("+a.id+":"+a.ccid+"): sending");this.data.send_queue.push(a);this.send("c:"+JSON.stringify(a));this._check_pending();this.data.send_queue_timer!=null&&clearTimeout(this.data.send_queue_timer);return this.data.send_queue_timer=
-setTimeout(this._send_changes,this._send_backoff)}};d.prototype._send_changes=function(){var a,b,h,j;if(this.data.send_queue.length===0){console.log(""+this.name+": send_queue empty, done");this.data.send_queue_timer=null}else{if(this.s.connected){j=this.data.send_queue;b=0;for(h=j.length;b<h;b++){a=j[b];console.log(""+this.name+": sending change: "+JSON.stringify(a));this.send("c:"+JSON.stringify(a))}}else console.log(""+this.name+": _send_changes: not connected");this._send_backoff*=2;if(this._send_backoff>
-this._backoff_max)this._send_backoff=this._backoff_max;return this.data.send_queue_timer=setTimeout(this._send_changes,this._send_backoff)}};d.prototype.retrieve_changes=function(){console.log(""+this.name+": requesting changes since cv:"+this.data.last_cv);this.send("cv:"+this.data.last_cv)};d.prototype.on_changes=function(a){var b,h,j,m,p,q,s,w,v,u,r,x,B;h=[];w=false;this._send_backoff=this._backoff_min;console.log(""+this.name+": on_changes(): response=");console.log(a);v=0;for(r=a.length;v<r;v++){b=
-a[v];j=b.id;console.log(""+this.name+": processing id="+j);m=[];B=this.data.send_queue;u=0;for(x=B.length;u<x;u++){s=B[u];if(b.clientid===this.clientid&&j===s.id){b.local=true;m.push(s);h.push(j)}}s=0;for(u=m.length;s<u;s++){q=m[s];this.data.store[q.id].change=null;this._save_entity(q.id);this.data.send_queue=function(){var z,I,J,E;J=this.data.send_queue;E=[];z=0;for(I=J.length;z<I;z++){p=J[z];p!==q&&E.push(p)}return E}.call(this)}m.length>0&&this._check_pending();if("error"in b)switch(b.error){case 412:console.log(""+
-this.name+": on_changes(): empty change, dont check");j=h.indexOf(b.id);j>-1&&h.splice(j,1);break;case 409:console.log(""+this.name+": on_changes(): duplicate change, ignoring");break;case 405:console.log(""+this.name+": on_changes(): bad version");if(b.id in this.data.store)this.data.store[b.id].version=null;w=true;break;case 440:console.log(""+this.name+": on_change(): bad diff, sending full object");this.data.store[j].sendfull=true;break;default:console.log(""+this.name+": error for last change, reloading");
-if(b.id in this.data.store)this.data.store[b.id].version=null;w=true}else{m=b.o;if(m==="-"){delete this.data.store[j];this._remove_entity(j);"local"in b||this._notify_client(b.id,null,null,null,null)}else if(m==="M"){m=this.data.store[j];if("sv"in b&&m!=null&&m.version!=null&&m.version===b.sv||!("sv"in b)||b.ev===1){if(m==null){this.data.store[j]={id:j,object:{},version:null,change:null,check:null};m=this.data.store[j]}j=this.jd.deepCopy(m.object);m.object=this.jd.apply_object_diff(m.object,b.v);
-m.version=b.ev;m=this.jd.deepCopy(m.object);"local"in b||this._notify_client(b.id,m,j,b.v,b.ev)}else if(m!=null&&m.version!=null&&b.ev<=m.version)console.log(""+this.name+": old or duplicate change received, ignoring, change.ev="+b.ev+", s_data.version:"+m.version);else{m!=null?console.log(""+this.name+": version mismatch couldnt apply change, change.ev:"+b.ev+", s_data.version:"+m.version):console.log(""+this.name+": version mismatch couldnt apply change, change.ev:"+b.ev+", s_data null");if(m!=
-null)this.data.store[j].version=null;w=true}}else console.log(""+this.name+": no operation found for change");if(!w){this.data.last_cv=b.cv;this._save_meta();console.log(""+this.name+": checkpoint cv="+this.data.last_cv+" ccid="+this.data.ccid)}}}if(w){console.log(""+this.name+": reload needed, refreshing store");setTimeout(function(z){return function(){return z._refresh_store()}}(this))}else{a=function(z){return function(I){return setTimeout(function(){return z._check_update(I)},z.options.update_delay)}}(this);
-w=0;for(v=h.length;w<v;w++){j=h[w];a(j)}}};d.prototype.pending=function(){var a,b,h,j,m;b=function(){var p,q,s,w;s=this.data.send_queue;w=[];p=0;for(q=s.length;p<q;p++){a=s[p];w.push(a.id)}return w}.call(this);console.log(""+this.name+": pending: "+JSON.stringify(b));j=this.data.send_queue;m=[];b=0;for(h=j.length;b<h;b++){a=j[b];m.push(a.id)}return m};d.prototype._check_pending=function(){var a,b,h,j,m,p;if(this.cb_np!=null){a=this.pending();b=true;if(this._last_pending){b=false;if(this._last_pending.length===
-a.length){p=this._last_pending;j=0;for(m=p.length;j<m;j++){h=p[j];if(a.indexOf(h)===-1)b=true}}else b=true}if(b){this._last_pending=a;return this.cb_np(a)}}};return d}();f=function(){function d(a,b){var h,j,m;this.app_id=a;this.options=b;this._restoreCursor=c(this._restoreCursor,this);this._captureCursor=c(this._captureCursor,this);this._sock_message=c(this._sock_message,this);this._sock_hb_check=c(this._sock_hb_check,this);this._sock_closed=c(this._sock_closed,this);this._sock_opened=c(this._sock_opened,
-this);this._sock_connect=c(this._sock_connect,this);this.synced=c(this.synced,this);this.send=c(this.send,this);this.stop=c(this.stop,this);this.start=c(this.start,this);this.on=c(this.on,this);this.bucket=c(this.bucket,this);this.bversion=2014030401;this.jd=new jsondiff;this.dmp=this.jd.dmp;this.auth_token=null;this.options=this.options||{};this.options.app_id=this.app_id;this.sock_opts={debug:false};if("sockjs"in this.options){m=this.options.sockjs;for(h in m)if(k.call(m,h)){j=m[h];this.sock_opts[h]=
-j}}"host"in this.options||(this.options.host="api.simperium.com");"port"in this.options||(this.options.port=80);if("token"in this.options)this.auth_token=this.options.token;h=this.options.host.indexOf("simperium.com")!==-1?"https":"http";this.buckets={};this.channels=0;"update_delay"in this.options||(this.options.update_delay=0);"page_delay"in this.options||(this.options.page_delay=0);this.options.prefix="sock/1/"+this.app_id;this.options.port=parseInt(this.options.port);this.sock_url=this.options.port!==
-80&&this.options.port!==443?""+h+"://"+this.options.host+":"+this.options.port+"/"+this.options.prefix:""+h+"://"+this.options.host+"/"+this.options.prefix;this.stopped=false;this._sock_backoff=3E3;this._sock_hb=1;this._sock_connect()}d.prototype.lowerstrip=function(a){a=a.toLowerCase();return String.prototype.trim!=null?a.trim():a.replace(/^\s+|\s+$/g,"")};d.prototype._time=function(){var a;a=new Date;return Date.UTC(a.getUTCFullYear(),a.getUTCMonth(),a.getUTCDate(),a.getUTCHours(),a.getUTCMinutes(),
-a.getUTCSeconds(),a.getUTCMilliseconds())/1E3};d.prototype.supports_html5_storage=function(){try{return"localStorage"in window&&window.localStorage!==null}catch(a){return false}};d.prototype.bucket=function(a,b){var h;a=this.lowerstrip(a);b=b||{};b.n=this.channels++;h=new e(this,a,b);return this.buckets[b.n]=h};d.prototype.on=function(a,b,h){return this.buckets[a].on(b,h)};d.prototype.start=function(){var a,b,h;this.stopped=false;b=this.buckets;h=[];for(a in b)if(k.call(b,a)){e=b[a];h.push(e.start())}return h};
-d.prototype.stop=function(){this.stopped=true;if(this.sock!=null)return this.sock.close()};d.prototype.send=function(a){return this.sock.send(a)};d.prototype.synced=function(){var a,b;b=this.buckets;for(a in b)if(k.call(b,a)){e=b[a];if(e.pending().length>0)return false}return true};d.prototype._sock_connect=function(){console.log("simperium: connecting to "+this.sock_url);this.authorized=this.connected=false;this.sock=new SockJS(this.sock_url,void 0,this.sock_opts);this.sock.onopen=this._sock_opened;
-this.sock.onmessage=this._sock_message;return this.sock.onclose=this._sock_closed};d.prototype._sock_opened=function(){var a,b,h;this._sock_backoff=3E3;this.connected=true;this._sock_hb_timer=setTimeout(this._sock_hb_check,2E4);b=this.buckets;h=[];for(a in b)if(k.call(b,a)){e=b[a];e.started?h.push(e.start()):h.push(void 0)}return h};d.prototype._sock_closed=function(){var a,b;this.connected=false;b=this.buckets;for(a in b)if(k.call(b,a)){e=b[a];e.authorized=false}console.log("simperium: sock js closed");
-if(this._sock_backoff<4E3)this._sock_backoff+=1;else this._sock_backoff=15E3;if(this._sock_hb_timer){clearTimeout(this._sock_hb_timer);this._sock_hb_timer=null}if(!this.stopped)return setTimeout(this._sock_connect,this._sock_backoff)};d.prototype._sock_hb_check=function(){var a;a=(new Date).getTime()-this._sock_msg_time;if(this.connected!==false){if(a>4E4){console.log("simperium: force conn close");this.sock.close()}else if(a>15E3){console.log("simperium: send hb "+this._sock_hb);this.sock.send("h:"+
-this._sock_hb)}return this._sock_hb_timer=setTimeout(this._sock_hb_check,2E4)}};d.prototype._sock_message=function(a){var b,h;this._sock_msg_time=(new Date).getTime();b=a.data;h=b.indexOf(":");a=null;if(h===1&&b.charAt(0)==="h")this._sock_hb=b.substr(2);else{try{a=parseInt(b.substr(0,h));b=b.substr(h+1)}catch(j){a=null}if(a!==null)if(a in this.buckets)return this.buckets[a].on_data(b)}};d.prototype._captureCursor=function(){};d.prototype._captureCursor=function(a){if("activeElement"in a&&!a.activeElement)return null;
-var b=this.dmp.Match_MaxBits/2,h=a.value,j={};if("selectionStart"in a){try{var m=a.selectionStart,p=a.selectionEnd}catch(q){return null}j.startPrefix=h.substring(m-b,m);j.startSuffix=h.substring(m,m+b);j.startOffset=m;j.collapsed=m==p;if(!j.collapsed){j.endPrefix=h.substring(p-b,p);j.endSuffix=h.substring(p,p+b);j.endOffset=p}}else{for(m=a;m.parentNode;)m=m.parentNode;if(!m.selection||!m.selection.createRange)return null;h=m.selection.createRange();if(h.parentElement()!=a)return null;m=m.body.createTextRange();
-j.collapsed=h.text=="";m.moveToElementText(a);if(!j.collapsed){m.setEndPoint("EndToEnd",h);j.endPrefix=m.text;j.endOffset=j.endPrefix.length;j.endPrefix=j.endPrefix.substring(j.endPrefix.length-b)}m.setEndPoint("EndToStart",h);j.startPrefix=m.text;j.startOffset=j.startPrefix.length;j.startPrefix=j.startPrefix.substring(j.startPrefix.length-b);m.moveToElementText(a);m.setEndPoint("StartToStart",h);j.startSuffix=m.text.substring(0,b);if(!j.collapsed){m.setEndPoint("StartToEnd",h);j.endSuffix=m.text.substring(0,
-b)}}if("scrollTop"in a){j.scrollTop=a.scrollTop/a.scrollHeight;j.scrollLeft=a.scrollLeft/a.scrollWidth}return j};d.prototype._restoreCursor=function(){};d.prototype._restoreCursor=function(a,b){this.dmp.Match_Distance=1E3;this.dmp.Match_Threshold=0.9;var h=this.dmp.Match_MaxBits/2,j=a.value,m=b.startPrefix+b.startSuffix,p,q=this.dmp.match_main(j,m,b.startOffset-h);if(q!==null){p=j.substring(q,q+m.length);m=this.dmp.diff_main(m,p,false);q+=this.dmp.diff_xIndex(m,b.startPrefix.length)}var s=null;if(!b.collapsed){m=
-b.endPrefix+b.endSuffix;s=this.dmp.match_main(j,m,b.endOffset-h);if(s!==null){p=j.substring(s,s+m.length);m=this.dmp.diff_main(m,p,false);s+=this.dmp.diff_xIndex(m,b.endPrefix.length)}}if(q===null&&s!==null)q=s;else if(q===null&&s===null)q=b.startOffset;if(s===null)s=q;if("selectionStart"in a){a.selectionStart=q;a.selectionEnd=s}else{for(h=a;h.parentNode;)h=h.parentNode;if(!h.selection||!h.selection.createRange)return;j=a.value.substring(0,q);j=j.replace(/\r\n/g,"\n").length;h=h.body.createTextRange();
-h.moveToElementText(a);h.collapse(true);h.moveStart("character",j);if(!b.collapsed){j=a.value.substring(q,s);q=j.replace(/\r\n/g,"\n").length;h.moveEnd("character",q)}h.select()}if("scrollTop"in b){a.scrollTop=b.scrollTop*a.scrollHeight;a.scrollLeft=b.scrollLeft*a.scrollWidth}};return d}();window.Simperium=f;e.prototype.on=e.prototype.on;e.prototype.start=e.prototype.start;e.prototype.load_versions=e.prototype.load_versions;e.prototype.pending=e.prototype.pending;f.prototype.on=f.prototype.on;f.prototype.start=
-f.prototype.start;f.prototype.bucket=f.prototype.bucket;f.prototype.synced=f.prototype.synced}).call(this);
+// Generated by CoffeeScript 1.6.3
+(function() {
+  var jsondiff,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty;
+
+  jsondiff = (function() {
+    var DIFF_DELETE, DIFF_EQUAL, DIFF_INSERT;
+
+    DIFF_INSERT = 1;
+
+    DIFF_DELETE = -1;
+
+    DIFF_EQUAL = 0;
+
+    function jsondiff() {
+      this.patch_apply_with_offsets = __bind(this.patch_apply_with_offsets, this);
+      this.transform_object_diff = __bind(this.transform_object_diff, this);
+      this.transform_list_diff_dmp = __bind(this.transform_list_diff_dmp, this);
+      this.transform_list_diff = __bind(this.transform_list_diff, this);
+      this.apply_diff = __bind(this.apply_diff, this);
+      this.apply_object_diff_with_offsets = __bind(this.apply_object_diff_with_offsets, this);
+      this.apply_object_diff = __bind(this.apply_object_diff, this);
+      this.apply_list_diff_dmp = __bind(this.apply_list_diff_dmp, this);
+      this.apply_list_diff = __bind(this.apply_list_diff, this);
+      this.diff = __bind(this.diff, this);
+      this.object_diff = __bind(this.object_diff, this);
+      this._text_to_array = __bind(this._text_to_array, this);
+      this._serialize_to_text = __bind(this._serialize_to_text, this);
+      this.list_diff_dmp = __bind(this.list_diff_dmp, this);
+      this.list_diff = __bind(this.list_diff, this);
+      this._common_suffix = __bind(this._common_suffix, this);
+      this._common_prefix = __bind(this._common_prefix, this);
+      this.object_equals = __bind(this.object_equals, this);
+      this.list_equals = __bind(this.list_equals, this);
+      this.equals = __bind(this.equals, this);
+      this.deepCopy = __bind(this.deepCopy, this);
+      this.typeOf = __bind(this.typeOf, this);
+      this.entries = __bind(this.entries, this);
+      this.dmp = new diff_match_patch();
+    }
+
+    jsondiff.prototype.entries = function(obj) {
+      var key, n, value;
+      n = 0;
+      for (key in obj) {
+        if (!__hasProp.call(obj, key)) continue;
+        value = obj[key];
+        n++;
+      }
+      return n;
+    };
+
+    jsondiff.prototype.typeOf = function(value) {
+      var s;
+      s = typeof value;
+      if (s === 'object') {
+        if (value) {
+          if (typeof value.length === 'number' && typeof value.splice === 'function' && !value.propertyIsEnumerable('length')) {
+            s = 'array';
+          }
+        } else {
+          s = 'null';
+        }
+      }
+      return s;
+    };
+
+    jsondiff.prototype.deepCopy = function(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    };
+
+    jsondiff.prototype.equals = function(a, b) {
+      var typea, typeb;
+      typea = this.typeOf(a);
+      typeb = this.typeOf(b);
+      if (typea === 'boolean' && typeb === 'number') {
+        return Number(a) === b;
+      }
+      if (typea === 'number' && typeb === 'boolean') {
+        return Number(b) === a;
+      }
+      if (typea !== typeb) {
+        return false;
+      }
+      if (typea === 'array') {
+        return this.list_equals(a, b);
+      } else if (typea === 'object') {
+        return this.object_equals(a, b);
+      } else {
+        return a === b;
+      }
+    };
+
+    jsondiff.prototype.list_equals = function(a, b) {
+      var alength, i, _i;
+      alength = a.length;
+      if (alength !== b.length) {
+        return false;
+      }
+      for (i = _i = 0; 0 <= alength ? _i < alength : _i > alength; i = 0 <= alength ? ++_i : --_i) {
+        if (!this.equals(a[i], b[i])) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    jsondiff.prototype.object_equals = function(a, b) {
+      var key;
+      for (key in a) {
+        if (!__hasProp.call(a, key)) continue;
+        if (!(key in b)) {
+          return false;
+        }
+        if (!this.equals(a[key], b[key])) {
+          return false;
+        }
+      }
+      for (key in b) {
+        if (!__hasProp.call(b, key)) continue;
+        if (!(key in a)) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    jsondiff.prototype._common_prefix = function(a, b) {
+      var i, minlen, _i;
+      minlen = Math.min(a.length, b.length);
+      for (i = _i = 0; 0 <= minlen ? _i < minlen : _i > minlen; i = 0 <= minlen ? ++_i : --_i) {
+        if (!this.equals(a[i], b[i])) {
+          return i;
+        }
+      }
+      return minlen;
+    };
+
+    jsondiff.prototype._common_suffix = function(a, b) {
+      var i, lena, lenb, minlen, _i;
+      lena = a.length;
+      lenb = b.length;
+      minlen = Math.min(a.length, b.length);
+      if (minlen === 0) {
+        return 0;
+      }
+      for (i = _i = 0; 0 <= minlen ? _i < minlen : _i > minlen; i = 0 <= minlen ? ++_i : --_i) {
+        if (!this.equals(a[lena - i - 1], b[lenb - i - 1])) {
+          return i;
+        }
+      }
+      return minlen;
+    };
+
+    jsondiff.prototype.list_diff = function(a, b, policy) {
+      var diffs, i, lena, lenb, maxlen, prefix_len, suffix_len, _i;
+      if ((policy != null) && 'item' in policy) {
+        policy = policy['item'];
+      } else {
+        policy = null;
+      }
+      diffs = {};
+      lena = a.length;
+      lenb = b.length;
+      prefix_len = this._common_prefix(a, b);
+      suffix_len = this._common_suffix(a, b);
+      a = a.slice(prefix_len, lena - suffix_len);
+      b = b.slice(prefix_len, lenb - suffix_len);
+      lena = a.length;
+      lenb = b.length;
+      maxlen = Math.max(lena, lenb);
+      for (i = _i = 0; 0 <= maxlen ? _i <= maxlen : _i >= maxlen; i = 0 <= maxlen ? ++_i : --_i) {
+        if (i < lena && i < lenb) {
+          if (!this.equals(a[i], b[i])) {
+            diffs[i + prefix_len] = this.diff(a[i], b[i], policy);
+          }
+        } else if (i < lena) {
+          diffs[i + prefix_len] = {
+            'o': '-'
+          };
+        } else if (i < lenb) {
+          diffs[i + prefix_len] = {
+            'o': '+',
+            'v': b[i]
+          };
+        }
+      }
+      return diffs;
+    };
+
+    jsondiff.prototype.list_diff_dmp = function(a, b, policy) {
+      var atext, btext, delta, diffs, lena, lenb;
+      lena = a.length;
+      lenb = b.length;
+      atext = this._serialize_to_text(a);
+      btext = this._serialize_to_text(b);
+      diffs = this.dmp.diff_lineMode_(atext, btext);
+      this.dmp.diff_cleanupEfficiency(diffs);
+      delta = this.dmp.diff_toDelta(diffs);
+      return delta;
+    };
+
+    jsondiff.prototype._serialize_to_text = function(a) {
+      var i, s, _i, _len;
+      s = '';
+      for (_i = 0, _len = a.length; _i < _len; _i++) {
+        i = a[_i];
+        s += "" + (JSON.stringify(i)) + "\n";
+      }
+      return s;
+    };
+
+    jsondiff.prototype._text_to_array = function(s) {
+      var a, sa, x;
+      a = [];
+      sa = s.split("\n");
+      a = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = sa.length; _i < _len; _i++) {
+          x = sa[_i];
+          if (x.length > 0) {
+            _results.push(JSON.parse(x));
+          }
+        }
+        return _results;
+      })();
+      return a;
+    };
+
+    jsondiff.prototype.object_diff = function(a, b, policy) {
+      var diffs, key, sub_policy;
+      diffs = {};
+      if ((policy != null) && 'attributes' in policy) {
+        policy = policy['attributes'];
+      }
+      if ((a == null) || (b == null)) {
+        return {};
+      }
+      for (key in a) {
+        if (!__hasProp.call(a, key)) continue;
+        if ((policy != null) && key in policy) {
+          sub_policy = policy[key];
+        } else {
+          sub_policy = null;
+        }
+        if (key in b) {
+          if (!this.equals(a[key], b[key])) {
+            diffs[key] = this.diff(a[key], b[key], sub_policy);
+          }
+        } else {
+          diffs[key] = {
+            'o': '-'
+          };
+        }
+      }
+      for (key in b) {
+        if (!__hasProp.call(b, key)) continue;
+        if (!(key in a) && (b[key] != null)) {
+          diffs[key] = {
+            'o': '+',
+            'v': b[key]
+          };
+        }
+      }
+      return diffs;
+    };
+
+    jsondiff.prototype.diff = function(a, b, policy) {
+      var diffs, otype, typea;
+      if (this.equals(a, b)) {
+        return {};
+      }
+      if ((policy != null) && 'attributes' in policy) {
+        policy = policy['attributes'];
+      }
+      if ((policy != null) && 'otype' in policy) {
+        otype = policy['otype'];
+        switch (otype) {
+          case 'replace':
+            return {
+              'o': 'r',
+              'v': b
+            };
+          case 'list':
+            return {
+              'o': 'L',
+              'v': this.list_diff(a, b, policy)
+            };
+          case 'list_dmp':
+            return {
+              'o': 'dL',
+              'v': this.list_diff_dmp(a, b, policy)
+            };
+          case 'integer':
+            return {
+              'o': 'I',
+              'v': b - a
+            };
+          case 'string':
+            diffs = this.dmp.diff_main(a, b);
+            if (diffs.length > 2) {
+              this.dmp.diff_cleanupEfficiency(diffs);
+            }
+            if (diffs.length > 0) {
+              return {
+                'o': 'd',
+                'v': this.dmp.diff_toDelta(diffs)
+              };
+            }
+        }
+      }
+      typea = this.typeOf(a);
+      if (typea !== this.typeOf(b)) {
+        return {
+          'o': 'r',
+          'v': b
+        };
+      }
+      switch (typea) {
+        case 'boolean':
+          return {
+            'o': 'r',
+            'v': b
+          };
+        case 'number':
+          return {
+            'o': 'r',
+            'v': b
+          };
+        case 'array':
+          return {
+            'o': 'r',
+            'v': b
+          };
+        case 'object':
+          return {
+            'o': 'O',
+            'v': this.object_diff(a, b, policy)
+          };
+        case 'string':
+          diffs = this.dmp.diff_main(a, b);
+          if (diffs.length > 2) {
+            this.dmp.diff_cleanupEfficiency(diffs);
+          }
+          if (diffs.length > 0) {
+            return {
+              'o': 'd',
+              'v': this.dmp.diff_toDelta(diffs)
+            };
+          }
+      }
+      return {};
+    };
+
+    jsondiff.prototype.apply_list_diff = function(s, diffs) {
+      var deleted, dmp_diffs, dmp_patches, dmp_result, index, indexes, key, op, patched, s_index, shift, x, _i, _len, _ref, _ref1;
+      patched = this.deepCopy(s);
+      indexes = [];
+      deleted = [];
+      for (key in diffs) {
+        if (!__hasProp.call(diffs, key)) continue;
+        indexes.push(key);
+        indexes.sort();
+      }
+      for (_i = 0, _len = indexes.length; _i < _len; _i++) {
+        index = indexes[_i];
+        op = diffs[index];
+        shift = ((function() {
+          var _j, _len1, _results;
+          _results = [];
+          for (_j = 0, _len1 = deleted.length; _j < _len1; _j++) {
+            x = deleted[_j];
+            if (x <= index) {
+              _results.push(x);
+            }
+          }
+          return _results;
+        })()).length;
+        s_index = index - shift;
+        switch (op['o']) {
+          case '+':
+            [].splice.apply(patched, [s_index, (s_index - 1) - s_index + 1].concat(_ref = op['v'])), _ref;
+            break;
+          case '-':
+            [].splice.apply(patched, [s_index, s_index - s_index + 1].concat(_ref1 = [])), _ref1;
+            deleted[deleted.length] = s_index;
+            break;
+          case 'r':
+            patched[s_index] = op['v'];
+            break;
+          case 'I':
+            patched[s_index] += op['v'];
+            break;
+          case 'L':
+            patched[s_index] = this.apply_list_diff(patched[s_index], op['v']);
+            break;
+          case 'dL':
+            patched[s_index] = this.apply_list_diff_dmp(patched[s_index], op['v']);
+            break;
+          case 'O':
+            patched[s_index] = this.apply_object_diff(patched[s_index], op['v']);
+            break;
+          case 'd':
+            dmp_diffs = this.dmp.diff_fromDelta(patched[s_index], op['v']);
+            dmp_patches = this.dmp.patch_make(patched[s_index], dmp_diffs);
+            dmp_result = this.dmp.patch_apply(dmp_patches, patched[s_index]);
+            patched[s_index] = dmp_result[0];
+        }
+      }
+      return patched;
+    };
+
+    jsondiff.prototype.apply_list_diff_dmp = function(s, delta) {
+      var dmp_diffs, dmp_patches, dmp_result, ptext;
+      ptext = this._serialize_to_text(s);
+      dmp_diffs = this.dmp.diff_fromDelta(ptext, delta);
+      dmp_patches = this.dmp.patch_make(ptext, dmp_diffs);
+      dmp_result = this.dmp.patch_apply(dmp_patches, ptext);
+      return this._text_to_array(dmp_result[0]);
+    };
+
+    jsondiff.prototype.apply_object_diff = function(s, diffs) {
+      var key, op, patched;
+      patched = this.deepCopy(s);
+      for (key in diffs) {
+        if (!__hasProp.call(diffs, key)) continue;
+        op = diffs[key];
+        if (op['o'] === '-') {
+          delete patched[key];
+        } else {
+          patched[key] = this.apply_diff(patched[key], op);
+        }
+      }
+      return patched;
+    };
+
+    jsondiff.prototype.apply_object_diff_with_offsets = function(s, diffs, field, offsets) {
+      var dmp_diffs, dmp_patches, dmp_result, key, op, patched;
+      patched = this.deepCopy(s);
+      for (key in diffs) {
+        if (!__hasProp.call(diffs, key)) continue;
+        op = diffs[key];
+        switch (op['o']) {
+          case '+':
+            patched[key] = op['v'];
+            break;
+          case '-':
+            delete patched[key];
+            break;
+          case 'r':
+            patched[key] = op['v'];
+            break;
+          case 'I':
+            patched[key] += op['v'];
+            break;
+          case 'L':
+            patched[key] = this.apply_list_diff(patched[key], op['v']);
+            break;
+          case 'O':
+            patched[key] = this.apply_object_diff(patched[key], op['v']);
+            break;
+          case 'd':
+            dmp_diffs = this.dmp.diff_fromDelta(patched[key], op['v']);
+            dmp_patches = this.dmp.patch_make(patched[key], dmp_diffs);
+            if (key === field) {
+              patched[key] = this.patch_apply_with_offsets(dmp_patches, patched[key], offsets);
+            } else {
+              dmp_result = this.dmp.patch_apply(dmp_patches, patched[key]);
+              patched[key] = dmp_result[0];
+            }
+        }
+      }
+      return patched;
+    };
+
+    jsondiff.prototype.apply_diff = function(a, op) {
+      var dmp_diffs, dmp_patches, dmp_result;
+      switch (op['o']) {
+        case '+':
+          return op['v'];
+        case '-':
+          return null;
+        case 'r':
+          return op['v'];
+        case 'I':
+          return a + op['v'];
+        case 'L':
+          return this.apply_list_diff(a, op['v']);
+        case 'dL':
+          return this.apply_list_diff_dmp(a, op['v']);
+        case 'O':
+          return this.apply_object_diff(a, op['v']);
+        case 'd':
+          dmp_diffs = this.dmp.diff_fromDelta(a, op['v']);
+          dmp_patches = this.dmp.patch_make(a, dmp_diffs);
+          dmp_result = this.dmp.patch_apply(dmp_patches, a);
+          return dmp_result[0];
+      }
+    };
+
+    jsondiff.prototype.transform_list_diff = function(ad, bd, s, policy) {
+      var ad_new, b_deletes, b_inserts, diff, index, last_index, last_shift, op, other_op, shift_l, shift_r, sindex, target_op, x;
+      ad_new = {};
+      b_inserts = [];
+      b_deletes = [];
+      if ((policy != null) && 'item' in policy) {
+        policy = policy['item'];
+      } else {
+        policy = null;
+      }
+      for (index in bd) {
+        if (!__hasProp.call(bd, index)) continue;
+        op = bd[index];
+        index = parseInt(index);
+        if (op['o'] === '+') {
+          b_inserts.push(index);
+        }
+        if (op['o'] === '-') {
+          b_deletes.push(index);
+        }
+      }
+      last_index = 0;
+      last_shift = 0;
+      for (index in ad) {
+        if (!__hasProp.call(ad, index)) continue;
+        op = ad[index];
+        index = parseInt(index);
+        shift_r = ((function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = b_inserts.length; _i < _len; _i++) {
+            x = b_inserts[_i];
+            if (x < index) {
+              _results.push(x);
+            }
+          }
+          return _results;
+        })()).length;
+        shift_l = ((function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = b_deletes.length; _i < _len; _i++) {
+            x = b_deletes[_i];
+            if (x < index) {
+              _results.push(x);
+            }
+          }
+          return _results;
+        })()).length;
+        if (last_index + 1 === index) {
+          index = index + last_shift;
+        } else {
+          index = index + shift_r - shift_l;
+        }
+        last_index = index;
+        last_shift = shift_r - shift_l;
+        sindex = String(index);
+        ad_new[sindex] = op;
+        if (sindex in bd) {
+          if (op['o'] === '+' && bd[index]['o'] === '+') {
+            continue;
+          } else if (op['o'] === '-') {
+            if (bd[index]['o'] === '-') {
+              delete ad_new[sindex];
+            }
+          } else if (bd[index]['o'] === '-') {
+            if (op['o'] === 'r') {
+              ad_new[sindex] = {
+                'o': '+',
+                'v': op['v']
+              };
+            }
+            if (op['o'] === !'+') {
+              ad_new[sindex] = {
+                'o': '+',
+                'v': this.apply_object_diff(s[sindex], op['v'])
+              };
+            }
+          } else {
+            target_op = {};
+            target_op[sindex] = op;
+            other_op = {};
+            other_op[sindex] = bd[index];
+            diff = this.transform_object_diff(target_op, other_op, s, policy);
+            ad_new[sindex] = diff[sindex];
+          }
+        }
+      }
+      return ad_new;
+    };
+
+    jsondiff.prototype.transform_list_diff_dmp = function(ad, bd, s, policy) {
+      var a_patches, ab_text, b_patches, b_text, dmp_diffs, stext;
+      stext = this._serialize_to_text(s);
+      a_patches = this.dmp.patch_make(stext, this.dmp.diff_fromDelta(stext, ad));
+      b_patches = this.dmp.patch_make(stext, this.dmp.diff_fromDelta(stext, bd));
+      b_text = (this.dmp.patch_apply(b_patches, stext))[0];
+      ab_text = (this.dmp.patch_apply(a_patches, b_text))[0];
+      if (ab_text !== b_text) {
+        dmp_diffs = this.dmp.diff_lineMode_(b_text, ab_text);
+        if (dmp_diffs.length > 2) {
+          this.dmp.diff_cleanupEfficiency(dmp_diffs);
+        }
+        if (dmp_diffs.length > 0) {
+          return this.dmp.diff_toDelta(dmp_diffs);
+        }
+      }
+      return "";
+    };
+
+    jsondiff.prototype.transform_object_diff = function(ad, bd, s, policy) {
+      var a_patches, ab_text, ad_new, aop, b_patches, b_text, bop, dmp_diffs, key, sk, _ref;
+      ad_new = this.deepCopy(ad);
+      if ((policy != null) && 'attributes' in policy) {
+        policy = policy['attributes'];
+      }
+      for (key in ad) {
+        if (!__hasProp.call(ad, key)) continue;
+        aop = ad[key];
+        if (!(key in bd)) {
+          continue;
+        }
+        if ((policy != null) && 'attributes' in policy) {
+          policy = policy['attributes'];
+          if ((policy != null) && key in policy) {
+            policy = policy[key];
+          } else {
+            policy = null;
+          }
+        } else {
+          policy = null;
+        }
+        sk = s[key];
+        bop = bd[key];
+        if (aop['o'] === '+' && bop['o'] === '+') {
+          if (this.equals(aop['v'], bop['v'])) {
+            delete ad_new[key];
+          } else {
+            ad_new[key] = this.diff(bop['v'], aop['v'], policy);
+          }
+        } else if (aop['o'] === '-' && bop['o'] === '-') {
+          delete ad_new[key];
+        } else if (bop['o'] === '-' && ((_ref = aop['o']) !== '+' && _ref !== '-')) {
+          ad_new[key] = {
+            'o': '+'
+          };
+          ad_new[key]['v'] = this.apply_diff(sk, aop);
+        } else if (aop['o'] === 'O' && bop['o'] === 'O') {
+          ad_new[key] = {
+            'o': 'O',
+            'v': this.transform_object_diff(aop['v'], bop['v'], sk, policy)
+          };
+        } else if (aop['o'] === 'L' && bop['o'] === 'L') {
+          ad_new[key] = {
+            'o': 'L',
+            'v': this.transform_list_diff(aop['v'], bop['v'], sk, policy)
+          };
+        } else if (aop['o'] === 'dL' && bop['o'] === 'dL') {
+          ad_new[key] = {
+            'o': 'dL',
+            'v': this.transform_list_diff_dmp(aop['v'], bop['v'], sk, policy)
+          };
+        } else if (aop['o'] === 'd' && bop['o'] === 'd') {
+          delete ad_new[key];
+          a_patches = this.dmp.patch_make(sk, this.dmp.diff_fromDelta(sk, aop['v']));
+          b_patches = this.dmp.patch_make(sk, this.dmp.diff_fromDelta(sk, bop['v']));
+          b_text = (this.dmp.patch_apply(b_patches, sk))[0];
+          ab_text = (this.dmp.patch_apply(a_patches, b_text))[0];
+          if (ab_text !== b_text) {
+            dmp_diffs = this.dmp.diff_main(b_text, ab_text);
+            if (dmp_diffs.length > 2) {
+              this.dmp.diff_cleanupEfficiency(dmp_diffs);
+            }
+            if (dmp_diffs.length > 0) {
+              ad_new[key] = {
+                'o': 'd',
+                'v': this.dmp.diff_toDelta(dmp_diffs)
+              };
+            }
+          }
+        }
+        return ad_new;
+      }
+    };
+
+    jsondiff.prototype.patch_apply_with_offsets = function(patches, text, offsets) {
+      var del_end, del_start, delta, diffs, end_loc, expected_loc, i, index1, index2, mod, nullPadding, start_loc, text1, text2, x, y, _i, _j, _k, _l, _ref, _ref1, _ref2, _ref3;
+      if (patches.length === 0) {
+        return text;
+      }
+      patches = this.dmp.patch_deepCopy(patches);
+      nullPadding = this.dmp.patch_addPadding(patches);
+      text = nullPadding + text + nullPadding;
+      this.dmp.patch_splitMax(patches);
+      delta = 0;
+      for (x = _i = 0, _ref = patches.length; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+        expected_loc = patches[x].start2 + delta;
+        text1 = this.dmp.diff_text1(patches[x].diffs);
+        end_loc = -1;
+        if (text1.length > this.dmp.Match_MaxBits) {
+          start_loc = this.dmp.match_main(text, text1.substring(0, this.dmp.Match_MaxBits), expected_loc);
+          if (start_loc !== -1) {
+            end_loc = this.dmp.match_main(text, text1.substring(text1.length - this.dmp.Match_MaxBits), expected_loc + text1.length - this.dmp.Match_MaxBits);
+            if (end_loc === -1 || start_loc >= end_loc) {
+              start_loc = -1;
+            }
+          }
+        } else {
+          start_loc = this.dmp.match_main(text, text1, expected_loc);
+        }
+        if (start_loc === -1) {
+          delta -= patches[x].length2 - patches[x].length1;
+        } else {
+          delta = start_loc - expected_loc;
+          if (end_loc === -1) {
+            text2 = text.substring(start_loc, start_loc + text1.length);
+          } else {
+            text2 = text.substring(start_loc, end_loc + this.dmp.Match_MaxBits);
+          }
+          diffs = this.dmp.diff_main(text1, text2, false);
+          if (text1.length > this.dmp.Match_MaxBits && this.dmp.diff_levenshtein(diffs) / text1.length > this.dmp.Patch_DeleteThreshold) {
+
+          } else {
+            index1 = 0;
+            for (y = _j = 0, _ref1 = patches[x].diffs.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+              mod = patches[x].diffs[y];
+              if (mod[0] !== DIFF_EQUAL) {
+                index2 = this.dmp.diff_xIndex(diffs, index1);
+              }
+              if (mod[0] === DIFF_INSERT) {
+                text = text.substring(0, start_loc + index2) + mod[1] + text.substring(start_loc + index2);
+                for (i = _k = 0, _ref2 = offsets.length; 0 <= _ref2 ? _k < _ref2 : _k > _ref2; i = 0 <= _ref2 ? ++_k : --_k) {
+                  if (offsets[i] + nullPadding.length > start_loc + index2) {
+                    offsets[i] += mod[1].length;
+                  }
+                }
+              } else if (mod[0] === DIFF_DELETE) {
+                del_start = start_loc + index2;
+                del_end = start_loc + this.dmp.diff_xIndex(diffs, index1 + mod[1].length);
+                text = text.substring(0, del_start) + text.substring(del_end);
+                for (i = _l = 0, _ref3 = offsets.length; 0 <= _ref3 ? _l < _ref3 : _l > _ref3; i = 0 <= _ref3 ? ++_l : --_l) {
+                  if (offsets[i] + nullPadding.length > del_start) {
+                    if (offsets[i] + nullPadding.length < del_end) {
+                      offsets[i] = del_start - nullPadding.length;
+                    } else {
+                      offsets[i] -= del_end - del_start;
+                    }
+                  }
+                }
+              }
+              if (mod[0] !== DIFF_DELETE) {
+                index1 += mod[1].length;
+              }
+            }
+          }
+        }
+      }
+      text = text.substring(nullPadding.length, text.length - nullPadding.length);
+      return text;
+    };
+
+    return jsondiff;
+
+  })();
+
+  window['jsondiff'] = jsondiff;
+
+}).call(this);
+
+/**
+ * @fileoverview Computes the difference between two texts to create a patch.
+ * Applies the patch onto another text, allowing for errors.
+ * @author fraser@google.com (Neil Fraser)
+ */
+
+/**
+ * Class containing the diff, match and patch methods.
+ * @constructor
+ */
+function diff_match_patch() {
+
+  // Defaults.
+  // Redefine these in your program to override the defaults.
+
+  // Number of seconds to map a diff before giving up (0 for infinity).
+  this.Diff_Timeout = 1.0;
+  // Cost of an empty edit operation in terms of edit characters.
+  this.Diff_EditCost = 4;
+  // At what point is no match declared (0.0 = perfection, 1.0 = very loose).
+  this.Match_Threshold = 0.5;
+  // How far to search for a match (0 = exact location, 1000+ = broad match).
+  // A match this many characters away from the expected location will add
+  // 1.0 to the score (0.0 is a perfect match).
+  this.Match_Distance = 1000;
+  // When deleting a large block of text (over ~64 characters), how close do
+  // the contents have to be to match the expected contents. (0.0 = perfection,
+  // 1.0 = very loose).  Note that Match_Threshold controls how closely the
+  // end points of a delete need to match.
+  this.Patch_DeleteThreshold = 0.5;
+  // Chunk size for context length.
+  this.Patch_Margin = 4;
+
+  // The number of bits in an int.
+  this.Match_MaxBits = 32;
+}
+
+
+//  DIFF FUNCTIONS
+
+
+/**
+ * The data structure representing a diff is an array of tuples:
+ * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
+ * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
+ */
+var DIFF_DELETE = -1;
+var DIFF_INSERT = 1;
+var DIFF_EQUAL = 0;
+
+/** @typedef {{0: number, 1: string}} */
+diff_match_patch.Diff;
+
+
+/**
+ * Find the differences between two texts.  Simplifies the problem by stripping
+ * any common prefix or suffix off the texts before diffing.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {boolean=} opt_checklines Optional speedup flag. If present and false,
+ *     then don't run a line-level diff first to identify the changed areas.
+ *     Defaults to true, which does a faster, slightly less optimal diff.
+ * @param {number} opt_deadline Optional time when the diff should be complete
+ *     by.  Used internally for recursive calls.  Users should set DiffTimeout
+ *     instead.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_main = function(text1, text2, opt_checklines,
+    opt_deadline) {
+  // Set a deadline by which time the diff must be complete.
+  if (typeof opt_deadline == 'undefined') {
+    if (this.Diff_Timeout <= 0) {
+      opt_deadline = Number.MAX_VALUE;
+    } else {
+      opt_deadline = (new Date).getTime() + this.Diff_Timeout * 1000;
+    }
+  }
+  var deadline = opt_deadline;
+
+  // Check for null inputs.
+  if (text1 == null || text2 == null) {
+    throw new Error('Null input. (diff_main)');
+  }
+
+  // Check for equality (speedup).
+  if (text1 == text2) {
+    if (text1) {
+      return [[DIFF_EQUAL, text1]];
+    }
+    return [];
+  }
+
+  if (typeof opt_checklines == 'undefined') {
+    opt_checklines = true;
+  }
+  var checklines = opt_checklines;
+
+  // Trim off common prefix (speedup).
+  var commonlength = this.diff_commonPrefix(text1, text2);
+  var commonprefix = text1.substring(0, commonlength);
+  text1 = text1.substring(commonlength);
+  text2 = text2.substring(commonlength);
+
+  // Trim off common suffix (speedup).
+  commonlength = this.diff_commonSuffix(text1, text2);
+  var commonsuffix = text1.substring(text1.length - commonlength);
+  text1 = text1.substring(0, text1.length - commonlength);
+  text2 = text2.substring(0, text2.length - commonlength);
+
+  // Compute the diff on the middle block.
+  var diffs = this.diff_compute_(text1, text2, checklines, deadline);
+
+  // Restore the prefix and suffix.
+  if (commonprefix) {
+    diffs.unshift([DIFF_EQUAL, commonprefix]);
+  }
+  if (commonsuffix) {
+    diffs.push([DIFF_EQUAL, commonsuffix]);
+  }
+  this.diff_cleanupMerge(diffs);
+  return diffs;
+};
+
+
+/**
+ * Find the differences between two texts.  Assumes that the texts do not
+ * have any common prefix or suffix.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {boolean} checklines Speedup flag.  If false, then don't run a
+ *     line-level diff first to identify the changed areas.
+ *     If true, then run a faster, slightly less optimal diff.
+ * @param {number} deadline Time when the diff should be complete by.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_compute_ = function(text1, text2, checklines,
+    deadline) {
+  var diffs;
+
+  if (!text1) {
+    // Just add some text (speedup).
+    return [[DIFF_INSERT, text2]];
+  }
+
+  if (!text2) {
+    // Just delete some text (speedup).
+    return [[DIFF_DELETE, text1]];
+  }
+
+  /** @type {?string} */
+  var longtext = text1.length > text2.length ? text1 : text2;
+  /** @type {?string} */
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  var i = longtext.indexOf(shorttext);
+  if (i != -1) {
+    // Shorter text is inside the longer text (speedup).
+    diffs = [[DIFF_INSERT, longtext.substring(0, i)],
+             [DIFF_EQUAL, shorttext],
+             [DIFF_INSERT, longtext.substring(i + shorttext.length)]];
+    // Swap insertions for deletions if diff is reversed.
+    if (text1.length > text2.length) {
+      diffs[0][0] = diffs[2][0] = DIFF_DELETE;
+    }
+    return diffs;
+  }
+
+  if (shorttext.length == 1) {
+    // Single character string.
+    // After the previous speedup, the character can't be an equality.
+    return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+  }
+  longtext = shorttext = null;  // Garbage collect.
+
+  // Check to see if the problem can be split in two.
+  var hm = this.diff_halfMatch_(text1, text2);
+  if (hm) {
+    // A half-match was found, sort out the return data.
+    var text1_a = hm[0];
+    var text1_b = hm[1];
+    var text2_a = hm[2];
+    var text2_b = hm[3];
+    var mid_common = hm[4];
+    // Send both pairs off for separate processing.
+    var diffs_a = this.diff_main(text1_a, text2_a, checklines, deadline);
+    var diffs_b = this.diff_main(text1_b, text2_b, checklines, deadline);
+    // Merge the results.
+    return diffs_a.concat([[DIFF_EQUAL, mid_common]], diffs_b);
+  }
+
+  if (checklines && text1.length > 100 && text2.length > 100) {
+    return this.diff_lineMode_(text1, text2, deadline);
+  }
+
+  return this.diff_bisect_(text1, text2, deadline);
+};
+
+
+/**
+ * Do a quick line-level diff on both strings, then rediff the parts for
+ * greater accuracy.
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} deadline Time when the diff should be complete by.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_lineMode_ = function(text1, text2, deadline) {
+  // Scan the text on a line-by-line basis first.
+  var a = this.diff_linesToChars_(text1, text2);
+  text1 = a.chars1;
+  text2 = a.chars2;
+  var linearray = a.lineArray;
+
+  var diffs = this.diff_main(text1, text2, false, deadline);
+
+  // Convert the diff back to original text.
+  this.diff_charsToLines_(diffs, linearray);
+  // Eliminate freak matches (e.g. blank lines)
+  this.diff_cleanupSemantic(diffs);
+
+  // Rediff any replacement blocks, this time character-by-character.
+  // Add a dummy entry at the end.
+  diffs.push([DIFF_EQUAL, '']);
+  var pointer = 0;
+  var count_delete = 0;
+  var count_insert = 0;
+  var text_delete = '';
+  var text_insert = '';
+  while (pointer < diffs.length) {
+    switch (diffs[pointer][0]) {
+      case DIFF_INSERT:
+        count_insert++;
+        text_insert += diffs[pointer][1];
+        break;
+      case DIFF_DELETE:
+        count_delete++;
+        text_delete += diffs[pointer][1];
+        break;
+      case DIFF_EQUAL:
+        // Upon reaching an equality, check for prior redundancies.
+        if (count_delete >= 1 && count_insert >= 1) {
+          // Delete the offending records and add the merged ones.
+          diffs.splice(pointer - count_delete - count_insert,
+                       count_delete + count_insert);
+          pointer = pointer - count_delete - count_insert;
+          var a = this.diff_main(text_delete, text_insert, false, deadline);
+          for (var j = a.length - 1; j >= 0; j--) {
+            diffs.splice(pointer, 0, a[j]);
+          }
+          pointer = pointer + a.length;
+        }
+        count_insert = 0;
+        count_delete = 0;
+        text_delete = '';
+        text_insert = '';
+        break;
+    }
+    pointer++;
+  }
+  diffs.pop();  // Remove the dummy entry at the end.
+
+  return diffs;
+};
+
+
+/**
+ * Find the 'middle snake' of a diff, split the problem in two
+ * and return the recursively constructed diff.
+ * See Myers 1986 paper: An O(ND) Difference Algorithm and Its Variations.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} deadline Time at which to bail if not yet complete.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_bisect_ = function(text1, text2, deadline) {
+  // Cache the text lengths to prevent multiple calls.
+  var text1_length = text1.length;
+  var text2_length = text2.length;
+  var max_d = Math.ceil((text1_length + text2_length) / 2);
+  var v_offset = max_d;
+  var v_length = 2 * max_d;
+  var v1 = new Array(v_length);
+  var v2 = new Array(v_length);
+  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
+  // integers and undefined.
+  for (var x = 0; x < v_length; x++) {
+    v1[x] = -1;
+    v2[x] = -1;
+  }
+  v1[v_offset + 1] = 0;
+  v2[v_offset + 1] = 0;
+  var delta = text1_length - text2_length;
+  // If the total number of characters is odd, then the front path will collide
+  // with the reverse path.
+  var front = (delta % 2 != 0);
+  // Offsets for start and end of k loop.
+  // Prevents mapping of space beyond the grid.
+  var k1start = 0;
+  var k1end = 0;
+  var k2start = 0;
+  var k2end = 0;
+  for (var d = 0; d < max_d; d++) {
+    // Bail out if deadline is reached.
+    if ((new Date()).getTime() > deadline) {
+      break;
+    }
+
+    // Walk the front path one step.
+    for (var k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
+      var k1_offset = v_offset + k1;
+      var x1;
+      if (k1 == -d || (k1 != d && v1[k1_offset - 1] < v1[k1_offset + 1])) {
+        x1 = v1[k1_offset + 1];
+      } else {
+        x1 = v1[k1_offset - 1] + 1;
+      }
+      var y1 = x1 - k1;
+      while (x1 < text1_length && y1 < text2_length &&
+             text1.charAt(x1) == text2.charAt(y1)) {
+        x1++;
+        y1++;
+      }
+      v1[k1_offset] = x1;
+      if (x1 > text1_length) {
+        // Ran off the right of the graph.
+        k1end += 2;
+      } else if (y1 > text2_length) {
+        // Ran off the bottom of the graph.
+        k1start += 2;
+      } else if (front) {
+        var k2_offset = v_offset + delta - k1;
+        if (k2_offset >= 0 && k2_offset < v_length && v2[k2_offset] != -1) {
+          // Mirror x2 onto top-left coordinate system.
+          var x2 = text1_length - v2[k2_offset];
+          if (x1 >= x2) {
+            // Overlap detected.
+            return this.diff_bisectSplit_(text1, text2, x1, y1, deadline);
+          }
+        }
+      }
+    }
+
+    // Walk the reverse path one step.
+    for (var k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
+      var k2_offset = v_offset + k2;
+      var x2;
+      if (k2 == -d || (k2 != d && v2[k2_offset - 1] < v2[k2_offset + 1])) {
+        x2 = v2[k2_offset + 1];
+      } else {
+        x2 = v2[k2_offset - 1] + 1;
+      }
+      var y2 = x2 - k2;
+      while (x2 < text1_length && y2 < text2_length &&
+             text1.charAt(text1_length - x2 - 1) ==
+             text2.charAt(text2_length - y2 - 1)) {
+        x2++;
+        y2++;
+      }
+      v2[k2_offset] = x2;
+      if (x2 > text1_length) {
+        // Ran off the left of the graph.
+        k2end += 2;
+      } else if (y2 > text2_length) {
+        // Ran off the top of the graph.
+        k2start += 2;
+      } else if (!front) {
+        var k1_offset = v_offset + delta - k2;
+        if (k1_offset >= 0 && k1_offset < v_length && v1[k1_offset] != -1) {
+          var x1 = v1[k1_offset];
+          var y1 = v_offset + x1 - k1_offset;
+          // Mirror x2 onto top-left coordinate system.
+          x2 = text1_length - x2;
+          if (x1 >= x2) {
+            // Overlap detected.
+            return this.diff_bisectSplit_(text1, text2, x1, y1, deadline);
+          }
+        }
+      }
+    }
+  }
+  // Diff took too long and hit the deadline or
+  // number of diffs equals number of characters, no commonality at all.
+  return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+};
+
+
+/**
+ * Given the location of the 'middle snake', split the diff in two parts
+ * and recurse.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} x Index of split point in text1.
+ * @param {number} y Index of split point in text2.
+ * @param {number} deadline Time at which to bail if not yet complete.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_bisectSplit_ = function(text1, text2, x, y,
+    deadline) {
+  var text1a = text1.substring(0, x);
+  var text2a = text2.substring(0, y);
+  var text1b = text1.substring(x);
+  var text2b = text2.substring(y);
+
+  // Compute both diffs serially.
+  var diffs = this.diff_main(text1a, text2a, false, deadline);
+  var diffsb = this.diff_main(text1b, text2b, false, deadline);
+
+  return diffs.concat(diffsb);
+};
+
+
+/**
+ * Split two texts into an array of strings.  Reduce the texts to a string of
+ * hashes where each Unicode character represents one line.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {{chars1: string, chars2: string, lineArray: !Array.<string>}}
+ *     An object containing the encoded text1, the encoded text2 and
+ *     the array of unique strings.
+ *     The zeroth element of the array of unique strings is intentionally blank.
+ * @private
+ */
+diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2) {
+  var lineArray = [];  // e.g. lineArray[4] == 'Hello\n'
+  var lineHash = {};   // e.g. lineHash['Hello\n'] == 4
+
+  // '\x00' is a valid character, but various debuggers don't like it.
+  // So we'll insert a junk entry to avoid generating a null character.
+  lineArray[0] = '';
+
+  /**
+   * Split a text into an array of strings.  Reduce the texts to a string of
+   * hashes where each Unicode character represents one line.
+   * Modifies linearray and linehash through being a closure.
+   * @param {string} text String to encode.
+   * @return {string} Encoded string.
+   * @private
+   */
+  function diff_linesToCharsMunge_(text) {
+    var chars = '';
+    // Walk the text, pulling out a substring for each line.
+    // text.split('\n') would would temporarily double our memory footprint.
+    // Modifying text would create many large strings to garbage collect.
+    var lineStart = 0;
+    var lineEnd = -1;
+    // Keeping our own length variable is faster than looking it up.
+    var lineArrayLength = lineArray.length;
+    while (lineEnd < text.length - 1) {
+      lineEnd = text.indexOf('\n', lineStart);
+      if (lineEnd == -1) {
+        lineEnd = text.length - 1;
+      }
+      var line = text.substring(lineStart, lineEnd + 1);
+      lineStart = lineEnd + 1;
+
+      if (lineHash.hasOwnProperty ? lineHash.hasOwnProperty(line) :
+          (lineHash[line] !== undefined)) {
+        chars += String.fromCharCode(lineHash[line]);
+      } else {
+        chars += String.fromCharCode(lineArrayLength);
+        lineHash[line] = lineArrayLength;
+        lineArray[lineArrayLength++] = line;
+      }
+    }
+    return chars;
+  }
+
+  var chars1 = diff_linesToCharsMunge_(text1);
+  var chars2 = diff_linesToCharsMunge_(text2);
+  return {chars1: chars1, chars2: chars2, lineArray: lineArray};
+};
+
+
+/**
+ * Rehydrate the text in a diff from a string of line hashes to real lines of
+ * text.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @param {!Array.<string>} lineArray Array of unique strings.
+ * @private
+ */
+diff_match_patch.prototype.diff_charsToLines_ = function(diffs, lineArray) {
+  for (var x = 0; x < diffs.length; x++) {
+    var chars = diffs[x][1];
+    var text = [];
+    for (var y = 0; y < chars.length; y++) {
+      text[y] = lineArray[chars.charCodeAt(y)];
+    }
+    diffs[x][1] = text.join('');
+  }
+};
+
+
+/**
+ * Determine the common prefix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the start of each
+ *     string.
+ */
+diff_match_patch.prototype.diff_commonPrefix = function(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 || text1.charAt(0) != text2.charAt(0)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerstart = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(pointerstart, pointermid) ==
+        text2.substring(pointerstart, pointermid)) {
+      pointermin = pointermid;
+      pointerstart = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Determine the common suffix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the end of each string.
+ */
+diff_match_patch.prototype.diff_commonSuffix = function(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 ||
+      text1.charAt(text1.length - 1) != text2.charAt(text2.length - 1)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerend = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
+        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
+      pointermin = pointermid;
+      pointerend = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Determine if the suffix of one string is the prefix of another.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the end of the first
+ *     string and the start of the second string.
+ * @private
+ */
+diff_match_patch.prototype.diff_commonOverlap_ = function(text1, text2) {
+  // Cache the text lengths to prevent multiple calls.
+  var text1_length = text1.length;
+  var text2_length = text2.length;
+  // Eliminate the null case.
+  if (text1_length == 0 || text2_length == 0) {
+    return 0;
+  }
+  // Truncate the longer string.
+  if (text1_length > text2_length) {
+    text1 = text1.substring(text1_length - text2_length);
+  } else if (text1_length < text2_length) {
+    text2 = text2.substring(0, text1_length);
+  }
+  var text_length = Math.min(text1_length, text2_length);
+  // Quick check for the worst case.
+  if (text1 == text2) {
+    return text_length;
+  }
+
+  // Start by looking for a single character match
+  // and increase length until no match is found.
+  // Performance analysis: http://neil.fraser.name/news/2010/11/04/
+  var best = 0;
+  var length = 1;
+  while (true) {
+    var pattern = text1.substring(text_length - length);
+    var found = text2.indexOf(pattern);
+    if (found == -1) {
+      return best;
+    }
+    length += found;
+    if (found == 0 || text1.substring(text_length - length) ==
+        text2.substring(0, length)) {
+      best = length;
+      length++;
+    }
+  }
+};
+
+
+/**
+ * Do the two texts share a substring which is at least half the length of the
+ * longer text?
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {Array.<string>} Five element Array, containing the prefix of
+ *     text1, the suffix of text1, the prefix of text2, the suffix of
+ *     text2 and the common middle.  Or null if there was no match.
+ * @private
+ */
+diff_match_patch.prototype.diff_halfMatch_ = function(text1, text2) {
+  if (this.Diff_Timeout <= 0) {
+    // Don't risk returning a non-optimal diff if we have unlimited time.
+    return null;
+  }
+  var longtext = text1.length > text2.length ? text1 : text2;
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
+    return null;  // Pointless.
+  }
+  var dmp = this;  // 'this' becomes 'window' in a closure.
+
+  /**
+   * Does a substring of shorttext exist within longtext such that the substring
+   * is at least half the length of longtext?
+   * Closure, but does not reference any external variables.
+   * @param {string} longtext Longer string.
+   * @param {string} shorttext Shorter string.
+   * @param {number} i Start index of quarter length substring within longtext.
+   * @return {Array.<string>} Five element Array, containing the prefix of
+   *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
+   *     of shorttext and the common middle.  Or null if there was no match.
+   * @private
+   */
+  function diff_halfMatchI_(longtext, shorttext, i) {
+    // Start with a 1/4 length substring at position i as a seed.
+    var seed = longtext.substring(i, i + Math.floor(longtext.length / 4));
+    var j = -1;
+    var best_common = '';
+    var best_longtext_a, best_longtext_b, best_shorttext_a, best_shorttext_b;
+    while ((j = shorttext.indexOf(seed, j + 1)) != -1) {
+      var prefixLength = dmp.diff_commonPrefix(longtext.substring(i),
+                                               shorttext.substring(j));
+      var suffixLength = dmp.diff_commonSuffix(longtext.substring(0, i),
+                                               shorttext.substring(0, j));
+      if (best_common.length < suffixLength + prefixLength) {
+        best_common = shorttext.substring(j - suffixLength, j) +
+            shorttext.substring(j, j + prefixLength);
+        best_longtext_a = longtext.substring(0, i - suffixLength);
+        best_longtext_b = longtext.substring(i + prefixLength);
+        best_shorttext_a = shorttext.substring(0, j - suffixLength);
+        best_shorttext_b = shorttext.substring(j + prefixLength);
+      }
+    }
+    if (best_common.length * 2 >= longtext.length) {
+      return [best_longtext_a, best_longtext_b,
+              best_shorttext_a, best_shorttext_b, best_common];
+    } else {
+      return null;
+    }
+  }
+
+  // First check if the second quarter is the seed for a half-match.
+  var hm1 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 4));
+  // Check again based on the third quarter.
+  var hm2 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 2));
+  var hm;
+  if (!hm1 && !hm2) {
+    return null;
+  } else if (!hm2) {
+    hm = hm1;
+  } else if (!hm1) {
+    hm = hm2;
+  } else {
+    // Both matched.  Select the longest.
+    hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+  }
+
+  // A half-match was found, sort out the return data.
+  var text1_a, text1_b, text2_a, text2_b;
+  if (text1.length > text2.length) {
+    text1_a = hm[0];
+    text1_b = hm[1];
+    text2_a = hm[2];
+    text2_b = hm[3];
+  } else {
+    text2_a = hm[0];
+    text2_b = hm[1];
+    text1_a = hm[2];
+    text1_b = hm[3];
+  }
+  var mid_common = hm[4];
+  return [text1_a, text1_b, text2_a, text2_b, mid_common];
+};
+
+
+/**
+ * Reduce the number of edits by eliminating semantically trivial equalities.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupSemantic = function(diffs) {
+  var changes = false;
+  var equalities = [];  // Stack of indices where equalities are found.
+  var equalitiesLength = 0;  // Keeping our own length var is faster in JS.
+  /** @type {?string} */
+  var lastequality = null;
+  // Always equal to diffs[equalities[equalitiesLength - 1]][1]
+  var pointer = 0;  // Index of current position.
+  // Number of characters that changed prior to the equality.
+  var length_insertions1 = 0;
+  var length_deletions1 = 0;
+  // Number of characters that changed after the equality.
+  var length_insertions2 = 0;
+  var length_deletions2 = 0;
+  while (pointer < diffs.length) {
+    if (diffs[pointer][0] == DIFF_EQUAL) {  // Equality found.
+      equalities[equalitiesLength++] = pointer;
+      length_insertions1 = length_insertions2;
+      length_deletions1 = length_deletions2;
+      length_insertions2 = 0;
+      length_deletions2 = 0;
+      lastequality = diffs[pointer][1];
+    } else {  // An insertion or deletion.
+      if (diffs[pointer][0] == DIFF_INSERT) {
+        length_insertions2 += diffs[pointer][1].length;
+      } else {
+        length_deletions2 += diffs[pointer][1].length;
+      }
+      // Eliminate an equality that is smaller or equal to the edits on both
+      // sides of it.
+      if (lastequality && (lastequality.length <=
+          Math.max(length_insertions1, length_deletions1)) &&
+          (lastequality.length <= Math.max(length_insertions2,
+                                           length_deletions2))) {
+        // Duplicate record.
+        diffs.splice(equalities[equalitiesLength - 1], 0,
+                     [DIFF_DELETE, lastequality]);
+        // Change second copy to insert.
+        diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+        // Throw away the equality we just deleted.
+        equalitiesLength--;
+        // Throw away the previous equality (it needs to be reevaluated).
+        equalitiesLength--;
+        pointer = equalitiesLength > 0 ? equalities[equalitiesLength - 1] : -1;
+        length_insertions1 = 0;  // Reset the counters.
+        length_deletions1 = 0;
+        length_insertions2 = 0;
+        length_deletions2 = 0;
+        lastequality = null;
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+
+  // Normalize the diff.
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+  this.diff_cleanupSemanticLossless(diffs);
+
+  // Find any overlaps between deletions and insertions.
+  // e.g: <del>abcxxx</del><ins>xxxdef</ins>
+  //   -> <del>abc</del>xxx<ins>def</ins>
+  // e.g: <del>xxxabc</del><ins>defxxx</ins>
+  //   -> <ins>def</ins>xxx<del>abc</del>
+  // Only extract an overlap if it is as big as the edit ahead or behind it.
+  pointer = 1;
+  while (pointer < diffs.length) {
+    if (diffs[pointer - 1][0] == DIFF_DELETE &&
+        diffs[pointer][0] == DIFF_INSERT) {
+      var deletion = diffs[pointer - 1][1];
+      var insertion = diffs[pointer][1];
+      var overlap_length1 = this.diff_commonOverlap_(deletion, insertion);
+      var overlap_length2 = this.diff_commonOverlap_(insertion, deletion);
+      if (overlap_length1 >= overlap_length2) {
+        if (overlap_length1 >= deletion.length / 2 ||
+            overlap_length1 >= insertion.length / 2) {
+          // Overlap found.  Insert an equality and trim the surrounding edits.
+          diffs.splice(pointer, 0,
+              [DIFF_EQUAL, insertion.substring(0, overlap_length1)]);
+          diffs[pointer - 1][1] =
+              deletion.substring(0, deletion.length - overlap_length1);
+          diffs[pointer + 1][1] = insertion.substring(overlap_length1);
+          pointer++;
+        }
+      } else {
+        if (overlap_length2 >= deletion.length / 2 ||
+            overlap_length2 >= insertion.length / 2) {
+          // Reverse overlap found.
+          // Insert an equality and swap and trim the surrounding edits.
+          diffs.splice(pointer, 0,
+              [DIFF_EQUAL, deletion.substring(0, overlap_length2)]);
+          diffs[pointer - 1][0] = DIFF_INSERT;
+          diffs[pointer - 1][1] =
+              insertion.substring(0, insertion.length - overlap_length2);
+          diffs[pointer + 1][0] = DIFF_DELETE;
+          diffs[pointer + 1][1] =
+              deletion.substring(overlap_length2);
+          pointer++;
+        }
+      }
+      pointer++;
+    }
+    pointer++;
+  }
+};
+
+
+/**
+ * Look for single edits surrounded on both sides by equalities
+ * which can be shifted sideways to align the edit to a word boundary.
+ * e.g: The c<ins>at c</ins>ame. -> The <ins>cat </ins>came.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupSemanticLossless = function(diffs) {
+  /**
+   * Given two strings, compute a score representing whether the internal
+   * boundary falls on logical boundaries.
+   * Scores range from 6 (best) to 0 (worst).
+   * Closure, but does not reference any external variables.
+   * @param {string} one First string.
+   * @param {string} two Second string.
+   * @return {number} The score.
+   * @private
+   */
+  function diff_cleanupSemanticScore_(one, two) {
+    if (!one || !two) {
+      // Edges are the best.
+      return 6;
+    }
+
+    // Each port of this function behaves slightly differently due to
+    // subtle differences in each language's definition of things like
+    // 'whitespace'.  Since this function's purpose is largely cosmetic,
+    // the choice has been made to use each language's native features
+    // rather than force total conformity.
+    var char1 = one.charAt(one.length - 1);
+    var char2 = two.charAt(0);
+    var nonAlphaNumeric1 = char1.match(diff_match_patch.nonAlphaNumericRegex_);
+    var nonAlphaNumeric2 = char2.match(diff_match_patch.nonAlphaNumericRegex_);
+    var whitespace1 = nonAlphaNumeric1 &&
+        char1.match(diff_match_patch.whitespaceRegex_);
+    var whitespace2 = nonAlphaNumeric2 &&
+        char2.match(diff_match_patch.whitespaceRegex_);
+    var lineBreak1 = whitespace1 &&
+        char1.match(diff_match_patch.linebreakRegex_);
+    var lineBreak2 = whitespace2 &&
+        char2.match(diff_match_patch.linebreakRegex_);
+    var blankLine1 = lineBreak1 &&
+        one.match(diff_match_patch.blanklineEndRegex_);
+    var blankLine2 = lineBreak2 &&
+        two.match(diff_match_patch.blanklineStartRegex_);
+
+    if (blankLine1 || blankLine2) {
+      // Five points for blank lines.
+      return 5;
+    } else if (lineBreak1 || lineBreak2) {
+      // Four points for line breaks.
+      return 4;
+    } else if (nonAlphaNumeric1 && !whitespace1 && whitespace2) {
+      // Three points for end of sentences.
+      return 3;
+    } else if (whitespace1 || whitespace2) {
+      // Two points for whitespace.
+      return 2;
+    } else if (nonAlphaNumeric1 || nonAlphaNumeric2) {
+      // One point for non-alphanumeric.
+      return 1;
+    }
+    return 0;
+  }
+
+  var pointer = 1;
+  // Intentionally ignore the first and last element (don't need checking).
+  while (pointer < diffs.length - 1) {
+    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
+        diffs[pointer + 1][0] == DIFF_EQUAL) {
+      // This is a single edit surrounded by equalities.
+      var equality1 = diffs[pointer - 1][1];
+      var edit = diffs[pointer][1];
+      var equality2 = diffs[pointer + 1][1];
+
+      // First, shift the edit as far left as possible.
+      var commonOffset = this.diff_commonSuffix(equality1, edit);
+      if (commonOffset) {
+        var commonString = edit.substring(edit.length - commonOffset);
+        equality1 = equality1.substring(0, equality1.length - commonOffset);
+        edit = commonString + edit.substring(0, edit.length - commonOffset);
+        equality2 = commonString + equality2;
+      }
+
+      // Second, step character by character right, looking for the best fit.
+      var bestEquality1 = equality1;
+      var bestEdit = edit;
+      var bestEquality2 = equality2;
+      var bestScore = diff_cleanupSemanticScore_(equality1, edit) +
+          diff_cleanupSemanticScore_(edit, equality2);
+      while (edit.charAt(0) === equality2.charAt(0)) {
+        equality1 += edit.charAt(0);
+        edit = edit.substring(1) + equality2.charAt(0);
+        equality2 = equality2.substring(1);
+        var score = diff_cleanupSemanticScore_(equality1, edit) +
+            diff_cleanupSemanticScore_(edit, equality2);
+        // The >= encourages trailing rather than leading whitespace on edits.
+        if (score >= bestScore) {
+          bestScore = score;
+          bestEquality1 = equality1;
+          bestEdit = edit;
+          bestEquality2 = equality2;
+        }
+      }
+
+      if (diffs[pointer - 1][1] != bestEquality1) {
+        // We have an improvement, save it back to the diff.
+        if (bestEquality1) {
+          diffs[pointer - 1][1] = bestEquality1;
+        } else {
+          diffs.splice(pointer - 1, 1);
+          pointer--;
+        }
+        diffs[pointer][1] = bestEdit;
+        if (bestEquality2) {
+          diffs[pointer + 1][1] = bestEquality2;
+        } else {
+          diffs.splice(pointer + 1, 1);
+          pointer--;
+        }
+      }
+    }
+    pointer++;
+  }
+};
+
+// Define some regex patterns for matching boundaries.
+diff_match_patch.nonAlphaNumericRegex_ = /[^a-zA-Z0-9]/;
+diff_match_patch.whitespaceRegex_ = /\s/;
+diff_match_patch.linebreakRegex_ = /[\r\n]/;
+diff_match_patch.blanklineEndRegex_ = /\n\r?\n$/;
+diff_match_patch.blanklineStartRegex_ = /^\r?\n\r?\n/;
+
+/**
+ * Reduce the number of edits by eliminating operationally trivial equalities.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupEfficiency = function(diffs) {
+  var changes = false;
+  var equalities = [];  // Stack of indices where equalities are found.
+  var equalitiesLength = 0;  // Keeping our own length var is faster in JS.
+  /** @type {?string} */
+  var lastequality = null;
+  // Always equal to diffs[equalities[equalitiesLength - 1]][1]
+  var pointer = 0;  // Index of current position.
+  // Is there an insertion operation before the last equality.
+  var pre_ins = false;
+  // Is there a deletion operation before the last equality.
+  var pre_del = false;
+  // Is there an insertion operation after the last equality.
+  var post_ins = false;
+  // Is there a deletion operation after the last equality.
+  var post_del = false;
+  while (pointer < diffs.length) {
+    if (diffs[pointer][0] == DIFF_EQUAL) {  // Equality found.
+      if (diffs[pointer][1].length < this.Diff_EditCost &&
+          (post_ins || post_del)) {
+        // Candidate found.
+        equalities[equalitiesLength++] = pointer;
+        pre_ins = post_ins;
+        pre_del = post_del;
+        lastequality = diffs[pointer][1];
+      } else {
+        // Not a candidate, and can never become one.
+        equalitiesLength = 0;
+        lastequality = null;
+      }
+      post_ins = post_del = false;
+    } else {  // An insertion or deletion.
+      if (diffs[pointer][0] == DIFF_DELETE) {
+        post_del = true;
+      } else {
+        post_ins = true;
+      }
+      /*
+       * Five types to be split:
+       * <ins>A</ins><del>B</del>XY<ins>C</ins><del>D</del>
+       * <ins>A</ins>X<ins>C</ins><del>D</del>
+       * <ins>A</ins><del>B</del>X<ins>C</ins>
+       * <ins>A</del>X<ins>C</ins><del>D</del>
+       * <ins>A</ins><del>B</del>X<del>C</del>
+       */
+      if (lastequality && ((pre_ins && pre_del && post_ins && post_del) ||
+                           ((lastequality.length < this.Diff_EditCost / 2) &&
+                            (pre_ins + pre_del + post_ins + post_del) == 3))) {
+        // Duplicate record.
+        diffs.splice(equalities[equalitiesLength - 1], 0,
+                     [DIFF_DELETE, lastequality]);
+        // Change second copy to insert.
+        diffs[equalities[equalitiesLength - 1] + 1][0] = DIFF_INSERT;
+        equalitiesLength--;  // Throw away the equality we just deleted;
+        lastequality = null;
+        if (pre_ins && pre_del) {
+          // No changes made which could affect previous entry, keep going.
+          post_ins = post_del = true;
+          equalitiesLength = 0;
+        } else {
+          equalitiesLength--;  // Throw away the previous equality.
+          pointer = equalitiesLength > 0 ?
+              equalities[equalitiesLength - 1] : -1;
+          post_ins = post_del = false;
+        }
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+};
+
+
+/**
+ * Reorder and merge like edit sections.  Merge equalities.
+ * Any edit section can move as long as it doesn't cross an equality.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ */
+diff_match_patch.prototype.diff_cleanupMerge = function(diffs) {
+  diffs.push([DIFF_EQUAL, '']);  // Add a dummy entry at the end.
+  var pointer = 0;
+  var count_delete = 0;
+  var count_insert = 0;
+  var text_delete = '';
+  var text_insert = '';
+  var commonlength;
+  while (pointer < diffs.length) {
+    switch (diffs[pointer][0]) {
+      case DIFF_INSERT:
+        count_insert++;
+        text_insert += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_DELETE:
+        count_delete++;
+        text_delete += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_EQUAL:
+        // Upon reaching an equality, check for prior redundancies.
+        if (count_delete + count_insert > 1) {
+          if (count_delete !== 0 && count_insert !== 0) {
+            // Factor out any common prefixies.
+            commonlength = this.diff_commonPrefix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              if ((pointer - count_delete - count_insert) > 0 &&
+                  diffs[pointer - count_delete - count_insert - 1][0] ==
+                  DIFF_EQUAL) {
+                diffs[pointer - count_delete - count_insert - 1][1] +=
+                    text_insert.substring(0, commonlength);
+              } else {
+                diffs.splice(0, 0, [DIFF_EQUAL,
+                                    text_insert.substring(0, commonlength)]);
+                pointer++;
+              }
+              text_insert = text_insert.substring(commonlength);
+              text_delete = text_delete.substring(commonlength);
+            }
+            // Factor out any common suffixies.
+            commonlength = this.diff_commonSuffix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              diffs[pointer][1] = text_insert.substring(text_insert.length -
+                  commonlength) + diffs[pointer][1];
+              text_insert = text_insert.substring(0, text_insert.length -
+                  commonlength);
+              text_delete = text_delete.substring(0, text_delete.length -
+                  commonlength);
+            }
+          }
+          // Delete the offending records and add the merged ones.
+          if (count_delete === 0) {
+            diffs.splice(pointer - count_insert,
+                count_delete + count_insert, [DIFF_INSERT, text_insert]);
+          } else if (count_insert === 0) {
+            diffs.splice(pointer - count_delete,
+                count_delete + count_insert, [DIFF_DELETE, text_delete]);
+          } else {
+            diffs.splice(pointer - count_delete - count_insert,
+                count_delete + count_insert, [DIFF_DELETE, text_delete],
+                [DIFF_INSERT, text_insert]);
+          }
+          pointer = pointer - count_delete - count_insert +
+                    (count_delete ? 1 : 0) + (count_insert ? 1 : 0) + 1;
+        } else if (pointer !== 0 && diffs[pointer - 1][0] == DIFF_EQUAL) {
+          // Merge this equality with the previous one.
+          diffs[pointer - 1][1] += diffs[pointer][1];
+          diffs.splice(pointer, 1);
+        } else {
+          pointer++;
+        }
+        count_insert = 0;
+        count_delete = 0;
+        text_delete = '';
+        text_insert = '';
+        break;
+    }
+  }
+  if (diffs[diffs.length - 1][1] === '') {
+    diffs.pop();  // Remove the dummy entry at the end.
+  }
+
+  // Second pass: look for single edits surrounded on both sides by equalities
+  // which can be shifted sideways to eliminate an equality.
+  // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
+  var changes = false;
+  pointer = 1;
+  // Intentionally ignore the first and last element (don't need checking).
+  while (pointer < diffs.length - 1) {
+    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
+        diffs[pointer + 1][0] == DIFF_EQUAL) {
+      // This is a single edit surrounded by equalities.
+      if (diffs[pointer][1].substring(diffs[pointer][1].length -
+          diffs[pointer - 1][1].length) == diffs[pointer - 1][1]) {
+        // Shift the edit over the previous equality.
+        diffs[pointer][1] = diffs[pointer - 1][1] +
+            diffs[pointer][1].substring(0, diffs[pointer][1].length -
+                                        diffs[pointer - 1][1].length);
+        diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
+        diffs.splice(pointer - 1, 1);
+        changes = true;
+      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
+          diffs[pointer + 1][1]) {
+        // Shift the edit over the next equality.
+        diffs[pointer - 1][1] += diffs[pointer + 1][1];
+        diffs[pointer][1] =
+            diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
+            diffs[pointer + 1][1];
+        diffs.splice(pointer + 1, 1);
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+  // If shifts were made, the diff needs reordering and another shift sweep.
+  if (changes) {
+    this.diff_cleanupMerge(diffs);
+  }
+};
+
+
+/**
+ * loc is a location in text1, compute and return the equivalent location in
+ * text2.
+ * e.g. 'The cat' vs 'The big cat', 1->1, 5->8
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @param {number} loc Location within text1.
+ * @return {number} Location within text2.
+ */
+diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
+  var chars1 = 0;
+  var chars2 = 0;
+  var last_chars1 = 0;
+  var last_chars2 = 0;
+  var x;
+  for (x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_INSERT) {  // Equality or deletion.
+      chars1 += diffs[x][1].length;
+    }
+    if (diffs[x][0] !== DIFF_DELETE) {  // Equality or insertion.
+      chars2 += diffs[x][1].length;
+    }
+    if (chars1 > loc) {  // Overshot the location.
+      break;
+    }
+    last_chars1 = chars1;
+    last_chars2 = chars2;
+  }
+  // Was the location was deleted?
+  if (diffs.length != x && diffs[x][0] === DIFF_DELETE) {
+    return last_chars2;
+  }
+  // Add the remaining character length.
+  return last_chars2 + (loc - last_chars1);
+};
+
+
+/**
+ * Convert a diff array into a pretty HTML report.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} HTML representation.
+ */
+diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
+  var html = [];
+  var pattern_amp = /&/g;
+  var pattern_lt = /</g;
+  var pattern_gt = />/g;
+  var pattern_para = /\n/g;
+  for (var x = 0; x < diffs.length; x++) {
+    var op = diffs[x][0];    // Operation (insert, delete, equal)
+    var data = diffs[x][1];  // Text of change.
+    var text = data.replace(pattern_amp, '&amp;').replace(pattern_lt, '&lt;')
+        .replace(pattern_gt, '&gt;').replace(pattern_para, '&para;<br>');
+    switch (op) {
+      case DIFF_INSERT:
+        html[x] = '<ins style="background:#e6ffe6;">' + text + '</ins>';
+        break;
+      case DIFF_DELETE:
+        html[x] = '<del style="background:#ffe6e6;">' + text + '</del>';
+        break;
+      case DIFF_EQUAL:
+        html[x] = '<span>' + text + '</span>';
+        break;
+    }
+  }
+  return html.join('');
+};
+
+
+/**
+ * Compute and return the source text (all equalities and deletions).
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Source text.
+ */
+diff_match_patch.prototype.diff_text1 = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_INSERT) {
+      text[x] = diffs[x][1];
+    }
+  }
+  return text.join('');
+};
+
+
+/**
+ * Compute and return the destination text (all equalities and insertions).
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Destination text.
+ */
+diff_match_patch.prototype.diff_text2 = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    if (diffs[x][0] !== DIFF_DELETE) {
+      text[x] = diffs[x][1];
+    }
+  }
+  return text.join('');
+};
+
+
+/**
+ * Compute the Levenshtein distance; the number of inserted, deleted or
+ * substituted characters.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {number} Number of changes.
+ */
+diff_match_patch.prototype.diff_levenshtein = function(diffs) {
+  var levenshtein = 0;
+  var insertions = 0;
+  var deletions = 0;
+  for (var x = 0; x < diffs.length; x++) {
+    var op = diffs[x][0];
+    var data = diffs[x][1];
+    switch (op) {
+      case DIFF_INSERT:
+        insertions += data.length;
+        break;
+      case DIFF_DELETE:
+        deletions += data.length;
+        break;
+      case DIFF_EQUAL:
+        // A deletion and an insertion is one substitution.
+        levenshtein += Math.max(insertions, deletions);
+        insertions = 0;
+        deletions = 0;
+        break;
+    }
+  }
+  levenshtein += Math.max(insertions, deletions);
+  return levenshtein;
+};
+
+
+/**
+ * Crush the diff into an encoded string which describes the operations
+ * required to transform text1 into text2.
+ * E.g. =3\t-2\t+ing  -> Keep 3 chars, delete 2 chars, insert 'ing'.
+ * Operations are tab-separated.  Inserted text is escaped using %xx notation.
+ * @param {!Array.<!diff_match_patch.Diff>} diffs Array of diff tuples.
+ * @return {string} Delta text.
+ */
+diff_match_patch.prototype.diff_toDelta = function(diffs) {
+  var text = [];
+  for (var x = 0; x < diffs.length; x++) {
+    switch (diffs[x][0]) {
+      case DIFF_INSERT:
+        text[x] = '+' + encodeURI(diffs[x][1]);
+        break;
+      case DIFF_DELETE:
+        text[x] = '-' + diffs[x][1].length;
+        break;
+      case DIFF_EQUAL:
+        text[x] = '=' + diffs[x][1].length;
+        break;
+    }
+  }
+  return text.join('\t').replace(/%20/g, ' ');
+};
+
+
+/**
+ * Given the original text1, and an encoded string which describes the
+ * operations required to transform text1 into text2, compute the full diff.
+ * @param {string} text1 Source string for the diff.
+ * @param {string} delta Delta text.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @throws {!Error} If invalid input.
+ */
+diff_match_patch.prototype.diff_fromDelta = function(text1, delta) {
+  var diffs = [];
+  var diffsLength = 0;  // Keeping our own length var is faster in JS.
+  var pointer = 0;  // Cursor in text1
+  var tokens = delta.split(/\t/g);
+  for (var x = 0; x < tokens.length; x++) {
+    // Each token begins with a one character parameter which specifies the
+    // operation of this token (delete, insert, equality).
+    var param = tokens[x].substring(1);
+    switch (tokens[x].charAt(0)) {
+      case '+':
+        try {
+          diffs[diffsLength++] = [DIFF_INSERT, decodeURI(param)];
+        } catch (ex) {
+          // Malformed URI sequence.
+          throw new Error('Illegal escape in diff_fromDelta: ' + param);
+        }
+        break;
+      case '-':
+        // Fall through.
+      case '=':
+        var n = parseInt(param, 10);
+        if (isNaN(n) || n < 0) {
+          throw new Error('Invalid number in diff_fromDelta: ' + param);
+        }
+        var text = text1.substring(pointer, pointer += n);
+        if (tokens[x].charAt(0) == '=') {
+          diffs[diffsLength++] = [DIFF_EQUAL, text];
+        } else {
+          diffs[diffsLength++] = [DIFF_DELETE, text];
+        }
+        break;
+      default:
+        // Blank tokens are ok (from a trailing \t).
+        // Anything else is an error.
+        if (tokens[x]) {
+          throw new Error('Invalid diff operation in diff_fromDelta: ' +
+                          tokens[x]);
+        }
+    }
+  }
+  if (pointer != text1.length) {
+    throw new Error('Delta length (' + pointer +
+        ') does not equal source text length (' + text1.length + ').');
+  }
+  return diffs;
+};
+
+
+//  MATCH FUNCTIONS
+
+
+/**
+ * Locate the best instance of 'pattern' in 'text' near 'loc'.
+ * @param {string} text The text to search.
+ * @param {string} pattern The pattern to search for.
+ * @param {number} loc The location to search around.
+ * @return {number} Best match index or -1.
+ */
+diff_match_patch.prototype.match_main = function(text, pattern, loc) {
+  // Check for null inputs.
+  if (text == null || pattern == null || loc == null) {
+    throw new Error('Null input. (match_main)');
+  }
+
+  loc = Math.max(0, Math.min(loc, text.length));
+  if (text == pattern) {
+    // Shortcut (potentially not guaranteed by the algorithm)
+    return 0;
+  } else if (!text.length) {
+    // Nothing to match.
+    return -1;
+  } else if (text.substring(loc, loc + pattern.length) == pattern) {
+    // Perfect match at the perfect spot!  (Includes case of null pattern)
+    return loc;
+  } else {
+    // Do a fuzzy compare.
+    return this.match_bitap_(text, pattern, loc);
+  }
+};
+
+
+/**
+ * Locate the best instance of 'pattern' in 'text' near 'loc' using the
+ * Bitap algorithm.
+ * @param {string} text The text to search.
+ * @param {string} pattern The pattern to search for.
+ * @param {number} loc The location to search around.
+ * @return {number} Best match index or -1.
+ * @private
+ */
+diff_match_patch.prototype.match_bitap_ = function(text, pattern, loc) {
+  if (pattern.length > this.Match_MaxBits) {
+    throw new Error('Pattern too long for this browser.');
+  }
+
+  // Initialise the alphabet.
+  var s = this.match_alphabet_(pattern);
+
+  var dmp = this;  // 'this' becomes 'window' in a closure.
+
+  /**
+   * Compute and return the score for a match with e errors and x location.
+   * Accesses loc and pattern through being a closure.
+   * @param {number} e Number of errors in match.
+   * @param {number} x Location of match.
+   * @return {number} Overall score for match (0.0 = good, 1.0 = bad).
+   * @private
+   */
+  function match_bitapScore_(e, x) {
+    var accuracy = e / pattern.length;
+    var proximity = Math.abs(loc - x);
+    if (!dmp.Match_Distance) {
+      // Dodge divide by zero error.
+      return proximity ? 1.0 : accuracy;
+    }
+    return accuracy + (proximity / dmp.Match_Distance);
+  }
+
+  // Highest score beyond which we give up.
+  var score_threshold = this.Match_Threshold;
+  // Is there a nearby exact match? (speedup)
+  var best_loc = text.indexOf(pattern, loc);
+  if (best_loc != -1) {
+    score_threshold = Math.min(match_bitapScore_(0, best_loc), score_threshold);
+    // What about in the other direction? (speedup)
+    best_loc = text.lastIndexOf(pattern, loc + pattern.length);
+    if (best_loc != -1) {
+      score_threshold =
+          Math.min(match_bitapScore_(0, best_loc), score_threshold);
+    }
+  }
+
+  // Initialise the bit arrays.
+  var matchmask = 1 << (pattern.length - 1);
+  best_loc = -1;
+
+  var bin_min, bin_mid;
+  var bin_max = pattern.length + text.length;
+  var last_rd;
+  for (var d = 0; d < pattern.length; d++) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from 'loc' we can stray at this
+    // error level.
+    bin_min = 0;
+    bin_mid = bin_max;
+    while (bin_min < bin_mid) {
+      if (match_bitapScore_(d, loc + bin_mid) <= score_threshold) {
+        bin_min = bin_mid;
+      } else {
+        bin_max = bin_mid;
+      }
+      bin_mid = Math.floor((bin_max - bin_min) / 2 + bin_min);
+    }
+    // Use the result from this iteration as the maximum for the next.
+    bin_max = bin_mid;
+    var start = Math.max(1, loc - bin_mid + 1);
+    var finish = Math.min(loc + bin_mid, text.length) + pattern.length;
+
+    var rd = Array(finish + 2);
+    rd[finish + 1] = (1 << d) - 1;
+    for (var j = finish; j >= start; j--) {
+      // The alphabet (s) is a sparse hash, so the following line generates
+      // warnings.
+      var charMatch = s[text.charAt(j - 1)];
+      if (d === 0) {  // First pass: exact match.
+        rd[j] = ((rd[j + 1] << 1) | 1) & charMatch;
+      } else {  // Subsequent passes: fuzzy match.
+        rd[j] = (((rd[j + 1] << 1) | 1) & charMatch) |
+                (((last_rd[j + 1] | last_rd[j]) << 1) | 1) |
+                last_rd[j + 1];
+      }
+      if (rd[j] & matchmask) {
+        var score = match_bitapScore_(d, j - 1);
+        // This match will almost certainly be better than any existing match.
+        // But check anyway.
+        if (score <= score_threshold) {
+          // Told you so.
+          score_threshold = score;
+          best_loc = j - 1;
+          if (best_loc > loc) {
+            // When passing loc, don't exceed our current distance from loc.
+            start = Math.max(1, 2 * loc - best_loc);
+          } else {
+            // Already passed loc, downhill from here on in.
+            break;
+          }
+        }
+      }
+    }
+    // No hope for a (better) match at greater error levels.
+    if (match_bitapScore_(d + 1, loc) > score_threshold) {
+      break;
+    }
+    last_rd = rd;
+  }
+  return best_loc;
+};
+
+
+/**
+ * Initialise the alphabet for the Bitap algorithm.
+ * @param {string} pattern The text to encode.
+ * @return {!Object} Hash of character locations.
+ * @private
+ */
+diff_match_patch.prototype.match_alphabet_ = function(pattern) {
+  var s = {};
+  for (var i = 0; i < pattern.length; i++) {
+    s[pattern.charAt(i)] = 0;
+  }
+  for (var i = 0; i < pattern.length; i++) {
+    s[pattern.charAt(i)] |= 1 << (pattern.length - i - 1);
+  }
+  return s;
+};
+
+
+//  PATCH FUNCTIONS
+
+
+/**
+ * Increase the context until it is unique,
+ * but don't let the pattern expand beyond Match_MaxBits.
+ * @param {!diff_match_patch.patch_obj} patch The patch to grow.
+ * @param {string} text Source text.
+ * @private
+ */
+diff_match_patch.prototype.patch_addContext_ = function(patch, text) {
+  if (text.length == 0) {
+    return;
+  }
+  var pattern = text.substring(patch.start2, patch.start2 + patch.length1);
+  var padding = 0;
+
+  // Look for the first and last matches of pattern in text.  If two different
+  // matches are found, increase the pattern length.
+  while (text.indexOf(pattern) != text.lastIndexOf(pattern) &&
+         pattern.length < this.Match_MaxBits - this.Patch_Margin -
+         this.Patch_Margin) {
+    padding += this.Patch_Margin;
+    pattern = text.substring(patch.start2 - padding,
+                             patch.start2 + patch.length1 + padding);
+  }
+  // Add one chunk for good luck.
+  padding += this.Patch_Margin;
+
+  // Add the prefix.
+  var prefix = text.substring(patch.start2 - padding, patch.start2);
+  if (prefix) {
+    patch.diffs.unshift([DIFF_EQUAL, prefix]);
+  }
+  // Add the suffix.
+  var suffix = text.substring(patch.start2 + patch.length1,
+                              patch.start2 + patch.length1 + padding);
+  if (suffix) {
+    patch.diffs.push([DIFF_EQUAL, suffix]);
+  }
+
+  // Roll back the start points.
+  patch.start1 -= prefix.length;
+  patch.start2 -= prefix.length;
+  // Extend the lengths.
+  patch.length1 += prefix.length + suffix.length;
+  patch.length2 += prefix.length + suffix.length;
+};
+
+
+/**
+ * Compute a list of patches to turn text1 into text2.
+ * Use diffs if provided, otherwise compute it ourselves.
+ * There are four ways to call this function, depending on what data is
+ * available to the caller:
+ * Method 1:
+ * a = text1, b = text2
+ * Method 2:
+ * a = diffs
+ * Method 3 (optimal):
+ * a = text1, b = diffs
+ * Method 4 (deprecated, use method 3):
+ * a = text1, b = text2, c = diffs
+ *
+ * @param {string|!Array.<!diff_match_patch.Diff>} a text1 (methods 1,3,4) or
+ * Array of diff tuples for text1 to text2 (method 2).
+ * @param {string|!Array.<!diff_match_patch.Diff>} opt_b text2 (methods 1,4) or
+ * Array of diff tuples for text1 to text2 (method 3) or undefined (method 2).
+ * @param {string|!Array.<!diff_match_patch.Diff>} opt_c Array of diff tuples
+ * for text1 to text2 (method 4) or undefined (methods 1,2,3).
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_make = function(a, opt_b, opt_c) {
+  var text1, diffs;
+  if (typeof a == 'string' && typeof opt_b == 'string' &&
+      typeof opt_c == 'undefined') {
+    // Method 1: text1, text2
+    // Compute diffs from text1 and text2.
+    text1 = /** @type {string} */(a);
+    diffs = this.diff_main(text1, /** @type {string} */(opt_b), true);
+    if (diffs.length > 2) {
+      this.diff_cleanupSemantic(diffs);
+      this.diff_cleanupEfficiency(diffs);
+    }
+  } else if (a && typeof a == 'object' && typeof opt_b == 'undefined' &&
+      typeof opt_c == 'undefined') {
+    // Method 2: diffs
+    // Compute text1 from diffs.
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(a);
+    text1 = this.diff_text1(diffs);
+  } else if (typeof a == 'string' && opt_b && typeof opt_b == 'object' &&
+      typeof opt_c == 'undefined') {
+    // Method 3: text1, diffs
+    text1 = /** @type {string} */(a);
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(opt_b);
+  } else if (typeof a == 'string' && typeof opt_b == 'string' &&
+      opt_c && typeof opt_c == 'object') {
+    // Method 4: text1, text2, diffs
+    // text2 is not used.
+    text1 = /** @type {string} */(a);
+    diffs = /** @type {!Array.<!diff_match_patch.Diff>} */(opt_c);
+  } else {
+    throw new Error('Unknown call format to patch_make.');
+  }
+
+  if (diffs.length === 0) {
+    return [];  // Get rid of the null case.
+  }
+  var patches = [];
+  var patch = new diff_match_patch.patch_obj();
+  var patchDiffLength = 0;  // Keeping our own length var is faster in JS.
+  var char_count1 = 0;  // Number of characters into the text1 string.
+  var char_count2 = 0;  // Number of characters into the text2 string.
+  // Start with text1 (prepatch_text) and apply the diffs until we arrive at
+  // text2 (postpatch_text).  We recreate the patches one by one to determine
+  // context info.
+  var prepatch_text = text1;
+  var postpatch_text = text1;
+  for (var x = 0; x < diffs.length; x++) {
+    var diff_type = diffs[x][0];
+    var diff_text = diffs[x][1];
+
+    if (!patchDiffLength && diff_type !== DIFF_EQUAL) {
+      // A new patch starts here.
+      patch.start1 = char_count1;
+      patch.start2 = char_count2;
+    }
+
+    switch (diff_type) {
+      case DIFF_INSERT:
+        patch.diffs[patchDiffLength++] = diffs[x];
+        patch.length2 += diff_text.length;
+        postpatch_text = postpatch_text.substring(0, char_count2) + diff_text +
+                         postpatch_text.substring(char_count2);
+        break;
+      case DIFF_DELETE:
+        patch.length1 += diff_text.length;
+        patch.diffs[patchDiffLength++] = diffs[x];
+        postpatch_text = postpatch_text.substring(0, char_count2) +
+                         postpatch_text.substring(char_count2 +
+                             diff_text.length);
+        break;
+      case DIFF_EQUAL:
+        if (diff_text.length <= 2 * this.Patch_Margin &&
+            patchDiffLength && diffs.length != x + 1) {
+          // Small equality inside a patch.
+          patch.diffs[patchDiffLength++] = diffs[x];
+          patch.length1 += diff_text.length;
+          patch.length2 += diff_text.length;
+        } else if (diff_text.length >= 2 * this.Patch_Margin) {
+          // Time for a new patch.
+          if (patchDiffLength) {
+            this.patch_addContext_(patch, prepatch_text);
+            patches.push(patch);
+            patch = new diff_match_patch.patch_obj();
+            patchDiffLength = 0;
+            // Unlike Unidiff, our patch lists have a rolling context.
+            // http://code.google.com/p/google-diff-match-patch/wiki/Unidiff
+            // Update prepatch text & pos to reflect the application of the
+            // just completed patch.
+            prepatch_text = postpatch_text;
+            char_count1 = char_count2;
+          }
+        }
+        break;
+    }
+
+    // Update the current character count.
+    if (diff_type !== DIFF_INSERT) {
+      char_count1 += diff_text.length;
+    }
+    if (diff_type !== DIFF_DELETE) {
+      char_count2 += diff_text.length;
+    }
+  }
+  // Pick up the leftover patch if not empty.
+  if (patchDiffLength) {
+    this.patch_addContext_(patch, prepatch_text);
+    patches.push(patch);
+  }
+
+  return patches;
+};
+
+
+/**
+ * Given an array of patches, return another array that is identical.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_deepCopy = function(patches) {
+  // Making deep copies is hard in JavaScript.
+  var patchesCopy = [];
+  for (var x = 0; x < patches.length; x++) {
+    var patch = patches[x];
+    var patchCopy = new diff_match_patch.patch_obj();
+    patchCopy.diffs = [];
+    for (var y = 0; y < patch.diffs.length; y++) {
+      patchCopy.diffs[y] = patch.diffs[y].slice();
+    }
+    patchCopy.start1 = patch.start1;
+    patchCopy.start2 = patch.start2;
+    patchCopy.length1 = patch.length1;
+    patchCopy.length2 = patch.length2;
+    patchesCopy[x] = patchCopy;
+  }
+  return patchesCopy;
+};
+
+
+/**
+ * Merge a set of patches onto the text.  Return a patched text, as well
+ * as a list of true/false values indicating which patches were applied.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @param {string} text Old text.
+ * @return {!Array.<string|!Array.<boolean>>} Two element Array, containing the
+ *      new text and an array of boolean values.
+ */
+diff_match_patch.prototype.patch_apply = function(patches, text) {
+  if (patches.length == 0) {
+    return [text, []];
+  }
+
+  // Deep copy the patches so that no changes are made to originals.
+  patches = this.patch_deepCopy(patches);
+
+  var nullPadding = this.patch_addPadding(patches);
+  text = nullPadding + text + nullPadding;
+
+  this.patch_splitMax(patches);
+  // delta keeps track of the offset between the expected and actual location
+  // of the previous patch.  If there are patches expected at positions 10 and
+  // 20, but the first patch was found at 12, delta is 2 and the second patch
+  // has an effective expected position of 22.
+  var delta = 0;
+  var results = [];
+  for (var x = 0; x < patches.length; x++) {
+    var expected_loc = patches[x].start2 + delta;
+    var text1 = this.diff_text1(patches[x].diffs);
+    var start_loc;
+    var end_loc = -1;
+    if (text1.length > this.Match_MaxBits) {
+      // patch_splitMax will only provide an oversized pattern in the case of
+      // a monster delete.
+      start_loc = this.match_main(text, text1.substring(0, this.Match_MaxBits),
+                                  expected_loc);
+      if (start_loc != -1) {
+        end_loc = this.match_main(text,
+            text1.substring(text1.length - this.Match_MaxBits),
+            expected_loc + text1.length - this.Match_MaxBits);
+        if (end_loc == -1 || start_loc >= end_loc) {
+          // Can't find valid trailing context.  Drop this patch.
+          start_loc = -1;
+        }
+      }
+    } else {
+      start_loc = this.match_main(text, text1, expected_loc);
+    }
+    if (start_loc == -1) {
+      // No match found.  :(
+      results[x] = false;
+      // Subtract the delta for this failed patch from subsequent patches.
+      delta -= patches[x].length2 - patches[x].length1;
+    } else {
+      // Found a match.  :)
+      results[x] = true;
+      delta = start_loc - expected_loc;
+      var text2;
+      if (end_loc == -1) {
+        text2 = text.substring(start_loc, start_loc + text1.length);
+      } else {
+        text2 = text.substring(start_loc, end_loc + this.Match_MaxBits);
+      }
+      if (text1 == text2) {
+        // Perfect match, just shove the replacement text in.
+        text = text.substring(0, start_loc) +
+               this.diff_text2(patches[x].diffs) +
+               text.substring(start_loc + text1.length);
+      } else {
+        // Imperfect match.  Run a diff to get a framework of equivalent
+        // indices.
+        var diffs = this.diff_main(text1, text2, false);
+        if (text1.length > this.Match_MaxBits &&
+            this.diff_levenshtein(diffs) / text1.length >
+            this.Patch_DeleteThreshold) {
+          // The end points match, but the content is unacceptably bad.
+          results[x] = false;
+        } else {
+          this.diff_cleanupSemanticLossless(diffs);
+          var index1 = 0;
+          var index2;
+          for (var y = 0; y < patches[x].diffs.length; y++) {
+            var mod = patches[x].diffs[y];
+            if (mod[0] !== DIFF_EQUAL) {
+              index2 = this.diff_xIndex(diffs, index1);
+            }
+            if (mod[0] === DIFF_INSERT) {  // Insertion
+              text = text.substring(0, start_loc + index2) + mod[1] +
+                     text.substring(start_loc + index2);
+            } else if (mod[0] === DIFF_DELETE) {  // Deletion
+              text = text.substring(0, start_loc + index2) +
+                     text.substring(start_loc + this.diff_xIndex(diffs,
+                         index1 + mod[1].length));
+            }
+            if (mod[0] !== DIFF_DELETE) {
+              index1 += mod[1].length;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Strip the padding off.
+  text = text.substring(nullPadding.length, text.length - nullPadding.length);
+  return [text, results];
+};
+
+
+/**
+ * Add some padding on text start and end so that edges can match something.
+ * Intended to be called only from within patch_apply.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {string} The padding string added to each side.
+ */
+diff_match_patch.prototype.patch_addPadding = function(patches) {
+  var paddingLength = this.Patch_Margin;
+  var nullPadding = '';
+  for (var x = 1; x <= paddingLength; x++) {
+    nullPadding += String.fromCharCode(x);
+  }
+
+  // Bump all the patches forward.
+  for (var x = 0; x < patches.length; x++) {
+    patches[x].start1 += paddingLength;
+    patches[x].start2 += paddingLength;
+  }
+
+  // Add some padding on start of first diff.
+  var patch = patches[0];
+  var diffs = patch.diffs;
+  if (diffs.length == 0 || diffs[0][0] != DIFF_EQUAL) {
+    // Add nullPadding equality.
+    diffs.unshift([DIFF_EQUAL, nullPadding]);
+    patch.start1 -= paddingLength;  // Should be 0.
+    patch.start2 -= paddingLength;  // Should be 0.
+    patch.length1 += paddingLength;
+    patch.length2 += paddingLength;
+  } else if (paddingLength > diffs[0][1].length) {
+    // Grow first equality.
+    var extraLength = paddingLength - diffs[0][1].length;
+    diffs[0][1] = nullPadding.substring(diffs[0][1].length) + diffs[0][1];
+    patch.start1 -= extraLength;
+    patch.start2 -= extraLength;
+    patch.length1 += extraLength;
+    patch.length2 += extraLength;
+  }
+
+  // Add some padding on end of last diff.
+  patch = patches[patches.length - 1];
+  diffs = patch.diffs;
+  if (diffs.length == 0 || diffs[diffs.length - 1][0] != DIFF_EQUAL) {
+    // Add nullPadding equality.
+    diffs.push([DIFF_EQUAL, nullPadding]);
+    patch.length1 += paddingLength;
+    patch.length2 += paddingLength;
+  } else if (paddingLength > diffs[diffs.length - 1][1].length) {
+    // Grow last equality.
+    var extraLength = paddingLength - diffs[diffs.length - 1][1].length;
+    diffs[diffs.length - 1][1] += nullPadding.substring(0, extraLength);
+    patch.length1 += extraLength;
+    patch.length2 += extraLength;
+  }
+
+  return nullPadding;
+};
+
+
+/**
+ * Look through the patches and break up any which are longer than the maximum
+ * limit of the match algorithm.
+ * Intended to be called only from within patch_apply.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ */
+diff_match_patch.prototype.patch_splitMax = function(patches) {
+  var patch_size = this.Match_MaxBits;
+  for (var x = 0; x < patches.length; x++) {
+    if (patches[x].length1 <= patch_size) {
+      continue;
+    }
+    var bigpatch = patches[x];
+    // Remove the big old patch.
+    patches.splice(x--, 1);
+    var start1 = bigpatch.start1;
+    var start2 = bigpatch.start2;
+    var precontext = '';
+    while (bigpatch.diffs.length !== 0) {
+      // Create one of several smaller patches.
+      var patch = new diff_match_patch.patch_obj();
+      var empty = true;
+      patch.start1 = start1 - precontext.length;
+      patch.start2 = start2 - precontext.length;
+      if (precontext !== '') {
+        patch.length1 = patch.length2 = precontext.length;
+        patch.diffs.push([DIFF_EQUAL, precontext]);
+      }
+      while (bigpatch.diffs.length !== 0 &&
+             patch.length1 < patch_size - this.Patch_Margin) {
+        var diff_type = bigpatch.diffs[0][0];
+        var diff_text = bigpatch.diffs[0][1];
+        if (diff_type === DIFF_INSERT) {
+          // Insertions are harmless.
+          patch.length2 += diff_text.length;
+          start2 += diff_text.length;
+          patch.diffs.push(bigpatch.diffs.shift());
+          empty = false;
+        } else if (diff_type === DIFF_DELETE && patch.diffs.length == 1 &&
+                   patch.diffs[0][0] == DIFF_EQUAL &&
+                   diff_text.length > 2 * patch_size) {
+          // This is a large deletion.  Let it pass in one chunk.
+          patch.length1 += diff_text.length;
+          start1 += diff_text.length;
+          empty = false;
+          patch.diffs.push([diff_type, diff_text]);
+          bigpatch.diffs.shift();
+        } else {
+          // Deletion or equality.  Only take as much as we can stomach.
+          diff_text = diff_text.substring(0,
+              patch_size - patch.length1 - this.Patch_Margin);
+          patch.length1 += diff_text.length;
+          start1 += diff_text.length;
+          if (diff_type === DIFF_EQUAL) {
+            patch.length2 += diff_text.length;
+            start2 += diff_text.length;
+          } else {
+            empty = false;
+          }
+          patch.diffs.push([diff_type, diff_text]);
+          if (diff_text == bigpatch.diffs[0][1]) {
+            bigpatch.diffs.shift();
+          } else {
+            bigpatch.diffs[0][1] =
+                bigpatch.diffs[0][1].substring(diff_text.length);
+          }
+        }
+      }
+      // Compute the head context for the next patch.
+      precontext = this.diff_text2(patch.diffs);
+      precontext =
+          precontext.substring(precontext.length - this.Patch_Margin);
+      // Append the end context for this patch.
+      var postcontext = this.diff_text1(bigpatch.diffs)
+                            .substring(0, this.Patch_Margin);
+      if (postcontext !== '') {
+        patch.length1 += postcontext.length;
+        patch.length2 += postcontext.length;
+        if (patch.diffs.length !== 0 &&
+            patch.diffs[patch.diffs.length - 1][0] === DIFF_EQUAL) {
+          patch.diffs[patch.diffs.length - 1][1] += postcontext;
+        } else {
+          patch.diffs.push([DIFF_EQUAL, postcontext]);
+        }
+      }
+      if (!empty) {
+        patches.splice(++x, 0, patch);
+      }
+    }
+  }
+};
+
+
+/**
+ * Take a list of patches and return a textual representation.
+ * @param {!Array.<!diff_match_patch.patch_obj>} patches Array of Patch objects.
+ * @return {string} Text representation of patches.
+ */
+diff_match_patch.prototype.patch_toText = function(patches) {
+  var text = [];
+  for (var x = 0; x < patches.length; x++) {
+    text[x] = patches[x];
+  }
+  return text.join('');
+};
+
+
+/**
+ * Parse a textual representation of patches and return a list of Patch objects.
+ * @param {string} textline Text representation of patches.
+ * @return {!Array.<!diff_match_patch.patch_obj>} Array of Patch objects.
+ * @throws {!Error} If invalid input.
+ */
+diff_match_patch.prototype.patch_fromText = function(textline) {
+  var patches = [];
+  if (!textline) {
+    return patches;
+  }
+  var text = textline.split('\n');
+  var textPointer = 0;
+  var patchHeader = /^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@$/;
+  while (textPointer < text.length) {
+    var m = text[textPointer].match(patchHeader);
+    if (!m) {
+      throw new Error('Invalid patch string: ' + text[textPointer]);
+    }
+    var patch = new diff_match_patch.patch_obj();
+    patches.push(patch);
+    patch.start1 = parseInt(m[1], 10);
+    if (m[2] === '') {
+      patch.start1--;
+      patch.length1 = 1;
+    } else if (m[2] == '0') {
+      patch.length1 = 0;
+    } else {
+      patch.start1--;
+      patch.length1 = parseInt(m[2], 10);
+    }
+
+    patch.start2 = parseInt(m[3], 10);
+    if (m[4] === '') {
+      patch.start2--;
+      patch.length2 = 1;
+    } else if (m[4] == '0') {
+      patch.length2 = 0;
+    } else {
+      patch.start2--;
+      patch.length2 = parseInt(m[4], 10);
+    }
+    textPointer++;
+
+    while (textPointer < text.length) {
+      var sign = text[textPointer].charAt(0);
+      try {
+        var line = decodeURI(text[textPointer].substring(1));
+      } catch (ex) {
+        // Malformed URI sequence.
+        throw new Error('Illegal escape in patch_fromText: ' + line);
+      }
+      if (sign == '-') {
+        // Deletion.
+        patch.diffs.push([DIFF_DELETE, line]);
+      } else if (sign == '+') {
+        // Insertion.
+        patch.diffs.push([DIFF_INSERT, line]);
+      } else if (sign == ' ') {
+        // Minor equality.
+        patch.diffs.push([DIFF_EQUAL, line]);
+      } else if (sign == '@') {
+        // Start of next patch.
+        break;
+      } else if (sign === '') {
+        // Blank line?  Whatever.
+      } else {
+        // WTF?
+        throw new Error('Invalid patch mode "' + sign + '" in: ' + line);
+      }
+      textPointer++;
+    }
+  }
+  return patches;
+};
+
+
+/**
+ * Class representing one patch operation.
+ * @constructor
+ */
+diff_match_patch.patch_obj = function() {
+  /** @type {!Array.<!diff_match_patch.Diff>} */
+  this.diffs = [];
+  /** @type {?number} */
+  this.start1 = null;
+  /** @type {?number} */
+  this.start2 = null;
+  /** @type {number} */
+  this.length1 = 0;
+  /** @type {number} */
+  this.length2 = 0;
+};
+
+
+/**
+ * Emmulate GNU diff's format.
+ * Header: @@ -382,8 +481,9 @@
+ * Indicies are printed as 1-based, not 0-based.
+ * @return {string} The GNU diff string.
+ */
+diff_match_patch.patch_obj.prototype.toString = function() {
+  var coords1, coords2;
+  if (this.length1 === 0) {
+    coords1 = this.start1 + ',0';
+  } else if (this.length1 == 1) {
+    coords1 = this.start1 + 1;
+  } else {
+    coords1 = (this.start1 + 1) + ',' + this.length1;
+  }
+  if (this.length2 === 0) {
+    coords2 = this.start2 + ',0';
+  } else if (this.length2 == 1) {
+    coords2 = this.start2 + 1;
+  } else {
+    coords2 = (this.start2 + 1) + ',' + this.length2;
+  }
+  var text = ['@@ -' + coords1 + ' +' + coords2 + ' @@\n'];
+  var op;
+  // Escape the body of the patch with %xx notation.
+  for (var x = 0; x < this.diffs.length; x++) {
+    switch (this.diffs[x][0]) {
+      case DIFF_INSERT:
+        op = '+';
+        break;
+      case DIFF_DELETE:
+        op = '-';
+        break;
+      case DIFF_EQUAL:
+        op = ' ';
+        break;
+    }
+    text[x + 1] = op + encodeURI(this.diffs[x][1]) + '\n';
+  }
+  return text.join('').replace(/%20/g, ' ');
+};
+
+
+// Export these global variables so that they survive Google's JS compiler.
+// In a browser, 'this' will be 'window'.
+// Users of node.js should 'require' the uncompressed version since Google's
+// JS compiler may break the following exports for non-browser environments.
+this['diff_match_patch'] = diff_match_patch;
+this['DIFF_DELETE'] = DIFF_DELETE;
+this['DIFF_INSERT'] = DIFF_INSERT;
+this['DIFF_EQUAL'] = DIFF_EQUAL;
+
+// JSON2 by Douglas Crockford (minified).
+var JSON;JSON||(JSON={}),function(){function str(a,b){var c,d,e,f,g=gap,h,i=b[a];i&&typeof i=="object"&&typeof i.toJSON=="function"&&(i=i.toJSON(a)),typeof rep=="function"&&(i=rep.call(b,a,i));switch(typeof i){case"string":return quote(i);case"number":return isFinite(i)?String(i):"null";case"boolean":case"null":return String(i);case"object":if(!i)return"null";gap+=indent,h=[];if(Object.prototype.toString.apply(i)==="[object Array]"){f=i.length;for(c=0;c<f;c+=1)h[c]=str(c,i)||"null";e=h.length===0?"[]":gap?"[\n"+gap+h.join(",\n"+gap)+"\n"+g+"]":"["+h.join(",")+"]",gap=g;return e}if(rep&&typeof rep=="object"){f=rep.length;for(c=0;c<f;c+=1)typeof rep[c]=="string"&&(d=rep[c],e=str(d,i),e&&h.push(quote(d)+(gap?": ":":")+e))}else for(d in i)Object.prototype.hasOwnProperty.call(i,d)&&(e=str(d,i),e&&h.push(quote(d)+(gap?": ":":")+e));e=h.length===0?"{}":gap?"{\n"+gap+h.join(",\n"+gap)+"\n"+g+"}":"{"+h.join(",")+"}",gap=g;return e}}function quote(a){escapable.lastIndex=0;return escapable.test(a)?'"'+a.replace(escapable,function(a){var b=meta[a];return typeof b=="string"?b:"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)})+'"':'"'+a+'"'}function f(a){return a<10?"0"+a:a}"use strict",typeof Date.prototype.toJSON!="function"&&(Date.prototype.toJSON=function(a){return isFinite(this.valueOf())?this.getUTCFullYear()+"-"+f(this.getUTCMonth()+1)+"-"+f(this.getUTCDate())+"T"+f(this.getUTCHours())+":"+f(this.getUTCMinutes())+":"+f(this.getUTCSeconds())+"Z":null},String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(a){return this.valueOf()});var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"},rep;typeof JSON.stringify!="function"&&(JSON.stringify=function(a,b,c){var d;gap="",indent="";if(typeof c=="number")for(d=0;d<c;d+=1)indent+=" ";else typeof c=="string"&&(indent=c);rep=b;if(!b||typeof b=="function"||typeof b=="object"&&typeof b.length=="number")return str("",{"":a});throw new Error("JSON.stringify")}),typeof JSON.parse!="function"&&(JSON.parse=function(text,reviver){function walk(a,b){var c,d,e=a[b];if(e&&typeof e=="object")for(c in e)Object.prototype.hasOwnProperty.call(e,c)&&(d=walk(e,c),d!==undefined?e[c]=d:delete e[c]);return reviver.call(a,b,e)}var j;text=String(text),cx.lastIndex=0,cx.test(text)&&(text=text.replace(cx,function(a){return"\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4)}));if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))){j=eval("("+text+")");return typeof reviver=="function"?walk({"":j},""):j}throw new SyntaxError("JSON.parse")})}()
+
+
+//     [*] Including lib/index.js
+// Public object
+SockJS = (function(){
+              var _document = document;
+              var _window = window;
+              var utils = {};
+
+
+//         [*] Including lib/reventtarget.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+/* Simplified implementation of DOM2 EventTarget.
+ *   http://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget
+ */
+var REventTarget = function() {};
+REventTarget.prototype.addEventListener = function (eventType, listener) {
+    if(!this._listeners) {
+         this._listeners = {};
+    }
+    if(!(eventType in this._listeners)) {
+        this._listeners[eventType] = [];
+    }
+    var arr = this._listeners[eventType];
+    if(utils.arrIndexOf(arr, listener) === -1) {
+        arr.push(listener);
+    }
+    return;
+};
+
+REventTarget.prototype.removeEventListener = function (eventType, listener) {
+    if(!(this._listeners && (eventType in this._listeners))) {
+        return;
+    }
+    var arr = this._listeners[eventType];
+    var idx = utils.arrIndexOf(arr, listener);
+    if (idx !== -1) {
+        if(arr.length > 1) {
+            this._listeners[eventType] = arr.slice(0, idx).concat( arr.slice(idx+1) );
+        } else {
+            delete this._listeners[eventType];
+        }
+        return;
+    }
+    return;
+};
+
+REventTarget.prototype.dispatchEvent = function (event) {
+    var t = event.type;
+    var args = Array.prototype.slice.call(arguments, 0);
+    if (this['on'+t]) {
+        this['on'+t].apply(this, args);
+    }
+    if (this._listeners && t in this._listeners) {
+        for(var i=0; i < this._listeners[t].length; i++) {
+            this._listeners[t][i].apply(this, args);
+        }
+    }
+};
+//         [*] End of lib/reventtarget.js
+
+
+//         [*] Including lib/simpleevent.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var SimpleEvent = function(type, obj) {
+    this.type = type;
+    if (typeof obj !== 'undefined') {
+        for(var k in obj) {
+            if (!obj.hasOwnProperty(k)) continue;
+            this[k] = obj[k];
+        }
+    }
+};
+
+SimpleEvent.prototype.toString = function() {
+    var r = [];
+    for(var k in this) {
+        if (!this.hasOwnProperty(k)) continue;
+        var v = this[k];
+        if (typeof v === 'function') v = '[function]';
+        r.push(k + '=' + v);
+    }
+    return 'SimpleEvent(' + r.join(', ') + ')';
+};
+//         [*] End of lib/simpleevent.js
+
+
+//         [*] Including lib/eventemitter.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var EventEmitter = function(events) {
+    var that = this;
+    that._events = events || [];
+    that._listeners = {};
+};
+EventEmitter.prototype.emit = function(type) {
+    var that = this;
+    that._verifyType(type);
+    if (that._nuked) return;
+
+    var args = Array.prototype.slice.call(arguments, 1);
+    if (that['on'+type]) {
+        that['on'+type].apply(that, args);
+    }
+    if (type in that._listeners) {
+        for(var i = 0; i < that._listeners[type].length; i++) {
+            that._listeners[type][i].apply(that, args);
+        }
+    }
+};
+
+EventEmitter.prototype.on = function(type, callback) {
+    var that = this;
+    that._verifyType(type);
+    if (that._nuked) return;
+
+    if (!(type in that._listeners)) {
+        that._listeners[type] = [];
+    }
+    that._listeners[type].push(callback);
+};
+
+EventEmitter.prototype._verifyType = function(type) {
+    var that = this;
+    if (utils.arrIndexOf(that._events, type) === -1) {
+        utils.log('Event ' + JSON.stringify(type) +
+                  ' not listed ' + JSON.stringify(that._events) +
+                  ' in ' + that);
+    }
+};
+
+EventEmitter.prototype.nuke = function() {
+    var that = this;
+    that._nuked = true;
+    for(var i=0; i<that._events.length; i++) {
+        delete that[that._events[i]];
+    }
+    that._listeners = {};
+};
+//         [*] End of lib/eventemitter.js
+
+
+//         [*] Including lib/utils.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var random_string_chars = 'abcdefghijklmnopqrstuvwxyz0123456789_';
+utils.random_string = function(length, max) {
+    max = max || random_string_chars.length;
+    var i, ret = [];
+    for(i=0; i < length; i++) {
+        ret.push( random_string_chars.substr(Math.floor(Math.random() * max),1) );
+    }
+    return ret.join('');
+};
+utils.random_number = function(max) {
+    return Math.floor(Math.random() * max);
+};
+utils.random_number_string = function(max) {
+    var t = (''+(max - 1)).length;
+    var p = Array(t+1).join('0');
+    return (p + utils.random_number(max)).slice(-t);
+};
+
+// Assuming that url looks like: http://asdasd:111/asd
+utils.getOrigin = function(url) {
+    url += '/';
+    var parts = url.split('/').slice(0, 3);
+    return parts.join('/');
+};
+
+utils.isSameOriginUrl = function(url_a, url_b) {
+    // location.origin would do, but it's not always available.
+    if (!url_b) url_b = _window.location.href;
+
+    return (url_a.split('/').slice(0,3).join('/')
+                ===
+            url_b.split('/').slice(0,3).join('/'));
+};
+
+utils.getParentDomain = function(url) {
+    // ipv4 ip address
+    if (/^[0-9.]*$/.test(url)) return url;
+    // ipv6 ip address
+    if (/^\[/.test(url)) return url;
+    // no dots
+    if (!(/[.]/.test(url))) return url;
+
+    var parts = url.split('.').slice(1);
+    return parts.join('.');
+};
+
+utils.objectExtend = function(dst, src) {
+    for(var k in src) {
+        if (src.hasOwnProperty(k)) {
+            dst[k] = src[k];
+        }
+    }
+    return dst;
+};
+
+var WPrefix = '_jp';
+
+utils.polluteGlobalNamespace = function() {
+    if (!(WPrefix in _window)) {
+        _window[WPrefix] = {};
+    }
+};
+
+utils.closeFrame = function (code, reason) {
+    return 'c'+JSON.stringify([code, reason]);
+};
+
+utils.userSetCode = function (code) {
+    return code === 1000 || (code >= 3000 && code <= 4999);
+};
+
+// See: http://www.erg.abdn.ac.uk/~gerrit/dccp/notes/ccid2/rto_estimator/
+// and RFC 2988.
+utils.countRTO = function (rtt) {
+    var rto;
+    if (rtt > 100) {
+        rto = 3 * rtt; // rto > 300msec
+    } else {
+        rto = rtt + 200; // 200msec < rto <= 300msec
+    }
+    return rto;
+}
+
+utils.log = function() {
+    if (_window.console && console.log && console.log.apply) {
+        console.log.apply(console, arguments);
+    }
+};
+
+utils.bind = function(fun, that) {
+    if (fun.bind) {
+        return fun.bind(that);
+    } else {
+        return function() {
+            return fun.apply(that, arguments);
+        };
+    }
+};
+
+utils.flatUrl = function(url) {
+    return url.indexOf('?') === -1 && url.indexOf('#') === -1;
+};
+
+utils.amendUrl = function(url) {
+    var dl = _document.location;
+    if (!url) {
+        throw new Error('Wrong url for SockJS');
+    }
+    if (!utils.flatUrl(url)) {
+        throw new Error('Only basic urls are supported in SockJS');
+    }
+
+    //  '//abc' --> 'http://abc'
+    if (url.indexOf('//') === 0) {
+        url = dl.protocol + url;
+    }
+    // '/abc' --> 'http://localhost:80/abc'
+    if (url.indexOf('/') === 0) {
+        url = dl.protocol + '//' + dl.host + url;
+    }
+    // strip trailing slashes
+    url = url.replace(/[/]+$/,'');
+    return url;
+};
+
+// IE doesn't support [].indexOf.
+utils.arrIndexOf = function(arr, obj){
+    for(var i=0; i < arr.length; i++){
+        if(arr[i] === obj){
+            return i;
+        }
+    }
+    return -1;
+};
+
+utils.arrSkip = function(arr, obj) {
+    var idx = utils.arrIndexOf(arr, obj);
+    if (idx === -1) {
+        return arr.slice();
+    } else {
+        var dst = arr.slice(0, idx);
+        return dst.concat(arr.slice(idx+1));
+    }
+};
+
+// Via: https://gist.github.com/1133122/2121c601c5549155483f50be3da5305e83b8c5df
+utils.isArray = Array.isArray || function(value) {
+    return {}.toString.call(value).indexOf('Array') >= 0
+};
+
+utils.delay = function(t, fun) {
+    if(typeof t === 'function') {
+        fun = t;
+        t = 0;
+    }
+    return setTimeout(fun, t);
+};
+
+
+// Chars worth escaping, as defined by Douglas Crockford:
+//   https://github.com/douglascrockford/JSON-js/blob/47a9882cddeb1e8529e07af9736218075372b8ac/json2.js#L196
+var json_escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+    json_lookup = {
+"\u0000":"\\u0000","\u0001":"\\u0001","\u0002":"\\u0002","\u0003":"\\u0003",
+"\u0004":"\\u0004","\u0005":"\\u0005","\u0006":"\\u0006","\u0007":"\\u0007",
+"\b":"\\b","\t":"\\t","\n":"\\n","\u000b":"\\u000b","\f":"\\f","\r":"\\r",
+"\u000e":"\\u000e","\u000f":"\\u000f","\u0010":"\\u0010","\u0011":"\\u0011",
+"\u0012":"\\u0012","\u0013":"\\u0013","\u0014":"\\u0014","\u0015":"\\u0015",
+"\u0016":"\\u0016","\u0017":"\\u0017","\u0018":"\\u0018","\u0019":"\\u0019",
+"\u001a":"\\u001a","\u001b":"\\u001b","\u001c":"\\u001c","\u001d":"\\u001d",
+"\u001e":"\\u001e","\u001f":"\\u001f","\"":"\\\"","\\":"\\\\",
+"\u007f":"\\u007f","\u0080":"\\u0080","\u0081":"\\u0081","\u0082":"\\u0082",
+"\u0083":"\\u0083","\u0084":"\\u0084","\u0085":"\\u0085","\u0086":"\\u0086",
+"\u0087":"\\u0087","\u0088":"\\u0088","\u0089":"\\u0089","\u008a":"\\u008a",
+"\u008b":"\\u008b","\u008c":"\\u008c","\u008d":"\\u008d","\u008e":"\\u008e",
+"\u008f":"\\u008f","\u0090":"\\u0090","\u0091":"\\u0091","\u0092":"\\u0092",
+"\u0093":"\\u0093","\u0094":"\\u0094","\u0095":"\\u0095","\u0096":"\\u0096",
+"\u0097":"\\u0097","\u0098":"\\u0098","\u0099":"\\u0099","\u009a":"\\u009a",
+"\u009b":"\\u009b","\u009c":"\\u009c","\u009d":"\\u009d","\u009e":"\\u009e",
+"\u009f":"\\u009f","\u00ad":"\\u00ad","\u0600":"\\u0600","\u0601":"\\u0601",
+"\u0602":"\\u0602","\u0603":"\\u0603","\u0604":"\\u0604","\u070f":"\\u070f",
+"\u17b4":"\\u17b4","\u17b5":"\\u17b5","\u200c":"\\u200c","\u200d":"\\u200d",
+"\u200e":"\\u200e","\u200f":"\\u200f","\u2028":"\\u2028","\u2029":"\\u2029",
+"\u202a":"\\u202a","\u202b":"\\u202b","\u202c":"\\u202c","\u202d":"\\u202d",
+"\u202e":"\\u202e","\u202f":"\\u202f","\u2060":"\\u2060","\u2061":"\\u2061",
+"\u2062":"\\u2062","\u2063":"\\u2063","\u2064":"\\u2064","\u2065":"\\u2065",
+"\u2066":"\\u2066","\u2067":"\\u2067","\u2068":"\\u2068","\u2069":"\\u2069",
+"\u206a":"\\u206a","\u206b":"\\u206b","\u206c":"\\u206c","\u206d":"\\u206d",
+"\u206e":"\\u206e","\u206f":"\\u206f","\ufeff":"\\ufeff","\ufff0":"\\ufff0",
+"\ufff1":"\\ufff1","\ufff2":"\\ufff2","\ufff3":"\\ufff3","\ufff4":"\\ufff4",
+"\ufff5":"\\ufff5","\ufff6":"\\ufff6","\ufff7":"\\ufff7","\ufff8":"\\ufff8",
+"\ufff9":"\\ufff9","\ufffa":"\\ufffa","\ufffb":"\\ufffb","\ufffc":"\\ufffc",
+"\ufffd":"\\ufffd","\ufffe":"\\ufffe","\uffff":"\\uffff"};
+
+// Some extra characters that Chrome gets wrong, and substitutes with
+// something else on the wire.
+var extra_escapable = /[\x00-\x1f\ud800-\udfff\ufffe\uffff\u0300-\u0333\u033d-\u0346\u034a-\u034c\u0350-\u0352\u0357-\u0358\u035c-\u0362\u0374\u037e\u0387\u0591-\u05af\u05c4\u0610-\u0617\u0653-\u0654\u0657-\u065b\u065d-\u065e\u06df-\u06e2\u06eb-\u06ec\u0730\u0732-\u0733\u0735-\u0736\u073a\u073d\u073f-\u0741\u0743\u0745\u0747\u07eb-\u07f1\u0951\u0958-\u095f\u09dc-\u09dd\u09df\u0a33\u0a36\u0a59-\u0a5b\u0a5e\u0b5c-\u0b5d\u0e38-\u0e39\u0f43\u0f4d\u0f52\u0f57\u0f5c\u0f69\u0f72-\u0f76\u0f78\u0f80-\u0f83\u0f93\u0f9d\u0fa2\u0fa7\u0fac\u0fb9\u1939-\u193a\u1a17\u1b6b\u1cda-\u1cdb\u1dc0-\u1dcf\u1dfc\u1dfe\u1f71\u1f73\u1f75\u1f77\u1f79\u1f7b\u1f7d\u1fbb\u1fbe\u1fc9\u1fcb\u1fd3\u1fdb\u1fe3\u1feb\u1fee-\u1fef\u1ff9\u1ffb\u1ffd\u2000-\u2001\u20d0-\u20d1\u20d4-\u20d7\u20e7-\u20e9\u2126\u212a-\u212b\u2329-\u232a\u2adc\u302b-\u302c\uaab2-\uaab3\uf900-\ufa0d\ufa10\ufa12\ufa15-\ufa1e\ufa20\ufa22\ufa25-\ufa26\ufa2a-\ufa2d\ufa30-\ufa6d\ufa70-\ufad9\ufb1d\ufb1f\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40-\ufb41\ufb43-\ufb44\ufb46-\ufb4e\ufff0-\uffff]/g,
+    extra_lookup;
+
+// JSON Quote string. Use native implementation when possible.
+var JSONQuote = (JSON && JSON.stringify) || function(string) {
+    json_escapable.lastIndex = 0;
+    if (json_escapable.test(string)) {
+        string = string.replace(json_escapable, function(a) {
+            return json_lookup[a];
+        });
+    }
+    return '"' + string + '"';
+};
+
+// This may be quite slow, so let's delay until user actually uses bad
+// characters.
+var unroll_lookup = function(escapable) {
+    var i;
+    var unrolled = {}
+    var c = []
+    for(i=0; i<65536; i++) {
+        c.push( String.fromCharCode(i) );
+    }
+    escapable.lastIndex = 0;
+    c.join('').replace(escapable, function (a) {
+        unrolled[ a ] = '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+        return '';
+    });
+    escapable.lastIndex = 0;
+    return unrolled;
+};
+
+// Quote string, also taking care of unicode characters that browsers
+// often break. Especially, take care of unicode surrogates:
+//    http://en.wikipedia.org/wiki/Mapping_of_Unicode_characters#Surrogates
+utils.quote = function(string) {
+    var quoted = JSONQuote(string);
+
+    // In most cases this should be very fast and good enough.
+    extra_escapable.lastIndex = 0;
+    if(!extra_escapable.test(quoted)) {
+        return quoted;
+    }
+
+    if(!extra_lookup) extra_lookup = unroll_lookup(extra_escapable);
+
+    return quoted.replace(extra_escapable, function(a) {
+        return extra_lookup[a];
+    });
+}
+
+var _all_protocols = ['websocket',
+                      'xdr-streaming',
+                      'xhr-streaming',
+                      'iframe-eventsource',
+                      'iframe-htmlfile',
+                      'xdr-polling',
+                      'xhr-polling',
+                      'iframe-xhr-polling',
+                      'jsonp-polling'];
+
+utils.probeProtocols = function() {
+    var probed = {};
+    for(var i=0; i<_all_protocols.length; i++) {
+        var protocol = _all_protocols[i];
+        // User can have a typo in protocol name.
+        probed[protocol] = SockJS[protocol] &&
+                           SockJS[protocol].enabled();
+    }
+    return probed;
+};
+
+utils.detectProtocols = function(probed, protocols_whitelist, info) {
+    var pe = {},
+        protocols = [];
+    if (!protocols_whitelist) protocols_whitelist = _all_protocols;
+    for(var i=0; i<protocols_whitelist.length; i++) {
+        var protocol = protocols_whitelist[i];
+        pe[protocol] = probed[protocol];
+    }
+    var maybe_push = function(protos) {
+        var proto = protos.shift();
+        if (pe[proto]) {
+            protocols.push(proto);
+        } else {
+            if (protos.length > 0) {
+                maybe_push(protos);
+            }
+        }
+    }
+
+    // 1. Websocket
+    if (info.websocket !== false) {
+        maybe_push(['websocket']);
+    }
+
+    // 2. Streaming
+    if (pe['xhr-streaming'] && !info.null_origin) {
+        protocols.push('xhr-streaming');
+    } else {
+        if (pe['xdr-streaming'] && !info.cookie_needed && !info.null_origin) {
+            protocols.push('xdr-streaming');
+        } else {
+            maybe_push(['iframe-eventsource',
+                        'iframe-htmlfile']);
+        }
+    }
+
+    // 3. Polling
+    if (pe['xhr-polling'] && !info.null_origin) {
+        protocols.push('xhr-polling');
+    } else {
+        if (pe['xdr-polling'] && !info.cookie_needed && !info.null_origin) {
+            protocols.push('xdr-polling');
+        } else {
+            maybe_push(['iframe-xhr-polling',
+                        'jsonp-polling']);
+        }
+    }
+    return protocols;
+}
+//         [*] End of lib/utils.js
+
+
+//         [*] Including lib/dom.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// May be used by htmlfile jsonp and transports.
+var MPrefix = '_sockjs_global';
+utils.createHook = function() {
+    var window_id = 'a' + utils.random_string(8);
+    if (!(MPrefix in _window)) {
+        var map = {};
+        _window[MPrefix] = function(window_id) {
+            if (!(window_id in map)) {
+                map[window_id] = {
+                    id: window_id,
+                    del: function() {delete map[window_id];}
+                };
+            }
+            return map[window_id];
+        }
+    }
+    return _window[MPrefix](window_id);
+};
+
+
+
+utils.attachMessage = function(listener) {
+    utils.attachEvent('message', listener);
+};
+utils.attachEvent = function(event, listener) {
+    if (typeof _window.addEventListener !== 'undefined') {
+        _window.addEventListener(event, listener, false);
+    } else {
+        // IE quirks.
+        // According to: http://stevesouders.com/misc/test-postmessage.php
+        // the message gets delivered only to 'document', not 'window'.
+        _document.attachEvent("on" + event, listener);
+        // I get 'window' for ie8.
+        _window.attachEvent("on" + event, listener);
+    }
+};
+
+utils.detachMessage = function(listener) {
+    utils.detachEvent('message', listener);
+};
+utils.detachEvent = function(event, listener) {
+    if (typeof _window.addEventListener !== 'undefined') {
+        _window.removeEventListener(event, listener, false);
+    } else {
+        _document.detachEvent("on" + event, listener);
+        _window.detachEvent("on" + event, listener);
+    }
+};
+
+
+var on_unload = {};
+// Things registered after beforeunload are to be called immediately.
+var after_unload = false;
+
+var trigger_unload_callbacks = function() {
+    for(var ref in on_unload) {
+        on_unload[ref]();
+        delete on_unload[ref];
+    };
+};
+
+var unload_triggered = function() {
+    if(after_unload) return;
+    after_unload = true;
+    trigger_unload_callbacks();
+};
+
+// 'unload' alone is not reliable in opera within an iframe, but we
+// can't use `beforeunload` as IE fires it on javascript: links.
+utils.attachEvent('unload', unload_triggered);
+
+utils.unload_add = function(listener) {
+    var ref = utils.random_string(8);
+    on_unload[ref] = listener;
+    if (after_unload) {
+        utils.delay(trigger_unload_callbacks);
+    }
+    return ref;
+};
+utils.unload_del = function(ref) {
+    if (ref in on_unload)
+        delete on_unload[ref];
+};
+
+
+utils.createIframe = function (iframe_url, error_callback) {
+    var iframe = _document.createElement('iframe');
+    var tref, unload_ref;
+    var unattach = function() {
+        clearTimeout(tref);
+        // Explorer had problems with that.
+        try {iframe.onload = null;} catch (x) {}
+        iframe.onerror = null;
+    };
+    var cleanup = function() {
+        if (iframe) {
+            unattach();
+            // This timeout makes chrome fire onbeforeunload event
+            // within iframe. Without the timeout it goes straight to
+            // onunload.
+            setTimeout(function() {
+                if(iframe) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+                iframe = null;
+            }, 0);
+            utils.unload_del(unload_ref);
+        }
+    };
+    var onerror = function(r) {
+        if (iframe) {
+            cleanup();
+            error_callback(r);
+        }
+    };
+    var post = function(msg, origin) {
+        try {
+            // When the iframe is not loaded, IE raises an exception
+            // on 'contentWindow'.
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage(msg, origin);
+            }
+        } catch (x) {};
+    };
+
+    iframe.src = iframe_url;
+    iframe.style.display = 'none';
+    iframe.style.position = 'absolute';
+    iframe.onerror = function(){onerror('onerror');};
+    iframe.onload = function() {
+        // `onload` is triggered before scripts on the iframe are
+        // executed. Give it few seconds to actually load stuff.
+        clearTimeout(tref);
+        tref = setTimeout(function(){onerror('onload timeout');}, 2000);
+    };
+    _document.body.appendChild(iframe);
+    tref = setTimeout(function(){onerror('timeout');}, 15000);
+    unload_ref = utils.unload_add(cleanup);
+    return {
+        post: post,
+        cleanup: cleanup,
+        loaded: unattach
+    };
+};
+
+utils.createHtmlfile = function (iframe_url, error_callback) {
+    var doc = new ActiveXObject('htmlfile');
+    var tref, unload_ref;
+    var iframe;
+    var unattach = function() {
+        clearTimeout(tref);
+    };
+    var cleanup = function() {
+        if (doc) {
+            unattach();
+            utils.unload_del(unload_ref);
+            iframe.parentNode.removeChild(iframe);
+            iframe = doc = null;
+            CollectGarbage();
+        }
+    };
+    var onerror = function(r)  {
+        if (doc) {
+            cleanup();
+            error_callback(r);
+        }
+    };
+    var post = function(msg, origin) {
+        try {
+            // When the iframe is not loaded, IE raises an exception
+            // on 'contentWindow'.
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage(msg, origin);
+            }
+        } catch (x) {};
+    };
+
+    doc.open();
+    doc.write('<html><s' + 'cript>' +
+              'document.domain="' + document.domain + '";' +
+              '</s' + 'cript></html>');
+    doc.close();
+    doc.parentWindow[WPrefix] = _window[WPrefix];
+    var c = doc.createElement('div');
+    doc.body.appendChild(c);
+    iframe = doc.createElement('iframe');
+    c.appendChild(iframe);
+    iframe.src = iframe_url;
+    tref = setTimeout(function(){onerror('timeout');}, 15000);
+    unload_ref = utils.unload_add(cleanup);
+    return {
+        post: post,
+        cleanup: cleanup,
+        loaded: unattach
+    };
+};
+//         [*] End of lib/dom.js
+
+
+//         [*] Including lib/dom2.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var AbstractXHRObject = function(){};
+AbstractXHRObject.prototype = new EventEmitter(['chunk', 'finish']);
+
+AbstractXHRObject.prototype._start = function(method, url, payload, opts) {
+    var that = this;
+
+    try {
+        that.xhr = new XMLHttpRequest();
+    } catch(x) {};
+
+    if (!that.xhr) {
+        try {
+            that.xhr = new _window.ActiveXObject('Microsoft.XMLHTTP');
+        } catch(x) {};
+    }
+    if (_window.ActiveXObject || _window.XDomainRequest) {
+        // IE8 caches even POSTs
+        url += ((url.indexOf('?') === -1) ? '?' : '&') + 't='+(+new Date);
+    }
+
+    // Explorer tends to keep connection open, even after the
+    // tab gets closed: http://bugs.jquery.com/ticket/5280
+    that.unload_ref = utils.unload_add(function(){that._cleanup(true);});
+    try {
+        that.xhr.open(method, url, true);
+    } catch(e) {
+        // IE raises an exception on wrong port.
+        that.emit('finish', 0, '');
+        that._cleanup();
+        return;
+    };
+
+    if (!opts || !opts.no_credentials) {
+        // Mozilla docs says https://developer.mozilla.org/en/XMLHttpRequest :
+        // "This never affects same-site requests."
+        that.xhr.withCredentials = 'true';
+    }
+    if (opts && opts.headers) {
+        for(var key in opts.headers) {
+            that.xhr.setRequestHeader(key, opts.headers[key]);
+        }
+    }
+
+    that.xhr.onreadystatechange = function() {
+        if (that.xhr) {
+            var x = that.xhr;
+            switch (x.readyState) {
+            case 3:
+                // IE doesn't like peeking into responseText or status
+                // on Microsoft.XMLHTTP and readystate=3
+                try {
+                    var status = x.status;
+                    var text = x.responseText;
+                } catch (x) {};
+                // IE returns 1223 for 204: http://bugs.jquery.com/ticket/1450
+                if (status === 1223) status = 204;
+
+                // IE does return readystate == 3 for 404 answers.
+                if (text && text.length > 0) {
+                    that.emit('chunk', status, text);
+                }
+                break;
+            case 4:
+                var status = x.status;
+                // IE returns 1223 for 204: http://bugs.jquery.com/ticket/1450
+                if (status === 1223) status = 204;
+
+                that.emit('finish', status, x.responseText);
+                that._cleanup(false);
+                break;
+            }
+        }
+    };
+    that.xhr.send(payload);
+};
+
+AbstractXHRObject.prototype._cleanup = function(abort) {
+    var that = this;
+    if (!that.xhr) return;
+    utils.unload_del(that.unload_ref);
+
+    // IE needs this field to be a function
+    that.xhr.onreadystatechange = function(){};
+
+    if (abort) {
+        try {
+            that.xhr.abort();
+        } catch(x) {};
+    }
+    that.unload_ref = that.xhr = null;
+};
+
+AbstractXHRObject.prototype.close = function() {
+    var that = this;
+    that.nuke();
+    that._cleanup(true);
+};
+
+var XHRCorsObject = utils.XHRCorsObject = function() {
+    var that = this, args = arguments;
+    utils.delay(function(){that._start.apply(that, args);});
+};
+XHRCorsObject.prototype = new AbstractXHRObject();
+
+var XHRLocalObject = utils.XHRLocalObject = function(method, url, payload) {
+    var that = this;
+    utils.delay(function(){
+        that._start(method, url, payload, {
+            no_credentials: true
+        });
+    });
+};
+XHRLocalObject.prototype = new AbstractXHRObject();
+
+
+
+// References:
+//   http://ajaxian.com/archives/100-line-ajax-wrapper
+//   http://msdn.microsoft.com/en-us/library/cc288060(v=VS.85).aspx
+var XDRObject = utils.XDRObject = function(method, url, payload) {
+    var that = this;
+    utils.delay(function(){that._start(method, url, payload);});
+};
+XDRObject.prototype = new EventEmitter(['chunk', 'finish']);
+XDRObject.prototype._start = function(method, url, payload) {
+    var that = this;
+    var xdr = new XDomainRequest();
+    // IE caches even POSTs
+    url += ((url.indexOf('?') === -1) ? '?' : '&') + 't='+(+new Date);
+
+    var onerror = xdr.ontimeout = xdr.onerror = function() {
+        that.emit('finish', 0, '');
+        that._cleanup(false);
+    };
+    xdr.onprogress = function() {
+        that.emit('chunk', 200, xdr.responseText);
+    };
+    xdr.onload = function() {
+        that.emit('finish', 200, xdr.responseText);
+        that._cleanup(false);
+    };
+    that.xdr = xdr;
+    that.unload_ref = utils.unload_add(function(){that._cleanup(true);});
+    try {
+        // Fails with AccessDenied if port number is bogus
+        that.xdr.open(method, url);
+        that.xdr.send(payload);
+    } catch(x) {
+        onerror();
+    }
+};
+
+XDRObject.prototype._cleanup = function(abort) {
+    var that = this;
+    if (!that.xdr) return;
+    utils.unload_del(that.unload_ref);
+
+    that.xdr.ontimeout = that.xdr.onerror = that.xdr.onprogress =
+        that.xdr.onload = null;
+    if (abort) {
+        try {
+            that.xdr.abort();
+        } catch(x) {};
+    }
+    that.unload_ref = that.xdr = null;
+};
+
+XDRObject.prototype.close = function() {
+    var that = this;
+    that.nuke();
+    that._cleanup(true);
+};
+
+// 1. Is natively via XHR
+// 2. Is natively via XDR
+// 3. Nope, but postMessage is there so it should work via the Iframe.
+// 4. Nope, sorry.
+utils.isXHRCorsCapable = function() {
+    if (_window.XMLHttpRequest && 'withCredentials' in new XMLHttpRequest()) {
+        return 1;
+    }
+    // XDomainRequest doesn't work if page is served from file://
+    if (_window.XDomainRequest && _document.domain) {
+        return 2;
+    }
+    if (IframeTransport.enabled()) {
+        return 3;
+    }
+    return 4;
+};
+//         [*] End of lib/dom2.js
+
+
+//         [*] Including lib/sockjs.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var SockJS = function(url, dep_protocols_whitelist, options) {
+    if (this === _window) {
+        // makes `new` optional
+        return new SockJS(url, dep_protocols_whitelist, options);
+    }
+    
+    var that = this, protocols_whitelist;
+    that._options = {devel: false, debug: false, protocols_whitelist: [],
+                     info: undefined, rtt: undefined};
+    if (options) {
+        utils.objectExtend(that._options, options);
+    }
+    that._base_url = utils.amendUrl(url);
+    that._server = that._options.server || utils.random_number_string(1000);
+    if (that._options.protocols_whitelist &&
+        that._options.protocols_whitelist.length) {
+        protocols_whitelist = that._options.protocols_whitelist;
+    } else {
+        // Deprecated API
+        if (typeof dep_protocols_whitelist === 'string' &&
+            dep_protocols_whitelist.length > 0) {
+            protocols_whitelist = [dep_protocols_whitelist];
+        } else if (utils.isArray(dep_protocols_whitelist)) {
+            protocols_whitelist = dep_protocols_whitelist
+        } else {
+            protocols_whitelist = null;
+        }
+        if (protocols_whitelist) {
+            that._debug('Deprecated API: Use "protocols_whitelist" option ' +
+                        'instead of supplying protocol list as a second ' +
+                        'parameter to SockJS constructor.');
+        }
+    }
+    that._protocols = [];
+    that.protocol = null;
+    that.readyState = SockJS.CONNECTING;
+    that._ir = createInfoReceiver(that._base_url);
+    that._ir.onfinish = function(info, rtt) {
+        that._ir = null;
+        if (info) {
+            if (that._options.info) {
+                // Override if user supplies the option
+                info = utils.objectExtend(info, that._options.info);
+            }
+            if (that._options.rtt) {
+                rtt = that._options.rtt;
+            }
+            that._applyInfo(info, rtt, protocols_whitelist);
+            that._didClose();
+        } else {
+            that._didClose(1002, 'Can\'t connect to server', true);
+        }
+    };
+};
+// Inheritance
+SockJS.prototype = new REventTarget();
+
+SockJS.version = "0.3.4";
+
+SockJS.CONNECTING = 0;
+SockJS.OPEN = 1;
+SockJS.CLOSING = 2;
+SockJS.CLOSED = 3;
+
+SockJS.prototype._debug = function() {
+    if (this._options.debug)
+        utils.log.apply(utils, arguments);
+};
+
+SockJS.prototype._dispatchOpen = function() {
+    var that = this;
+    if (that.readyState === SockJS.CONNECTING) {
+        if (that._transport_tref) {
+            clearTimeout(that._transport_tref);
+            that._transport_tref = null;
+        }
+        that.readyState = SockJS.OPEN;
+        that.dispatchEvent(new SimpleEvent("open"));
+    } else {
+        // The server might have been restarted, and lost track of our
+        // connection.
+        that._didClose(1006, "Server lost session");
+    }
+};
+
+SockJS.prototype._dispatchMessage = function(data) {
+    var that = this;
+    if (that.readyState !== SockJS.OPEN)
+            return;
+    that.dispatchEvent(new SimpleEvent("message", {data: data}));
+};
+
+SockJS.prototype._dispatchHeartbeat = function(data) {
+    var that = this;
+    if (that.readyState !== SockJS.OPEN)
+        return;
+    that.dispatchEvent(new SimpleEvent('heartbeat', {}));
+};
+
+SockJS.prototype._didClose = function(code, reason, force) {
+    var that = this;
+    if (that.readyState !== SockJS.CONNECTING &&
+        that.readyState !== SockJS.OPEN &&
+        that.readyState !== SockJS.CLOSING)
+            throw new Error('INVALID_STATE_ERR');
+    if (that._ir) {
+        that._ir.nuke();
+        that._ir = null;
+    }
+
+    if (that._transport) {
+        that._transport.doCleanup();
+        that._transport = null;
+    }
+
+    var close_event = new SimpleEvent("close", {
+        code: code,
+        reason: reason,
+        wasClean: utils.userSetCode(code)});
+
+    if (!utils.userSetCode(code) &&
+        that.readyState === SockJS.CONNECTING && !force) {
+        if (that._try_next_protocol(close_event)) {
+            return;
+        }
+        close_event = new SimpleEvent("close", {code: 2000,
+                                                reason: "All transports failed",
+                                                wasClean: false,
+                                                last_event: close_event});
+    }
+    that.readyState = SockJS.CLOSED;
+
+    utils.delay(function() {
+                   that.dispatchEvent(close_event);
+                });
+};
+
+SockJS.prototype._didMessage = function(data) {
+    var that = this;
+    var type = data.slice(0, 1);
+    switch(type) {
+    case 'o':
+        that._dispatchOpen();
+        break;
+    case 'a':
+        var payload = JSON.parse(data.slice(1) || '[]');
+        for(var i=0; i < payload.length; i++){
+            that._dispatchMessage(payload[i]);
+        }
+        break;
+    case 'm':
+        var payload = JSON.parse(data.slice(1) || 'null');
+        that._dispatchMessage(payload);
+        break;
+    case 'c':
+        var payload = JSON.parse(data.slice(1) || '[]');
+        that._didClose(payload[0], payload[1]);
+        break;
+    case 'h':
+        that._dispatchHeartbeat();
+        break;
+    }
+};
+
+SockJS.prototype._try_next_protocol = function(close_event) {
+    var that = this;
+    if (that.protocol) {
+        that._debug('Closed transport:', that.protocol, ''+close_event);
+        that.protocol = null;
+    }
+    if (that._transport_tref) {
+        clearTimeout(that._transport_tref);
+        that._transport_tref = null;
+    }
+
+    while(1) {
+        var protocol = that.protocol = that._protocols.shift();
+        if (!protocol) {
+            return false;
+        }
+        // Some protocols require access to `body`, what if were in
+        // the `head`?
+        if (SockJS[protocol] &&
+            SockJS[protocol].need_body === true &&
+            (!_document.body ||
+             (typeof _document.readyState !== 'undefined'
+              && _document.readyState !== 'complete'))) {
+            that._protocols.unshift(protocol);
+            that.protocol = 'waiting-for-load';
+            utils.attachEvent('load', function(){
+                that._try_next_protocol();
+            });
+            return true;
+        }
+
+        if (!SockJS[protocol] ||
+              !SockJS[protocol].enabled(that._options)) {
+            that._debug('Skipping transport:', protocol);
+        } else {
+            var roundTrips = SockJS[protocol].roundTrips || 1;
+            var to = ((that._options.rto || 0) * roundTrips) || 5000;
+            that._transport_tref = utils.delay(to, function() {
+                if (that.readyState === SockJS.CONNECTING) {
+                    // I can't understand how it is possible to run
+                    // this timer, when the state is CLOSED, but
+                    // apparently in IE everythin is possible.
+                    that._didClose(2007, "Transport timeouted");
+                }
+            });
+
+            var connid = utils.random_string(8);
+            var trans_url = that._base_url + '/' + that._server + '/' + connid;
+            that._debug('Opening transport:', protocol, ' url:'+trans_url,
+                        ' RTO:'+that._options.rto);
+            that._transport = new SockJS[protocol](that, trans_url,
+                                                   that._base_url);
+            return true;
+        }
+    }
+};
+
+SockJS.prototype.close = function(code, reason) {
+    var that = this;
+    if (code && !utils.userSetCode(code))
+        throw new Error("INVALID_ACCESS_ERR");
+    if(that.readyState !== SockJS.CONNECTING &&
+       that.readyState !== SockJS.OPEN) {
+        return false;
+    }
+    that.readyState = SockJS.CLOSING;
+    that._didClose(code || 1000, reason || "Normal closure");
+    return true;
+};
+
+SockJS.prototype.send = function(data) {
+    var that = this;
+    if (that.readyState === SockJS.CONNECTING)
+        throw new Error('INVALID_STATE_ERR');
+    if (that.readyState === SockJS.OPEN) {
+        that._transport.doSend(utils.quote('' + data));
+    }
+    return true;
+};
+
+SockJS.prototype._applyInfo = function(info, rtt, protocols_whitelist) {
+    var that = this;
+    that._options.info = info;
+    that._options.rtt = rtt;
+    that._options.rto = utils.countRTO(rtt);
+    that._options.info.null_origin = !_document.domain;
+    var probed = utils.probeProtocols();
+    that._protocols = utils.detectProtocols(probed, protocols_whitelist, info);
+};
+//         [*] End of lib/sockjs.js
+
+
+//         [*] Including lib/trans-websocket.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var WebSocketTransport = SockJS.websocket = function(ri, trans_url) {
+    var that = this;
+    var url = trans_url + '/websocket';
+    if (url.slice(0, 5) === 'https') {
+        url = 'wss' + url.slice(5);
+    } else {
+        url = 'ws' + url.slice(4);
+    }
+    that.ri = ri;
+    that.url = url;
+    var Constructor = _window.WebSocket || _window.MozWebSocket;
+
+    that.ws = new Constructor(that.url);
+    that.ws.onmessage = function(e) {
+        that.ri._didMessage(e.data);
+    };
+    // Firefox has an interesting bug. If a websocket connection is
+    // created after onunload, it stays alive even when user
+    // navigates away from the page. In such situation let's lie -
+    // let's not open the ws connection at all. See:
+    // https://github.com/sockjs/sockjs-client/issues/28
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=696085
+    that.unload_ref = utils.unload_add(function(){that.ws.close()});
+    that.ws.onclose = function() {
+        that.ri._didMessage(utils.closeFrame(1006, "WebSocket connection broken"));
+    };
+};
+
+WebSocketTransport.prototype.doSend = function(data) {
+    this.ws.send('[' + data + ']');
+};
+
+WebSocketTransport.prototype.doCleanup = function() {
+    var that = this;
+    var ws = that.ws;
+    if (ws) {
+        ws.onmessage = ws.onclose = null;
+        ws.close();
+        utils.unload_del(that.unload_ref);
+        that.unload_ref = that.ri = that.ws = null;
+    }
+};
+
+WebSocketTransport.enabled = function() {
+    return !!(_window.WebSocket || _window.MozWebSocket);
+};
+
+// In theory, ws should require 1 round trip. But in chrome, this is
+// not very stable over SSL. Most likely a ws connection requires a
+// separate SSL connection, in which case 2 round trips are an
+// absolute minumum.
+WebSocketTransport.roundTrips = 2;
+//         [*] End of lib/trans-websocket.js
+
+
+//         [*] Including lib/trans-sender.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var BufferedSender = function() {};
+BufferedSender.prototype.send_constructor = function(sender) {
+    var that = this;
+    that.send_buffer = [];
+    that.sender = sender;
+};
+BufferedSender.prototype.doSend = function(message) {
+    var that = this;
+    that.send_buffer.push(message);
+    if (!that.send_stop) {
+        that.send_schedule();
+    }
+};
+
+// For polling transports in a situation when in the message callback,
+// new message is being send. If the sending connection was started
+// before receiving one, it is possible to saturate the network and
+// timeout due to the lack of receiving socket. To avoid that we delay
+// sending messages by some small time, in order to let receiving
+// connection be started beforehand. This is only a halfmeasure and
+// does not fix the big problem, but it does make the tests go more
+// stable on slow networks.
+BufferedSender.prototype.send_schedule_wait = function() {
+    var that = this;
+    var tref;
+    that.send_stop = function() {
+        that.send_stop = null;
+        clearTimeout(tref);
+    };
+    tref = utils.delay(25, function() {
+        that.send_stop = null;
+        that.send_schedule();
+    });
+};
+
+BufferedSender.prototype.send_schedule = function() {
+    var that = this;
+    if (that.send_buffer.length > 0) {
+        var payload = '[' + that.send_buffer.join(',') + ']';
+        that.send_stop = that.sender(that.trans_url, payload, function(success, abort_reason) {
+            that.send_stop = null;
+            if (success === false) {
+                that.ri._didClose(1006, 'Sending error ' + abort_reason);
+            } else {
+                that.send_schedule_wait();
+            }
+        });
+        that.send_buffer = [];
+    }
+};
+
+BufferedSender.prototype.send_destructor = function() {
+    var that = this;
+    if (that._send_stop) {
+        that._send_stop();
+    }
+    that._send_stop = null;
+};
+
+var jsonPGenericSender = function(url, payload, callback) {
+    var that = this;
+
+    if (!('_send_form' in that)) {
+        var form = that._send_form = _document.createElement('form');
+        var area = that._send_area = _document.createElement('textarea');
+        area.name = 'd';
+        form.style.display = 'none';
+        form.style.position = 'absolute';
+        form.method = 'POST';
+        form.enctype = 'application/x-www-form-urlencoded';
+        form.acceptCharset = "UTF-8";
+        form.appendChild(area);
+        _document.body.appendChild(form);
+    }
+    var form = that._send_form;
+    var area = that._send_area;
+    var id = 'a' + utils.random_string(8);
+    form.target = id;
+    form.action = url + '/jsonp_send?i=' + id;
+
+    var iframe;
+    try {
+        // ie6 dynamic iframes with target="" support (thanks Chris Lambacher)
+        iframe = _document.createElement('<iframe name="'+ id +'">');
+    } catch(x) {
+        iframe = _document.createElement('iframe');
+        iframe.name = id;
+    }
+    iframe.id = id;
+    form.appendChild(iframe);
+    iframe.style.display = 'none';
+
+    try {
+        area.value = payload;
+    } catch(e) {
+        utils.log('Your browser is seriously broken. Go home! ' + e.message);
+    }
+    form.submit();
+
+    var completed = function(e) {
+        if (!iframe.onerror) return;
+        iframe.onreadystatechange = iframe.onerror = iframe.onload = null;
+        // Opera mini doesn't like if we GC iframe
+        // immediately, thus this timeout.
+        utils.delay(500, function() {
+                       iframe.parentNode.removeChild(iframe);
+                       iframe = null;
+                   });
+        area.value = '';
+        // It is not possible to detect if the iframe succeeded or
+        // failed to submit our form.
+        callback(true);
+    };
+    iframe.onerror = iframe.onload = completed;
+    iframe.onreadystatechange = function(e) {
+        if (iframe.readyState == 'complete') completed();
+    };
+    return completed;
+};
+
+var createAjaxSender = function(AjaxObject) {
+    return function(url, payload, callback) {
+        var xo = new AjaxObject('POST', url + '/xhr_send', payload);
+        xo.onfinish = function(status, text) {
+            callback(status === 200 || status === 204,
+                     'http status ' + status);
+        };
+        return function(abort_reason) {
+            callback(false, abort_reason);
+        };
+    };
+};
+//         [*] End of lib/trans-sender.js
+
+
+//         [*] Including lib/trans-jsonp-receiver.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// Parts derived from Socket.io:
+//    https://github.com/LearnBoost/socket.io/blob/0.6.17/lib/socket.io/transports/jsonp-polling.js
+// and jQuery-JSONP:
+//    https://code.google.com/p/jquery-jsonp/source/browse/trunk/core/jquery.jsonp.js
+var jsonPGenericReceiver = function(url, callback) {
+    var tref;
+    var script = _document.createElement('script');
+    var script2;  // Opera synchronous load trick.
+    var close_script = function(frame) {
+        if (script2) {
+            script2.parentNode.removeChild(script2);
+            script2 = null;
+        }
+        if (script) {
+            clearTimeout(tref);
+            // Unfortunately, you can't really abort script loading of
+            // the script.
+            script.parentNode.removeChild(script);
+            script.onreadystatechange = script.onerror =
+                script.onload = script.onclick = null;
+            script = null;
+            callback(frame);
+            callback = null;
+        }
+    };
+
+    // IE9 fires 'error' event after orsc or before, in random order.
+    var loaded_okay = false;
+    var error_timer = null;
+
+    script.id = 'a' + utils.random_string(8);
+    script.src = url;
+    script.type = 'text/javascript';
+    script.charset = 'UTF-8';
+    script.onerror = function(e) {
+        if (!error_timer) {
+            // Delay firing close_script.
+            error_timer = setTimeout(function() {
+                if (!loaded_okay) {
+                    close_script(utils.closeFrame(
+                        1006,
+                        "JSONP script loaded abnormally (onerror)"));
+                }
+            }, 1000);
+        }
+    };
+    script.onload = function(e) {
+        close_script(utils.closeFrame(1006, "JSONP script loaded abnormally (onload)"));
+    };
+
+    script.onreadystatechange = function(e) {
+        if (/loaded|closed/.test(script.readyState)) {
+            if (script && script.htmlFor && script.onclick) {
+                loaded_okay = true;
+                try {
+                    // In IE, actually execute the script.
+                    script.onclick();
+                } catch (x) {}
+            }
+            if (script) {
+                close_script(utils.closeFrame(1006, "JSONP script loaded abnormally (onreadystatechange)"));
+            }
+        }
+    };
+    // IE: event/htmlFor/onclick trick.
+    // One can't rely on proper order for onreadystatechange. In order to
+    // make sure, set a 'htmlFor' and 'event' properties, so that
+    // script code will be installed as 'onclick' handler for the
+    // script object. Later, onreadystatechange, manually execute this
+    // code. FF and Chrome doesn't work with 'event' and 'htmlFor'
+    // set. For reference see:
+    //   http://jaubourg.net/2010/07/loading-script-as-onclick-handler-of.html
+    // Also, read on that about script ordering:
+    //   http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
+    if (typeof script.async === 'undefined' && _document.attachEvent) {
+        // According to mozilla docs, in recent browsers script.async defaults
+        // to 'true', so we may use it to detect a good browser:
+        // https://developer.mozilla.org/en/HTML/Element/script
+        if (!/opera/i.test(navigator.userAgent)) {
+            // Naively assume we're in IE
+            try {
+                script.htmlFor = script.id;
+                script.event = "onclick";
+            } catch (x) {}
+            script.async = true;
+        } else {
+            // Opera, second sync script hack
+            script2 = _document.createElement('script');
+            script2.text = "try{var a = document.getElementById('"+script.id+"'); if(a)a.onerror();}catch(x){};";
+            script.async = script2.async = false;
+        }
+    }
+    if (typeof script.async !== 'undefined') {
+        script.async = true;
+    }
+
+    // Fallback mostly for Konqueror - stupid timer, 35 seconds shall be plenty.
+    tref = setTimeout(function() {
+                          close_script(utils.closeFrame(1006, "JSONP script loaded abnormally (timeout)"));
+                      }, 35000);
+
+    var head = _document.getElementsByTagName('head')[0];
+    head.insertBefore(script, head.firstChild);
+    if (script2) {
+        head.insertBefore(script2, head.firstChild);
+    }
+    return close_script;
+};
+//         [*] End of lib/trans-jsonp-receiver.js
+
+
+//         [*] Including lib/trans-jsonp-polling.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// The simplest and most robust transport, using the well-know cross
+// domain hack - JSONP. This transport is quite inefficient - one
+// mssage could use up to one http request. But at least it works almost
+// everywhere.
+// Known limitations:
+//   o you will get a spinning cursor
+//   o for Konqueror a dumb timer is needed to detect errors
+
+
+var JsonPTransport = SockJS['jsonp-polling'] = function(ri, trans_url) {
+    utils.polluteGlobalNamespace();
+    var that = this;
+    that.ri = ri;
+    that.trans_url = trans_url;
+    that.send_constructor(jsonPGenericSender);
+    that._schedule_recv();
+};
+
+// Inheritnace
+JsonPTransport.prototype = new BufferedSender();
+
+JsonPTransport.prototype._schedule_recv = function() {
+    var that = this;
+    var callback = function(data) {
+        that._recv_stop = null;
+        if (data) {
+            // no data - heartbeat;
+            if (!that._is_closing) {
+                that.ri._didMessage(data);
+            }
+        }
+        // The message can be a close message, and change is_closing state.
+        if (!that._is_closing) {
+            that._schedule_recv();
+        }
+    };
+    that._recv_stop = jsonPReceiverWrapper(that.trans_url + '/jsonp',
+                                           jsonPGenericReceiver, callback);
+};
+
+JsonPTransport.enabled = function() {
+    return true;
+};
+
+JsonPTransport.need_body = true;
+
+
+JsonPTransport.prototype.doCleanup = function() {
+    var that = this;
+    that._is_closing = true;
+    if (that._recv_stop) {
+        that._recv_stop();
+    }
+    that.ri = that._recv_stop = null;
+    that.send_destructor();
+};
+
+
+// Abstract away code that handles global namespace pollution.
+var jsonPReceiverWrapper = function(url, constructReceiver, user_callback) {
+    var id = 'a' + utils.random_string(6);
+    var url_id = url + '?c=' + escape(WPrefix + '.' + id);
+
+    // Unfortunately it is not possible to abort loading of the
+    // script. We need to keep track of frake close frames.
+    var aborting = 0;
+
+    // Callback will be called exactly once.
+    var callback = function(frame) {
+        switch(aborting) {
+        case 0:
+            // Normal behaviour - delete hook _and_ emit message.
+            delete _window[WPrefix][id];
+            user_callback(frame);
+            break;
+        case 1:
+            // Fake close frame - emit but don't delete hook.
+            user_callback(frame);
+            aborting = 2;
+            break;
+        case 2:
+            // Got frame after connection was closed, delete hook, don't emit.
+            delete _window[WPrefix][id];
+            break;
+        }
+    };
+
+    var close_script = constructReceiver(url_id, callback);
+    _window[WPrefix][id] = close_script;
+    var stop = function() {
+        if (_window[WPrefix][id]) {
+            aborting = 1;
+            _window[WPrefix][id](utils.closeFrame(1000, "JSONP user aborted read"));
+        }
+    };
+    return stop;
+};
+//         [*] End of lib/trans-jsonp-polling.js
+
+
+//         [*] Including lib/trans-xhr.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var AjaxBasedTransport = function() {};
+AjaxBasedTransport.prototype = new BufferedSender();
+
+AjaxBasedTransport.prototype.run = function(ri, trans_url,
+                                            url_suffix, Receiver, AjaxObject) {
+    var that = this;
+    that.ri = ri;
+    that.trans_url = trans_url;
+    that.send_constructor(createAjaxSender(AjaxObject));
+    that.poll = new Polling(ri, Receiver,
+                            trans_url + url_suffix, AjaxObject);
+};
+
+AjaxBasedTransport.prototype.doCleanup = function() {
+    var that = this;
+    if (that.poll) {
+        that.poll.abort();
+        that.poll = null;
+    }
+};
+
+// xhr-streaming
+var XhrStreamingTransport = SockJS['xhr-streaming'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/xhr_streaming', XhrReceiver, utils.XHRCorsObject);
+};
+
+XhrStreamingTransport.prototype = new AjaxBasedTransport();
+
+XhrStreamingTransport.enabled = function() {
+    // Support for CORS Ajax aka Ajax2? Opera 12 claims CORS but
+    // doesn't do streaming.
+    return (_window.XMLHttpRequest &&
+            'withCredentials' in new XMLHttpRequest() &&
+            (!/opera/i.test(navigator.userAgent)));
+};
+XhrStreamingTransport.roundTrips = 2; // preflight, ajax
+
+// Safari gets confused when a streaming ajax request is started
+// before onload. This causes the load indicator to spin indefinetely.
+XhrStreamingTransport.need_body = true;
+
+
+// According to:
+//   http://stackoverflow.com/questions/1641507/detect-browser-support-for-cross-domain-xmlhttprequests
+//   http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+
+
+// xdr-streaming
+var XdrStreamingTransport = SockJS['xdr-streaming'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/xhr_streaming', XhrReceiver, utils.XDRObject);
+};
+
+XdrStreamingTransport.prototype = new AjaxBasedTransport();
+
+XdrStreamingTransport.enabled = function() {
+    return !!_window.XDomainRequest;
+};
+XdrStreamingTransport.roundTrips = 2; // preflight, ajax
+
+
+
+// xhr-polling
+var XhrPollingTransport = SockJS['xhr-polling'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/xhr', XhrReceiver, utils.XHRCorsObject);
+};
+
+XhrPollingTransport.prototype = new AjaxBasedTransport();
+
+XhrPollingTransport.enabled = XhrStreamingTransport.enabled;
+XhrPollingTransport.roundTrips = 2; // preflight, ajax
+
+
+// xdr-polling
+var XdrPollingTransport = SockJS['xdr-polling'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/xhr', XhrReceiver, utils.XDRObject);
+};
+
+XdrPollingTransport.prototype = new AjaxBasedTransport();
+
+XdrPollingTransport.enabled = XdrStreamingTransport.enabled;
+XdrPollingTransport.roundTrips = 2; // preflight, ajax
+//         [*] End of lib/trans-xhr.js
+
+
+//         [*] Including lib/trans-iframe.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// Few cool transports do work only for same-origin. In order to make
+// them working cross-domain we shall use iframe, served form the
+// remote domain. New browsers, have capabilities to communicate with
+// cross domain iframe, using postMessage(). In IE it was implemented
+// from IE 8+, but of course, IE got some details wrong:
+//    http://msdn.microsoft.com/en-us/library/cc197015(v=VS.85).aspx
+//    http://stevesouders.com/misc/test-postmessage.php
+
+var IframeTransport = function() {};
+
+IframeTransport.prototype.i_constructor = function(ri, trans_url, base_url) {
+    var that = this;
+    that.ri = ri;
+    that.origin = utils.getOrigin(base_url);
+    that.base_url = base_url;
+    that.trans_url = trans_url;
+
+    var iframe_url = base_url + '/iframe.html';
+    if (that.ri._options.devel) {
+        iframe_url += '?t=' + (+new Date);
+    }
+    that.window_id = utils.random_string(8);
+    iframe_url += '#' + that.window_id;
+
+    that.iframeObj = utils.createIframe(iframe_url, function(r) {
+                                            that.ri._didClose(1006, "Unable to load an iframe (" + r + ")");
+                                        });
+
+    that.onmessage_cb = utils.bind(that.onmessage, that);
+    utils.attachMessage(that.onmessage_cb);
+};
+
+IframeTransport.prototype.doCleanup = function() {
+    var that = this;
+    if (that.iframeObj) {
+        utils.detachMessage(that.onmessage_cb);
+        try {
+            // When the iframe is not loaded, IE raises an exception
+            // on 'contentWindow'.
+            if (that.iframeObj.iframe.contentWindow) {
+                that.postMessage('c');
+            }
+        } catch (x) {}
+        that.iframeObj.cleanup();
+        that.iframeObj = null;
+        that.onmessage_cb = that.iframeObj = null;
+    }
+};
+
+IframeTransport.prototype.onmessage = function(e) {
+    var that = this;
+    if (e.origin !== that.origin) return;
+    var window_id = e.data.slice(0, 8);
+    var type = e.data.slice(8, 9);
+    var data = e.data.slice(9);
+
+    if (window_id !== that.window_id) return;
+
+    switch(type) {
+    case 's':
+        that.iframeObj.loaded();
+        that.postMessage('s', JSON.stringify([SockJS.version, that.protocol, that.trans_url, that.base_url]));
+        break;
+    case 't':
+        that.ri._didMessage(data);
+        break;
+    }
+};
+
+IframeTransport.prototype.postMessage = function(type, data) {
+    var that = this;
+    that.iframeObj.post(that.window_id + type + (data || ''), that.origin);
+};
+
+IframeTransport.prototype.doSend = function (message) {
+    this.postMessage('m', message);
+};
+
+IframeTransport.enabled = function() {
+    // postMessage misbehaves in konqueror 4.6.5 - the messages are delivered with
+    // huge delay, or not at all.
+    var konqueror = navigator && navigator.userAgent && navigator.userAgent.indexOf('Konqueror') !== -1;
+    return ((typeof _window.postMessage === 'function' ||
+            typeof _window.postMessage === 'object') && (!konqueror));
+};
+//         [*] End of lib/trans-iframe.js
+
+
+//         [*] Including lib/trans-iframe-within.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var curr_window_id;
+
+var postMessage = function (type, data) {
+    if(parent !== _window) {
+        parent.postMessage(curr_window_id + type + (data || ''), '*');
+    } else {
+        utils.log("Can't postMessage, no parent window.", type, data);
+    }
+};
+
+var FacadeJS = function() {};
+FacadeJS.prototype._didClose = function (code, reason) {
+    postMessage('t', utils.closeFrame(code, reason));
+};
+FacadeJS.prototype._didMessage = function (frame) {
+    postMessage('t', frame);
+};
+FacadeJS.prototype._doSend = function (data) {
+    this._transport.doSend(data);
+};
+FacadeJS.prototype._doCleanup = function () {
+    this._transport.doCleanup();
+};
+
+utils.parent_origin = undefined;
+
+SockJS.bootstrap_iframe = function() {
+    var facade;
+    curr_window_id = _document.location.hash.slice(1);
+    var onMessage = function(e) {
+        if(e.source !== parent) return;
+        if(typeof utils.parent_origin === 'undefined')
+            utils.parent_origin = e.origin;
+        if (e.origin !== utils.parent_origin) return;
+
+        var window_id = e.data.slice(0, 8);
+        var type = e.data.slice(8, 9);
+        var data = e.data.slice(9);
+        if (window_id !== curr_window_id) return;
+        switch(type) {
+        case 's':
+            var p = JSON.parse(data);
+            var version = p[0];
+            var protocol = p[1];
+            var trans_url = p[2];
+            var base_url = p[3];
+            if (version !== SockJS.version) {
+                utils.log("Incompatibile SockJS! Main site uses:" +
+                          " \"" + version + "\", the iframe:" +
+                          " \"" + SockJS.version + "\".");
+            }
+            if (!utils.flatUrl(trans_url) || !utils.flatUrl(base_url)) {
+                utils.log("Only basic urls are supported in SockJS");
+                return;
+            }
+
+            if (!utils.isSameOriginUrl(trans_url) ||
+                !utils.isSameOriginUrl(base_url)) {
+                utils.log("Can't connect to different domain from within an " +
+                          "iframe. (" + JSON.stringify([_window.location.href, trans_url, base_url]) +
+                          ")");
+                return;
+            }
+            facade = new FacadeJS();
+            facade._transport = new FacadeJS[protocol](facade, trans_url, base_url);
+            break;
+        case 'm':
+            facade._doSend(data);
+            break;
+        case 'c':
+            if (facade)
+                facade._doCleanup();
+            facade = null;
+            break;
+        }
+    };
+
+    // alert('test ticker');
+    // facade = new FacadeJS();
+    // facade._transport = new FacadeJS['w-iframe-xhr-polling'](facade, 'http://host.com:9999/ticker/12/basd');
+
+    utils.attachMessage(onMessage);
+
+    // Start
+    postMessage('s');
+};
+//         [*] End of lib/trans-iframe-within.js
+
+
+//         [*] Including lib/info.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var InfoReceiver = function(base_url, AjaxObject) {
+    var that = this;
+    utils.delay(function(){that.doXhr(base_url, AjaxObject);});
+};
+
+InfoReceiver.prototype = new EventEmitter(['finish']);
+
+InfoReceiver.prototype.doXhr = function(base_url, AjaxObject) {
+    var that = this;
+    var t0 = (new Date()).getTime();
+    var xo = new AjaxObject('GET', base_url + '/info');
+
+    var tref = utils.delay(8000,
+                           function(){xo.ontimeout();});
+
+    xo.onfinish = function(status, text) {
+        clearTimeout(tref);
+        tref = null;
+        if (status === 200) {
+            var rtt = (new Date()).getTime() - t0;
+            var info = JSON.parse(text);
+            if (typeof info !== 'object') info = {};
+            that.emit('finish', info, rtt);
+        } else {
+            that.emit('finish');
+        }
+    };
+    xo.ontimeout = function() {
+        xo.close();
+        that.emit('finish');
+    };
+};
+
+var InfoReceiverIframe = function(base_url) {
+    var that = this;
+    var go = function() {
+        var ifr = new IframeTransport();
+        ifr.protocol = 'w-iframe-info-receiver';
+        var fun = function(r) {
+            if (typeof r === 'string' && r.substr(0,1) === 'm') {
+                var d = JSON.parse(r.substr(1));
+                var info = d[0], rtt = d[1];
+                that.emit('finish', info, rtt);
+            } else {
+                that.emit('finish');
+            }
+            ifr.doCleanup();
+            ifr = null;
+        };
+        var mock_ri = {
+            _options: {},
+            _didClose: fun,
+            _didMessage: fun
+        };
+        ifr.i_constructor(mock_ri, base_url, base_url);
+    }
+    if(!_document.body) {
+        utils.attachEvent('load', go);
+    } else {
+        go();
+    }
+};
+InfoReceiverIframe.prototype = new EventEmitter(['finish']);
+
+
+var InfoReceiverFake = function() {
+    // It may not be possible to do cross domain AJAX to get the info
+    // data, for example for IE7. But we want to run JSONP, so let's
+    // fake the response, with rtt=2s (rto=6s).
+    var that = this;
+    utils.delay(function() {
+        that.emit('finish', {}, 2000);
+    });
+};
+InfoReceiverFake.prototype = new EventEmitter(['finish']);
+
+var createInfoReceiver = function(base_url) {
+    if (utils.isSameOriginUrl(base_url)) {
+        // If, for some reason, we have SockJS locally - there's no
+        // need to start up the complex machinery. Just use ajax.
+        return new InfoReceiver(base_url, utils.XHRLocalObject);
+    }
+    switch (utils.isXHRCorsCapable()) {
+    case 1:
+        // XHRLocalObject -> no_credentials=true
+        return new InfoReceiver(base_url, utils.XHRLocalObject);
+    case 2:
+        return new InfoReceiver(base_url, utils.XDRObject);
+    case 3:
+        // Opera
+        return new InfoReceiverIframe(base_url);
+    default:
+        // IE 7
+        return new InfoReceiverFake();
+    };
+};
+
+
+var WInfoReceiverIframe = FacadeJS['w-iframe-info-receiver'] = function(ri, _trans_url, base_url) {
+    var ir = new InfoReceiver(base_url, utils.XHRLocalObject);
+    ir.onfinish = function(info, rtt) {
+        ri._didMessage('m'+JSON.stringify([info, rtt]));
+        ri._didClose();
+    }
+};
+WInfoReceiverIframe.prototype.doCleanup = function() {};
+//         [*] End of lib/info.js
+
+
+//         [*] Including lib/trans-iframe-eventsource.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var EventSourceIframeTransport = SockJS['iframe-eventsource'] = function () {
+    var that = this;
+    that.protocol = 'w-iframe-eventsource';
+    that.i_constructor.apply(that, arguments);
+};
+
+EventSourceIframeTransport.prototype = new IframeTransport();
+
+EventSourceIframeTransport.enabled = function () {
+    return ('EventSource' in _window) && IframeTransport.enabled();
+};
+
+EventSourceIframeTransport.need_body = true;
+EventSourceIframeTransport.roundTrips = 3; // html, javascript, eventsource
+
+
+// w-iframe-eventsource
+var EventSourceTransport = FacadeJS['w-iframe-eventsource'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/eventsource', EventSourceReceiver, utils.XHRLocalObject);
+}
+EventSourceTransport.prototype = new AjaxBasedTransport();
+//         [*] End of lib/trans-iframe-eventsource.js
+
+
+//         [*] Including lib/trans-iframe-xhr-polling.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var XhrPollingIframeTransport = SockJS['iframe-xhr-polling'] = function () {
+    var that = this;
+    that.protocol = 'w-iframe-xhr-polling';
+    that.i_constructor.apply(that, arguments);
+};
+
+XhrPollingIframeTransport.prototype = new IframeTransport();
+
+XhrPollingIframeTransport.enabled = function () {
+    return _window.XMLHttpRequest && IframeTransport.enabled();
+};
+
+XhrPollingIframeTransport.need_body = true;
+XhrPollingIframeTransport.roundTrips = 3; // html, javascript, xhr
+
+
+// w-iframe-xhr-polling
+var XhrPollingITransport = FacadeJS['w-iframe-xhr-polling'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/xhr', XhrReceiver, utils.XHRLocalObject);
+};
+
+XhrPollingITransport.prototype = new AjaxBasedTransport();
+//         [*] End of lib/trans-iframe-xhr-polling.js
+
+
+//         [*] Including lib/trans-iframe-htmlfile.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// This transport generally works in any browser, but will cause a
+// spinning cursor to appear in any browser other than IE.
+// We may test this transport in all browsers - why not, but in
+// production it should be only run in IE.
+
+var HtmlFileIframeTransport = SockJS['iframe-htmlfile'] = function () {
+    var that = this;
+    that.protocol = 'w-iframe-htmlfile';
+    that.i_constructor.apply(that, arguments);
+};
+
+// Inheritance.
+HtmlFileIframeTransport.prototype = new IframeTransport();
+
+HtmlFileIframeTransport.enabled = function() {
+    return IframeTransport.enabled();
+};
+
+HtmlFileIframeTransport.need_body = true;
+HtmlFileIframeTransport.roundTrips = 3; // html, javascript, htmlfile
+
+
+// w-iframe-htmlfile
+var HtmlFileTransport = FacadeJS['w-iframe-htmlfile'] = function(ri, trans_url) {
+    this.run(ri, trans_url, '/htmlfile', HtmlfileReceiver, utils.XHRLocalObject);
+};
+HtmlFileTransport.prototype = new AjaxBasedTransport();
+//         [*] End of lib/trans-iframe-htmlfile.js
+
+
+//         [*] Including lib/trans-polling.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var Polling = function(ri, Receiver, recv_url, AjaxObject) {
+    var that = this;
+    that.ri = ri;
+    that.Receiver = Receiver;
+    that.recv_url = recv_url;
+    that.AjaxObject = AjaxObject;
+    that._scheduleRecv();
+};
+
+Polling.prototype._scheduleRecv = function() {
+    var that = this;
+    var poll = that.poll = new that.Receiver(that.recv_url, that.AjaxObject);
+    var msg_counter = 0;
+    poll.onmessage = function(e) {
+        msg_counter += 1;
+        that.ri._didMessage(e.data);
+    };
+    poll.onclose = function(e) {
+        that.poll = poll = poll.onmessage = poll.onclose = null;
+        if (!that.poll_is_closing) {
+            if (e.reason === 'permanent') {
+                that.ri._didClose(1006, 'Polling error (' + e.reason + ')');
+            } else {
+                that._scheduleRecv();
+            }
+        }
+    };
+};
+
+Polling.prototype.abort = function() {
+    var that = this;
+    that.poll_is_closing = true;
+    if (that.poll) {
+        that.poll.abort();
+    }
+};
+//         [*] End of lib/trans-polling.js
+
+
+//         [*] Including lib/trans-receiver-eventsource.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var EventSourceReceiver = function(url) {
+    var that = this;
+    var es = new EventSource(url);
+    es.onmessage = function(e) {
+        that.dispatchEvent(new SimpleEvent('message',
+                                           {'data': unescape(e.data)}));
+    };
+    that.es_close = es.onerror = function(e, abort_reason) {
+        // ES on reconnection has readyState = 0 or 1.
+        // on network error it's CLOSED = 2
+        var reason = abort_reason ? 'user' :
+            (es.readyState !== 2 ? 'network' : 'permanent');
+        that.es_close = es.onmessage = es.onerror = null;
+        // EventSource reconnects automatically.
+        es.close();
+        es = null;
+        // Safari and chrome < 15 crash if we close window before
+        // waiting for ES cleanup. See:
+        //   https://code.google.com/p/chromium/issues/detail?id=89155
+        utils.delay(200, function() {
+                        that.dispatchEvent(new SimpleEvent('close', {reason: reason}));
+                    });
+    };
+};
+
+EventSourceReceiver.prototype = new REventTarget();
+
+EventSourceReceiver.prototype.abort = function() {
+    var that = this;
+    if (that.es_close) {
+        that.es_close({}, true);
+    }
+};
+//         [*] End of lib/trans-receiver-eventsource.js
+
+
+//         [*] Including lib/trans-receiver-htmlfile.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var _is_ie_htmlfile_capable;
+var isIeHtmlfileCapable = function() {
+    if (_is_ie_htmlfile_capable === undefined) {
+        if ('ActiveXObject' in _window) {
+            try {
+                _is_ie_htmlfile_capable = !!new ActiveXObject('htmlfile');
+            } catch (x) {}
+        } else {
+            _is_ie_htmlfile_capable = false;
+        }
+    }
+    return _is_ie_htmlfile_capable;
+};
+
+
+var HtmlfileReceiver = function(url) {
+    var that = this;
+    utils.polluteGlobalNamespace();
+
+    that.id = 'a' + utils.random_string(6, 26);
+    url += ((url.indexOf('?') === -1) ? '?' : '&') +
+        'c=' + escape(WPrefix + '.' + that.id);
+
+    var constructor = isIeHtmlfileCapable() ?
+        utils.createHtmlfile : utils.createIframe;
+
+    var iframeObj;
+    _window[WPrefix][that.id] = {
+        start: function () {
+            iframeObj.loaded();
+        },
+        message: function (data) {
+            that.dispatchEvent(new SimpleEvent('message', {'data': data}));
+        },
+        stop: function () {
+            that.iframe_close({}, 'network');
+        }
+    };
+    that.iframe_close = function(e, abort_reason) {
+        iframeObj.cleanup();
+        that.iframe_close = iframeObj = null;
+        delete _window[WPrefix][that.id];
+        that.dispatchEvent(new SimpleEvent('close', {reason: abort_reason}));
+    };
+    iframeObj = constructor(url, function(e) {
+                                that.iframe_close({}, 'permanent');
+                            });
+};
+
+HtmlfileReceiver.prototype = new REventTarget();
+
+HtmlfileReceiver.prototype.abort = function() {
+    var that = this;
+    if (that.iframe_close) {
+        that.iframe_close({}, 'user');
+    }
+};
+//         [*] End of lib/trans-receiver-htmlfile.js
+
+
+//         [*] Including lib/trans-receiver-xhr.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+var XhrReceiver = function(url, AjaxObject) {
+    var that = this;
+    var buf_pos = 0;
+
+    that.xo = new AjaxObject('POST', url, null);
+    that.xo.onchunk = function(status, text) {
+        if (status !== 200) return;
+        while (1) {
+            var buf = text.slice(buf_pos);
+            var p = buf.indexOf('\n');
+            if (p === -1) break;
+            buf_pos += p+1;
+            var msg = buf.slice(0, p);
+            that.dispatchEvent(new SimpleEvent('message', {data: msg}));
+        }
+    };
+    that.xo.onfinish = function(status, text) {
+        that.xo.onchunk(status, text);
+        that.xo = null;
+        var reason = status === 200 ? 'network' : 'permanent';
+        that.dispatchEvent(new SimpleEvent('close', {reason: reason}));
+    }
+};
+
+XhrReceiver.prototype = new REventTarget();
+
+XhrReceiver.prototype.abort = function() {
+    var that = this;
+    if (that.xo) {
+        that.xo.close();
+        that.dispatchEvent(new SimpleEvent('close', {reason: 'user'}));
+        that.xo = null;
+    }
+};
+//         [*] End of lib/trans-receiver-xhr.js
+
+
+//         [*] Including lib/test-hooks.js
+/*
+ * ***** BEGIN LICENSE BLOCK *****
+ * Copyright (c) 2011-2012 VMware, Inc.
+ *
+ * For the license see COPYING.
+ * ***** END LICENSE BLOCK *****
+ */
+
+// For testing
+SockJS.getUtils = function(){
+    return utils;
+};
+
+SockJS.getIframeTransport = function(){
+    return IframeTransport;
+};
+//         [*] End of lib/test-hooks.js
+
+                  return SockJS;
+          })();
+if ('_sockjs_onload' in window) setTimeout(_sockjs_onload, 1);
+
+// AMD compliance
+if (typeof define === 'function' && define.amd) {
+    define('sockjs', [], function(){return SockJS;});
+}
+//     [*] End of lib/index.js
+
+// [*] End of lib/all.js
+
+
+(function() {
+  var bucket, simperium,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  bucket = (function() {
+    function bucket(s, name, b_opts) {
+      var error, val;
+      this.s = s;
+      this.name = name;
+      this._check_pending = __bind(this._check_pending, this);
+      this.pending = __bind(this.pending, this);
+      this.on_changes = __bind(this.on_changes, this);
+      this.retrieve_changes = __bind(this.retrieve_changes, this);
+      this._send_changes = __bind(this._send_changes, this);
+      this._queue_change = __bind(this._queue_change, this);
+      this._make_change = __bind(this._make_change, this);
+      this.update = __bind(this.update, this);
+      this._check_update = __bind(this._check_update, this);
+      this._notify_client = __bind(this._notify_client, this);
+      this._index_loaded = __bind(this._index_loaded, this);
+      this.on_entity_version = __bind(this.on_entity_version, this);
+      this.get_version = __bind(this.get_version, this);
+      this.load_versions = __bind(this.load_versions, this);
+      this.on_index_error = __bind(this.on_index_error, this);
+      this.on_index_page = __bind(this.on_index_page, this);
+      this._refresh_store = __bind(this._refresh_store, this);
+      this.send = __bind(this.send, this);
+      this.on_data = __bind(this.on_data, this);
+      this.start = __bind(this.start, this);
+      this._remove_entity = __bind(this._remove_entity, this);
+      this._save_entity = __bind(this._save_entity, this);
+      this._load_data = __bind(this._load_data, this);
+      this._verify = __bind(this._verify, this);
+      this._load_meta = __bind(this._load_meta, this);
+      this.show_data = __bind(this.show_data, this);
+      this.on = __bind(this.on, this);
+      this.jd = this.s.jd;
+      this.options = this.jd.deepCopy(this.s.options);
+      for (name in b_opts) {
+        if (!__hasProp.call(b_opts, name)) continue;
+        val = b_opts[name];
+        this.options[name] = val;
+      }
+      this.chan = this.options['n'];
+      this.space = "" + this.options['app_id'] + "/" + this.name;
+      this.username = this.options['username'];
+      this.namespace = "" + this.username + ":" + this.space;
+      this.clientid = null;
+      try {
+        this.clientid = localStorage.getItem("" + this.namespace + "/clientid");
+      } catch (_error) {
+        error = _error;
+        this.clientid = null;
+      }
+      if ((this.clientid == null) || this.clientid.indexOf("sjs") !== 0) {
+        this.clientid = "sjs-" + this.s.bversion + "-" + (this.uuid(5));
+        try {
+          localStorage.setItem("" + this.namespace + "/clientid", this.clientid);
+        } catch (_error) {
+          error = _error;
+          console.log("" + this.name + ": couldnt set clientid");
+        }
+      }
+      this.cb_events = ['notify', 'notify_init', 'notify_version', 'local', 'get', 'ready', 'notify_pending', 'error'];
+      this.cbs = {};
+      this.cb_e = this.cb_l = this.cb_ni = this.cb_np = null;
+      this.cb_n = this.cb_nv = this.cb_r = function() {};
+      this.initialized = false;
+      this.authorized = false;
+      this.data = {
+        last_cv: 0,
+        ccid: this.uuid(),
+        store: {},
+        send_queue: [],
+        send_queue_timer: null
+      };
+      this.started = false;
+      if (!('nostore' in this.options)) {
+        this._load_meta();
+        this.loaded = this._load_data();
+        console.log("" + this.name + ": localstorage loaded " + this.loaded + " entities");
+      } else {
+        console.log("" + this.name + ": not loading from localstorage");
+        this.loaded = 0;
+      }
+      this._last_pending = null;
+      this._send_backoff = 15000;
+      this._backoff_max = 120000;
+      this._backoff_min = 15000;
+      console.log("" + this.namespace + ": bucket created: opts: " + (JSON.stringify(this.options)));
+    }
+
+    bucket.prototype.S4 = function() {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+
+    bucket.prototype.uuid = function(n) {
+      var s;
+      n = n || 8;
+      s = this.S4();
+      while (n -= 1) {
+        s += this.S4();
+      }
+      return s;
+    };
+
+    bucket.prototype.now = function() {
+      return new Date().getTime();
+    };
+
+    bucket.prototype.on = function(event, callback) {
+      if (__indexOf.call(this.cb_events, event) >= 0) {
+        this.cbs[event] = callback;
+        switch (event) {
+          case 'get':
+          case 'local':
+            return this.cb_l = callback;
+          case 'notify':
+            return this.cb_n = callback;
+          case 'notify_version':
+            return this.cb_nv = callback;
+          case 'notify_pending':
+            return this.cb_np = callback;
+          case 'notify_init':
+            return this.cb_ni = callback;
+          case 'ready':
+            return this.cb_r = callback;
+          case 'error':
+            return this.cb_e = callback;
+        }
+      } else {
+        throw new Error("unsupported callback event");
+      }
+    };
+
+    bucket.prototype.show_data = function() {
+      var datastr, key, total;
+      if (!this.s.supports_html5_storage()) {
+        return;
+      }
+      total = 0;
+      for (key in localStorage) {
+        if (!__hasProp.call(localStorage, key)) continue;
+        datastr = localStorage[key];
+        console.log("[" + key + "]: " + datastr);
+        total = total + 1;
+      }
+      return console.log("" + total + " total");
+    };
+
+    bucket.prototype._save_meta = function() {
+      var error;
+      if (!this.s.supports_html5_storage()) {
+        return false;
+      }
+      console.log("" + this.name + ": save_meta ccid:" + this.data.ccid + " cv:" + this.data.last_cv);
+      try {
+        localStorage.setItem("" + this.namespace + "/ccid", this.data.ccid);
+        localStorage.setItem("" + this.namespace + "/last_cv", this.data.last_cv);
+      } catch (_error) {
+        error = _error;
+        return false;
+      }
+      return true;
+    };
+
+    bucket.prototype._load_meta = function() {
+      var _base, _base1;
+      if (!this.s.supports_html5_storage()) {
+        return;
+      }
+      this.data.ccid = localStorage.getItem("" + this.namespace + "/ccid");
+      if ((_base = this.data).ccid == null) {
+        _base.ccid = 1;
+      }
+      this.data.last_cv = localStorage.getItem("" + this.namespace + "/last_cv");
+      if ((_base1 = this.data).last_cv == null) {
+        _base1.last_cv = 0;
+      }
+      return console.log("" + this.name + ": load_meta ccid:" + this.data.ccid + " cv:" + this.data.last_cv);
+    };
+
+    bucket.prototype._verify = function(data) {
+      if (!('object' in data) || !('version' in data)) {
+        return false;
+      }
+      if (this.jd.entries(data['object']) === 0) {
+        if ('last' in data && this.jd.entries(data['last']) > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (!(data['version'] != null)) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    bucket.prototype._load_data = function() {
+      var data, error, i, id, key, loaded, p_len, prefix, _i, _ref;
+      if (!this.s.supports_html5_storage()) {
+        return;
+      }
+      prefix = "" + this.namespace + "/e/";
+      p_len = prefix.length;
+      loaded = 0;
+      if (localStorage.length === 0) {
+        return 0;
+      }
+      for (i = _i = 0, _ref = localStorage.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        key = localStorage.key(i);
+        if ((key != null) && key.substr(0, p_len) === prefix) {
+          id = key.substr(p_len, key.length - p_len);
+          try {
+            data = JSON.parse(localStorage.getItem(key));
+          } catch (_error) {
+            error = _error;
+            data = null;
+          }
+          if (data == null) {
+            continue;
+          }
+          if (this._verify(data)) {
+            data['check'] = null;
+            this.data.store[id] = data;
+            loaded = loaded + 1;
+          } else {
+            console.log("ignoring CORRUPT data: " + (JSON.stringify(data)));
+            this._remove_entity(id);
+          }
+        }
+      }
+      return loaded;
+    };
+
+    bucket.prototype._save_entity = function(id) {
+      var datastr, error, key, ret_data, store_data;
+      if (!this.s.supports_html5_storage()) {
+        return false;
+      }
+      key = "" + this.namespace + "/e/" + id;
+      store_data = this.data.store[id];
+      datastr = JSON.stringify(store_data);
+      try {
+        localStorage.setItem(key, datastr);
+      } catch (_error) {
+        error = _error;
+        return false;
+      }
+      ret_data = JSON.parse(localStorage.getItem(key));
+      if (this.jd.equals(store_data, ret_data)) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    bucket.prototype._remove_entity = function(id) {
+      var error, key;
+      if (!this.s.supports_html5_storage()) {
+        return false;
+      }
+      key = "" + this.namespace + "/e/" + id;
+      try {
+        localStorage.removeItem(key);
+      } catch (_error) {
+        error = _error;
+        return false;
+      }
+      return true;
+    };
+
+    bucket.prototype.start = function() {
+      var index_query, opts;
+      console.log("" + this.space + ": started initialized: " + this.initialized + " authorized: " + this.authorized);
+      this.namespace = "" + this.username + ":" + this.space;
+      this.started = true;
+      this.first = false;
+      if (!this.authorized) {
+        if (this.s.connected) {
+          this.first = true;
+          if ('limit' in this.options) {
+            index_query = "i:1:::" + this.options['limit'];
+          } else {
+            index_query = "i:1:::40";
+          }
+          this.irequest_time = this.now();
+          this.index_request = true;
+          this.notify_index = {};
+          opts = {
+            app_id: this.options.app_id,
+            token: this.options.token,
+            name: this.name,
+            clientid: this.clientid,
+            build: this.s.bversion
+          };
+          if (!this.initialized) {
+            opts.cmd = index_query;
+          }
+          this.send("init:" + (JSON.stringify(opts)));
+          console.log("" + this.name + ": sent init " + (JSON.stringify(opts)) + " waiting for auth");
+        } else {
+          console.log("" + this.name + ": waiting for connect");
+        }
+        return;
+      }
+      if (!this.initialized) {
+        if (!this.first) {
+          this.notify_index = {};
+          return this._refresh_store();
+        }
+      } else {
+        console.log("" + this.name + ": retrieve changes from start");
+        return this.retrieve_changes();
+      }
+    };
+
+    bucket.prototype.on_data = function(data) {
+      var changes, entity, entitydata, evkey, key, key_end, user, version;
+      if (data.substr(0, 5) === "auth:") {
+        user = data.substr(5);
+        if (user === "expired") {
+          console.log("auth expired");
+          this.started = false;
+          if (this.cb_e != null) {
+            this.cb_e("auth");
+          }
+        } else {
+          this.username = user;
+          this.authorized = true;
+          if (this.initialized) {
+            return this.start();
+          }
+        }
+      } else if (data.substr(0, 4) === "cv:?") {
+        console.log("" + this.name + ": cv out of sync, refreshing index");
+        return setTimeout((function(_this) {
+          return function() {
+            return _this._refresh_store();
+          };
+        })(this));
+      } else if (data.substr(0, 2) === "c:") {
+        changes = JSON.parse(data.substr(2));
+        if (this.data.last_cv === "0" && changes.length === 0 && !this.cv_check) {
+          this.cv_check = true;
+          this._refresh_store();
+        }
+        return this.on_changes(changes);
+      } else if (data.substr(0, 2) === "i:") {
+        console.log("" + this.name + ":  index msg received: " + (this.now() - this.irequest_time));
+        return this.on_index_page(JSON.parse(data.substr(2)));
+      } else if (data.substr(0, 2) === "e:") {
+        key_end = data.indexOf("\n");
+        evkey = data.substr(2, key_end - 2);
+        version = evkey.substr(evkey.lastIndexOf('.') + 1);
+        key = evkey.substr(0, evkey.lastIndexOf('.'));
+        entitydata = data.substr(key_end + 1);
+        if (entitydata === "?") {
+          return this.on_entity_version(null, key, version);
+        } else {
+          entity = JSON.parse(entitydata);
+          return this.on_entity_version(entity['data'], key, version);
+        }
+      } else {
+        return console.log("unknown message: " + data);
+      }
+    };
+
+    bucket.prototype.send = function(message) {
+      console.log("sending: " + this.chan + ":" + message);
+      return this.s.send("" + this.chan + ":" + message);
+    };
+
+    bucket.prototype._refresh_store = function() {
+      var index_query;
+      console.log("" + this.name + ": _refresh_store(): loading index");
+      if ('limit' in this.options) {
+        index_query = "i:1:::" + this.options['limit'];
+      } else {
+        index_query = "i:1:::40";
+      }
+      this.send(index_query);
+      this.irequest_time = this.now();
+      this.index_request = true;
+    };
+
+    bucket.prototype.on_index_page = function(response) {
+      var elapsed, item, loaded, mark, now, page_req, _i, _len, _ref;
+      now = this.now();
+      elapsed = now - this.irequest_time;
+      console.log("" + this.name + ": index response time: " + elapsed);
+      console.log("" + this.name + ": on_index_page(): index page received, current= " + response['current']);
+      console.log(response);
+      loaded = 0;
+      _ref = response['index'];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        this.notify_index[item['id']] = false;
+        loaded++;
+        setTimeout((function(_this) {
+          return function(item) {
+            return function() {
+              return _this.on_entity_version(item['d'], item['id'], item['v']);
+            };
+          };
+        })(this)(item));
+      }
+      if (!('mark' in response) || 'limit' in this.options) {
+        this.index_request = false;
+        if ('current' in response) {
+          this.data.last_cv = response['current'];
+          this._save_meta();
+        } else {
+          this.data.last_cv = 0;
+        }
+        if (loaded === 0) {
+          return this._index_loaded();
+        }
+      } else {
+        this.index_request = true;
+        console.log("" + this.name + ": index last process time: " + (this.now() - now) + ", page_delay: " + this.options['page_delay']);
+        mark = response['mark'];
+        page_req = (function(_this) {
+          return function(mark) {
+            _this.send("i:1:" + mark + "::100");
+            return _this.irequest_time = _this.now();
+          };
+        })(this);
+        return setTimeout((function(_this) {
+          return function(mark) {
+            return function() {
+              return page_req(mark);
+            };
+          };
+        })(this)(mark), this.options['page_delay']);
+      }
+    };
+
+    bucket.prototype.on_index_error = function() {
+      return console.log("" + this.name + ": index doesnt exist or other error");
+    };
+
+    bucket.prototype.load_versions = function(id, versions) {
+      var min, v, _i, _ref, _results;
+      if (!(id in this.data.store)) {
+        return false;
+      }
+      min = Math.max(this.data.store[id]['version'] - (versions + 1), 1);
+      _results = [];
+      for (v = _i = min, _ref = this.data.store[id]['version'] - 1; min <= _ref ? _i <= _ref : _i >= _ref; v = min <= _ref ? ++_i : --_i) {
+        console.log("" + this.name + ": loading version " + id + "." + v);
+        _results.push(this.send("e:" + id + "." + v));
+      }
+      return _results;
+    };
+
+    bucket.prototype.get_version = function(id, version) {
+      var evkey;
+      evkey = "" + id + "." + version;
+      return this.send("e:" + evkey);
+    };
+
+    bucket.prototype.on_entity_version = function(data, id, version) {
+      var data_copy, nid, notify_cb, to_load, _ref;
+      console.log("" + this.name + ": on_entity_version(" + data + ", " + id + ", " + version + ")");
+      if (data != null) {
+        data_copy = this.jd.deepCopy(data);
+      } else {
+        data_copy = null;
+      }
+      if (this.initialized === false && (this.cb_ni != null)) {
+        notify_cb = this.cb_ni;
+      } else {
+        notify_cb = this.cb_n;
+      }
+      if (id in this.data.store && 'last' in this.data.store[id] && this.jd.entries(this.data.store[id]['last'])) {
+        data_copy = this.jd.deepCopy(this.data.store[id]['last']);
+        notify_cb(id, data_copy, null);
+        this.notify_index[id] = true;
+        return this._check_update(id);
+      } else if (id in this.data.store && version < this.data.store[id]['version']) {
+        return this.cb_nv(id, data_copy, version);
+      } else {
+        if (!(id in this.data.store)) {
+          this.data.store[id] = {};
+        }
+        this.data.store[id]['id'] = id;
+        this.data.store[id]['object'] = data;
+        this.data.store[id]['version'] = parseInt(version);
+        notify_cb(id, data_copy, version);
+        this.notify_index[id] = true;
+        to_load = 0;
+        _ref = this.notify_index;
+        for (nid in _ref) {
+          if (!__hasProp.call(_ref, nid)) continue;
+          if (this.notify_index[nid] === false) {
+            to_load++;
+          }
+        }
+        if (to_load === 0 && this.index_request === false) {
+          return this._index_loaded();
+        }
+      }
+    };
+
+    bucket.prototype._index_loaded = function() {
+      console.log("" + this.name + ": index loaded, initialized: " + this.initialized);
+      if (this.initialized === false) {
+        this.cb_r();
+      }
+      this.initialized = true;
+      console.log("" + this.name + ": retrieve changes from index loaded");
+      return this.retrieve_changes();
+    };
+
+    bucket.prototype._notify_client = function(key, new_object, orig_object, diff, version) {
+      var c_object, cursor, element, fieldname, new_data, o_diff, offsets, t_diff, t_object;
+      console.log("" + this.name + ": _notify_client(" + key + ", " + new_object + ", " + orig_object + ", " + (JSON.stringify(diff)) + ")");
+      if (this.cb_l == null) {
+        console.log("" + this.name + ": no get callback, notifying without transform");
+        this.cb_n(key, new_object, version);
+        return;
+      }
+      c_object = this.cb_l(key);
+      t_object = null;
+      t_diff = null;
+      cursor = null;
+      offsets = [];
+      if (this.jd.typeOf(c_object) === 'array') {
+        element = c_object[2];
+        fieldname = c_object[1];
+        c_object = c_object[0];
+        cursor = this.s._captureCursor(element);
+        if (cursor) {
+          offsets[0] = cursor['startOffset'];
+          if ('endOffset' in cursor) {
+            offsets[1] = cursor['endOffset'];
+          }
+        }
+      }
+      if ((c_object != null) && (orig_object != null)) {
+        o_diff = this.jd.object_diff(orig_object, c_object);
+        console.log("client/server version diff: " + (JSON.stringify(o_diff)));
+        if (this.jd.entries(o_diff) === 0) {
+          console.log("local diff 0 entries");
+          t_diff = diff;
+          t_object = orig_object;
+        } else {
+          console.log("o_diff");
+          console.log(o_diff);
+          console.log("orig_object");
+          console.log(orig_object);
+          console.log("c_object");
+          console.log(c_object);
+          console.log("client modified doing transform");
+          t_diff = this.jd.transform_object_diff(o_diff, diff, orig_object);
+          t_object = new_object;
+        }
+        if (cursor) {
+          new_data = this.jd.apply_object_diff_with_offsets(t_object, t_diff, fieldname, offsets);
+          if ((element != null) && 'value' in element) {
+            element['value'] = new_data[fieldname];
+          }
+          cursor['startOffset'] = offsets[0];
+          if (offsets.length > 1) {
+            cursor['endOffset'] = offsets[1];
+            if (cursor['startOffset'] >= cursor['endOffset']) {
+              cursor['collapsed'] = true;
+            }
+          }
+          this.s._restoreCursor(element, cursor);
+        } else {
+          console.log("in regular apply_object_diff");
+          console.log("t_object");
+          console.log(t_object);
+          console.log("t_diff");
+          console.log(t_diff);
+          new_data = this.jd.apply_object_diff(t_object, t_diff);
+        }
+        return this.cb_n(key, new_data, version);
+      } else if (new_object) {
+        return this.cb_n(key, new_object, version);
+      } else {
+        return this.cb_n(key, null, null);
+      }
+    };
+
+    bucket.prototype._check_update = function(id) {
+      var change, found, s_data, _i, _len, _ref;
+      console.log("" + this.name + ": _check_update(" + id + ")");
+      if (!(id in this.data.store)) {
+        return false;
+      }
+      s_data = this.data.store[id];
+      if (s_data['change']) {
+        found = false;
+        _ref = this.data.send_queue;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          change = _ref[_i];
+          if (change['id'] === s_data['change']['id'] && change['ccid'] === s_data['change']['ccid']) {
+            found = true;
+          }
+        }
+        if (!found) {
+          this._queue_change(s_data['change']);
+          return true;
+        }
+        return false;
+      }
+      if (s_data['check'] != null) {
+        return false;
+      }
+      if ('last' in s_data && this.jd.equals(s_data['object'], s_data['last'])) {
+        delete s_data['last'];
+        this._remove_entity(id);
+        return false;
+      }
+      change = this._make_change(id);
+      if (change != null) {
+        s_data['change'] = change;
+        this._queue_change(change);
+      } else {
+        this._remove_entity(id);
+      }
+      return true;
+    };
+
+    bucket.prototype.update = function(id, object) {
+      var change, s_data, _i, _len, _ref;
+      if (arguments.length === 1) {
+        if (this.cb_l != null) {
+          object = this.cb_l(id);
+          if (this.jd.typeOf(object) === 'array') {
+            object = object[0];
+          }
+        } else {
+          throw new Error("missing 'local' callback");
+        }
+      }
+      console.log("" + this.name + ": update(" + id + ")");
+      if ((id == null) && (object == null)) {
+        return false;
+      }
+      if (id != null) {
+        if (id.length === 0 || id.indexOf('/') !== -1) {
+          return false;
+        }
+      } else {
+        id = this.uuid();
+      }
+      if (!(id in this.data.store)) {
+        this.data.store[id] = {
+          'id': id,
+          'object': {},
+          'version': null,
+          'change': null,
+          'check': null
+        };
+      }
+      s_data = this.data.store[id];
+      s_data['last'] = this.jd.deepCopy(object);
+      s_data['modified'] = this.s._time();
+      this._save_entity(id);
+      _ref = this.data.send_queue;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        change = _ref[_i];
+        if (String(id) === change['id']) {
+          console.log("" + this.name + ": update(" + id + ") found pending change, aborting");
+          return null;
+        }
+      }
+      if (s_data['check'] != null) {
+        clearTimeout(s_data['check']);
+      }
+      s_data['check'] = setTimeout((function(_this) {
+        return function(id, s_data) {
+          return function() {
+            s_data['check'] = null;
+            s_data['change'] = _this._make_change(id);
+            delete s_data['last'];
+            _this._save_entity(id);
+            return _this._queue_change(s_data['change']);
+          };
+        };
+      })(this)(id, s_data), this.options['update_delay']);
+      return id;
+    };
+
+    bucket.prototype._make_change = function(id) {
+      var c_object, change, s_data;
+      s_data = this.data.store[id];
+      change = {
+        'id': String(id),
+        'ccid': this.uuid()
+      };
+      if (!this.initialized) {
+        if ('last' in s_data) {
+          c_object = s_data['last'];
+        } else {
+          return null;
+        }
+      } else {
+        if (this.cb_l != null) {
+          c_object = this.cb_l(id);
+          if (this.jd.typeOf(c_object) === 'array') {
+            c_object = c_object[0];
+          }
+        } else {
+          if ('last' in s_data) {
+            c_object = s_data['last'];
+          } else {
+            return null;
+          }
+        }
+      }
+      if (s_data['version'] != null) {
+        change['sv'] = s_data['version'];
+      }
+      if (c_object === null && (s_data['version'] != null)) {
+        change['o'] = '-';
+        console.log("" + this.name + ": deletion requested for " + id);
+      } else if ((c_object != null) && (s_data['object'] != null)) {
+        change['o'] = 'M';
+        if ('sendfull' in s_data) {
+          change['d'] = this.jd.deepCopy(c_object);
+          delete s_data['sendfull'];
+        } else {
+          change['v'] = this.jd.object_diff(s_data['object'], c_object);
+          if (this.jd.entries(change['v']) === 0) {
+            change = null;
+          }
+        }
+      } else {
+        change = null;
+      }
+      return change;
+    };
+
+    bucket.prototype._queue_change = function(change) {
+      if (change == null) {
+        return;
+      }
+      console.log("_queue_change(" + change['id'] + ":" + change['ccid'] + "): sending");
+      this.data.send_queue.push(change);
+      this.send("c:" + (JSON.stringify(change)));
+      this._check_pending();
+      if (this.data.send_queue_timer != null) {
+        clearTimeout(this.data.send_queue_timer);
+      }
+      return this.data.send_queue_timer = setTimeout(this._send_changes, this._send_backoff);
+    };
+
+    bucket.prototype._send_changes = function() {
+      var change, _i, _len, _ref;
+      if (this.data.send_queue.length === 0) {
+        console.log("" + this.name + ": send_queue empty, done");
+        this.data.send_queue_timer = null;
+        return;
+      }
+      if (!this.s.connected) {
+        console.log("" + this.name + ": _send_changes: not connected");
+      } else {
+        _ref = this.data.send_queue;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          change = _ref[_i];
+          console.log("" + this.name + ": sending change: " + (JSON.stringify(change)));
+          this.send("c:" + (JSON.stringify(change)));
+        }
+      }
+      this._send_backoff = this._send_backoff * 2;
+      if (this._send_backoff > this._backoff_max) {
+        this._send_backoff = this._backoff_max;
+      }
+      return this.data.send_queue_timer = setTimeout(this._send_changes, this._send_backoff);
+    };
+
+    bucket.prototype.retrieve_changes = function() {
+      console.log("" + this.name + ": requesting changes since cv:" + this.data.last_cv);
+      this.send("cv:" + this.data.last_cv);
+    };
+
+    bucket.prototype.on_changes = function(response) {
+      var change, check_updates, id, idx, new_object, op, orig_object, p, pd, pending, pending_to_delete, reload_needed, s_data, _fn, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref;
+      check_updates = [];
+      reload_needed = false;
+      this._send_backoff = this._backoff_min;
+      console.log("" + this.name + ": on_changes(): response=");
+      console.log(response);
+      for (_i = 0, _len = response.length; _i < _len; _i++) {
+        change = response[_i];
+        id = change['id'];
+        console.log("" + this.name + ": processing id=" + id);
+        pending_to_delete = [];
+        _ref = this.data.send_queue;
+        for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+          pending = _ref[_j];
+          if (change['clientid'] === this.clientid && id === pending['id']) {
+            change['local'] = true;
+            pending_to_delete.push(pending);
+            check_updates.push(id);
+          }
+        }
+        for (_k = 0, _len2 = pending_to_delete.length; _k < _len2; _k++) {
+          pd = pending_to_delete[_k];
+          this.data.store[pd['id']]['change'] = null;
+          this._save_entity(pd['id']);
+          this.data.send_queue = (function() {
+            var _l, _len3, _ref1, _results;
+            _ref1 = this.data.send_queue;
+            _results = [];
+            for (_l = 0, _len3 = _ref1.length; _l < _len3; _l++) {
+              p = _ref1[_l];
+              if (p !== pd) {
+                _results.push(p);
+              }
+            }
+            return _results;
+          }).call(this);
+        }
+        if (pending_to_delete.length > 0) {
+          this._check_pending();
+        }
+        if ('error' in change) {
+          switch (change['error']) {
+            case 412:
+              console.log("" + this.name + ": on_changes(): empty change, dont check");
+              idx = check_updates.indexOf(change['id']);
+              if (idx > -1) {
+                check_updates.splice(idx, 1);
+              }
+              break;
+            case 409:
+              console.log("" + this.name + ": on_changes(): duplicate change, ignoring");
+              break;
+            case 405:
+              console.log("" + this.name + ": on_changes(): bad version");
+              if (change['id'] in this.data.store) {
+                this.data.store[change['id']]['version'] = null;
+              }
+              reload_needed = true;
+              break;
+            case 440:
+              console.log("" + this.name + ": on_change(): bad diff, sending full object");
+              this.data.store[id]['sendfull'] = true;
+              break;
+            default:
+              console.log("" + this.name + ": error for last change, reloading");
+              if (change['id'] in this.data.store) {
+                this.data.store[change['id']]['version'] = null;
+              }
+              reload_needed = true;
+          }
+        } else {
+          op = change['o'];
+          if (op === '-') {
+            delete this.data.store[id];
+            this._remove_entity(id);
+            if (!('local' in change)) {
+              this._notify_client(change['id'], null, null, null, null);
+            }
+          } else if (op === 'M') {
+            s_data = this.data.store[id];
+            if (('sv' in change && (s_data != null) && (s_data['version'] != null) && s_data['version'] === change['sv']) || !('sv' in change) || (change['ev'] === 1)) {
+              if (s_data == null) {
+                this.data.store[id] = {
+                  'id': id,
+                  'object': {},
+                  'version': null,
+                  'change': null,
+                  'check': null
+                };
+                s_data = this.data.store[id];
+              }
+              orig_object = this.jd.deepCopy(s_data['object']);
+              s_data['object'] = this.jd.apply_object_diff(s_data['object'], change['v']);
+              s_data['version'] = change['ev'];
+              new_object = this.jd.deepCopy(s_data['object']);
+              if (!('local' in change)) {
+                this._notify_client(change['id'], new_object, orig_object, change['v'], change['ev']);
+              }
+            } else if ((s_data != null) && (s_data['version'] != null) && change['ev'] <= s_data['version']) {
+              console.log("" + this.name + ": old or duplicate change received, ignoring, change.ev=" + change['ev'] + ", s_data.version:" + s_data['version']);
+            } else {
+              if (s_data != null) {
+                console.log("" + this.name + ": version mismatch couldnt apply change, change.ev:" + change['ev'] + ", s_data.version:" + s_data['version']);
+              } else {
+                console.log("" + this.name + ": version mismatch couldnt apply change, change.ev:" + change['ev'] + ", s_data null");
+              }
+              if (s_data != null) {
+                this.data.store[id]['version'] = null;
+              }
+              reload_needed = true;
+            }
+          } else {
+            console.log("" + this.name + ": no operation found for change");
+          }
+          if (!reload_needed) {
+            this.data.last_cv = change['cv'];
+            this._save_meta();
+            console.log("" + this.name + ": checkpoint cv=" + this.data.last_cv + " ccid=" + this.data.ccid);
+          }
+        }
+      }
+      if (reload_needed) {
+        console.log("" + this.name + ": reload needed, refreshing store");
+        setTimeout((function(_this) {
+          return function() {
+            return _this._refresh_store();
+          };
+        })(this));
+      } else {
+        _fn = (function(_this) {
+          return function(id) {
+            return setTimeout((function() {
+              return _this._check_update(id);
+            }), _this.options['update_delay']);
+          };
+        })(this);
+        for (_l = 0, _len3 = check_updates.length; _l < _len3; _l++) {
+          id = check_updates[_l];
+          _fn(id);
+        }
+      }
+    };
+
+    bucket.prototype.pending = function() {
+      var change, x, _i, _len, _ref, _results;
+      x = (function() {
+        var _i, _len, _ref, _results;
+        _ref = this.data.send_queue;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          change = _ref[_i];
+          _results.push(change['id']);
+        }
+        return _results;
+      }).call(this);
+      console.log("" + this.name + ": pending: " + (JSON.stringify(x)));
+      _ref = this.data.send_queue;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        change = _ref[_i];
+        _results.push(change['id']);
+      }
+      return _results;
+    };
+
+    bucket.prototype._check_pending = function() {
+      var curr_pending, diff, x, _i, _len, _ref;
+      if (this.cb_np != null) {
+        curr_pending = this.pending();
+        diff = true;
+        if (this._last_pending) {
+          diff = false;
+          if (this._last_pending.length === curr_pending.length) {
+            _ref = this._last_pending;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              x = _ref[_i];
+              if (curr_pending.indexOf(x) === -1) {
+                diff = true;
+              }
+            }
+          } else {
+            diff = true;
+          }
+        }
+        if (diff) {
+          this._last_pending = curr_pending;
+          return this.cb_np(curr_pending);
+        }
+      }
+    };
+
+    return bucket;
+
+  })();
+
+  simperium = (function() {
+    simperium.prototype.lowerstrip = function(s) {
+      s = s.toLowerCase();
+      if (String.prototype.trim != null) {
+        return s.trim();
+      } else {
+        return s.replace(/^\s+|\s+$/g, "");
+      }
+    };
+
+    simperium.prototype._time = function() {
+      var d;
+      d = new Date();
+      return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds()) / 1000;
+    };
+
+    simperium.prototype.supports_html5_storage = function() {
+      var error;
+      try {
+        return 'localStorage' in window && window['localStorage'] !== null;
+      } catch (_error) {
+        error = _error;
+        return false;
+      }
+    };
+
+    function simperium(app_id, options) {
+      var name, scheme, val, _ref;
+      this.app_id = app_id;
+      this.options = options;
+      this._restoreCursor = __bind(this._restoreCursor, this);
+      this._captureCursor = __bind(this._captureCursor, this);
+      this._sock_message = __bind(this._sock_message, this);
+      this._sock_hb_check = __bind(this._sock_hb_check, this);
+      this._sock_closed = __bind(this._sock_closed, this);
+      this._sock_opened = __bind(this._sock_opened, this);
+      this._sock_connect = __bind(this._sock_connect, this);
+      this.synced = __bind(this.synced, this);
+      this.send = __bind(this.send, this);
+      this.stop = __bind(this.stop, this);
+      this.start = __bind(this.start, this);
+      this.on = __bind(this.on, this);
+      this.bucket = __bind(this.bucket, this);
+      this.bversion = 2014030401;
+      this.jd = new jsondiff();
+      this.dmp = this.jd.dmp;
+      this.auth_token = null;
+      this.options = this.options || {};
+      this.options['app_id'] = this.app_id;
+      this.sock_opts = {
+        'debug': false
+      };
+      if ('sockjs' in this.options) {
+        _ref = this.options['sockjs'];
+        for (name in _ref) {
+          if (!__hasProp.call(_ref, name)) continue;
+          val = _ref[name];
+          this.sock_opts[name] = val;
+        }
+      }
+      if (!('host' in this.options)) {
+        this.options['host'] = 'api.simperium.com';
+      }
+      if (!('port' in this.options)) {
+        this.options['port'] = 80;
+      }
+      if ('token' in this.options) {
+        this.auth_token = this.options['token'];
+      }
+      if (this.options['host'].indexOf("simperium.com") !== -1) {
+        scheme = "https";
+      } else {
+        scheme = "http";
+      }
+      this.buckets = {};
+      this.channels = 0;
+      if (!('update_delay' in this.options)) {
+        this.options['update_delay'] = 0;
+      }
+      if (!('page_delay' in this.options)) {
+        this.options['page_delay'] = 0;
+      }
+      this.options['prefix'] = "sock/1/" + this.app_id;
+      this.options['port'] = parseInt(this.options['port']);
+      if (this.options['port'] !== 80 && this.options['port'] !== 443) {
+        this.sock_url = "" + scheme + "://" + this.options['host'] + ":" + this.options['port'] + "/" + this.options['prefix'];
+      } else {
+        this.sock_url = "" + scheme + "://" + this.options['host'] + "/" + this.options['prefix'];
+      }
+      this.stopped = false;
+      this._sock_backoff = 3000;
+      this._sock_hb = 1;
+      this._sock_connect();
+    }
+
+    simperium.prototype.bucket = function(name, b_opts) {
+      var b;
+      name = this.lowerstrip(name);
+      b_opts = b_opts || {};
+      b_opts['n'] = this.channels++;
+      b = new bucket(this, name, b_opts);
+      this.buckets[b_opts['n']] = b;
+      return b;
+    };
+
+    simperium.prototype.on = function(bucket, event, callback) {
+      return this.buckets[bucket].on(event, callback);
+    };
+
+    simperium.prototype.start = function() {
+      var name, _ref, _results;
+      this.stopped = false;
+      _ref = this.buckets;
+      _results = [];
+      for (name in _ref) {
+        if (!__hasProp.call(_ref, name)) continue;
+        bucket = _ref[name];
+        _results.push(bucket.start());
+      }
+      return _results;
+    };
+
+    simperium.prototype.stop = function() {
+      this.stopped = true;
+      if (this.sock != null) {
+        return this.sock.close();
+      }
+    };
+
+    simperium.prototype.send = function(data) {
+      return this.sock.send(data);
+    };
+
+    simperium.prototype.synced = function() {
+      var name, _ref;
+      _ref = this.buckets;
+      for (name in _ref) {
+        if (!__hasProp.call(_ref, name)) continue;
+        bucket = _ref[name];
+        if (bucket.pending().length > 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    simperium.prototype._sock_connect = function() {
+      console.log("simperium: connecting to " + this.sock_url);
+      this.connected = false;
+      this.authorized = false;
+      this.sock = new SockJS(this.sock_url, void 0, this.sock_opts);
+      this.sock.onopen = this._sock_opened;
+      this.sock.onmessage = this._sock_message;
+      return this.sock.onclose = this._sock_closed;
+    };
+
+    simperium.prototype._sock_opened = function() {
+      var name, _ref, _results;
+      this._sock_backoff = 3000;
+      this.connected = true;
+      this._sock_hb_timer = setTimeout(this._sock_hb_check, 20000);
+      _ref = this.buckets;
+      _results = [];
+      for (name in _ref) {
+        if (!__hasProp.call(_ref, name)) continue;
+        bucket = _ref[name];
+        if (bucket.started) {
+          _results.push(bucket.start());
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    simperium.prototype._sock_closed = function() {
+      var name, _ref;
+      this.connected = false;
+      _ref = this.buckets;
+      for (name in _ref) {
+        if (!__hasProp.call(_ref, name)) continue;
+        bucket = _ref[name];
+        bucket.authorized = false;
+      }
+      console.log("simperium: sock js closed");
+      if (this._sock_backoff < 4000) {
+        this._sock_backoff = this._sock_backoff + 1;
+      } else {
+        this._sock_backoff = 15000;
+      }
+      if (this._sock_hb_timer) {
+        clearTimeout(this._sock_hb_timer);
+        this._sock_hb_timer = null;
+      }
+      if (!this.stopped) {
+        return setTimeout(this._sock_connect, this._sock_backoff);
+      }
+    };
+
+    simperium.prototype._sock_hb_check = function() {
+      var delay;
+      delay = new Date().getTime() - this._sock_msg_time;
+      if (this.connected === false) {
+        return;
+      }
+      if (delay > 40000) {
+        console.log("simperium: force conn close");
+        this.sock.close();
+      } else if (delay > 15000) {
+        console.log("simperium: send hb " + this._sock_hb);
+        this.sock.send("h:" + this._sock_hb);
+      }
+      return this._sock_hb_timer = setTimeout(this._sock_hb_check, 20000);
+    };
+
+    simperium.prototype._sock_message = function(e) {
+      var chan, data, error, sep;
+      this._sock_msg_time = new Date().getTime();
+      data = e.data;
+      sep = data.indexOf(":");
+      chan = null;
+      if (sep === 1 && data.charAt(0) === 'h') {
+        this._sock_hb = data.substr(2);
+        return;
+      }
+      try {
+        chan = parseInt(data.substr(0, sep));
+        data = data.substr(sep + 1);
+      } catch (_error) {
+        error = _error;
+        chan = null;
+      }
+      if (chan === null) {
+        return;
+      }
+      if (!(chan in this.buckets)) {
+        return;
+      }
+      return this.buckets[chan].on_data(data);
+    };
+
+    simperium.prototype._captureCursor = function(element) {};
+
+    simperium.prototype._captureCursor = function(element) {
+        if ('activeElement' in element && !element.activeElement) {
+            // Safari specific code.
+            // Restoring a cursor in an unfocused element causes the focus to jump.
+            return null;
+        }
+        var padLength = this.dmp.Match_MaxBits / 2;    // Normally 16.
+        var text = element.value;
+        var cursor = {};
+        if ('selectionStart' in element) {    // W3
+            try {
+                var selectionStart = element.selectionStart;
+                var selectionEnd = element.selectionEnd;
+            } catch (e) {
+                // No cursor; the element may be "display:none".
+                return null;
+            }
+            cursor.startPrefix = text.substring(selectionStart - padLength, selectionStart);
+            cursor.startSuffix = text.substring(selectionStart, selectionStart + padLength);
+            cursor.startOffset = selectionStart;
+            cursor.collapsed = (selectionStart == selectionEnd);
+            if (!cursor.collapsed) {
+                cursor.endPrefix = text.substring(selectionEnd - padLength, selectionEnd);
+                cursor.endSuffix = text.substring(selectionEnd, selectionEnd + padLength);
+                cursor.endOffset = selectionEnd;
+            }
+        } else {    // IE
+            // Walk up the tree looking for this textarea's document node.
+            var doc = element;
+            while (doc.parentNode) {
+                doc = doc.parentNode;
+            }
+            if (!doc.selection || !doc.selection.createRange) {
+                // Not IE?
+                return null;
+            }
+            var range = doc.selection.createRange();
+            if (range.parentElement() != element) {
+                // Cursor not in this textarea.
+                return null;
+            }
+            var newRange = doc.body.createTextRange();
+
+            cursor.collapsed = (range.text == '');
+            newRange.moveToElementText(element);
+            if (!cursor.collapsed) {
+                newRange.setEndPoint('EndToEnd', range);
+                cursor.endPrefix = newRange.text;
+                cursor.endOffset = cursor.endPrefix.length;
+                cursor.endPrefix = cursor.endPrefix.substring(cursor.endPrefix.length - padLength);
+            }
+            newRange.setEndPoint('EndToStart', range);
+            cursor.startPrefix = newRange.text;
+            cursor.startOffset = cursor.startPrefix.length;
+            cursor.startPrefix = cursor.startPrefix.substring(cursor.startPrefix.length - padLength);
+
+            newRange.moveToElementText(element);
+            newRange.setEndPoint('StartToStart', range);
+            cursor.startSuffix = newRange.text.substring(0, padLength);
+            if (!cursor.collapsed) {
+                newRange.setEndPoint('StartToEnd', range);
+                cursor.endSuffix = newRange.text.substring(0, padLength);
+            }
+        }
+
+        // Record scrollbar locations
+        if ('scrollTop' in element) {
+            cursor.scrollTop = element.scrollTop / element.scrollHeight;
+            cursor.scrollLeft = element.scrollLeft / element.scrollWidth;
+        }
+
+        // alert(cursor.startPrefix + '|' + cursor.startSuffix + ' ' +
+        //         cursor.startOffset + '\n' + cursor.endPrefix + '|' +
+        //         cursor.endSuffix + ' ' + cursor.endOffset + '\n' +
+        //         cursor.scrollTop + ' x ' + cursor.scrollLeft);
+        return cursor;
+    };
+
+    simperium.prototype._restoreCursor = function(element, cursor) {};
+
+    simperium.prototype._restoreCursor = function(element, cursor) {
+        // Set some constants which tweak the matching behaviour.
+        // Maximum distance to search from expected location.
+        this.dmp.Match_Distance = 1000;
+        // At what point is no match declared (0.0 = perfection, 1.0 = very loose)
+        this.dmp.Match_Threshold = 0.9;
+
+        var padLength = this.dmp.Match_MaxBits / 2;    // Normally 16.
+        var newText = element.value;
+
+        // Find the start of the selection in the new text.
+        var pattern1 = cursor.startPrefix + cursor.startSuffix;
+        var pattern2, diff;
+        var cursorStartPoint = this.dmp.match_main(newText, pattern1,
+                cursor.startOffset - padLength);
+        if (cursorStartPoint !== null) {
+            pattern2 = newText.substring(cursorStartPoint,
+                                                                     cursorStartPoint + pattern1.length);
+            //alert(pattern1 + '\nvs\n' + pattern2);
+            // Run a diff to get a framework of equivalent indicies.
+            diff = this.dmp.diff_main(pattern1, pattern2, false);
+            cursorStartPoint += this.dmp.diff_xIndex(diff, cursor.startPrefix.length);
+        }
+
+        var cursorEndPoint = null;
+        if (!cursor.collapsed) {
+            // Find the end of the selection in the new text.
+            pattern1 = cursor.endPrefix + cursor.endSuffix;
+            cursorEndPoint = this.dmp.match_main(newText, pattern1,
+                    cursor.endOffset - padLength);
+            if (cursorEndPoint !== null) {
+                pattern2 = newText.substring(cursorEndPoint,
+                                                                         cursorEndPoint + pattern1.length);
+                //alert(pattern1 + '\nvs\n' + pattern2);
+                // Run a diff to get a framework of equivalent indicies.
+                diff = this.dmp.diff_main(pattern1, pattern2, false);
+                cursorEndPoint += this.dmp.diff_xIndex(diff, cursor.endPrefix.length);
+            }
+        }
+
+        // Deal with loose ends
+        if (cursorStartPoint === null && cursorEndPoint !== null) {
+            // Lost the start point of the selection, but we have the end point.
+            // Collapse to end point.
+            cursorStartPoint = cursorEndPoint;
+        } else if (cursorStartPoint === null && cursorEndPoint === null) {
+            // Lost both start and end points.
+            // Jump to the offset of start.
+            cursorStartPoint = cursor.startOffset;
+        }
+        if (cursorEndPoint === null) {
+            // End not known, collapse to start.
+            cursorEndPoint = cursorStartPoint;
+        }
+
+        // Restore selection.
+        if ('selectionStart' in element) {    // W3
+            element.selectionStart = cursorStartPoint;
+            element.selectionEnd = cursorEndPoint;
+        } else {    // IE
+            // Walk up the tree looking for this textarea's document node.
+            var doc = element;
+            while (doc.parentNode) {
+                doc = doc.parentNode;
+            }
+            if (!doc.selection || !doc.selection.createRange) {
+                // Not IE?
+                return;
+            }
+            // IE's TextRange.move functions treat '\r\n' as one character.
+            var snippet = element.value.substring(0, cursorStartPoint);
+            var ieStartPoint = snippet.replace(/\r\n/g, '\n').length;
+
+            var newRange = doc.body.createTextRange();
+            newRange.moveToElementText(element);
+            newRange.collapse(true);
+            newRange.moveStart('character', ieStartPoint);
+            if (!cursor.collapsed) {
+                snippet = element.value.substring(cursorStartPoint, cursorEndPoint);
+                var ieMidLength = snippet.replace(/\r\n/g, '\n').length;
+                newRange.moveEnd('character', ieMidLength);
+            }
+            newRange.select();
+        }
+
+        // Restore scrollbar locations
+        if ('scrollTop' in cursor) {
+            element.scrollTop = cursor.scrollTop * element.scrollHeight;
+            element.scrollLeft = cursor.scrollLeft * element.scrollWidth;
+        }
+    };
+
+    return simperium;
+
+  })();
+
+  window['Simperium'] = simperium;
+
+  bucket.prototype['on'] = bucket.prototype.on;
+
+  bucket.prototype['start'] = bucket.prototype.start;
+
+  bucket.prototype['load_versions'] = bucket.prototype.load_versions;
+
+  bucket.prototype['pending'] = bucket.prototype.pending;
+
+  simperium.prototype['on'] = simperium.prototype.on;
+
+  simperium.prototype['start'] = simperium.prototype.start;
+
+  simperium.prototype['bucket'] = simperium.prototype.bucket;
+
+  simperium.prototype['synced'] = simperium.prototype.synced;
+
+}).call(this);
