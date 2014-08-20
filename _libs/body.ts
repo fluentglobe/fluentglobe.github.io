@@ -14,6 +14,16 @@
 /// <reference path="../../libs/book-reader/slider.ts"/>
 /// <reference path="../../libs/book-reader/audio.ts"/>
 
+//TODO generalise for multiple countries
+
+Resolver("page").set("map.class.state.stress-free-feature","stress-free-feature-enabled");
+Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
+
+Resolver("buckets::user.features").on("change",function(ev) {
+    Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
+
+});
+
 function enhance_book(el,role,config) {
 
 	var	book = new reader.Book(el,config);
