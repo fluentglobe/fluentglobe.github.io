@@ -18,7 +18,6 @@
     "angular-socialshare": "*",
     "swiper-3d-flow": "~2.1.0",
     "angular-route": "~1.2.21",
-    "base64": "~0.3.0",
-    "impress.js": "~0.5.3"
+    "base64": "~0.3.0"
   }
 }

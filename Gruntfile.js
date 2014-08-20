@@ -37,7 +37,7 @@ module.exports = function(grunt) {
           'components/angular-toggle-switch/angular-toggle-switch.js',
           'components/tv4/tv4.js',
           '../libs/html5-audio-read-along/read-along.js',
-          'components/impress.js/js/impress.js',
+          '../libs/impress.js/js/impress.js',
           '_libs/angular-mods.js'
         ],
         dest: 'js/angular-mods.js'
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
             'components/angular-toggle-switch/angular-toggle-switch.min.js',
             'components/tv4/tv4.js',
             '../libs/html5-audio-read-along/read-along.js',
-            'components/impress.js/js/impress.js',
+            '../libs/impress.js/js/impress.js',
             '_libs/angular-mods.js'
           ]
         }
