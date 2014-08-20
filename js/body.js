@@ -928,12 +928,22 @@ var account;
     var buckets = Resolver("buckets");
     buckets.getSimperium = function () {
         if (this.simperium == undefined) {
-            var access_token = session('access_token');
-            if (!access_token)
+            var access_token = session('access_token'), username = session().username;
+            if (!access_token || !username)
                 return null;
-            this.simperium = new Simperium(this.app_id, { token: access_token });
+            this.simperium = new Simperium(this.app_id, { token: access_token, username: username });
         }
         return this.simperium;
+    };
+
+    buckets.stopSimperium = function () {
+        if (this.simperium)
+            this.simperium.stop();
+    };
+
+    buckets.startSimperium = function () {
+        if (this.simperium)
+            this.simperium.start();
     };
 
     buckets.stop = function () {
@@ -952,6 +962,10 @@ var account;
 
         if (this.get(bn, "null") == null) {
             var bucket = this.set(bn, simperium.bucket(name));
+            bucket.on('notify_init', function (id, data) {
+                console.info("init bucket", name, "with", id, "=", data);
+                buckets.set([name, id], data);
+            });
             bucket.on('notify', function (id, data) {
                 buckets.set([name, id], data);
             });
@@ -963,13 +977,14 @@ var account;
                     Resolver("document").set("essential.session.access_token", null);
 
                     if (session("username"))
-                        buckets.authenticate(session("username"), buckets.lastPassword || '-', {});
+                        buckets.authenticate(session("username"), buckets.lastPassword || '-', this, {});
                     return;
                 }
 
                 console.log("got error:", errortype);
             });
             bucket.on('ready', function () {
+                console.info("Bucket", name, "ready.");
                 var names = buckets(name);
 
                 if (buckets.created)
@@ -995,9 +1010,11 @@ var account;
     };
 
     buckets.resumeSession = function () {
-        var access_token = session().access_token;
-        if (access_token) {
-            this.simperium = new Simperium(this.app_id, { token: access_token });
+        var access_token = session().access_token, username = session().username;
+        if (access_token && username) {
+            this.simperium = new Simperium(this.app_id, { token: access_token, username: username });
+
+            var user = this.getBucket("user");
         }
     };
 
@@ -1142,13 +1159,6 @@ var account;
         if (this.state.authenticated) {
             if (buckets.simperium == null) {
                 var bucket = buckets.getBucket("user", function (name, bucket) {
-                    var features = session().enable_features;
-                    if (typeof features == "object") {
-                        for (var n in features) {
-                            bucket.update("feature " + n, features[n]);
-                        }
-                        session.set("enable_features", null);
-                    }
                 });
             }
         }
@@ -1157,6 +1167,7 @@ var account;
             buckets.clear();
             buckets.stop();
             this.forgetUser();
+            session.set("access_token", null);
         }
     };
 
@@ -1175,7 +1186,12 @@ var account;
     };
 
     account.BookAccess.prototype.enableFeatures = function (features) {
-        session.set("enable_features", features);
+        if (typeof features == "object") {
+            for (var n in features) {
+                buckets.set(["user", "feature " + n], features[n]);
+                buckets.getBucket("user").update("feature " + n);
+            }
+        }
     };
 
     account.BookAccess.prototype.applyPhone = function () {
