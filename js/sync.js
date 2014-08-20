@@ -511,6 +511,7 @@
       console.log("" + this.name + ": index loaded, initialized: " + this.initialized);
       if (this.initialized === false) {
         this.cb_r();
+        console.log("" + this.name + ": intialized and ready called");
       }
       this.initialized = true;
       console.log("" + this.name + ": retrieve changes from index loaded");
@@ -1084,19 +1085,19 @@
       return b;
     };
 
-    simperium.prototype.on = function(bucket, event, callback) {
-      return this.buckets[bucket].on(event, callback);
+    simperium.prototype.on = function(name, event, callback) {
+      return this.buckets[name].on(event, callback);
     };
 
     simperium.prototype.start = function() {
-      var name, _ref, _results;
+      var b, name, _ref, _results;
       this.stopped = false;
       _ref = this.buckets;
       _results = [];
       for (name in _ref) {
         if (!__hasProp.call(_ref, name)) continue;
-        bucket = _ref[name];
-        _results.push(bucket.start());
+        b = _ref[name];
+        _results.push(b.start());
       }
       return _results;
     };
@@ -1113,12 +1114,12 @@
     };
 
     simperium.prototype.synced = function() {
-      var name, _ref;
+      var b, name, _ref;
       _ref = this.buckets;
       for (name in _ref) {
         if (!__hasProp.call(_ref, name)) continue;
-        bucket = _ref[name];
-        if (bucket.pending().length > 0) {
+        b = _ref[name];
+        if (b.pending().length > 0) {
           return false;
         }
       }
@@ -1136,7 +1137,7 @@
     };
 
     simperium.prototype._sock_opened = function() {
-      var name, _ref, _results;
+      var b, name, _ref, _results;
       this._sock_backoff = 3000;
       this.connected = true;
       this._sock_hb_timer = setTimeout(this._sock_hb_check, 20000);
@@ -1144,9 +1145,9 @@
       _results = [];
       for (name in _ref) {
         if (!__hasProp.call(_ref, name)) continue;
-        bucket = _ref[name];
-        if (bucket.started) {
-          _results.push(bucket.start());
+        b = _ref[name];
+        if (b.started) {
+          _results.push(b.start());
         } else {
           _results.push(void 0);
         }
@@ -1155,13 +1156,13 @@
     };
 
     simperium.prototype._sock_closed = function() {
-      var name, _ref;
+      var b, name, _ref;
       this.connected = false;
       _ref = this.buckets;
       for (name in _ref) {
         if (!__hasProp.call(_ref, name)) continue;
-        bucket = _ref[name];
-        bucket.authorized = false;
+        b = _ref[name];
+        b.authorized = false;
       }
       console.log("simperium: sock js closed");
       if (this._sock_backoff < 4000) {

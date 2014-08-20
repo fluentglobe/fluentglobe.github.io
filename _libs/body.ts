@@ -109,8 +109,9 @@ if (window["angular"]) {
 
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(path,action) {
     Resolver("document").set("essential.state.authenticated",false);
-    Resolver("page").set("state.expanded",false);
-    // BookAccess().forgetUser();
+    Resolver("page").set("state.authenticated",false); //TODO move to new flag
+    Resolver("buckets").logOut();
+    Resolver("page").set("state.expanded",false); //TODO collapse the menu I'm in
     //TODO reset signup form
 
         document.essential.router.clearHash();

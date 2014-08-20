@@ -953,6 +953,13 @@ var account;
         }
     };
 
+    buckets.hasReadyUserBucket = function () {
+        var bn = name + "Bucket", bucket = this.get(bn, "null");
+        if (bucket == null)
+            return false;
+        return bucket.initialized;
+    };
+
     buckets.getBucket = function (name, onReady) {
         var bn = name + "Bucket", simperium = this.getSimperium();
 
@@ -964,6 +971,7 @@ var account;
             var bucket = this.set(bn, simperium.bucket(name));
             bucket.on('notify_init', function (id, data) {
                 console.info("init bucket", name, "with", id, "=", data);
+                buckets.declare(name, {});
                 buckets.set([name, id], data);
             });
             bucket.on('notify', function (id, data) {
@@ -987,7 +995,7 @@ var account;
                 console.info("Bucket", name, "ready.");
                 var names = buckets(name);
 
-                if (buckets.created)
+                if (buckets.created || name == "user")
                     for (var n in names)
                         bucket.update(n);
                 if (onReady)
@@ -1012,8 +1020,6 @@ var account;
     buckets.resumeSession = function () {
         var access_token = session().access_token, username = session().username;
         if (access_token && username) {
-            this.simperium = new Simperium(this.app_id, { token: access_token, username: username });
-
             var user = this.getBucket("user");
         }
     };
@@ -1036,6 +1042,9 @@ var account;
             session.set("access_token", data.access_token);
             session.set("password", buckets.lastPassword == "-");
             state.set("authenticated", true);
+            Resolver("page").set("state.authenticated", true);
+
+            var bucket = buckets.getBucket("user");
 
             if (opts.success)
                 opts.success.call(that, data, opts);
@@ -1077,6 +1086,22 @@ var account;
         });
     };
 
+    buckets.forgetUser = function () {
+        session.set("access_token", null);
+        setTimeout(function () {
+            if (buckets.get("user", null))
+                basic.set({});
+            session.set("username", "");
+            session.set("password", false);
+        }, 0);
+    };
+
+    buckets.logOut = function () {
+        this.stop();
+        this.forgetUser();
+        this.clear();
+    };
+
     account.OUR_CITIES = {
         "zurich": { code: "zurich", name: "Zürich" }
     };
@@ -1098,10 +1123,6 @@ var account;
         if (this.session.username)
             basic.set("email", this.session.username);
         this.state = state();
-        state.on("change", this, function (ev) {
-            if (ev.binding || ev.symbol == "authenticated")
-                ev.data.updateAuthenticated();
-        });
         this.city = null;
         this.message = null;
 
@@ -1138,6 +1159,9 @@ var account;
             unknown: function (err, tp, code) {
                 buckets.authenticate(_user.email, password, this, {
                     create: true,
+                    success: function () {
+                        console.info("Created user", _user.email);
+                    },
                     error: function (err, tp, code) {
                         switch (err.status) {
                             case 400:
@@ -1155,43 +1179,16 @@ var account;
         });
     };
 
-    account.BookAccess.prototype.updateAuthenticated = function () {
-        if (this.state.authenticated) {
-            if (buckets.simperium == null) {
-                var bucket = buckets.getBucket("user", function (name, bucket) {
-                });
-            }
-        }
-
-        if (!this.state.authenticated) {
-            buckets.clear();
-            buckets.stop();
-            this.forgetUser();
-            session.set("access_token", null);
-        }
-    };
-
-    account.BookAccess.prototype.forgetUser = function () {
-        setTimeout(function () {
-            if (buckets.get("user", null))
-                basic.set({});
-            session.set("username", "");
-            session.set("password", false);
-        }, 0);
-    };
-
     account.BookAccess.prototype.iLiveIn = function (city) {
         if (account.OUR_CITIES[city])
             this.city = account.OUR_CITIES[city];
     };
 
     account.BookAccess.prototype.enableFeatures = function (features) {
-        if (typeof features == "object") {
-            for (var n in features) {
-                buckets.set(["user", "feature " + n], features[n]);
-                buckets.getBucket("user").update("feature " + n);
-            }
-        }
+        buckets.set("user.features", features);
+
+        if (buckets.hasReadyUserBucket())
+            buckets.getBucket("user").update("features");
     };
 
     account.BookAccess.prototype.applyPhone = function () {
@@ -1708,6 +1705,8 @@ if (window["angular"]) {
 
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (path, action) {
     Resolver("document").set("essential.state.authenticated", false);
+    Resolver("page").set("state.authenticated", false);
+    Resolver("buckets").logOut();
     Resolver("page").set("state.expanded", false);
 
     document.essential.router.clearHash();
