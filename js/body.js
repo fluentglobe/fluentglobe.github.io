@@ -1706,9 +1706,44 @@ if (window["angular"]) {
     fluentApp.directive('fgCard', $FgCardDirective);
 }
 
-document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (ev) {
+document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (path, action) {
     Resolver("document").set("essential.state.authenticated", false);
     Resolver("page").set("state.expanded", false);
 
+    document.essential.router.clearHash();
+
+    return false;
+});
+
+document.essential.router.manage({ href: "/present_for" }, "essential.resources", function (path, action) {
+    var parts = path.split("&"), present = parts[0].split("=");
+
+    if (parts.length > 1 || present.length > 1) {
+        Resolver("page").set("state.expanded", false);
+
+        var access = account.BookAccess();
+
+        for (var i = 0, part; part = parts[i]; ++i) {
+            var bits = part.split("="), name = bits.shift(), value = bits.join("=");
+            switch (name) {
+                case "/present_for":
+                    if (value && value.indexOf("@") > 0) {
+                        access.user.email = present[1];
+                        access.startSignUp();
+                    } else {
+                    }
+                    break;
+                case "enable":
+                    try  {
+                        var decoded = JSON.parse(atob(value));
+                        access.enableFeatures(decoded);
+                    } catch (ex) {
+                    }
+                    break;
+            }
+        }
+
+        document.essential.router.clearHash();
+    }
     return false;
 });

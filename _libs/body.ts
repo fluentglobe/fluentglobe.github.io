@@ -107,12 +107,56 @@ if (window["angular"]) {
 
 }
 
-document.essential.router.manage({ href:"/log-out" },"essential.resources",function(ev) {
+document.essential.router.manage({ href:"/log-out" },"essential.resources",function(path,action) {
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.expanded",false);
     // BookAccess().forgetUser();
     //TODO reset signup form
 
+        document.essential.router.clearHash();
+
+    return false;
+});
+
+document.essential.router.manage({ href:"/present_for"}, "essential.resources", function(path,action) {
+    var parts = path.split("&"), present = parts[0].split("=");
+
+    // ignore if clearing hash
+    if (parts.length>1 || present.length>1) {
+        // Resolver("document").set("essential.state.authenticated",false);
+
+        Resolver("page").set("state.expanded",false);
+
+        var access = account.BookAccess();
+
+        for(var i=0, part; part = parts[i]; ++i) {
+            var bits = part.split("="), name = bits.shift(), value = bits.join("=");
+            switch(name) {
+                case "/present_for":
+                    if (value && value.indexOf("@") > 0) {
+                        //TODO verify as email
+                        access.user.email = present[1];
+                        access.startSignUp();
+                    } else {
+                        //TODO pop up a login form
+                        // save the parts
+                    }
+                    break;
+                case "enable":
+                    try {
+                        // {"stress-free-switzerland":"123456"}
+                        // eyJzdHJlc3MtZnJlZS1zd2l0emVybGFuZCI6IjEyMzQ1NiJ9
+                        var decoded = JSON.parse(atob(value));
+                        access.enableFeatures(decoded);
+                    } catch(ex) {}
+                    break;
+            }
+        }
+
+        //TODO if authenticated, change user auth
+
+        document.essential.router.clearHash();
+    }
     return false;
 });
 
