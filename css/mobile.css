@@ -9327,3 +9327,17 @@ main article section.first {
   width: 100%;
   height: 320px;
 }
+.fallback-message {
+  display: none;
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  margin-left: -150px;
+  width: 300px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 3px 3px 10px #000;
+}
+.impress-not-supported .fallback-message {
+  display: inherit;
+}
