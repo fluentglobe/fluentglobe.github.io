@@ -1,6 +1,7 @@
 /// <reference path="../../libs/DefinitelyTyped/essentialjs/essential.d.ts"/>
 /// <reference path="../../libs/DefinitelyTyped/jquery/jquery.d.ts"/>
 /// <reference path="../../libs/DefinitelyTyped/angularjs/angular.d.ts"/>
+/// <reference path="../../libs/DefinitelyTyped/impress/impress.d.ts"/>
 
 /// <reference path="head.d.ts"/>
 /// <reference path="../../libs/book-reader/fluent-app-def.ts"/>
@@ -116,6 +117,13 @@ if (window["angular"]) {
     fluentApp.directive('fgCard', $FgCardDirective);
 
 }
+
+document.essential.router.manage({ href:"/stress-free-presentation"}, "essential.resources", function(path,action) {
+
+    impress('stress-free-presentation').init();
+
+    return false;
+});
 
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(path,action) {
     Resolver("document").set("essential.state.authenticated",false);

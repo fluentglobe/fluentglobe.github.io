@@ -1721,6 +1721,12 @@ if (window["angular"]) {
     fluentApp.directive('fgCard', $FgCardDirective);
 }
 
+document.essential.router.manage({ href: "/stress-free-presentation" }, "essential.resources", function (path, action) {
+    impress('stress-free-presentation').init();
+
+    return false;
+});
+
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (path, action) {
     Resolver("document").set("essential.state.authenticated", false);
     Resolver("page").set("state.authenticated", false);
