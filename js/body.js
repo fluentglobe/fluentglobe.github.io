@@ -1087,6 +1087,8 @@ var account;
     };
 
     buckets.forgetUser = function () {
+        this.set("user.basic", {});
+        this.set("user.features", {});
         session.set("access_token", null);
         setTimeout(function () {
             if (buckets.get("user", null))
