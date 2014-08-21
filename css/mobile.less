@@ -788,9 +788,16 @@ main article section.first {
     background-color: white;
 }
 
+.show-when-stress-free-feature-enabled {
+    display:none;
+}
+
 .stress-free-feature-enabled {
     .hide-when-stress-free-feature-enabled {
         display:none;
+    }
+    .show-when-stress-free-feature-enabled {
+        display:inherit;
     }
 }
 

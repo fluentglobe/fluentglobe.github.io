@@ -1619,7 +1619,8 @@ Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature
 Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
 
 Resolver("buckets::user.features").on("change", function (ev) {
-    Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
+    var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland", "null");
+    Resolver("page").set("state.stress-free-feature", enabled);
 });
 
 function enhance_book(el, role, config) {
