@@ -202,6 +202,8 @@ var fluentbook;
         this.stateful.set("map.class.state.subscribed", "state-subscribed");
         this.stateful.set("state.subscribed", false);
 
+        this.inIframeSubmit = false;
+
         var strategyRole = el.stateful("strategy.role", "undefined") || effectiveRole;
         for (var i = 0, node; node = el.elements[i]; ++i) {
             if (node.accessor == undefined) {
@@ -311,13 +313,18 @@ var fluentbook;
         ev.preventDefault();
     };
 
-    function onIframeLoad(ev) {
+    EnhancedForm.prototype.onIframeLoad = function (ev) {
         ev = MutableEvent(ev);
-        if (this.showSubmitResult) {
-            ev.target.stateful.set("state.hidden", false);
+
+        if (this.inIframeSubmit) {
+            if (this.showSubmitResult) {
+                ev.target.stateful.set("state.hidden", false);
+            }
+            this.stateful.set("state.subscribed", true);
+
+            this.inIframeSubmit = false;
         }
-        this.stateful.set("state.subscribed", true);
-    }
+    };
 
     EnhancedForm.prototype.planIframeSubmit = function (el) {
         this.iframeId = el.target || "form-target-" + (newIframeId++);
@@ -335,7 +342,7 @@ var fluentbook;
             StatefulResolver(eFrame, true);
         }
         this.targetIframe.stateful.set("state.hidden", true);
-        this.targetIframe.onload = onIframeLoad.bind(this);
+        this.targetIframe.onload = this.onIframeLoad.bind(this);
 
         el.target = this.iframeId;
         this.actionParts.protocol = this.actionParts.protocol.replace("client+http", "http");
@@ -343,6 +350,7 @@ var fluentbook;
     };
 
     EnhancedForm.prototype.iframeSubmit = function (ev, el) {
+        this.inIframeSubmit = true;
         var action = buildURI(this.actionParts);
         el.setAttribute("action", action);
         el.__builtinSubmit();

@@ -108,6 +108,8 @@ function EnhancedForm(el,config) {
 	this.stateful.set("map.class.state.subscribed","state-subscribed")
 	this.stateful.set("state.subscribed",false); // for clarity
 
+	this.inIframeSubmit = false;
+
 	// Strategy determines if element should be stateful and the effective role
 	var strategyRole = el.stateful("strategy.role","undefined") || effectiveRole;
 	for(var i=0,node; node = el.elements[i]; ++i) {
@@ -233,13 +235,20 @@ EnhancedForm.prototype.jsonSubmit = function(ev,el) {
 	ev.preventDefault();
 };
 
-function onIframeLoad(ev) {
+EnhancedForm.prototype.onIframeLoad = function(ev) {
 	ev = MutableEvent(ev);
-	if (this.showSubmitResult) {
-		ev.target.stateful.set("state.hidden",false);
-		//TODO pop it up
+
+	// IE/FF does load event on blank iframes, and no way to identify from attributes
+	if (this.inIframeSubmit) {
+
+		if (this.showSubmitResult) {
+			ev.target.stateful.set("state.hidden",false);
+			//TODO pop it up
+		}
+		this.stateful.set("state.subscribed",true);
+
+		this.inIframeSubmit = false;
 	}
-	this.stateful.set("state.subscribed",true);
 }
 
 EnhancedForm.prototype.planIframeSubmit = function(el) {
@@ -260,7 +269,7 @@ EnhancedForm.prototype.planIframeSubmit = function(el) {
 		StatefulResolver(eFrame,true);		
 	}
 	this.targetIframe.stateful.set("state.hidden",true);
-	this.targetIframe.onload = onIframeLoad.bind(this);
+	this.targetIframe.onload = this.onIframeLoad.bind(this);
 
 	el.target = this.iframeId;
 	this.actionParts.protocol = this.actionParts.protocol.replace("client+http","http");
@@ -270,6 +279,7 @@ EnhancedForm.prototype.planIframeSubmit = function(el) {
 EnhancedForm.prototype.iframeSubmit = function(ev,el) {
 	// var enctype = this.getAttribute("enctype");
 
+	this.inIframeSubmit = true;
 	var action = buildURI(this.actionParts);
 	el.setAttribute("action",action);
 	el.__builtinSubmit();
