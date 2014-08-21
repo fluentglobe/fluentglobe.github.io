@@ -2681,6 +2681,11 @@ html[lang=ch] body [lang=ar] {
 }
 .btn.tinted {
   background: #fb441b;
+  color: #444;
+  font-weight: bold;
+}
+.btn.tinted:hover {
+  color: white;
 }
 #intro {
   position: relative;
