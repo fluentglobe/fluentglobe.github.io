@@ -9241,6 +9241,12 @@ main article section.first {
 .stress-free-feature-enabled .show-when-stress-free-feature-enabled {
   display: inherit;
 }
+.show-when-impress-enabled {
+  display: none;
+}
+.impress-enabled .show-when-impress-enabled {
+  display: inherit;
+}
 .kat-henry-intro {
   background-color: white;
   background-size: 100% auto;
