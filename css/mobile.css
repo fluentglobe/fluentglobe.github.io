@@ -9247,6 +9247,21 @@ main article section.first {
 .impress-enabled .show-when-impress-enabled {
   display: inherit;
 }
+.impress-enabled  main.fluid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.impress-enabled  main.fluid > header {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  background-size: auto 100%;
+  background-image: url(/images/Kat-Henry-86-field.jpg);
+}
 .kat-henry-intro {
   background-color: white;
   background-size: 100% auto;
