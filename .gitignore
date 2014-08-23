@@ -21,5 +21,7 @@ _site/
 /components/swiper/
 /components/swiper-3d-flow/
 /components/swiper-smooth-progress/
+/components/base64/
+/components/impress.js/
 
 /node_modules/
