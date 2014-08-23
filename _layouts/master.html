@@ -110,8 +110,8 @@ base-body-class:
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>{% endif %}
 
-<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
-{% if page.fresh-button %}
+{% if page.fresh-button or page.fresh-form %}<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
+{% endif %}{% if page.fresh-button %}
 <script type="text/javascript">
     FreshWidget.init("", {"queryString": "&widgetType=popup", "widgetType": "popup", "buttonText": "Help", "buttonColor": "white", "buttonBg": "#E73A00", "backgroundImage": "", "alignment": "3", "offset": "20px", "formHeight": "450px", "url": "http://help.fluentglobe.com"} );
 </script>{% endif %}
