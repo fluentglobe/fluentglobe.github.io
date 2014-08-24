@@ -23,5 +23,6 @@ _site/
 /components/swiper-smooth-progress/
 /components/base64/
 /components/impress.js/
+/components/SoundJS/
 
 /node_modules/

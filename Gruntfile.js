@@ -36,6 +36,7 @@ module.exports = function(grunt) {
         src: [
           'components/angular-toggle-switch/angular-toggle-switch.js',
           'components/tv4/tv4.js',
+          'components/SoundJS/lib/soundjs-0.5.2.combined.js',
           '../libs/html5-audio-read-along/read-along.js',
           '../libs/impress.js/js/impress.js',
           '_libs/angular-mods.js'
@@ -91,6 +92,7 @@ module.exports = function(grunt) {
           'js/angular-mods.min.js': [
             'components/angular-toggle-switch/angular-toggle-switch.min.js',
             'components/tv4/tv4.js',
+            'components/SoundJS/lib/soundjs-0.5.2.combined.js',
             '../libs/html5-audio-read-along/read-along.js',
             '../libs/impress.js/js/impress.js',
             '_libs/angular-mods.js'
