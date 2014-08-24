@@ -274,6 +274,26 @@ module.exports = function(grunt) {
     //   }
     // },
 
+    transpile: {
+      immerse: {
+        type: "globals",
+        // cwd: '../libs/immerse.js/',
+        // expand: true,
+
+        files: {
+          'js/immerse.js' : [ '../libs/immerse.js/index.js' ]
+        }
+      }
+    },
+
+    traceur: {
+      // immerse: {
+      //   cwd: '../libs/impress.js/',
+      //   src: [ 'index.js' ],
+      //   dest: 'js/impress.js'
+      // }
+    },
+
     typescript: {
       body: {
         src: ['_libs/body.ts'],
@@ -310,6 +330,10 @@ module.exports = function(grunt) {
       //   files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
       //   tasks: 'sass:dev'
       // },
+      transpile: {
+        files: [ '../libs/immerse.js/**/*.js' ],
+        tasks: ['transpile']
+      },
       typescript: {
         files: ['Gruntfile.js','**/*.ts','../libs/book-reader/*.ts'],
         tasks: ['typescript','jekyll:dev']
@@ -484,15 +508,18 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-typescript');
+  // grunt.loadNpmTasks('grunt-traceur');
+  grunt.loadNpmTasks('grunt-es6-module-transpiler');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-responsive-videos');
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy','uglify',
+    'browserify','copy',/*'traceur',*/'transpile',
     'less:dev','less:dist',
     'typescript',
     'concat:essential','concat:mods', 'coffee:serverDev', 'uglify:server','concat:serverDev','jekyll:dev',
+    'uglify',
     'concurrent']
     );
   grunt.registerTask('install', [
@@ -500,8 +527,8 @@ module.exports = function(grunt) {
     'modernizr','copy:mediaelement','exec:ffmpeg'
     ]);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
-    'qunit','coffee','concat',
-    'uglify','typescript','jekyll:dist' //TODO should there be a dist typescript build
+    'qunit','coffee','concat','typescript',/*'traceur',*/'transpile',
+    'uglify','jekyll:dist' //TODO should there be a dist typescript build
     ]);
   grunt.registerTask('serve', ['jekyll:serve']);
 };
