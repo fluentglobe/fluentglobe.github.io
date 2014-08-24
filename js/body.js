@@ -979,7 +979,9 @@ var account;
             var bucket = this.set(bn, simperium.bucket(name));
             bucket.on('notify_init', function (id, data) {
                 console.info("init bucket", name, "with", id, "=", data);
-                buckets.declare(name, {});
+
+                if (buckets(name) == null)
+                    buckets.set(name, {});
                 buckets.set([name, id], data);
             });
             bucket.on('notify', function (id, data) {
@@ -1195,6 +1197,7 @@ var account;
     };
 
     account.BookAccess.prototype.enableFeatures = function (features) {
+        buckets.declare("user.features", {});
         buckets.reference("user.features").mixin(features);
 
         if (buckets.hasReadyUserBucket())
