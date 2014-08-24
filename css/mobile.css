@@ -9314,3 +9314,13 @@ main article section.first {
 .impress-not-supported .fallback-message {
   display: inherit;
 }
+#sfpch_hype_container {
+  position: absolute;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  margin-top: -468px;
+  margin-left: -468px;
+  width: 936px;
+  height: 936px;
+}
