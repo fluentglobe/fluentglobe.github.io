@@ -1663,6 +1663,127 @@ Resolver("document").set("essential.handlers.discard.slider", function (el, role
         instance.destroy(el);
 });
 
+createjs.Sound.alternateExtensions = ["ogg", "mp3"];
+
+function spokenLoadHandler(event) {
+    var spoken = SpokenWord.prototype.known[event.id];
+    if (spoken && spoken.playOnLoad)
+        spoken.play();
+}
+
+function SpokenWord(name, conf) {
+    this.name = name;
+    this.types = conf;
+    this.known[name] = this;
+}
+SpokenWord.prototype.known = {};
+SpokenWord.prototype.capabilities = createjs.Sound.getCapabilities();
+
+SpokenWord.prototype._prepareLoad = function () {
+    if (this.loadHandler)
+        return;
+
+    SpokenWord.prototype.loadHandler = createjs.Sound.addEventListener("fileload", spokenLoadHandler);
+};
+
+SpokenWord.prototype.load = function () {
+    if (this.registered)
+        return;
+
+    this._prepareLoad();
+
+    var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = "/assets/7766449900/" + fileName;
+    this.registered = createjs.Sound.registerSound(path, this.name, 1);
+};
+
+SpokenWord.prototype.unload = function () {
+    if (!this.registered)
+        return;
+
+    this.instance = null;
+    createjs.Sound.removeSound(this.name);
+};
+
+SpokenWord.prototype.completed = function (event) {
+};
+
+SpokenWord.prototype.play = function () {
+    if (this.instance) {
+        this.instance.resume();
+        return;
+    }
+
+    if (this.registered) {
+        this.playOnLoad = false;
+        this.instance = createjs.Sound.play(this.name);
+    } else {
+        this.playOnLoad = true;
+        this.load();
+    }
+};
+
+SpokenWord.prototype.pause = function () {
+    if (this.instance)
+        this.instance.pause();
+};
+
+SpokenWord.prototype.stop = function () {
+    if (!this.instance)
+        return;
+
+    this.instance.stop();
+};
+
+SpokenWord.prototype.togglePlay = function () {
+    if (this.instance)
+        this.play();
+    else
+        this.pause();
+};
+
+function registerSounds(map) {
+    this.spokenWords = this.spokenWords || {};
+    for (var n in map) {
+        this.spokenWords[n] = new SpokenWord(n, map[n]);
+    }
+}
+
+function hypeDocCallback(hypeDocument, element, event) {
+    hypeDocument.registerSounds = registerSounds;
+}
+
+if ("HYPE_eventListeners" in window === false) {
+    window["HYPE_eventListeners"] = Array();
+}
+window["HYPE_eventListeners"].push({ "type": "HypeDocumentLoad", "callback": hypeDocCallback });
+
+function AssetPresentation() {
+}
+
+AssetPresentation.prototype.applyFeature = function (feature) {
+    var path = "/assets/7766449900/stress-free-hype.html";
+    $.ajax({
+        url: path,
+        data: this,
+        success: function (data, status, xhr) {
+        }
+    });
+};
+
+function enhance_presentation(el, role, config) {
+    var presentation = new AssetPresentation();
+    Resolver("buckets::user.features").on("bind change", function (ev) {
+        var feature = ev.base[config.feature];
+        if (feature) {
+            presentation.applyFeature(feature);
+        }
+    });
+
+    return presentation;
+}
+
+Resolver("document").set("essential.handlers.enhance.presentation", enhance_presentation);
+
 if (window["angular"]) {
     var fluentApp = angular.module('fluentApp', ["fluentAccount"]);
     fluentApp.config([
