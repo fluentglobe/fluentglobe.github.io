@@ -4,7 +4,8 @@ theme: main
 blog-link: no
 js-bundle: /js/body.js
 app-name: fluentApp
-body-class: impress-not-supported
+fresh-form: true
+no-body-class: impress-not-supported
 og-tags:
 - Language Learning
 - Learning German
@@ -19,20 +20,24 @@ og-images:
 
 <main class="with-lead-and-menu with-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
 
-  <header>
+  <header id="stress-free-presentation" role="presentation" data-role="'feature':'stress-free-switzerland'">
   {% include intro/understood-networked.html %}
-  {% include intro/fallback-message.html %}
+  <!-- {% include intro/fallback-message.html %} -->
+
+  <div id="sfpch_hype_container" style="position:relative;overflow:hidden;margin-top:-250px;width:100%;height:100%;max-height:750px">
+    <script type="text/javascript" charset="utf-8" src="/assets/7766449900/sfpch_hype_generated_script.js?65469"></script>
+  </div>
+
   </header>
 
-  <article id="stress-free-presentation">
+  <article>
   	<header id="more-to-tell">
       {% include site-follow.html %}
     </header>
 
-    <section class="first" style="text-align:center;">
+    <section class="first hide-when-stress-free-feature-enabled" style="text-align:center;">
     {% include stress-free/new-city.html %}
-
-        </section>
+    </section>
 
     <section class="second even kat-henry-intro on-dark-picture-bg hide-when-stress-free-feature-enabled" style="min-height:250px;padding: 35px;">
     {% include intro/henrik-and-katty-lead.html %}

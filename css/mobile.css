@@ -9268,6 +9268,16 @@ main article section.first {
   background-position: center right;
   background-image: url(/images/Kat-Henry-9.jpg);
 }
+.stress-free-feature-enabled .with-lead-and-menu {
+  height: 100%;
+}
+.stress-free-feature-enabled .with-lead-and-menu > header {
+  height: 100%;
+  background-color: white;
+  background-size: auto 100% ;
+  background-position: center right;
+  background-image: url(/images/Kat-Henry-86-field.jpg);
+}
 .pitch-audio {
   margin-top: -55px;
 }
