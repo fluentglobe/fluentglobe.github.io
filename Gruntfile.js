@@ -276,14 +276,22 @@ module.exports = function(grunt) {
 
     transpile: {
       immerse: {
-        type: "globals",
-        // cwd: '../libs/immerse.js/',
-        // expand: true,
+        cwd: '../libs/immerse.js/',
+        src: [ 'index.js' ],
+        dest: 'js/immerse.js'
+      },
 
-        files: {
-          'js/immerse.js' : [ '../libs/immerse.js/index.js' ]
-        }
-      }
+      // immerse_globals: {
+      //   type: "globals",
+      //   // expand: true,
+      //   imports: {
+      //     Resolver: "Resolver",
+      //     Generator: "Generator"
+      //   },
+      //   files: {
+      //     'js/immerse.js' : [ '../libs/immerse.js/index.js' ]
+      //   }
+      // }
     },
 
     traceur: {
