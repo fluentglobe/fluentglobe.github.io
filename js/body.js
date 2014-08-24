@@ -1749,7 +1749,11 @@ SpokenWord.prototype.togglePlay = function () {
         this.pause();
 };
 
-function registerSounds(map) {
+function getSpoken(name) {
+    return SpokenWord.prototype.known[name];
+}
+
+function registerSpoken(map) {
     this.spokenWords = this.spokenWords || {};
     for (var n in map) {
         this.spokenWords[n] = new SpokenWord(n, map[n]);
@@ -1757,7 +1761,8 @@ function registerSounds(map) {
 }
 
 function hypeDocCallback(hypeDocument, element, event) {
-    hypeDocument.registerSounds = registerSounds;
+    hypeDocument.getSpoken = getSpoken;
+    hypeDocument.registerSpoken = registerSpoken;
 }
 
 if ("HYPE_eventListeners" in window === false) {
