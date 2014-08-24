@@ -1195,7 +1195,7 @@ var account;
     };
 
     account.BookAccess.prototype.enableFeatures = function (features) {
-        buckets.set("user.features", features);
+        buckets.reference("user.features").mixin(features);
 
         if (buckets.hasReadyUserBucket())
             buckets.getBucket("user").update("features");
@@ -1625,44 +1625,49 @@ var account;
         };
     });
 }();
-Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature-enabled");
-Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
-
-Resolver("buckets::user.features").on("change", function (ev) {
-    var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland", "null");
-    Resolver("page").set("state.stress-free-feature", enabled);
-});
-
-function enhance_book(el, role, config) {
-    var book = new reader.Book(el, config);
-
-    return book;
+function ProtectedPresentation(el) {
+    this.el = el;
+    this.a = 0;
 }
 
-function layout_book(el, layout, instance) {
-    if (instance)
-        return instance.layout(layout);
-}
+ProtectedPresentation.prototype.destroy = function () {
+};
 
-function discard_book(el, role, instance) {
-    if (instance)
-        instance.destroy(el);
-}
+ProtectedPresentation.prototype.applyFeature = function (feature) {
+    var HTMLElement = Resolver("essential::HTMLElement::");
 
-Resolver("document").set("essential.handlers.enhance.book", enhance_book);
-Resolver("document").set("essential.handlers.layout.book", layout_book);
-Resolver("document").set("essential.handlers.discard.book", discard_book);
+    if (feature.js) {
+        var el = HTMLElement("div", { id: feature.id });
+        this.el.appendChild(el);
 
-Resolver("document").set("essential.handlers.enhance.slider", slider.enhance);
-Resolver("document").set("essential.handlers.layout.slider", function (el, layout, instance) {
-    if (instance)
-        return instance.layout(layout);
-});
-Resolver("document").set("essential.handlers.discard.slider", function (el, role, instance) {
-    if (instance)
-        instance.destroy(el);
-});
+        var script = HTMLElement("script", {});
+        script.src = feature.path + feature.js;
+        document.head.appendChild(script);
+    } else if (feature.html) {
+    }
+};
 
+ProtectedPresentation.prototype.applyHTML = function (page) {
+    SubPageApplyDest.call(page, this.el);
+};
+
+var SubPageApplyDest = function (dest) {
+    var e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild, db = dest, fc = db.firstElementChild !== undefined ? db.firstElementChild : db.firstChild;
+
+    if (this.applied)
+        return;
+
+    var applied = this.applied = [];
+    while (e) {
+        if (fc == null) {
+            db.appendChild(e);
+        } else {
+            db.insertBefore(e, fc);
+        }
+        applied.push(e);
+        e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild;
+    }
+};
 createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
 function spokenLoadHandler(event) {
@@ -1756,33 +1761,65 @@ if ("HYPE_eventListeners" in window === false) {
     window["HYPE_eventListeners"] = Array();
 }
 window["HYPE_eventListeners"].push({ "type": "HypeDocumentLoad", "callback": hypeDocCallback });
+Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature-enabled");
+Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
 
-function AssetPresentation() {
+Resolver("buckets::user.features").on("change", function (ev) {
+    var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland", "null");
+    Resolver("page").set("state.stress-free-feature", enabled);
+});
+
+function enhance_book(el, role, config) {
+    var book = new reader.Book(el, config);
+
+    return book;
 }
 
-AssetPresentation.prototype.applyFeature = function (feature) {
-    var path = "/assets/7766449900/stress-free-hype.html";
-    $.ajax({
-        url: path,
-        data: this,
-        success: function (data, status, xhr) {
-        }
-    });
-};
+function layout_book(el, layout, instance) {
+    if (instance)
+        return instance.layout(layout);
+}
+
+function discard_book(el, role, instance) {
+    if (instance)
+        instance.destroy(el);
+}
+
+Resolver("document").set("essential.handlers.enhance.book", enhance_book);
+Resolver("document").set("essential.handlers.layout.book", layout_book);
+Resolver("document").set("essential.handlers.discard.book", discard_book);
+
+Resolver("document").set("essential.handlers.enhance.slider", slider.enhance);
+Resolver("document").set("essential.handlers.layout.slider", function (el, layout, instance) {
+    if (instance)
+        return instance.layout(layout);
+});
+Resolver("document").set("essential.handlers.discard.slider", function (el, role, instance) {
+    if (instance)
+        instance.destroy(el);
+});
 
 function enhance_presentation(el, role, config) {
-    var presentation = new AssetPresentation();
+    var presentation = new ProtectedPresentation(el);
     Resolver("buckets::user.features").on("bind change", function (ev) {
-        var feature = ev.base[config.feature];
-        if (feature) {
-            presentation.applyFeature(feature);
+        var featuresValue = ev.resolver("user.features");
+        if (featuresValue) {
+            var feature = featuresValue[config.feature];
+            if (feature) {
+                presentation.applyFeature(feature);
+            }
         }
     });
 
     return presentation;
 }
 
+function discard_presentation(el, role, instance) {
+    instance.destroy();
+}
+
 Resolver("document").set("essential.handlers.enhance.presentation", enhance_presentation);
+Resolver("document").set("essential.handlers.discard.presentation", discard_presentation);
 
 if (window["angular"]) {
     var fluentApp = angular.module('fluentApp', ["fluentAccount"]);
@@ -1882,6 +1919,7 @@ document.essential.router.manage({ href: "/present_for" }, "essential.resources"
                         var decoded = JSON.parse(atob(value));
                         access.enableFeatures(decoded);
                     } catch (ex) {
+                        console.error("Failed to enable features", decoded, ex);
                     }
                     break;
             }
