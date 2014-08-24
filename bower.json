@@ -19,6 +19,7 @@
     "swiper-3d-flow": "~2.1.0",
     "angular-route": "~1.2.21",
     "base64": "~0.3.0",
-    "SoundJS": "*"
+    "SoundJS": "*",
+    "sockjs-client": "~0.3.4"
   }
 }
