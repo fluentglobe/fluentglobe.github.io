@@ -276,8 +276,11 @@ module.exports = function(grunt) {
 
     transpile: {
       immerse: {
-        cwd: '../libs/immerse.js/',
-        src: [ 'index.js' ],
+        type: "cjs",
+        // cwd: '../libs/immerse.js/',
+        src: [ 
+          '../libs/immerse.js/ProtectedPresentation.js',
+          '../libs/immerse.js/index.js' ],
         dest: 'js/immerse.js'
       },
 
