@@ -1628,15 +1628,14 @@ var account;
         };
     });
 }();
-var ProtectedPresentation = function (el) {
+var ProtectedPresentation = function (el, config) {
     this.el = el;
-    this.a = 0;
 };
 
 ProtectedPresentation["handlers"] = {};
 
 ProtectedPresentation["handlers"].enhance = function (el, role, config) {
-    var presentation = new ProtectedPresentation(el);
+    var presentation = new ProtectedPresentation(el, config);
     Resolver("buckets::user.features").on("bind change", function (ev) {
         var featuresValue = ev.resolver("user.features");
         if (featuresValue) {
@@ -1654,7 +1653,11 @@ ProtectedPresentation["handlers"].discard = function (el, role, instance) {
     instance.destroy();
 };
 
+ProtectedPresentation.prototype.byId = {};
+
 ProtectedPresentation.prototype.destroy = function () {
+    if (this.featureId)
+        this.byId[this.featureId] = null;
 };
 
 ProtectedPresentation.continueSpeaking = function () {
@@ -1670,14 +1673,25 @@ ProtectedPresentation.prototype.applyFeature = function (feature) {
     var HTMLElement = Resolver("essential::HTMLElement::");
 
     if (feature.js) {
+        this.resourcePath = feature.path;
+        this.featureId = feature.id;
+        if (this.featureId)
+            this.byId[this.featureId] = this;
+
         var el = HTMLElement("div", { id: feature.id });
         this.el.appendChild(el);
 
-        var script = HTMLElement("script", {});
+        var script = HTMLElement("script", {
+            "charset": "utf-8"
+        });
         script.src = feature.path + feature.js;
         document.head.appendChild(script);
     } else if (feature.html) {
     }
+};
+
+ProtectedPresentation.prototype.getResourcePath = function () {
+    return this.resourcePath;
 };
 
 ProtectedPresentation.prototype.applyHTML = function (page) {
@@ -1709,10 +1723,12 @@ function spokenLoadHandler(event) {
         spoken.play();
 }
 
-function SpokenWord(name, conf) {
+function SpokenWord(name, conf, docId) {
     this.name = name;
     this.types = conf;
+    this.docId = docId;
     this.known[name] = this;
+    this.presentation = ProtectedPresentation.prototype.byId[docId];
 
     this.registered;
 
@@ -1734,7 +1750,8 @@ SpokenWord.prototype.load = function () {
 
     this._prepareLoad();
 
-    var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = "/assets/7766449900/" + fileName;
+    var resourcePath = this.presentation ? this.presentation.getResourcePath() : "/assets/default/";
+    var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = resourcePath + fileName;
     this.registered = createjs.Sound.registerSound(path, this.name, 1);
 };
 
@@ -1789,7 +1806,7 @@ function getSpoken(name) {
 function registerSpoken(map) {
     this.spokenWords = this.spokenWords || {};
     for (var n in map) {
-        this.spokenWords[n] = new SpokenWord(n, map[n]);
+        this.spokenWords[n] = new SpokenWord(n, map[n], this.documentId());
     }
 }
 
