@@ -55,28 +55,8 @@ Resolver("document").set("essential.handlers.discard.slider", function(el,role,i
     if (instance) instance.destroy(el);
 });
 
-function enhance_presentation(el,role,config) {
-    var presentation = new ProtectedPresentation(el);
-    Resolver("buckets::user.features").on("bind change",function(ev) {
-        // var featuresValue = ev.value; TODO lib support
-        var featuresValue = ev.resolver("user.features");
-        if (featuresValue) {
-            var feature = featuresValue[config.feature];
-            if (feature) {
-                presentation.applyFeature(feature);
-            }
-        }
-    });
-    
-    return presentation;
-}
-
-function discard_presentation(el,role,instance) {
-    instance.destroy();
-}
-
-Resolver("document").set("essential.handlers.enhance.presentation", enhance_presentation);
-Resolver("document").set("essential.handlers.discard.presentation", discard_presentation);
+Resolver("document").set("essential.handlers.enhance.presentation", ProtectedPresentation["handlers"].enhance);
+Resolver("document").set("essential.handlers.discard.presentation", ProtectedPresentation["handlers"].discard);
 
 if (window["angular"]) {
 

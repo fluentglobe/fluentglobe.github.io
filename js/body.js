@@ -1628,12 +1628,42 @@ var account;
         };
     });
 }();
-function ProtectedPresentation(el) {
+var ProtectedPresentation = function (el) {
     this.el = el;
     this.a = 0;
-}
+};
+
+ProtectedPresentation["handlers"] = {};
+
+ProtectedPresentation["handlers"].enhance = function (el, role, config) {
+    var presentation = new ProtectedPresentation(el);
+    Resolver("buckets::user.features").on("bind change", function (ev) {
+        var featuresValue = ev.resolver("user.features");
+        if (featuresValue) {
+            var feature = featuresValue[config.feature];
+            if (feature) {
+                presentation.applyFeature(feature);
+            }
+        }
+    });
+
+    return presentation;
+};
+
+ProtectedPresentation["handlers"].discard = function (el, role, instance) {
+    instance.destroy();
+};
 
 ProtectedPresentation.prototype.destroy = function () {
+};
+
+ProtectedPresentation.continueSpeaking = function () {
+};
+
+ProtectedPresentation.pauseSpeaking = function () {
+};
+
+ProtectedPresentation.skipSpeaking = function () {
 };
 
 ProtectedPresentation.prototype.applyFeature = function (feature) {
@@ -1683,6 +1713,10 @@ function SpokenWord(name, conf) {
     this.name = name;
     this.types = conf;
     this.known[name] = this;
+
+    this.registered;
+
+    this.instance;
 }
 SpokenWord.prototype.known = {};
 SpokenWord.prototype.capabilities = createjs.Sound.getCapabilities();
@@ -1748,7 +1782,6 @@ SpokenWord.prototype.togglePlay = function () {
     else
         this.pause();
 };
-
 function getSpoken(name) {
     return SpokenWord.prototype.known[name];
 }
@@ -1807,27 +1840,8 @@ Resolver("document").set("essential.handlers.discard.slider", function (el, role
         instance.destroy(el);
 });
 
-function enhance_presentation(el, role, config) {
-    var presentation = new ProtectedPresentation(el);
-    Resolver("buckets::user.features").on("bind change", function (ev) {
-        var featuresValue = ev.resolver("user.features");
-        if (featuresValue) {
-            var feature = featuresValue[config.feature];
-            if (feature) {
-                presentation.applyFeature(feature);
-            }
-        }
-    });
-
-    return presentation;
-}
-
-function discard_presentation(el, role, instance) {
-    instance.destroy();
-}
-
-Resolver("document").set("essential.handlers.enhance.presentation", enhance_presentation);
-Resolver("document").set("essential.handlers.discard.presentation", discard_presentation);
+Resolver("document").set("essential.handlers.enhance.presentation", ProtectedPresentation["handlers"].enhance);
+Resolver("document").set("essential.handlers.discard.presentation", ProtectedPresentation["handlers"].discard);
 
 if (window["angular"]) {
     var fluentApp = angular.module('fluentApp', ["fluentAccount"]);
