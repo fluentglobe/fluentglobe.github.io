@@ -150,6 +150,27 @@ document.essential.router.manage({ href:"/stress-free-presentation"}, "essential
     return false;
 });
 
+document.essential.router.manage({ href:"/continue-speaking" },"essential.resources",function(path,action) {
+
+    ProtectedPresentation.continueSpeaking();
+    document.essential.router.clearHash();
+    return false;
+});
+
+document.essential.router.manage({ href:"/pause-speaking" },"essential.resources",function(path,action) {
+
+    ProtectedPresentation.pauseSpeaking();
+    document.essential.router.clearHash();
+    return false;
+});
+
+document.essential.router.manage({ href:"/skip-speaking" },"essential.resources",function(path,action) {
+
+    ProtectedPresentation.skipSpeaking();
+    document.essential.router.clearHash();
+    return false;
+});
+
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(path,action) {
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.authenticated",false); //TODO move to new flag
