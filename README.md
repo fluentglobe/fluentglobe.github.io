@@ -20,3 +20,5 @@ http://dontkry.com/posts/code/angular-browserify-grunt.html
 
 http://www.thomasboyt.com/2013/06/21/es6-module-transpiler
 
+
+http://danielkummer.github.io/git-flow-cheatsheet/
