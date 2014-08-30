@@ -1649,6 +1649,11 @@ ProtectedPresentation["handlers"].enhance = function (el, role, config) {
     return presentation;
 };
 
+ProtectedPresentation["handlers"].layout = function (el, layout, instance) {
+    if (instance)
+        return instance.layout(layout);
+};
+
 ProtectedPresentation["handlers"].discard = function (el, role, instance) {
     instance.destroy();
 };
@@ -1658,6 +1663,12 @@ ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
 ProtectedPresentation.prototype.destroy = function () {
     if (this.hypeId)
         this.byId[this.hypeId] = null;
+};
+
+ProtectedPresentation.prototype.layout = function (layout) {
+    if (layout.height > layout.width) {
+        this.el.style.maxHeight = layout.width + "px";
+    }
 };
 
 ProtectedPresentation.continueSpeaking = function () {
@@ -1913,6 +1924,7 @@ Resolver("document").set("essential.handlers.discard.slider", function (el, role
 });
 
 Resolver("document").set("essential.handlers.enhance.presentation", ProtectedPresentation["handlers"].enhance);
+Resolver("document").set("essential.handlers.layout.presentation", ProtectedPresentation["handlers"].layout);
 Resolver("document").set("essential.handlers.discard.presentation", ProtectedPresentation["handlers"].discard);
 
 if (window["angular"]) {

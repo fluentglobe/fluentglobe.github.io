@@ -9218,6 +9218,7 @@ body {
   padding-top: 50px;
   width: 100%;
   height: 350px;
+  z-index: -1;
   background-image: url(/images/Kat-Henry-1.jpg);
   background-position: top right;
   background-size: auto 100%;
@@ -9317,12 +9318,12 @@ main article section.first {
 #sfpch_hype_container {
   position: absolute;
   overflow: hidden;
-  left: 50%;
-  top: 50%;
-  margin-top: -468px;
-  margin-left: -468px;
-  width: 936px;
-  height: 936px;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#sfpch_hype_container .HYPE_scene {
+  overflow-x: visible;
 }
 .spoken-controls {
   position: absolute;

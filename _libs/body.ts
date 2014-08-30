@@ -56,6 +56,7 @@ Resolver("document").set("essential.handlers.discard.slider", function(el,role,i
 });
 
 Resolver("document").set("essential.handlers.enhance.presentation", ProtectedPresentation["handlers"].enhance);
+Resolver("document").set("essential.handlers.layout.presentation", ProtectedPresentation["handlers"].layout);
 Resolver("document").set("essential.handlers.discard.presentation", ProtectedPresentation["handlers"].discard);
 
 if (window["angular"]) {
