@@ -1653,20 +1653,55 @@ ProtectedPresentation["handlers"].discard = function (el, role, instance) {
     instance.destroy();
 };
 
-ProtectedPresentation.prototype.byId = {};
+ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
 
 ProtectedPresentation.prototype.destroy = function () {
-    if (this.featureId)
-        this.byId[this.featureId] = null;
+    if (this.hypeId)
+        this.byId[this.hypeId] = null;
 };
 
 ProtectedPresentation.continueSpeaking = function () {
+    for (var n in ProtectedPresentation.byId) {
+        var pp = ProtectedPresentation.byId[n];
+        pp.continueSpeaking();
+    }
+};
+
+ProtectedPresentation.prototype.continueSpeaking = function () {
+    if (this.pausedSpoken)
+        this.pausedSpoken.play();
 };
 
 ProtectedPresentation.pauseSpeaking = function () {
+    for (var n in ProtectedPresentation.byId) {
+        var pp = ProtectedPresentation.byId[n];
+        pp.pauseSpeaking();
+    }
+};
+
+ProtectedPresentation.prototype.pauseSpeaking = function () {
+    if (this.playingSpoken)
+        this.playingSpoken.pause();
 };
 
 ProtectedPresentation.skipSpeaking = function () {
+    for (var n in ProtectedPresentation.byId) {
+        var pp = ProtectedPresentation.byId[n];
+        pp.skipSpeaking();
+    }
+};
+
+ProtectedPresentation.prototype.skipSpeaking = function () {
+    if (this.playingSpoken || this.pausedSpoken) {
+        var spoken = this.playingSpoken || this.pausedSpoken;
+        spoken.stop();
+
+        if (HYPE && this.hypeId && HYPE.documents[this.hypeId]) {
+            var doc = HYPE.documents[this.hypeId];
+            doc.showNextScene();
+            doc.playTimelineNamed("Main Timeline");
+        }
+    }
 };
 
 ProtectedPresentation.prototype.applyFeature = function (feature) {
@@ -1674,9 +1709,13 @@ ProtectedPresentation.prototype.applyFeature = function (feature) {
 
     if (feature.js) {
         this.resourcePath = feature.path;
-        this.featureId = feature.id;
-        if (this.featureId)
-            this.byId[this.featureId] = this;
+        this.elementId = feature.id;
+        this.hypeId = feature.doc;
+
+        if (this.elementId == "sfpch_hype_container" && this.hypeId == null)
+            this.hypeId = "sfp-ch";
+        if (this.hypeId)
+            this.byId[this.hypeId] = this;
 
         var el = HTMLElement("div", { id: feature.id });
         this.el.appendChild(el);
@@ -1769,12 +1808,19 @@ SpokenWord.prototype.completed = function (event) {
 SpokenWord.prototype.play = function () {
     if (this.instance) {
         this.instance.resume();
+        if (this.presentation) {
+            this.presentation.playingSpoken = this;
+            this.presentation.pausedSpoken = null;
+        }
         return;
     }
 
     if (this.registered) {
         this.playOnLoad = false;
         this.instance = createjs.Sound.play(this.name);
+        if (this.presentation) {
+            this.presentation.playingSpoken = this;
+        }
     } else {
         this.playOnLoad = true;
         this.load();
@@ -1782,8 +1828,13 @@ SpokenWord.prototype.play = function () {
 };
 
 SpokenWord.prototype.pause = function () {
-    if (this.instance)
+    if (this.instance) {
         this.instance.pause();
+        if (this.presentation) {
+            this.presentation.pausedSpoken = this;
+            this.presentation.playingSpoken = null;
+        }
+    }
 };
 
 SpokenWord.prototype.stop = function () {
@@ -1791,6 +1842,10 @@ SpokenWord.prototype.stop = function () {
         return;
 
     this.instance.stop();
+    if (this.presentation) {
+        this.presentation.pausedSpoken = null;
+        this.presentation.playingSpoken = null;
+    }
 };
 
 SpokenWord.prototype.togglePlay = function () {
@@ -1806,7 +1861,7 @@ function getSpoken(name) {
 function registerSpoken(map) {
     this.spokenWords = this.spokenWords || {};
     for (var n in map) {
-        this.spokenWords[n] = new SpokenWord(n, map[n], this.documentId());
+        this.spokenWords[n] = new SpokenWord(n, map[n], this.documentName());
     }
 }
 

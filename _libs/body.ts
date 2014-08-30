@@ -189,8 +189,8 @@ document.essential.router.manage({ href:"/present_for"}, "essential.resources", 
                     break;
                 case "enable":
                     try {
-                        // {"stress-free-switzerland":{"path":"/assets/7766449900/", "js":"sfpch_hype_generated_script.js", "id":"sfpch_hype_container"}}
-                        // eyJzdHJlc3MtZnJlZS1zd2l0emVybGFuZCI6eyJwYXRoIjoiL2Fzc2V0cy83NzY2NDQ5OTAwLyIsICJqcyI6InNmcGNoX2h5cGVfZ2VuZXJhdGVkX3NjcmlwdC5qcyIsICJpZCI6InNmcGNoX2h5cGVfY29udGFpbmVyIn19
+                        // {"stress-free-switzerland":{"path":"/assets/7766449900/", "js":"sfpch_hype_generated_script.js", "id":"sfpch_hype_container", "doc":"sfp-ch"}}
+                        // eyJzdHJlc3MtZnJlZS1zd2l0emVybGFuZCI6eyJwYXRoIjoiL2Fzc2V0cy83NzY2NDQ5OTAwLyIsICJqcyI6InNmcGNoX2h5cGVfZ2VuZXJhdGVkX3NjcmlwdC5qcyIsICJpZCI6InNmcGNoX2h5cGVfY29udGFpbmVyIiwgImRvYyI6InNmLXBjaCJ9fQ==
                         var decoded = JSON.parse(atob(value));
                         access.enableFeatures(decoded);
                     } catch(ex) {
