@@ -2483,7 +2483,7 @@ html[lang=en] body [lang=it],
 html[lang=en] body [lang=pl],
 html[lang=en] body [lang=cs],
 html[lang=en] body [lang=ch],
-html[lang=en] body [lang=jp],
+html[lang=en] body [lang=ja],
 html[lang=en] body [lang=ru],
 html[lang=en] body [lang=ar] {
   display: none !important;
@@ -2500,7 +2500,7 @@ html[lang=fr] body [lang=it],
 html[lang=fr] body [lang=pl],
 html[lang=fr] body [lang=cs],
 html[lang=fr] body [lang=ch],
-html[lang=fr] body [lang=jp],
+html[lang=fr] body [lang=ja],
 html[lang=fr] body [lang=ru],
 html[lang=fr] body [lang=ar] {
   display: none !important;
@@ -2517,7 +2517,7 @@ html[lang=de] body [lang=it],
 html[lang=de] body [lang=pl],
 html[lang=de] body [lang=cs],
 html[lang=de] body [lang=ch],
-html[lang=de] body [lang=jp],
+html[lang=de] body [lang=ja],
 html[lang=de] body [lang=ru],
 html[lang=de] body [lang=ar] {
   display: none !important;
@@ -2534,7 +2534,7 @@ html[lang=es] body [lang=it],
 html[lang=es] body [lang=pl],
 html[lang=es] body [lang=cs],
 html[lang=es] body [lang=ch],
-html[lang=es] body [lang=jp],
+html[lang=es] body [lang=ja],
 html[lang=es] body [lang=ru],
 html[lang=es] body [lang=ar] {
   display: none !important;
@@ -2551,7 +2551,7 @@ html[lang=pt] body [lang=it],
 html[lang=pt] body [lang=pl],
 html[lang=pt] body [lang=cs],
 html[lang=pt] body [lang=ch],
-html[lang=pt] body [lang=jp],
+html[lang=pt] body [lang=ja],
 html[lang=pt] body [lang=ru],
 html[lang=pt] body [lang=ar] {
   display: none !important;
@@ -2568,7 +2568,7 @@ html[lang=it] body [lang=pt],
 html[lang=it] body [lang=pl],
 html[lang=it] body [lang=cs],
 html[lang=it] body [lang=ch],
-html[lang=it] body [lang=jp],
+html[lang=it] body [lang=ja],
 html[lang=it] body [lang=ru],
 html[lang=it] body [lang=ar] {
   display: none !important;
@@ -2585,7 +2585,7 @@ html[lang=pl] body [lang=pt],
 html[lang=pl] body [lang=it],
 html[lang=pl] body [lang=cs],
 html[lang=pl] body [lang=ch],
-html[lang=pl] body [lang=jp],
+html[lang=pl] body [lang=ja],
 html[lang=pl] body [lang=ru],
 html[lang=pl] body [lang=ar] {
   display: none !important;
@@ -2602,7 +2602,7 @@ html[lang=cs] body [lang=pt],
 html[lang=cs] body [lang=it],
 html[lang=cs] body [lang=pl],
 html[lang=cs] body [lang=ch],
-html[lang=cs] body [lang=jp],
+html[lang=cs] body [lang=ja],
 html[lang=cs] body [lang=ru],
 html[lang=cs] body [lang=ar] {
   display: none !important;
@@ -2619,26 +2619,26 @@ html[lang=ch] body [lang=pt],
 html[lang=ch] body [lang=it],
 html[lang=ch] body [lang=pl],
 html[lang=ch] body [lang=cs],
-html[lang=ch] body [lang=jp],
+html[lang=ch] body [lang=ja],
 html[lang=ch] body [lang=ru],
 html[lang=ch] body [lang=ar] {
   display: none !important;
 }
-[lang=jp] *[lang=not-jp],
-[lang=jp] .not-lang-jp {
+[lang=ja] *[lang=not-jp],
+[lang=ja] .not-lang-jp {
   display: none !important;
 }
-[lang=jp] [lang=en],
-[lang=jp] [lang=fr],
-[lang=jp] [lang=de],
-[lang=jp] [lang=es],
-[lang=jp] [lang=pt],
-[lang=jp] [lang=it],
-[lang=jp] [lang=pl],
-[lang=jp] [lang=cs],
-[lang=jp] [lang=ch],
-[lang=jp] [lang=ru],
-[lang=jp] [lang=ar] {
+[lang=ja] [lang=en],
+[lang=ja] [lang=fr],
+[lang=ja] [lang=de],
+[lang=ja] [lang=es],
+[lang=ja] [lang=pt],
+[lang=ja] [lang=it],
+[lang=ja] [lang=pl],
+[lang=ja] [lang=cs],
+[lang=ja] [lang=ch],
+[lang=ja] [lang=ru],
+[lang=ja] [lang=ar] {
   display: none !important;
 }
 [lang=ru] *[lang=not-ru],
@@ -2654,7 +2654,7 @@ html[lang=ch] body [lang=ar] {
 [lang=ru] [lang=pl],
 [lang=ru] [lang=cs],
 [lang=ru] [lang=ch],
-[lang=ru] [lang=jp],
+[lang=ru] [lang=ja],
 [lang=ru] [lang=ar] {
   display: none !important;
 }
@@ -2670,7 +2670,7 @@ html[lang=ch] body [lang=ar] {
 [lang=ar] [lang=it],
 [lang=ar] [lang=pl],
 [lang=ar] [lang=cs],
-[lang=ar] [lang=jp],
+[lang=ar] [lang=ja],
 [lang=ar] [lang=ru],
 [lang=ar] [lang=ch] {
   display: none !important;
