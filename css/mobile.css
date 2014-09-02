@@ -9307,6 +9307,21 @@ main article section.first {
   z-index: 1000;
 }
 .expat-happiness .surveymonkey {
+  border: 0 none;
   width: 100%;
   height: 2000px;
+}
+.expat-happiness .wufoo {
+  border: 0 none;
+  width: 642px;
+  height: 1000px;
+  margin-left: -121px;
+  margin-right: -121px;
+}
+.language-survey .wufoo {
+  border: 0 none;
+  width: 642px;
+  height: 1000px;
+  margin-left: -121px;
+  margin-right: -121px;
 }
