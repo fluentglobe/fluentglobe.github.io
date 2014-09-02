@@ -4,18 +4,6 @@
 
 @media only screen and (max-device-width: 480px) and  (-webkit-min-device-pixel-ratio:2) {
 	// iPhone
-
-    .center-piece {
-        .us,
-        .story {
-            position: absolute;
-            top: 0%;
-            height: 150px;
-            margin-top: 125px;
-        }
-
-    }
-
 }
 
 @media only screen and (device-width: 768px) {
@@ -68,3 +56,22 @@
     }
  
 }
+
+// desktop like
+@media only screen and (min-width: 750px) {
+    
+    .center-piece {
+        #intro &, main.fluid > header & {
+            margin-top: -100px;
+        }
+    }
+
+    .with-lead-and-menu {
+        > header {
+            background-size: 100% auto;
+            height: 500px;
+        }
+    }
+}
+
+
