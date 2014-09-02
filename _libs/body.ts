@@ -23,9 +23,16 @@
 Resolver("page").set("map.class.state.stress-free-feature","stress-free-feature-enabled");
 Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
 
+Resolver("page").set("map.class.state.appified","appified");
+Resolver("page").set("state.appified", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
+
 Resolver("buckets::user.features").on("change",function(ev) {
     var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland","null");
     Resolver("page").set("state.stress-free-feature", enabled);
+
+    //TODO list of appified features
+    var appified = enabled;
+    Resolver("page").set("state.appified", appified);
 });
 
 function enhance_book(el,role,config) {
