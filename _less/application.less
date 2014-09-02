@@ -339,11 +339,12 @@
         padding: (@icon-size/4) (@icon-size/4) 5px 0;
         vertical-align: top;
         color: @color;
+        text-shadow: 1px 1px 1px #888;
     }
     .social-icon {
         font-family: "socialicoregular";
         font-size: @icon-size;
-        color: #888;
+        color: @color;
         text-decoration: none;
         line-height: 1;
 
@@ -377,17 +378,14 @@
 }
 
 
-.outhangingHeader(@header-height: 60px, @bg-color: rgba(0,0,0,.7),@bg-color-ie:rgb(40,40,40)) {
+.outhangingHeader(@header-height: 60px, @bg-color: rgba(0,0,0,.25),@bg-color-ie:#484838) {
 
-    > header {
         position:absolute;
         top: -(@header-height);
         height: @header-height;
         left:0; right:0;
         background-color: @bg-color-ie;
         background-color: @bg-color;
-    }
-
 }
 
 .articleSections(@white-bg-color: white, @shaded-bg-color: rgb(243,243,243), @border-top-color: rgb(236,236,236),@border-bottom-color: rgb(236,236,236)) {

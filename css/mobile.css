@@ -2624,8 +2624,8 @@ html[lang=ch] body [lang=ru],
 html[lang=ch] body [lang=ar] {
   display: none !important;
 }
-[lang=ja] *[lang=not-jp],
-[lang=ja] .not-lang-jp {
+[lang=ja] *[lang=not-ja],
+[lang=ja] .not-lang-ja {
   display: none !important;
 }
 [lang=ja] [lang=en],
@@ -3417,14 +3417,14 @@ article {
   -o-transition: .3s ease-in-out left,.3s ease-in-out margin-top;
   transition: .3s ease-in-out left,.3s ease-in-out margin-top;
 }
-article > header {
+article > header.floating {
   position: absolute;
   top: -60px;
   height: 60px;
   left: 0;
   right: 0;
-  background-color: #282828;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #484838;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 article section header {
   text-align: center;
@@ -4649,6 +4649,41 @@ body.lesson .menu nav.flag label {
 .splash article {
   z-index: 100;
 }
+main.fluid footer.links-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+}
+main.fluid footer.links-bar .follow {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  text-align: right;
+}
+main.fluid footer.links-bar .follow nav {
+  display: inline-block;
+}
+main.fluid footer.links-bar .follow h4 {
+  display: inline-block;
+  font-size: 15px;
+  margin: 0;
+  padding: 10px 10px 5px 0;
+  vertical-align: top;
+  color: #eeeeee;
+  text-shadow: 1px 1px 1px #888;
+}
+main.fluid footer.links-bar .follow .social-icon {
+  font-family: "socialicoregular";
+  font-size: 40px;
+  color: #eeeeee;
+  text-decoration: none;
+  line-height: 1;
+}
+main.fluid footer.links-bar .follow .social-icon:hover {
+  color: #0088cc;
+}
 main.fluid article h1,
 main.fluid article h2,
 main.fluid article h3,
@@ -4656,41 +4691,6 @@ main.fluid article h4,
 main.fluid article h5,
 main.fluid article h6 {
   font-weight: 300;
-}
-main.fluid article > header .follow {
-  position: absolute;
-  top: 12px;
-  right: 20px;
-  text-align: right;
-}
-main.fluid article > header .follow h4 {
-  display: inline-block;
-  font-size: 15px;
-  padding: 10px 10px 5px 0;
-  margin-top: 0;
-  vertical-align: top;
-  color: #888;
-}
-main.fluid article > header .follow nav {
-  display: inline-block;
-}
-main.fluid article > header .follow h4 {
-  display: inline-block;
-  font-size: 15px;
-  margin: 0;
-  padding: 10px 10px 5px 0;
-  vertical-align: top;
-  color: #888888;
-}
-main.fluid article > header .follow .social-icon {
-  font-family: "socialicoregular";
-  font-size: 40px;
-  color: #888;
-  text-decoration: none;
-  line-height: 1;
-}
-main.fluid article > header .follow .social-icon:hover {
-  color: #0088cc;
 }
 main.fluid article section {
   position: relative;
@@ -9329,4 +9329,8 @@ main article section.first {
   right: 10px;
   top: 10px;
   z-index: 1000;
+}
+.expat-happiness .surveymonkey {
+  width: 100%;
+  height: 2000px;
 }

@@ -178,34 +178,33 @@ main.with-menu {
 }
 
 main.fluid {
-    article {
-    @header-height: 60px;
 
-    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+    // placed at the bottom of the #intro or article > header
+    footer.links-bar {
+        @links-bar-height: 60px;
 
-    > header {
+        position: absolute;
+        left:0; right:0;
+        bottom: 0; height: @links-bar-height;
+
         .follow {
             position: absolute;
-            top: (@header-height - 40px)/2 + 2px; right:20px;
+            top: (@links-bar-height - 40px)/2 + 2px; right:20px;
             // .center-box-horz(@center-width);
             text-align: right;
             // bottom: 60px;
 
-            h4 {
-                display: inline-block;
-                font-size: 15px;
-                padding: 10px 10px 5px 0;
-                margin-top: 0;
-                vertical-align: top;
-                color: #888;
-            }
             nav {
                 display: inline-block;
             }
 
-            .social-icon-bar();
+            .social-icon-bar(40px,#eee);
         }
     }
+
+    article {
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 300; }
 
     .articleSections();
 
