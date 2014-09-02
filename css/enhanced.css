@@ -32,8 +32,19 @@
   main.fluid > header .center-piece {
     margin-top: -100px;
   }
+  article .center-piece {
+    width: 400px;
+    margin-left: -200px;
+  }
   .with-lead-and-menu > header {
     background-size: 100% auto;
     height: 500px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  #intro .center-piece,
+  main.fluid > header .center-piece {
+    width: 400px;
+    margin-left: -200px;
   }
 }
