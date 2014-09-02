@@ -50,6 +50,13 @@
     width: 400px;
     margin-left: -200px;
   }
+  article .wide-center-piece {
+    width: 500px;
+    margin-left: -250px;
+  }
+  .expat-happiness .wide-center-piece iframe.surveymonkey {
+    height: 1800px;
+  }
   .with-lead-and-menu > header {
     background-size: 100% auto;
     height: 500px;
@@ -94,7 +101,6 @@
   #intro .left-col,
   main.fluid .left-col {
     width: 480px;
-    max-width: auto;
   }
   #intro .right-col,
   main.fluid .right-col {
