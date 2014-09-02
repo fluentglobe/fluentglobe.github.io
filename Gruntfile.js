@@ -542,4 +542,18 @@ module.exports = function(grunt) {
     'uglify','jekyll:dist' //TODO should there be a dist typescript build
     ]);
   grunt.registerTask('serve', ['jekyll:serve']);
+
+  // grunt.registerTask('protectserve', function() {
+
+  //   var $secret = "mysecret";
+  //   var $filepath = "paidcontent.wmv";
+  //   var $splashpage = "http://www.website.com/protected.php";
+  //   var $b64splash = base64_encode($splashpage);
+  //   var $expiretime = time() + 60; // unix epoch
+  //   var $user_ip = $_SERVER['REMOTE_ADDR']; 
+  //   var $rules = "expiretime=$expiretime;ip=$user_ip;badurl=$b64splash";
+  //   var $hash = hash_hmac('sha256',$rules . $filepath, $secret, FALSE);
+  //   var $link = "http://username.cachefly.net/Protected/$rules/$hash/$filepath";
+
+  // });
 };
