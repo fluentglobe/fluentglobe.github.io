@@ -27,6 +27,20 @@
     position: static;
   }
 }
+@media only screen and (min-width: 480px) {
+  #intro .left-col,
+  main.fluid .left-col {
+    left: 50%;
+    margin-left: -240px;
+    width: 480px;
+  }
+  #intro .right-col,
+  main.fluid .right-col {
+    left: 50%;
+    margin-left: -240px;
+    width: 480px;
+  }
+}
 @media only screen and (min-width: 750px) {
   #intro .center-piece,
   main.fluid > header .center-piece {
@@ -39,6 +53,52 @@
   .with-lead-and-menu > header {
     background-size: 100% auto;
     height: 500px;
+  }
+  #intro .two-cols,
+  main.fluid .two-cols {
+    position: relative;
+  }
+  #intro .two-cols:before,
+  main.fluid .two-cols:before,
+  #intro .two-cols:after,
+  main.fluid .two-cols:after {
+    content: " ";
+    display: table;
+  }
+  #intro .two-cols:after,
+  main.fluid .two-cols:after {
+    clear: both;
+  }
+  #intro .left-col,
+  main.fluid .left-col {
+    float: left;
+    width: 50%;
+    left: 0;
+    margin-left: 0;
+  }
+  #intro .right-col,
+  main.fluid .right-col {
+    float: left;
+    width: 50%;
+    left: 0;
+    margin-left: 0;
+  }
+}
+@media only screen and (min-width: 960px) {
+  #intro .two-cols,
+  main.fluid .two-cols {
+    width: 960px;
+    left: 50%;
+    margin-left: -480px;
+  }
+  #intro .left-col,
+  main.fluid .left-col {
+    width: 480px;
+    max-width: auto;
+  }
+  #intro .right-col,
+  main.fluid .right-col {
+    width: 480px;
   }
 }
 @media only screen and (min-width: 1000px) {

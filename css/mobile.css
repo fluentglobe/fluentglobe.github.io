@@ -3479,10 +3479,6 @@ article > footer {
 .center-col {
   text-align: center;
 }
-#intro .left-col,
-#intro .right-col {
-  margin-top: 3em;
-}
 .main-text-section {
   text-align: center;
 }
@@ -4724,10 +4720,9 @@ main.fluid article section.even {
   border-top: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
 }
-main.fluid article .left-col {
-  padding: 0 30px;
-}
+main.fluid article .left-col,
 main.fluid article .right-col {
+  position: relative;
   padding: 0 30px;
 }
 main.fluid article > footer {
@@ -4774,20 +4769,6 @@ main.fluid article > footer a {
     top: 100%;
     z-index: 100;
     margin-top: -5px;
-  }
-}
-@media only screen and (min-width: 400px) {
-  main.fluid article .left-col {
-    position: absolute;
-    right: 50%;
-    width: 50%;
-    max-width: 500px;
-  }
-  main.fluid article .right-col {
-    position: relative;
-    left: 50%;
-    width: 50%;
-    max-width: 500px;
   }
 }
 @media screen and (device-aspect-ratio: 2/3) {

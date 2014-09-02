@@ -58,6 +58,25 @@
 }
 
 // bigger phone resolution ?
+@media only screen and (min-width: 480px) {
+    
+    // sequential columns
+    #intro,
+    main.fluid {
+        .left-col {
+            left: 50%;
+            margin-left: -240px;
+            width: 480px
+        }
+        .right-col {
+            left: 50%;
+            margin-left: -240px;
+            width: 480px
+        }
+        //.center-col
+    }
+}
+
 
 // desktop like
 @media only screen and (min-width: 750px) {
@@ -77,6 +96,47 @@
         > header {
             background-size: 100% auto;
             height: 500px;
+        }
+    }
+
+    // split columns
+    #intro,
+    main.fluid {
+        .two-cols {
+            position: relative;
+            .clearfix;
+        }
+        .left-col {
+            float:left;
+            width: 50%;
+            left:0; margin-left:0;
+            // max-width: 480px;
+        }
+        .right-col {
+            float:left;
+            width: 50%;
+            left:0; margin-left:0;
+            // max-width: 480px;
+        }
+        //.center-col
+    }
+}
+@media only screen and (min-width: 960px) {
+
+    // split columns centering
+    #intro,
+    main.fluid {
+        .two-cols {
+            width: 960px;
+            left: 50%;
+            margin-left: -480px;
+        }
+
+        .left-col {
+            width: 480px;
+        }
+        .right-col {
+            width: 480px;
         }
     }
 }

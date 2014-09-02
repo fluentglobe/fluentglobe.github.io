@@ -215,10 +215,8 @@ main.fluid {
 
     .articleSections();
 
-    .left-col {
-        padding: 0 30px;
-    }
-    .right-col {
+    .left-col, .right-col {
+        position: relative;
         padding: 0 30px;
     }
 
@@ -279,22 +277,6 @@ main.fluid {
     }
 }
 
-@media only screen and (min-width: 400px) {
-	
-    main.fluid article {
-		.left-col {
-			position: absolute;
-			right: 50%; width: 50%;
-			max-width: 500px
-		}
-		.right-col {
-			position: relative;
-			left: 50%; width: 50%;
-			max-width: 500px
-		}
-        //.center-col
-    }
-}
 @top-splash-room: 650px;
 @top-splash-room-640: 560px;
 @top-splash-max: 800px;
