@@ -1631,6 +1631,15 @@ var account;
 var ProtectedPresentation = function (el, config) {
     this.el = el;
     this.spokenScene = {};
+    if (config.featureId) {
+        var feature = {
+            doc: config.featureId
+        };
+        for (var n in config.featureData) {
+            feature[n] = config.featureData[n];
+        }
+        this.applyFeature(feature);
+    }
 };
 
 ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};

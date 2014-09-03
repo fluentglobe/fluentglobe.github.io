@@ -1,0 +1,65 @@
+---
+layout: master
+blog-link: no
+js-bundle: /js/body.js
+---
+<script type="application/config">{% include signup-config.js %}</script>
+
+<main class="with-lead-and-menu with-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
+
+  <header class="picture-background">
+  {% include intro/understood-networked.html %}
+
+  <nav class="center-piece" role="presentation" data-role="'featureId':'test-cmd','featureData':{'path':'/test/assets/', 'js':'sound-demo.js', 'id':'sound-demo'}">
+
+  <button name="playOne" action="test-cmd">Play 1</button>
+  <button name="playTwo" action="test-cmd">Play 2</button>
+  <button name="pauseOne" action="test-cmd">Pause 1</button>
+  <button name="pauseTwo" action="test-cmd">Pause 2</button>
+  <button name="stopOne" action="test-cmd">Stop 1</button>
+  <button name="stopTwo" action="test-cmd">Stop 2</button>
+
+  </nav>
+
+  </header>
+
+  <article>
+
+  </article>
+
+  {% include site-menu.html %}
+
+  <script>!function(){ 
+
+  	var DialogAction = Resolver("essential::DialogAction::");
+
+  	function _TestCmd() {
+  		// debugger;
+  	}
+  	_TestCmd.prototype.playOne = function(el,ev) {
+  			SpokenWord.prototype.known["one"].play();
+  	};
+  	_TestCmd.prototype.playTwo = function(el,ev) {
+  			SpokenWord.prototype.known["two"].play();
+  	};
+
+
+  	_TestCmd.prototype.pauseOne = function(el,ev) {
+  			SpokenWord.prototype.known["one"].pause();
+  	};
+  	_TestCmd.prototype.pauseTwo = function(el,ev) {
+  			SpokenWord.prototype.known["two"].pause();
+  	};
+
+
+  	_TestCmd.prototype.stopOne = function(el,ev) {
+  			SpokenWord.prototype.known["one"].stop();
+  	};
+  	_TestCmd.prototype.stopTwo = function(el,ev) {
+  			SpokenWord.prototype.known["two"].stop();
+  	};
+
+  	DialogAction.variant("test-cmd", Generator(_TestCmd));
+  	}();
+  </script>
+</main>
