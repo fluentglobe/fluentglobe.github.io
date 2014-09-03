@@ -1877,7 +1877,9 @@ SpokenWord.prototype.completed = function (event) {
 
 SpokenWord.prototype.play = function () {
     if (this.instance) {
-        this.instance.resume();
+        if (this.instance.resume() == false) {
+            this.instance.play();
+        }
         if (this.presentation) {
             this.presentation.playingSpoken = this;
             this.presentation.pausedSpoken = null;
