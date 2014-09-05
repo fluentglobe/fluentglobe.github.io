@@ -1,5 +1,6 @@
 /// <reference path="../../libs/DefinitelyTyped/essentialjs/essential.d.ts"/>
 /// <reference path="../../libs/DefinitelyTyped/jquery/jquery.d.ts"/>
+/// <reference path="../../libs/DefinitelyTyped/preloadjs/preloadjs.d.ts" />
 /// <reference path="../../libs/DefinitelyTyped/soundjs/soundjs.d.ts"/>
 /// <reference path="../../libs/DefinitelyTyped/angularjs/angular.d.ts"/>
 /// <reference path="../../libs/DefinitelyTyped/impress/impress.d.ts"/>

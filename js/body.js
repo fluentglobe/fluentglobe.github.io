@@ -1631,6 +1631,18 @@ var account;
 var ProtectedPresentation = function (el, config) {
     this.el = el;
     this.spokenScene = {};
+    this.spokenWords = {};
+
+    if (!createjs.Sound.isReady()) {
+        console.error("Sound not ready! The presentation cannot play.");
+    }
+    this.preload = new createjs.LoadQueue();
+    this.preload.installPlugin(createjs.Sound);
+    this.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
+    this.preload.addEventListener("complete", this._complete.bind(this));
+    this.preload.addEventListener("error", this._error.bind(this));
+    this.preload.addEventListener("progress", this._progress.bind(this));
+
     if (config.featureId) {
         var feature = {
             doc: config.featureId
@@ -1645,6 +1657,14 @@ var ProtectedPresentation = function (el, config) {
 ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
 
 ProtectedPresentation.prototype.destroy = function () {
+    for (var n in this.spokenScene) {
+        this.spokenScene[n] = null;
+    }
+
+    for (var n in this.spokenWords) {
+        this.spokenWords[n] = null;
+    }
+
     if (this.hypeId)
         this.byId[this.hypeId] = null;
 };
@@ -1653,6 +1673,24 @@ ProtectedPresentation.prototype.layout = function (layout) {
     if (layout.height > layout.width) {
         this.el.style.maxHeight = layout.width + "px";
     }
+};
+
+ProtectedPresentation.prototype._fileloadComplete = function (event) {
+    this.spokenWords[event.item.id].markLoaded();
+    console.info("file load complete", event);
+};
+
+ProtectedPresentation.prototype._complete = function (event) {
+    console.info("preload complete", event);
+};
+
+ProtectedPresentation.prototype._error = function (event) {
+    debugger;
+    console.info("preload error", event);
+};
+
+ProtectedPresentation.prototype._progress = function (event) {
+    console.log("progress", (this.preload.progress.toFixed(2) * 100) + "%");
 };
 
 ProtectedPresentation.continueSpeaking = function () {
@@ -1730,7 +1768,22 @@ ProtectedPresentation.prototype.applyFeature = function (feature) {
     }
 };
 
+ProtectedPresentation.prototype._preloadSpoken = function (sceneName) {
+    var scene = this.spokenScene[sceneName];
+    if (scene)
+        for (var n in scene.spoken) {
+            var spoken = scene.spoken[n];
+            var names = spoken.types, spokenId = spoken.name;
+
+            var manifest = [
+                { id: spokenId, src: this.resourcePath + names.ogg }
+            ];
+            this.preload.loadManifest(manifest);
+        }
+};
+
 ProtectedPresentation.prototype.loadingScene = function (sceneName) {
+    this._preloadSpoken(sceneName);
     var scene = this.spokenScene[sceneName];
 };
 
@@ -1747,10 +1800,16 @@ ProtectedPresentation.prototype.droppingScene = function (sceneName) {
 };
 
 ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
+    var manifest = [
+        { id: spokenId, src: this.resourcePath + names.ogg }
+    ];
+    this.preload.loadManifest(manifest);
+
     var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = scene.spoken[spokenId];
     if (spoken == undefined) {
         spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
         scene.unplayed.push(spokenId);
+        this.spokenWords[spokenId] = spoken;
     }
 
     return spoken;
@@ -1760,16 +1819,22 @@ ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
     var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] };
     scene.queued = scene.unplayed.shift();
     var spoken = scene.spoken[scene.queued];
-    if (spoken)
-        spoken.load();
+    if (spoken) {
+    } else {
+        console.error("no spoken to queue in", sceneName, "queue.");
+    }
 };
 
 ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
     var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = scene.spoken[scene.queued];
     scene.queued = null;
 
-    if (spoken)
-        spoken.play();
+    if (spoken) {
+        createjs.Sound.play(spoken.name);
+        this.playingSpoken = spoken;
+    } else {
+        console.error("no spoken to play in", sceneName, "queue.");
+    }
 };
 
 ProtectedPresentation.prototype.getResourcePath = function () {
@@ -1823,7 +1888,7 @@ ProtectedPresentation.handlers.layout = function (el, layout, instance) {
 ProtectedPresentation.handlers.discard = function (el, role, instance) {
     instance.destroy();
 };
-createjs.Sound.alternateExtensions = ["ogg", "mp3"];
+createjs.Sound.alternateExtensions = ["ogg", "m4a", "mp3"];
 
 function spokenLoadHandler(event) {
     var spoken = SpokenWord.prototype.known[event.id];
@@ -1851,6 +1916,15 @@ SpokenWord.prototype._prepareLoad = function () {
         return;
 
     SpokenWord.prototype.loadHandler = createjs.Sound.addEventListener("fileload", spokenLoadHandler);
+};
+
+SpokenWord.prototype.markLoaded = function () {
+    if (!this.instance) {
+        this.instance = createjs.Sound.createInstance(this.name);
+
+        this.instance.addEventListener("playComplete", this._completed.bind(this));
+        this.instance.addEventListener("failed", this._failed.bind(this));
+    }
 };
 
 SpokenWord.prototype.load = function () {
