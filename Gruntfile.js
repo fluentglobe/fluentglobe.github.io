@@ -22,11 +22,11 @@ module.exports = function(grunt) {
       essential: {
         src: [
           '_libs/prefix.js',
-          'components/essentialjs/js/modernizr-custom.js',
+          '../libs/EssentialJS/js/modernizr-custom.js',
           // 'components/es5-shim/es5-shim.min.js',          
           'components/es5-shim/es5-shim.js',
           'components/base64/base64.js',          
-          'components/essentialjs/essential.js',
+          '../libs/EssentialJS/essential.js',
           '_libs/head.js'
         ],
         dest: 'js/modernizr+essential.js'
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
 
       app: {
         src: [
-          // 'components/essentialjs/app/js/spin.min.js',
+          // '../libs/EssentialJS/app/js/spin.min.js',
           '_libs/uri.js',
           '_libs/impl.js',
           '_libs/form.js',
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
             // 'components/es5-shim/es5-shim.min.js',          
             'components/es5-shim/es5-shim.js',
             'components/base64/base64.js',          
-            'components/essentialjs/essential.js',
+            '../libs/EssentialJS/essential.js',
             '_libs/head.js'
           ]
         }
