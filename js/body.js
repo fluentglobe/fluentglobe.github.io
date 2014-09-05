@@ -1665,7 +1665,7 @@ ProtectedPresentation.continueSpeaking = function () {
 ProtectedPresentation.prototype.continueSpeaking = function () {
     if (this.pausedSpoken)
         this.pausedSpoken.play();
-    var doc = HYPE.documents[this.hypeId];
+    var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
     if (doc)
         doc.continueTimelineNamed("Main Timeline");
 };
@@ -1680,7 +1680,7 @@ ProtectedPresentation.pauseSpeaking = function () {
 ProtectedPresentation.prototype.pauseSpeaking = function () {
     if (this.playingSpoken)
         this.playingSpoken.pause();
-    var doc = HYPE.documents[this.hypeId];
+    var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
     if (doc)
         doc.pauseTimelineNamed("Main Timeline");
 };
@@ -1697,7 +1697,7 @@ ProtectedPresentation.prototype.skipSpeaking = function () {
         var spoken = this.playingSpoken || this.pausedSpoken;
         spoken.stop();
 
-        if (HYPE && this.hypeId && HYPE.documents[this.hypeId]) {
+        if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
             var doc = HYPE.documents[this.hypeId];
             doc.showNextScene();
             doc.playTimelineNamed("Main Timeline");
