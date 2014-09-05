@@ -22,9 +22,9 @@
 //TODO generalise for multiple countries
 
 Resolver("page").set("map.class.state.stress-free-feature","stress-free-feature-enabled");
-Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
-
 Resolver("page").set("map.class.state.appified","appified");
+
+Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
 Resolver("page").set("state.appified", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
 
 Resolver("buckets::user.features").on("change",function(ev) {

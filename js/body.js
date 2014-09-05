@@ -1634,7 +1634,6 @@ var ProtectedPresentation = function (el, config) {
     this.spokenWords = {};
 
     if (!createjs.Sound.isReady()) {
-        console.error("Sound not ready! The presentation cannot play.");
     }
     this.preload = new createjs.LoadQueue();
     this.preload.installPlugin(createjs.Sound);
@@ -1676,8 +1675,7 @@ ProtectedPresentation.prototype.layout = function (layout) {
 };
 
 ProtectedPresentation.prototype._fileloadComplete = function (event) {
-    this.spokenWords[event.item.id].markLoaded();
-    console.info("file load complete", event);
+    this.spokenWords[event.item.id].markLoaded(event.item);
 };
 
 ProtectedPresentation.prototype._complete = function (event) {
@@ -1891,7 +1889,7 @@ ProtectedPresentation.handlers.layout = function (el, layout, instance) {
 ProtectedPresentation.handlers.discard = function (el, role, instance) {
     instance.destroy();
 };
-createjs.Sound.alternateExtensions = ["ogg", "m4a", "mp3"];
+createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
 function spokenLoadHandler(event) {
     var spoken = SpokenWord.prototype.known[event.id];
@@ -1921,12 +1919,18 @@ SpokenWord.prototype._prepareLoad = function () {
     SpokenWord.prototype.loadHandler = createjs.Sound.addEventListener("fileload", spokenLoadHandler);
 };
 
-SpokenWord.prototype.markLoaded = function () {
-    if (!this.instance) {
-        this.instance = createjs.Sound.createInstance(this.name);
+SpokenWord.prototype._createInstance = function () {
+    this.instance = createjs.Sound.createInstance(this.name);
 
-        this.instance.addEventListener("playComplete", this._completed.bind(this));
-        this.instance.addEventListener("failed", this._failed.bind(this));
+    this.instance.addEventListener("playComplete", this._completed.bind(this));
+    this.instance.addEventListener("failed", this._failed.bind(this));
+};
+
+SpokenWord.prototype.markLoaded = function (item) {
+    if (!this.instance) {
+        this.preloaded = true;
+        this._createInstance();
+        console.log("set instance for", this.name, item.ext ? "extension=" + item.ext : "");
     }
 };
 
@@ -1949,10 +1953,33 @@ SpokenWord.prototype.unload = function () {
     createjs.Sound.removeSound(this.name);
 };
 
-SpokenWord.prototype.completed = function (event) {
+SpokenWord.prototype._completed = function (event) {
+    debugger;
+    this.instance.setPosition(0);
+    if (this.presentation) {
+        if (this.presentation.playingSpoken == this)
+            this.presentation.playingSpoken = null;
+    }
+};
+
+SpokenWord.prototype._failed = function (event) {
+    debugger;
 };
 
 SpokenWord.prototype.play = function () {
+    if (!this.instance) {
+        console.log("playing before load of", this.name, this.preloaded ? "was" : "wasn't", "preloaded");
+        if (this.preloaded)
+            this._createInstance();
+        else {
+            console.error("Flagging it for load");
+
+            this.playOnLoad = true;
+            this.load();
+            return;
+        }
+    }
+
     if (this.instance) {
         if (this.instance.resume() == false) {
             this.instance.play();
@@ -1960,19 +1987,10 @@ SpokenWord.prototype.play = function () {
         if (this.presentation) {
             this.presentation.playingSpoken = this;
             this.presentation.pausedSpoken = null;
-        }
-        return;
-    }
-
-    if (this.registered) {
-        this.playOnLoad = false;
-        this.instance = createjs.Sound.play(this.name);
-        if (this.presentation) {
-            this.presentation.playingSpoken = this;
+            console.log("setting playingSpoken");
         }
     } else {
-        this.playOnLoad = true;
-        this.load();
+        console.error("still no instance", this);
     }
 };
 
@@ -1982,6 +2000,7 @@ SpokenWord.prototype.pause = function () {
         if (this.presentation) {
             this.presentation.pausedSpoken = this;
             this.presentation.playingSpoken = null;
+            console.log("pause/clearing playingSpoken");
         }
     }
 };
@@ -1994,6 +2013,7 @@ SpokenWord.prototype.stop = function () {
     if (this.presentation) {
         this.presentation.pausedSpoken = null;
         this.presentation.playingSpoken = null;
+        console.log("stop/clear playingSpoken");
     }
 };
 
@@ -2017,6 +2037,8 @@ function registerSpoken(map) {
 function afterDefineScene(sceneName, map) {
     this.spokenWords = this.spokenWords || {};
     var presentation = ProtectedPresentation.byId[this.documentName()];
+    if (presentation)
+        presentation._preloadSpoken(sceneName);
     for (var n in map) {
         if (presentation)
             this.spokenWords[n] = presentation.addSpoken(n, map[n], sceneName);
@@ -2066,9 +2088,9 @@ window["HYPE_eventListeners"].push({ "type": "HypeDocumentLoad", "callback": hyp
 window["HYPE_eventListeners"].push({ "type": "HypeSceneLoad", "callback": hypeSceneCallback });
 window["HYPE_eventListeners"].push({ "type": "HypeSceneUnload", "callback": hypeSceneCallback });
 Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature-enabled");
-Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
-
 Resolver("page").set("map.class.state.appified", "appified");
+
+Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
 Resolver("page").set("state.appified", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
 
 Resolver("buckets::user.features").on("change", function (ev) {
