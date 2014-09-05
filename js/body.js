@@ -1805,11 +1805,15 @@ ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName
     ];
     this.preload.loadManifest(manifest);
 
-    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = scene.spoken[spokenId];
+    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId];
+
     if (spoken == undefined) {
         spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
         scene.unplayed.push(spokenId);
         this.spokenWords[spokenId] = spoken;
+    } else {
+        if (scene.spoken[spokenId] == null)
+            scene.spoken[spokenId] = spoken;
     }
 
     return spoken;
@@ -1818,7 +1822,7 @@ ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName
 ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
     var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] };
     scene.queued = scene.unplayed.shift();
-    var spoken = scene.spoken[scene.queued];
+    var spoken = this.spokenWords[scene.queued];
     if (spoken) {
     } else {
         console.error("no spoken to queue in", sceneName, "queue.");
@@ -1826,12 +1830,11 @@ ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
 };
 
 ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
-    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = scene.spoken[scene.queued];
+    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[scene.queued];
     scene.queued = null;
 
     if (spoken) {
-        createjs.Sound.play(spoken.name);
-        this.playingSpoken = spoken;
+        spoken.play();
     } else {
         console.error("no spoken to play in", sceneName, "queue.");
     }
