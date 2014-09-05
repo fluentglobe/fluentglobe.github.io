@@ -1891,6 +1891,8 @@ ProtectedPresentation.handlers.discard = function (el, role, instance) {
 };
 createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
+createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
+
 function spokenLoadHandler(event) {
     var spoken = SpokenWord.prototype.known[event.id];
     if (spoken && spoken.playOnLoad)
