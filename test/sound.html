@@ -9,13 +9,7 @@ js-bundle: /js/body.js
 
   <header class="picture-background">
   {% include intro/understood-networked.html %}
-
-    <div class="spoken-controls">
-      <a class="btn outline tinted" href="#/continue-speaking">Play</a>
-      <a class="btn outline tinted" href="#/pause-speaking">Pause</a>
-      <a class="btn outline tinted" href="#/skip-speaking">Skip</a>
-    </div>
-
+  {% include spoken-controls.html %}
 
   <nav class="center-piece" role="presentation" data-role="'featureId':'test-cmd','featureData':{'path':'/test/assets/', 'js':'sound-demo.js', 'id':'sound-demo'}">
 
