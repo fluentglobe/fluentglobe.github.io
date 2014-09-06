@@ -1628,265 +1628,399 @@ var account;
         };
     });
 }();
-var ProtectedPresentation = function (el, config) {
-    this.el = el;
-    this.spokenScene = {};
-    this.spokenWords = {};
+!function () {
+    var essential = Resolver("essential"), pageResolver = Resolver("page"), templates = Resolver("document::essential.templates::"), Layouter = essential("Layouter"), Laidout = essential("Laidout"), log = essential("console")();
 
-    if (!createjs.Sound.isReady()) {
-    }
-    this.preload = new createjs.LoadQueue();
-    this.preload.installPlugin(createjs.Sound);
-    this.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
-    this.preload.addEventListener("complete", this._complete.bind(this));
-    this.preload.addEventListener("error", this._error.bind(this));
-    this.preload.addEventListener("progress", this._progress.bind(this));
+    var HTMLElement = Resolver("essential::HTMLElement::");
+    var DialogAction = Resolver("essential::DialogAction::");
+    var DescriptorQuery = Resolver("essential::DescriptorQuery::");
+    var pageState = Resolver("page::state");
+    var pageProgress = Resolver("page::connection.loadingProgress");
 
-    if (config.featureId) {
-        var feature = {
-            doc: config.featureId
-        };
-        for (var n in config.featureData) {
-            feature[n] = config.featureData[n];
+    var policy = {
+        DECORATORS: {
+            "data-resolve": {
+                props: true
+            }
         }
-        this.applyFeature(feature);
-    }
-};
+    };
 
-ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
+    pageResolver.declare("handlers.prepare.resolved", function (el, role) {
+        var els = el.getElementsByTagName("*"), text = [], queued = el.queued = [], attrs, dataResolve;
 
-ProtectedPresentation.prototype.destroy = function () {
-    for (var n in this.spokenScene) {
-        this.spokenScene[n] = null;
-    }
+        attrs = HTMLElement.fn.describeAttributes(el, policy);
+        attrs.texts = [];
 
-    for (var n in this.spokenWords) {
-        this.spokenWords[n] = null;
-    }
+        if (attrs.texts.length === 0) {
+            attrs.texts = attrs.texts.concat(HTMLElement.fn.findTextSubstitutions(el));
+        }
 
-    if (this.hypeId)
-        this.byId[this.hypeId] = null;
-};
+        if (attrs.texts.length || dataResolve) {
+            attrs.el = el;
+            queued.push(attrs);
+            for (var i = 0, t; t = attrs.texts[i]; ++i)
+                t.renderText.call(t, pageResolver);
+        }
 
-ProtectedPresentation.prototype.layout = function (layout) {
-    this.el.style.maxHeight = layout.width + "px";
-};
+        for (var i = 0, ce; ce = els[i]; ++i) {
+            attrs = HTMLElement.fn.describeAttributes(ce, policy);
+            dataResolve = attrs["data-resolve"];
 
-ProtectedPresentation.prototype._fileloadComplete = function (event) {
-    this.spokenWords[event.item.id].markLoaded(event.item);
-};
+            attrs.texts = [];
 
-ProtectedPresentation.prototype._complete = function (event) {
-    console.info("preload complete", event);
-};
+            if (dataResolve) {
+                if (dataResolve.props.text) {
+                    attrs.texts.push(HTMLElement.fn.makeTextSubstitution(ce, dataResolve.props.text));
+                }
+                if (dataResolve.props.html) {
+                }
+            }
+            if (attrs.texts.length === 0) {
+                attrs.texts = attrs.texts.concat(HTMLElement.fn.findTextSubstitutions(ce));
+            }
 
-ProtectedPresentation.prototype._error = function (event) {
-    debugger;
-    console.info("preload error", event);
-};
+            if (attrs.texts.length || dataResolve) {
+                attrs.el = ce;
+                queued.push(attrs);
+                for (var j = 0, t; t = attrs.texts[j]; ++j)
+                    t.renderText.call(t, pageResolver);
+            }
+        }
+    });
 
-ProtectedPresentation.prototype._progress = function (event) {
-    console.log("progress", (this.preload.progress.toFixed(2) * 100) + "%");
-};
+    pageResolver.declare("handlers.enhance.resolved", function (el, role, config, context) {
+        function textRefresher(t, resolver) {
+            return function (ev) {
+                t.renderText.call(t, resolver);
+            };
+        }
 
-ProtectedPresentation.continueSpeaking = function () {
-    for (var n in ProtectedPresentation.byId) {
-        var pp = ProtectedPresentation.byId[n];
-        pp.continueSpeaking();
-    }
-};
+        function textUpdaters(attrs, resolver) {
+            for (var i = 0, t; t = attrs.texts[i]; ++i) {
+                t.renderText.call(t, resolver);
+                for (var j = 0, s; s = t.selectors[i]; ++i)
+                    if (s.indexOf("::") >= 0) {
+                        var parts = s.split("::");
+                        Resolver(parts[0]).on("change", parts[1], textRefresher(t, resolver));
+                    } else {
+                        resolver.on("change", s, textRefresher(t, resolver));
+                    }
+            }
+        }
 
-ProtectedPresentation.prototype.continueSpeaking = function () {
-    if (this.pausedSpoken)
-        this.pausedSpoken.play();
-    var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
-    if (doc)
-        doc.continueTimelineNamed("Main Timeline");
-};
+        if (el.queued) {
+            for (var i = 0, q; q = el.queued[i]; ++i) {
+                textUpdaters(q, el.stateful);
+            }
 
-ProtectedPresentation.pauseSpeaking = function () {
-    for (var n in ProtectedPresentation.byId) {
-        var pp = ProtectedPresentation.byId[n];
-        pp.pauseSpeaking();
-    }
-};
+            el.queued = undefined;
+        }
+    });
+}();
+var ProtectedPresentation;
 
-ProtectedPresentation.prototype.pauseSpeaking = function () {
-    if (this.playingSpoken)
-        this.playingSpoken.pause();
-    var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
-    if (doc)
-        doc.pauseTimelineNamed("Main Timeline");
-};
+!function () {
+    var HTMLElement = Resolver("essential::HTMLElement::"), StatefulResolver = Resolver("essential::StatefulResolver::");
 
-ProtectedPresentation.skipSpeaking = function () {
-    for (var n in ProtectedPresentation.byId) {
-        var pp = ProtectedPresentation.byId[n];
-        pp.skipSpeaking();
-    }
-};
+    var ProtectedPresentation = window["ProtectedPresentation"] = function (el, config) {
+        this.el = el;
+        this.progressEl = HTMLElement("div", {
+            "class": "play-progress", "append to": el,
+            "make stateful": true,
+            "enhance element": true,
+            "role": "resolved"
+        }, '<div class="progress" data-resolve="info.progress"></div>');
+        this.spokenScene = {};
+        this.spokenWords = {};
 
-ProtectedPresentation.prototype.skipSpeaking = function () {
-    if (this.playingSpoken || this.pausedSpoken) {
-        var spoken = this.playingSpoken || this.pausedSpoken;
-        spoken.stop();
+        this.preload = new createjs.LoadQueue();
+        this.preload.installPlugin(createjs.Sound);
+        this.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
+        this.preload.addEventListener("complete", this._complete.bind(this));
+        this.preload.addEventListener("error", this._error.bind(this));
+        this.preload.addEventListener("progress", this._progress.bind(this));
+
+        if (config.featureId) {
+            var feature = {
+                doc: config.featureId
+            };
+            for (var n in config.featureData) {
+                feature[n] = config.featureData[n];
+            }
+            this.applyFeature(feature);
+        }
+    };
+
+    ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
+
+    ProtectedPresentation.prototype.destroy = function () {
+        this.hypeDocument = null;
+
+        for (var n in this.spokenScene) {
+            this.spokenScene[n] = null;
+        }
+
+        for (var n in this.spokenWords) {
+            this.spokenWords[n] = null;
+        }
+
+        if (this.hypeId)
+            this.byId[this.hypeId] = null;
+    };
+
+    ProtectedPresentation.prototype.layout = function (layout) {
+        this.el.style.maxHeight = layout.width + "px";
+    };
+
+    ProtectedPresentation.prototype._fileloadComplete = function (event) {
+        this.spokenWords[event.item.id].markLoaded(event.item);
+    };
+
+    ProtectedPresentation.prototype._complete = function (event) {
+        this.progressEl.stateful.set("state.error", false);
+        this.progressEl.stateful.set("state.loading", false);
+        this.progressEl.stateful.set("state.hidden", true);
+
+        if (this.hypeDocument)
+            this.hypeDocument.continueTimelineNamed("Main Timeline");
+    };
+
+    ProtectedPresentation.prototype._error = function (event) {
+        this.progressEl.stateful.set("state.error", true);
+        this.progressEl.stateful.set("info.file", event.item.src);
+    };
+
+    ProtectedPresentation.prototype._progress = function (event) {
+        this.progressEl.stateful.set("state.error", false);
+        this.progressEl.stateful.set("info.file", "");
+        this.progressEl.stateful.set("info.progress", (this.preload.progress.toFixed(2) * 100) + "%");
+        this.progressEl.firstChild.innerHTML = (this.preload.progress.toFixed(2) * 100) + "%";
+    };
+
+    ProtectedPresentation.continueSpeaking = function () {
+        for (var n in ProtectedPresentation.byId) {
+            var pp = ProtectedPresentation.byId[n];
+            pp.continueSpeaking();
+        }
+    };
+
+    ProtectedPresentation.prototype.continueSpeaking = function () {
+        if (this.pausedSpoken)
+            this.pausedSpoken.play();
+        var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
+        if (doc)
+            doc.continueTimelineNamed("Main Timeline");
+    };
+
+    ProtectedPresentation.pauseSpeaking = function () {
+        for (var n in ProtectedPresentation.byId) {
+            var pp = ProtectedPresentation.byId[n];
+            pp.pauseSpeaking();
+        }
+    };
+
+    ProtectedPresentation.prototype.pauseSpeaking = function () {
+        if (this.playingSpoken)
+            this.playingSpoken.pause();
+        var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
+        if (doc)
+            doc.pauseTimelineNamed("Main Timeline");
+    };
+
+    ProtectedPresentation.skipSpeaking = function () {
+        for (var n in ProtectedPresentation.byId) {
+            var pp = ProtectedPresentation.byId[n];
+            pp.skipSpeaking();
+        }
+    };
+
+    ProtectedPresentation.prototype.skipSpeaking = function () {
+        if (this.playingSpoken || this.pausedSpoken) {
+            var spoken = this.playingSpoken || this.pausedSpoken;
+            spoken.stop();
+        }
 
         if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
             var doc = HYPE.documents[this.hypeId];
             doc.showNextScene();
             doc.playTimelineNamed("Main Timeline");
         }
-    }
-};
+    };
 
-ProtectedPresentation.prototype.applyFeature = function (feature) {
-    var HTMLElement = Resolver("essential::HTMLElement::");
-
-    if (feature.js) {
-        this.resourcePath = feature.path;
-        this.elementId = feature.id;
-        this.hypeId = feature.doc;
-
-        if (this.elementId == "sfpch_hype_container" && this.hypeId == null)
-            this.hypeId = "sfp-ch";
-        if (this.hypeId)
-            this.byId[this.hypeId] = this;
-
-        var el = HTMLElement("div", { id: feature.id });
-        this.el.appendChild(el);
-
-        var script = HTMLElement("script", {
-            "charset": "utf-8"
-        });
-        script.src = feature.path + feature.js;
-        document.head.appendChild(script);
-    } else if (feature.html) {
-    }
-};
-
-ProtectedPresentation.prototype._preloadSpoken = function (sceneName) {
-    var scene = this.spokenScene[sceneName];
-    if (scene)
-        for (var n in scene.spoken) {
-            var spoken = scene.spoken[n];
-            var names = spoken.types, spokenId = spoken.name;
-
-            var manifest = [
-                { id: spokenId, src: this.resourcePath + names.ogg }
-            ];
-            this.preload.loadManifest(manifest);
+    ProtectedPresentation.backSpeaking = function () {
+        for (var n in ProtectedPresentation.byId) {
+            var pp = ProtectedPresentation.byId[n];
+            pp.backSpeaking();
         }
-};
+    };
 
-ProtectedPresentation.prototype.loadingScene = function (sceneName) {
-    this._preloadSpoken(sceneName);
-    var scene = this.spokenScene[sceneName];
-};
-
-ProtectedPresentation.prototype.droppingScene = function (sceneName) {
-    var scene = this.spokenScene[sceneName];
-    if (scene) {
-        scene.unplayed.length = 0;
-        for (var n in scene.spoken) {
-            var spoken = scene.spoken[n];
-            spoken.unload();
-            scene.unplayed.push(n);
+    ProtectedPresentation.prototype.backSpeaking = function () {
+        if (this.playingSpoken || this.pausedSpoken) {
+            var spoken = this.playingSpoken || this.pausedSpoken;
+            spoken.stop();
         }
-    }
-};
 
-ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
-    var manifest = [
-        { id: spokenId, src: this.resourcePath + names.ogg }
-    ];
-    this.preload.loadManifest(manifest);
-
-    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId];
-
-    if (spoken == undefined) {
-        spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
-        scene.unplayed.push(spokenId);
-        this.spokenWords[spokenId] = spoken;
-    } else {
-        if (scene.spoken[spokenId] == null)
-            scene.spoken[spokenId] = spoken;
-    }
-
-    return spoken;
-};
-
-ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
-    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] };
-    scene.queued = scene.unplayed.shift();
-    var spoken = this.spokenWords[scene.queued];
-    if (spoken) {
-    } else {
-        console.error("no spoken to queue in", sceneName, "queue.");
-    }
-};
-
-ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
-    var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[scene.queued];
-    scene.queued = null;
-
-    if (spoken) {
-        spoken.play();
-    } else {
-        console.error("no spoken to play in", sceneName, "queue.");
-    }
-};
-
-ProtectedPresentation.prototype.getResourcePath = function () {
-    return this.resourcePath;
-};
-
-ProtectedPresentation.prototype.applyHTML = function (page) {
-    SubPageApplyDest.call(page, this.el);
-};
-
-var SubPageApplyDest = function (dest) {
-    var e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild, db = dest, fc = db.firstElementChild !== undefined ? db.firstElementChild : db.firstChild;
-
-    if (this.applied)
-        return;
-
-    var applied = this.applied = [];
-    while (e) {
-        if (fc == null) {
-            db.appendChild(e);
-        } else {
-            db.insertBefore(e, fc);
+        if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
+            var doc = HYPE.documents[this.hypeId];
+            doc.showPreviousScene();
+            doc.playTimelineNamed("Main Timeline");
         }
-        applied.push(e);
-        e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild;
-    }
-};
+    };
 
-ProtectedPresentation.handlers = {};
+    ProtectedPresentation.prototype.applyFeature = function (feature) {
+        if (feature.js) {
+            this.resourcePath = feature.path;
+            this.elementId = feature.id;
+            this.hypeId = feature.doc;
 
-ProtectedPresentation.handlers.enhance = function (el, role, config) {
-    var presentation = new ProtectedPresentation(el, config);
-    Resolver("buckets::user.features").on("bind change", function (ev) {
-        var featuresValue = ev.resolver("user.features");
-        if (featuresValue) {
-            var feature = featuresValue[config.feature];
-            if (feature) {
-                presentation.applyFeature(feature);
+            if (this.elementId == "sfpch_hype_container" && this.hypeId == null)
+                this.hypeId = "sfp-ch";
+            if (this.hypeId)
+                this.byId[this.hypeId] = this;
+
+            var el = HTMLElement("div", { id: feature.id });
+            this.el.appendChild(el);
+
+            var script = HTMLElement("script", {
+                "charset": "utf-8"
+            });
+            script.src = feature.path + feature.js;
+            document.head.appendChild(script);
+        } else if (feature.html) {
+        }
+    };
+
+    ProtectedPresentation.prototype._preloadSpoken = function (sceneName) {
+        var scene = this.spokenScene[sceneName];
+        if (scene)
+            for (var n in scene.spoken) {
+                this.progressEl.stateful.set("state.loading", true);
+                this.progressEl.stateful.set("state.hidden", false);
+
+                var spoken = scene.spoken[n];
+                var names = spoken.types, spokenId = spoken.name;
+
+                var manifest = [
+                    { id: spokenId, src: this.resourcePath + names.ogg }
+                ];
+                this.preload.loadManifest(manifest);
             }
+    };
+
+    ProtectedPresentation.prototype.loadingScene = function (sceneName) {
+        this._preloadSpoken(sceneName);
+        var scene = this.spokenScene[sceneName];
+        if (scene) {
+            console.log("Loaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
         }
-    });
+    };
 
-    return presentation;
-};
+    ProtectedPresentation.prototype.droppingScene = function (sceneName) {
+        var scene = this.spokenScene[sceneName];
+        if (scene) {
+            scene.unplayed.length = 0;
+            for (var n in scene.spoken) {
+                var spoken = scene.spoken[n];
+                spoken.unload();
+                scene.unplayed.push(n);
+            }
+            console.log("Unloaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
+        }
+    };
 
-ProtectedPresentation.handlers.layout = function (el, layout, instance) {
-    if (instance)
-        return instance.layout(layout);
-};
+    ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
+        var manifest = [
+            { id: spokenId, src: this.resourcePath + names.ogg }
+        ];
+        this.preload.loadManifest(manifest);
 
-ProtectedPresentation.handlers.discard = function (el, role, instance) {
-    instance.destroy();
-};
+        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId];
+
+        if (spoken == undefined) {
+            spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
+            scene.unplayed.push(spokenId);
+            this.spokenWords[spokenId] = spoken;
+        } else {
+            if (scene.spoken[spokenId] == null)
+                scene.spoken[spokenId] = spoken;
+        }
+
+        return spoken;
+    };
+
+    ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
+        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] };
+        scene.queued = scene.unplayed.shift();
+        var spoken = this.spokenWords[scene.queued];
+        if (spoken) {
+        } else {
+            console.error("no spoken to queue in", sceneName, "queue.");
+        }
+    };
+
+    ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
+        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[scene.queued];
+        scene.queued = null;
+
+        if (spoken) {
+            spoken.play();
+        } else {
+            console.error("no spoken to play in", sceneName, "queue.");
+        }
+    };
+
+    ProtectedPresentation.prototype.getResourcePath = function () {
+        return this.resourcePath;
+    };
+
+    ProtectedPresentation.prototype.applyHTML = function (page) {
+        SubPageApplyDest.call(page, this.el);
+    };
+
+    var SubPageApplyDest = function (dest) {
+        var e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild, db = dest, fc = db.firstElementChild !== undefined ? db.firstElementChild : db.firstChild;
+
+        if (this.applied)
+            return;
+
+        var applied = this.applied = [];
+        while (e) {
+            if (fc == null) {
+                db.appendChild(e);
+            } else {
+                db.insertBefore(e, fc);
+            }
+            applied.push(e);
+            e = this.body.firstElementChild !== undefined ? this.body.firstElementChild : this.body.firstChild;
+        }
+    };
+
+    ProtectedPresentation.handlers = {};
+
+    ProtectedPresentation.handlers.enhance = function (el, role, config) {
+        var presentation = new ProtectedPresentation(el, config);
+        Resolver("buckets::user.features").on("bind change", function (ev) {
+            var featuresValue = ev.resolver("user.features");
+            if (featuresValue) {
+                var feature = featuresValue[config.feature];
+                if (feature) {
+                    presentation.applyFeature(feature);
+                }
+            }
+        });
+
+        return presentation;
+    };
+
+    ProtectedPresentation.handlers.layout = function (el, layout, instance) {
+        if (instance)
+            return instance.layout(layout);
+    };
+
+    ProtectedPresentation.handlers.discard = function (el, role, instance) {
+        instance.destroy();
+    };
+}();
 createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
 createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
@@ -2045,6 +2179,7 @@ function afterDefineScene(sceneName, map) {
         else
             this.spokenWords[n] = new SpokenWord(n, map[n], this.documentName(), sceneName);
     }
+    presentation.hypeDocument.pauseTimelineNamed("Main Timeline");
 }
 
 function queueNextSpoken(sceneName) {
@@ -2066,12 +2201,19 @@ function hypeDocCallback(hypeDocument, element, event) {
     hypeDocument.afterDefineScene = afterDefineScene;
     hypeDocument.queueNextSpoken = queueNextSpoken;
     hypeDocument.playNextSpoken = playNextSpoken;
+
+    var presentation = ProtectedPresentation.byId[hypeDocument.documentName()];
+    if (presentation)
+        presentation.hypeDocument = hypeDocument;
 }
 
 function hypeSceneCallback(hypeDocument, element, event) {
     var presentation = ProtectedPresentation.byId[hypeDocument.documentName()];
     switch (event.type) {
         case "HypeSceneLoad":
+            setTimeout(function () {
+                hypeDocument.pauseTimelineNamed("Main Timeline");
+            }, 0);
             presentation.loadingScene(hypeDocument.currentSceneName());
             break;
 
@@ -2207,6 +2349,12 @@ document.essential.router.manage({ href: "/continue-speaking" }, "essential.reso
 
 document.essential.router.manage({ href: "/pause-speaking" }, "essential.resources", function (path, action) {
     ProtectedPresentation.pauseSpeaking();
+    document.essential.router.clearHash();
+    return false;
+});
+
+document.essential.router.manage({ href: "/back-speaking" }, "essential.resources", function (path, action) {
+    ProtectedPresentation.backSpeaking();
     document.essential.router.clearHash();
     return false;
 });

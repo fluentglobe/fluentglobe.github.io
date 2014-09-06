@@ -153,6 +153,13 @@ document.essential.router.manage({ href:"/pause-speaking" },"essential.resources
     return false;
 });
 
+document.essential.router.manage({ href:"/back-speaking" },"essential.resources",function(path,action) {
+
+    ProtectedPresentation.backSpeaking();
+    document.essential.router.clearHash();
+    return false;
+});
+
 document.essential.router.manage({ href:"/skip-speaking" },"essential.resources",function(path,action) {
 
     ProtectedPresentation.skipSpeaking();

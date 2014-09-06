@@ -193,6 +193,7 @@ main.fluid {
         position: absolute;
         left:0; right:0;
         bottom: 0; height: @links-bar-height;
+        z-index: 5; // above dynamic presentation (TODO review)
 
         .follow {
             position: absolute;
@@ -880,6 +881,37 @@ main article section.first {
     right: 10px;
     top: 10px;
     z-index: 1000; // above presentation
+
+    .btn {
+        font-size: 22px;
+    }
+}
+
+.play-progress {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    width: 200px;
+    height: 200px;
+    z-index: 10;
+
+    &::before {
+        content: "";
+        // background-image:url();
+    }
+
+    .progress {
+        position:absolute;
+        font-size: 30px;
+        line-height: 30px;
+        top: 85px;
+        left:0; right:0;
+        text-align: center;
+        color: white;
+        text-shadow: 1px 1px 3px black;
+    }
 }
 
 .expat-happiness {
