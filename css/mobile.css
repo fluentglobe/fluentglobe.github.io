@@ -9211,9 +9211,6 @@ body {
 .appified .with-lead-and-menu > header {
   height: 100%;
   background-color: white;
-  background-size: auto 100% ;
-  background-position: center right;
-  background-image: url(/images/Kat-Henry-86-field.jpg);
 }
 main article section.first {
   background-color: white;
@@ -9299,6 +9296,9 @@ main article section.first {
 }
 #sfpch_hype_container .HYPE_scene {
   overflow-x: visible;
+}
+#sfpch_hype_container #kat-henry-bg {
+  background-size: 100% auto;
 }
 .spoken-controls {
   position: absolute;

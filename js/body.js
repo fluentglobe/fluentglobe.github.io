@@ -1669,9 +1669,7 @@ ProtectedPresentation.prototype.destroy = function () {
 };
 
 ProtectedPresentation.prototype.layout = function (layout) {
-    if (layout.height > layout.width) {
-        this.el.style.maxHeight = layout.width + "px";
-    }
+    this.el.style.maxHeight = layout.width + "px";
 };
 
 ProtectedPresentation.prototype._fileloadComplete = function (event) {
