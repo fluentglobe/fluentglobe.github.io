@@ -1782,6 +1782,7 @@ var ProtectedPresentation;
 
         if (this.hypeDocument)
             this.hypeDocument.continueTimelineNamed("Main Timeline");
+        this.waitingForPreloadComplete = false;
     };
 
     ProtectedPresentation.prototype._error = function (event) {
@@ -2220,9 +2221,11 @@ function hypeSceneCallback(hypeDocument, element, event) {
     var presentation = ProtectedPresentation.byId[hypeDocument.documentName()];
     switch (event.type) {
         case "HypeSceneLoad":
-            setTimeout(function () {
-                hypeDocument.pauseTimelineNamed("Main Timeline");
-            }, 0);
+            if (!presentation.waitingForPreloadComplete)
+                setTimeout(function () {
+                    hypeDocument.pauseTimelineNamed("Main Timeline");
+                }, 0);
+            presentation.waitingForPreloadComplete = true;
             presentation.loadingScene(hypeDocument.currentSceneName());
             break;
 
