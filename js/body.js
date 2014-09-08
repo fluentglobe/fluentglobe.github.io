@@ -1608,11 +1608,6 @@ var account;
         el.parentNode.insertBefore(unavail, el);
         avail.appendChild(el);
 
-        if (el.networkState === el.NETWORK_NO_SOURCE) {
-            unavail.hidden = false;
-            throw new Error('Cannot play any of the available sources');
-        }
-
         var args = {
             "text_element": document.querySelector(conf.text),
             "audio_element": avail,
