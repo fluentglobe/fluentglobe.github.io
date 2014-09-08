@@ -1839,6 +1839,8 @@ var ProtectedPresentation;
             spoken.stop();
         }
 
+        this.preload.close();
+
         if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
             var doc = HYPE.documents[this.hypeId];
             doc.showNextScene();
@@ -1858,6 +1860,8 @@ var ProtectedPresentation;
             var spoken = this.playingSpoken || this.pausedSpoken;
             spoken.stop();
         }
+
+        this.preload.close();
 
         if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
             var doc = HYPE.documents[this.hypeId];
