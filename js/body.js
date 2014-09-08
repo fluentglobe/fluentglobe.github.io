@@ -1721,6 +1721,7 @@ var ProtectedPresentation;
 
 !function () {
     var HTMLElement = Resolver("essential::HTMLElement::"), StatefulResolver = Resolver("essential::StatefulResolver::");
+    var logger = Resolver("essential::console::")();
 
     var ProtectedPresentation = window["ProtectedPresentation"] = function (el, config) {
         this.el = el;
@@ -1774,6 +1775,9 @@ var ProtectedPresentation;
 
     ProtectedPresentation.prototype._fileloadComplete = function (event) {
         this.spokenWords[event.item.id].markLoaded(event.item);
+    };
+
+    ProtectedPresentation.prototype._completedPlaying = function (spoken) {
     };
 
     ProtectedPresentation.prototype._complete = function (event) {
@@ -1911,7 +1915,7 @@ var ProtectedPresentation;
         this._preloadSpoken(sceneName);
         var scene = this.spokenScene[sceneName];
         if (scene) {
-            console.log("Loaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
+            logger.log("Loaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
         }
     };
 
@@ -1924,7 +1928,7 @@ var ProtectedPresentation;
                 spoken.unload();
                 scene.unplayed.push(n);
             }
-            console.log("Unloaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
+            logger.log("Unloaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
         }
     };
 
@@ -1954,7 +1958,7 @@ var ProtectedPresentation;
         var spoken = this.spokenWords[scene.queued];
         if (spoken) {
         } else {
-            console.error("no spoken to queue in", sceneName, "queue.");
+            logger.error("no spoken to queue in", sceneName, "queue.");
         }
     };
 
@@ -1965,7 +1969,7 @@ var ProtectedPresentation;
         if (spoken) {
             spoken.play();
         } else {
-            console.error("no spoken to play in", sceneName, "queue.");
+            logger.error("no spoken to play in", sceneName, "queue.");
         }
     };
 
@@ -2025,12 +2029,6 @@ createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
 createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 
-function spokenLoadHandler(event) {
-    var spoken = SpokenWord.prototype.known[event.id];
-    if (spoken && spoken.playOnLoad)
-        spoken.play();
-}
-
 function SpokenWord(name, conf, docId, sceneName) {
     this.name = name;
     this.types = conf;
@@ -2043,120 +2041,132 @@ function SpokenWord(name, conf, docId, sceneName) {
 
     this.instance;
 }
-SpokenWord.prototype.known = {};
-SpokenWord.prototype.capabilities = createjs.Sound.getCapabilities();
 
-SpokenWord.prototype._prepareLoad = function () {
-    if (this.loadHandler)
-        return;
+!function () {
+    var logger = Resolver("essential::console::")();
 
-    SpokenWord.prototype.loadHandler = createjs.Sound.addEventListener("fileload", spokenLoadHandler);
-};
-
-SpokenWord.prototype._createInstance = function () {
-    this.instance = createjs.Sound.createInstance(this.name);
-
-    this.instance.addEventListener("playComplete", this._completed.bind(this));
-    this.instance.addEventListener("failed", this._failed.bind(this));
-};
-
-SpokenWord.prototype.markLoaded = function (item) {
-    if (!this.instance) {
-        this.preloaded = true;
-        this._createInstance();
-        console.log("set instance for", this.name, item.ext ? "extension=" + item.ext : "");
+    function spokenLoadHandler(event) {
+        var spoken = SpokenWord.prototype.known[event.id];
+        if (spoken && spoken.playOnLoad)
+            spoken.play();
     }
-};
 
-SpokenWord.prototype.load = function () {
-    if (this.registered)
-        return;
+    SpokenWord.prototype.known = {};
+    SpokenWord.prototype.capabilities = createjs.Sound.getCapabilities();
 
-    this._prepareLoad();
-
-    var resourcePath = this.presentation ? this.presentation.getResourcePath() : "/assets/default/";
-    var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = resourcePath + fileName;
-    this.registered = createjs.Sound.registerSound(path, this.name, 1);
-};
-
-SpokenWord.prototype.unload = function () {
-    if (!this.registered)
-        return;
-
-    this.instance = null;
-    createjs.Sound.removeSound(this.name);
-};
-
-SpokenWord.prototype._completed = function (event) {
-    debugger;
-    this.instance.setPosition(0);
-    if (this.presentation) {
-        if (this.presentation.playingSpoken == this)
-            this.presentation.playingSpoken = null;
-    }
-};
-
-SpokenWord.prototype._failed = function (event) {
-    debugger;
-};
-
-SpokenWord.prototype.play = function () {
-    if (!this.instance) {
-        console.log("playing before load of", this.name, this.preloaded ? "was" : "wasn't", "preloaded");
-        if (this.preloaded)
-            this._createInstance();
-        else {
-            console.error("Flagging it for load");
-
-            this.playOnLoad = true;
-            this.load();
+    SpokenWord.prototype._prepareLoad = function () {
+        if (this.loadHandler)
             return;
-        }
-    }
 
-    if (this.instance) {
-        if (this.instance.resume() == false) {
-            this.instance.play();
+        SpokenWord.prototype.loadHandler = createjs.Sound.addEventListener("fileload", spokenLoadHandler);
+    };
+
+    SpokenWord.prototype._createInstance = function () {
+        this.instance = createjs.Sound.createInstance(this.name);
+
+        this.instance.addEventListener("playComplete", this._completed.bind(this));
+        this.instance.addEventListener("failed", this._failed.bind(this));
+    };
+
+    SpokenWord.prototype.markLoaded = function (item) {
+        if (!this.instance) {
+            this.preloaded = true;
+            this._createInstance();
+            logger.log("set instance for", this.name, item.ext ? "extension=" + item.ext : "");
         }
+    };
+
+    SpokenWord.prototype.load = function () {
+        if (this.registered)
+            return;
+
+        this._prepareLoad();
+
+        var resourcePath = this.presentation ? this.presentation.getResourcePath() : "/assets/default/";
+        var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = resourcePath + fileName;
+        this.registered = createjs.Sound.registerSound(path, this.name, 1);
+    };
+
+    SpokenWord.prototype.unload = function () {
+        if (!this.registered)
+            return;
+
+        this.instance = null;
+        createjs.Sound.removeSound(this.name);
+    };
+
+    SpokenWord.prototype._completed = function (event) {
+        this.instance.setPosition(0);
         if (this.presentation) {
-            this.presentation.playingSpoken = this;
+            if (this.presentation.playingSpoken == this) {
+                this.presentation._completedPlaying(this);
+                this.presentation.playingSpoken = null;
+            }
+        }
+    };
+
+    SpokenWord.prototype._failed = function (event) {
+        debugger;
+    };
+
+    SpokenWord.prototype.play = function () {
+        if (!this.instance) {
+            logger.log("playing before load of", this.name, this.preloaded ? "was" : "wasn't", "preloaded");
+            if (this.preloaded)
+                this._createInstance();
+            else {
+                logger.error("Flagging it for load");
+
+                this.playOnLoad = true;
+                this.load();
+                return;
+            }
+        }
+
+        if (this.instance) {
+            if (this.instance.resume() == false) {
+                this.instance.play();
+            }
+            if (this.presentation) {
+                this.presentation.playingSpoken = this;
+                this.presentation.pausedSpoken = null;
+                logger.log("setting playingSpoken");
+            }
+        } else {
+            logger.error("still no instance", this);
+        }
+    };
+
+    SpokenWord.prototype.pause = function () {
+        if (this.instance) {
+            this.instance.pause();
+            if (this.presentation) {
+                this.presentation.pausedSpoken = this;
+                this.presentation.playingSpoken = null;
+                logger.log("pause/clearing playingSpoken");
+            }
+        }
+    };
+
+    SpokenWord.prototype.stop = function () {
+        if (!this.instance)
+            return;
+
+        this.instance.stop();
+        if (this.presentation) {
             this.presentation.pausedSpoken = null;
-            console.log("setting playingSpoken");
-        }
-    } else {
-        console.error("still no instance", this);
-    }
-};
-
-SpokenWord.prototype.pause = function () {
-    if (this.instance) {
-        this.instance.pause();
-        if (this.presentation) {
-            this.presentation.pausedSpoken = this;
             this.presentation.playingSpoken = null;
-            console.log("pause/clearing playingSpoken");
+            logger.log("stop/clear playingSpoken");
         }
-    }
-};
+    };
 
-SpokenWord.prototype.stop = function () {
-    if (!this.instance)
-        return;
-
-    this.instance.stop();
-    if (this.presentation) {
-        this.presentation.pausedSpoken = null;
-        this.presentation.playingSpoken = null;
-        console.log("stop/clear playingSpoken");
-    }
-};
-
-SpokenWord.prototype.togglePlay = function () {
-    if (this.instance)
-        this.play();
-    else
-        this.pause();
-};
+    SpokenWord.prototype.togglePlay = function () {
+        if (this.instance)
+            this.play();
+        else
+            this.pause();
+    };
+}();
 function getSpoken(name) {
     return SpokenWord.prototype.known[name];
 }
