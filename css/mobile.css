@@ -2703,6 +2703,10 @@ html[lang=ch] body [lang=ar] {
   width: 94%;
   max-width: 400px;
 }
+#intro .left-col,
+#intro .right-col {
+  position: relative;
+}
 .narrow-blurp {
   margin: 20px auto 0 auto;
   border: 0;

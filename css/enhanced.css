@@ -40,6 +40,11 @@
     margin-left: -240px;
     width: 480px;
   }
+  #intro .center-piece .left-col,
+  #intro .center-piece .right-col {
+    width: 200px;
+    margin-left: -100px;
+  }
 }
 @media only screen and (min-width: 750px) {
   #intro .center-piece,
@@ -86,6 +91,14 @@
   #intro .right-col,
   main.fluid .right-col {
     float: left;
+    width: 50%;
+    left: 0;
+    margin-left: 0;
+  }
+  #intro .center-piece .left-col,
+  main.fluid .center-piece .left-col,
+  #intro .center-piece .right-col,
+  main.fluid .center-piece .right-col {
     width: 50%;
     left: 0;
     margin-left: 0;

@@ -20,21 +20,24 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 <!--
     </div>
 -->
-<div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
+<div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'" >
+  {% include intro/understood-networked.html %}
 
-  <section class="left-col" style="color:#bbb;">
+  <section class="center-piece" style="color:#bbb;">
     <h3 style="text-align:center;">We are,</h3>
 
-    <div style="position:absolute;left:15%; width:35%;">
+    <div class="clearfix">
+    <div class="left-col">
     <img width="100" src="/images/henrik-head.jpg" style="display:block; margin: 0 auto 10px auto; border-radius:50px;">
     <div style="text-align:center;">Henrik Vendelbo</div>
     <div style="text-align:center;">henrik@fluentglobe.com</div>
     </div>
 
-    <div style="position:relative;left:50%;width:35%;">
+    <div class="right-col">
     <img width="100" src="/images/katty-head.jpg" style="display:block; margin: 0 auto 10px auto; border-radius:50px;">
     <div style="text-align:center;">Caterine Apruzzese</div>
     <div style="text-align:center;">katty@fluentglobe.com</div>
+    </div>
     </div>
 
     <h2 style="text-align:center;">We make Fluent Globe</h2>
@@ -49,18 +52,6 @@ var manifest_url = "http://freshtranslation.com/memory-ffos/manifest.webapp";
 
   </section>
 
-<!--   <div class="right-col clearfix">
-    <h2  style="text-align:center;">Our latest book</h2>
-
-    <div role="book" class="book-left-1" data-role="'prefix':'r4vb','src':'/speak/recipes-brazil.html','spread':true">
-    {% include book/r4vb-info.html %}
-    </div>
-
-    <div role="book" class="book-right-1" data-role="'prefix':'seil','src':'/speak/recipes-brazil.html','spread':true">
-    {% include book/seil-info.html %}
-    </div>
-  </div>
- -->
   <footer></footer>
 
 </div>
