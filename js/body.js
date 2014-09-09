@@ -1903,11 +1903,13 @@ var ProtectedPresentation;
 
                 var spoken = scene.spoken[n];
                 var names = spoken.types, spokenId = spoken.name;
-
                 var manifest = [
                     { id: spokenId, src: this.resourcePath + names.ogg }
                 ];
-                this.preload.loadManifest(manifest);
+                if (!spoken.preloading && !spoken.preloaded) {
+                    this.preload.loadManifest(manifest);
+                    spoken.preloading = true;
+                }
             }
     };
 
@@ -1933,12 +1935,9 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
-        var manifest = [
+        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId], manifest = [
             { id: spokenId, src: this.resourcePath + names.ogg }
         ];
-        this.preload.loadManifest(manifest);
-
-        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId];
 
         if (spoken == undefined) {
             spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
@@ -1949,6 +1948,11 @@ var ProtectedPresentation;
                 scene.spoken[spokenId] = spoken;
         }
 
+        if (!spoken.preloading && !spoken.preloaded) {
+            this.preload.loadManifest(manifest);
+            spoken.preloading = true;
+        }
+
         return spoken;
     };
 
@@ -1957,7 +1961,7 @@ var ProtectedPresentation;
         scene.queued = scene.unplayed.shift();
         var spoken = this.spokenWords[scene.queued];
         if (spoken) {
-            logger.error("next spoken", spoken.name, "for scene", sceneName);
+            logger.info("next spoken", spoken.name, "for scene", sceneName);
         } else {
             logger.error("no spoken to queue in", sceneName, "queue.");
         }
