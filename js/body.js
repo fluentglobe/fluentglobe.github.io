@@ -1957,6 +1957,7 @@ var ProtectedPresentation;
         scene.queued = scene.unplayed.shift();
         var spoken = this.spokenWords[scene.queued];
         if (spoken) {
+            logger.error("next spoken", spoken.name, "for scene", sceneName);
         } else {
             logger.error("no spoken to queue in", sceneName, "queue.");
         }
@@ -2070,6 +2071,7 @@ function SpokenWord(name, conf, docId, sceneName) {
 
     SpokenWord.prototype.markLoaded = function (item) {
         if (!this.instance) {
+            this.preloading = false;
             this.preloaded = true;
             this._createInstance();
             logger.log("set instance for", this.name, item.ext ? "extension=" + item.ext : "");
@@ -2093,6 +2095,8 @@ function SpokenWord(name, conf, docId, sceneName) {
 
         this.instance = null;
         createjs.Sound.removeSound(this.name);
+        this.preloaded = false;
+        this.preloading = false;
     };
 
     SpokenWord.prototype._completed = function (event) {
