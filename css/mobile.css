@@ -9314,6 +9314,10 @@ main article section.first {
 .spoken-controls .btn {
   font-size: 22px;
 }
+.spoken-controls .btn:hover {
+  color: inherit;
+  text-shadow: 0px 0px 3px white;
+}
 .play-progress {
   position: absolute;
   left: 50%;
