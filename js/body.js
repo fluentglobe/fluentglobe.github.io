@@ -1302,7 +1302,7 @@ var account;
 
     var expandedBook;
 
-    function Book(el, config) {
+    var Book = function (el, config) {
         this.el = el;
         this.stateful = el.stateful;
         this.pos = config.pos;
@@ -1351,7 +1351,7 @@ var account;
             this.book.pageLoad({ page: this, book: this.book });
         });
         page.book = this;
-    }
+    };
 
     Book.prototype.destroy = function () {
         this.bookEl = null;
@@ -1551,6 +1551,24 @@ var account;
     } else {
         window.reader = { Book: Book };
     }
+
+    reader.Book.handlers = {};
+
+    reader.Book.handlers.enhance = function (el, role, config) {
+        var book = new reader.Book(el, config);
+
+        return book;
+    };
+
+    reader.Book.handlers.layout = function (el, layout, instance) {
+        if (instance)
+            return instance.layout(layout);
+    };
+
+    reader.Book.handlers.discard = function (el, role, instance) {
+        if (instance)
+            instance.destroy(el);
+    };
 }(this);
 !function (window) {
     function Slider(el, role, config, context) {
@@ -2263,25 +2281,9 @@ Resolver("buckets::user.features").on("change", function (ev) {
     Resolver("page").set("state.appified", appified);
 });
 
-function enhance_book(el, role, config) {
-    var book = new reader.Book(el, config);
-
-    return book;
-}
-
-function layout_book(el, layout, instance) {
-    if (instance)
-        return instance.layout(layout);
-}
-
-function discard_book(el, role, instance) {
-    if (instance)
-        instance.destroy(el);
-}
-
-Resolver("document").set("essential.handlers.enhance.book", enhance_book);
-Resolver("document").set("essential.handlers.layout.book", layout_book);
-Resolver("document").set("essential.handlers.discard.book", discard_book);
+Resolver("document").set("essential.handlers.enhance.book", reader.Book.handlers.enhance);
+Resolver("document").set("essential.handlers.layout.book", reader.Book.handlers.layout);
+Resolver("document").set("essential.handlers.discard.book", reader.Book.handlers.discard);
 
 Resolver("document").set("essential.handlers.enhance.slider", slider.enhance);
 Resolver("document").set("essential.handlers.layout.slider", function (el, layout, instance) {

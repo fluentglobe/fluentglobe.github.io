@@ -6,16 +6,16 @@
 /// <reference path="../../libs/DefinitelyTyped/impress/impress.d.ts"/>
 
 /// <reference path="head.d.ts"/>
-/// <reference path="../../libs/book-reader/fluent-app-def.ts"/>
+/// <reference path="../../libs/book-reader/lib/fluent-app-def.ts"/>
 // in head:  <reference path="resolved.ts"/>
 /// <reference path="impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="router.ts"/>
-/// <reference path="../../libs/book-reader/cards.ts"/>
-/// <reference path="../../libs/book-reader/account.ts"/>
-/// <reference path="../../libs/book-reader/reader.ts"/>
-/// <reference path="../../libs/book-reader/slider.ts"/>
-/// <reference path="../../libs/book-reader/audio.ts"/>
+/// <reference path="../../libs/book-reader/lib/cards.ts"/>
+/// <reference path="../../libs/book-reader/lib/account.ts"/>
+/// <reference path="../../libs/book-reader/lib/reader.ts"/>
+/// <reference path="../../libs/book-reader/lib/slider.ts"/>
+/// <reference path="../../libs/book-reader/lib/audio.ts"/>
 
 /// <reference path="../../libs/immerse.js/index.ts"/>
 
@@ -36,24 +36,9 @@ Resolver("buckets::user.features").on("change",function(ev) {
     Resolver("page").set("state.appified", appified);
 });
 
-function enhance_book(el,role,config) {
-
-	var	book = new reader.Book(el,config);
-
-	return book;
-}
-
-function layout_book(el,layout,instance) {
-	if (instance) return instance.layout(layout);
-}
-
-function discard_book(el,role,instance) {
-	if (instance) instance.destroy(el);
-}
-
-Resolver("document").set("essential.handlers.enhance.book", enhance_book);
-Resolver("document").set("essential.handlers.layout.book", layout_book);
-Resolver("document").set("essential.handlers.discard.book", discard_book);
+Resolver("document").set("essential.handlers.enhance.book", reader.Book.handlers.enhance);
+Resolver("document").set("essential.handlers.layout.book", reader.Book.handlers.layout);
+Resolver("document").set("essential.handlers.discard.book", reader.Book.handlers.discard);
 
 Resolver("document").set("essential.handlers.enhance.slider", slider.enhance);
 Resolver("document").set("essential.handlers.layout.slider", function(el,layout,instance) {
