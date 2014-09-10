@@ -7,10 +7,10 @@
 
 /// <reference path="head.d.ts"/>
 /// <reference path="../../libs/book-reader/lib/fluent-app-def.ts"/>
-// in head:  <reference path="resolved.ts"/>
-/// <reference path="impl.ts"/>
+// in head:  <reference path="../../libs/immerse.js/lib/resolved.ts"/>
+/// <reference path="../../libs/immerse.js/lib/impl.ts"/>
 /// <reference path="form.ts"/>
-/// <reference path="router.ts"/>
+/// <reference path="../../libs/immerse.js/lib/router.ts"/>
 /// <reference path="../../libs/book-reader/lib/cards.ts"/>
 /// <reference path="../../libs/book-reader/lib/account.ts"/>
 /// <reference path="../../libs/book-reader/lib/reader.ts"/>
@@ -68,6 +68,10 @@ if (window["angular"]) {
         $scope.device = 'off';//'iPad';
     }]);
 
+    fluentApp.directive('fgSpokenControls', SpokenWord.fgSpokenControls);
+
+    fluentApp.directive('fgSpoken', SpokenWord.fgSpoken);
+
     fluentApp.directive('fgChoices',['$compile',function($compile) {
 
         var radios = '<label class="" ng-repeat="option in __.options">'+
@@ -81,7 +85,8 @@ if (window["angular"]) {
                 options: []
             };
             scope.__ = __;
-            for(var e,i=0; e = jqElement[0][i]; ++i) {
+            //TODO think .children() is needed
+            for(var e,c=jqElement.children(),i=0; e = c[i]; ++i) {
                 // option
                 __.options.push({
                     value: e.value || '',
