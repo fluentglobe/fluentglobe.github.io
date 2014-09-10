@@ -9311,11 +9311,11 @@ main article section.first {
   top: 10px;
   z-index: 1000;
 }
-.spoken-controls .btn {
+.spoken-controls a.btn {
   font-size: 22px;
 }
-.spoken-controls .btn:hover {
-  color: inherit;
+.spoken-controls a.btn:hover {
+  color: #fb441b;
   text-shadow: 0px 0px 3px white;
 }
 .play-progress {
