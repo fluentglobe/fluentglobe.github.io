@@ -1,6 +1,8 @@
-    <div class="spoken-controls">
-      <a class="btn icon-play" href="#/continue-speaking" label="Play"></a>
-      <a class="btn icon-pause" href="#/pause-speaking" label="Pause"></a>
-      <a class="btn icon-previous" href="#/back-speaking" label="Back"></a>
-      <a class="btn icon-next" href="#/skip-speaking" label="Skip"></a>
+<div ng-controller="blank">
+    <div class="spoken-controls" fg-spoken-controls="">
+      <a class="btn icon-play ng-hide" href="#/continue-speaking" title="Play" control-point="play"></a>
+      <a class="btn icon-pause ng-hide" href="#/pause-speaking" title="Pause" control-point="pause"></a>
+      <a class="btn icon-previous ng-hide" href="#/back-speaking" title="Back" control-point="prev"></a>
+      <a class="btn icon-next ng-hide" href="#/skip-speaking" title="Skip" control-point="next"></a>
     </div>
+</div>

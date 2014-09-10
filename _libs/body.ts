@@ -68,6 +68,10 @@ if (window["angular"]) {
         $scope.device = 'off';//'iPad';
     }]);
 
+    fluentApp.controller("blank",['$scope', function($scope) {
+        
+    }]);
+
     fluentApp.directive('fgSpokenControls', SpokenWord.fgSpokenControls);
 
     fluentApp.directive('fgSpoken', SpokenWord.fgSpoken);

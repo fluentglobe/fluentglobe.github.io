@@ -1766,10 +1766,15 @@ var ProtectedPresentation;
         }
     };
 
+    ProtectedPresentation.active = null;
+
     ProtectedPresentation.byId = ProtectedPresentation.prototype.byId = {};
 
     ProtectedPresentation.prototype.destroy = function () {
         this.hypeDocument = null;
+
+        if (ProtectedPresentation.active == this)
+            ProtectedPresentation.active = null;
 
         for (var n in this.spokenScene) {
             this.spokenScene[n] = null;
@@ -1842,6 +1847,10 @@ var ProtectedPresentation;
             this.playingSpoken.pause();
         if (this.hypeDocument)
             this.hypeDocument.pauseTimelineNamed("Main Timeline");
+
+        var spokenWords = Resolver("spoken-words");
+        spokenWords.set("available.playing", false);
+        spokenWords.set("available.paused", true);
     };
 
     ProtectedPresentation.skipSpeaking = function () {
@@ -1928,12 +1937,27 @@ var ProtectedPresentation;
             }
     };
 
+    ProtectedPresentation.prototype._updatePrevNext = function () {
+        ProtectedPresentation.active = this;
+
+        if (this.hypeDocument && this.hypeId) {
+            var scenes = this.hypeDocument.sceneNames(), current = this.hypeDocument.currentSceneName(), ixc = scenes.indexOf(current);
+            var spokenWords = Resolver("spoken-words");
+
+            spokenWords.set("available.next", (scenes.length - 1 > ixc));
+
+            spokenWords.set("available.prev", (0 < ixc));
+        }
+    };
+
     ProtectedPresentation.prototype.loadingScene = function (sceneName) {
         this._preloadSpoken(sceneName);
         var scene = this.spokenScene[sceneName];
         if (scene) {
             logger.log("Loaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
         }
+
+        this._updatePrevNext();
     };
 
     ProtectedPresentation.prototype.droppingScene = function (sceneName) {
@@ -1980,13 +2004,19 @@ var ProtectedPresentation;
         } else {
             logger.error("no spoken to queue in", sceneName, "queue.");
         }
+        var spokenWords = Resolver("spoken-words");
+        spokenWords.set("available.queued", (!!spoken));
     };
 
     ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
         var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[scene.queued];
         scene.queued = null;
+        var spokenWords = Resolver("spoken-words");
 
         if (spoken) {
+            spokenWords.set("available.playing", true);
+            spokenWords.set("available.queued", false);
+            spokenWords.set("available.paused", false);
             spoken.play();
         } else {
             logger.error("no spoken to play in", sceneName, "queue.");
@@ -2049,7 +2079,17 @@ createjs.Sound.alternateExtensions = ["ogg", "mp3"];
 
 createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 
-function SpokenWord(name, conf, docId, sceneName) {
+Resolver("spoken-words", {
+    available: {
+        queued: false,
+        paused: false,
+        playing: false,
+        next: false,
+        prev: false
+    }
+});
+
+var SpokenWord = function (name, conf, docId, sceneName) {
     this.name = name;
     this.types = conf;
     this.docId = docId;
@@ -2071,7 +2111,7 @@ function SpokenWord(name, conf, docId, sceneName) {
             spoken.play();
     }
 
-    SpokenWord.prototype.known = {};
+    SpokenWord.known = SpokenWord.prototype.known = {};
     SpokenWord.prototype.capabilities = createjs.Sound.getCapabilities();
 
     SpokenWord.prototype._prepareLoad = function () {
@@ -2264,6 +2304,71 @@ if ("HYPE_eventListeners" in window === false) {
 window["HYPE_eventListeners"].push({ "type": "HypeDocumentLoad", "callback": hypeDocCallback });
 window["HYPE_eventListeners"].push({ "type": "HypeSceneLoad", "callback": hypeSceneCallback });
 window["HYPE_eventListeners"].push({ "type": "HypeSceneUnload", "callback": hypeSceneCallback });
+SpokenWord.fgSpokenControls = [
+    '$compile', '$animate',
+    function ($compile, $animate) {
+        var spokenWords = Resolver("spoken-words");
+
+        var logger = Resolver("essential::console::")();
+
+        var POINTS = {
+            "next": "available.next",
+            "prev": "available.prev",
+            "play": "available.queued || available.paused",
+            "pause": "available.playing"
+        };
+
+        function link($scope, jqElement, attrs) {
+            $scope.available = spokenWords("available");
+
+            $scope.$safeDigest = function () {
+                switch (this.$root.$$phase) {
+                    case "$apply":
+                    case "$digest":
+                        break;
+                    default:
+                        this.$digest();
+                }
+            };
+
+            spokenWords.on("change", "available", function () {
+                $scope.$apply(function () {
+                });
+            });
+
+            jqElement.children().each(function (i, e) {
+                var cp = e.getAttribute("control-point");
+                if (cp != null) {
+                    var w = POINTS[cp];
+                    if (w)
+                        $scope.$watch(w, function (value, old, scope) {
+                            var jq = jQuery(e);
+                            jq.addClass(value ? "ng-show" : "ng-hide");
+                            jq.removeClass(value ? "ng-hide" : "ng-show");
+                        });
+                }
+            });
+        }
+
+        return {
+            scope: {},
+            link: link
+        };
+    }
+];
+
+SpokenWord.fgSpoken = [
+    '$compile',
+    function ($compile) {
+        function link(scope, jqElement, attrs) {
+        }
+
+        return {
+            scope: {},
+            link: link
+        };
+    }
+];
 Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature-enabled");
 Resolver("page").set("map.class.state.appified", "appified");
 
@@ -2313,6 +2418,14 @@ if (window["angular"]) {
             $scope.device = 'off';
         }]);
 
+    fluentApp.controller("blank", [
+        '$scope', function ($scope) {
+        }]);
+
+    fluentApp.directive('fgSpokenControls', SpokenWord.fgSpokenControls);
+
+    fluentApp.directive('fgSpoken', SpokenWord.fgSpoken);
+
     fluentApp.directive('fgChoices', [
         '$compile', function ($compile) {
             var radios = '<label class="" ng-repeat="option in __.options">' + '<input type="radio" name="{{ __.name }}" value="{{ option.value }}">{{ option.text }}</label>';
@@ -2323,7 +2436,8 @@ if (window["angular"]) {
                     options: []
                 };
                 scope.__ = __;
-                for (var e, i = 0; e = jqElement[0][i]; ++i) {
+
+                for (var e, c = jqElement.children(), i = 0; e = c[i]; ++i) {
                     __.options.push({
                         value: e.value || '',
                         text: e.label || e.innerHTML || ''
