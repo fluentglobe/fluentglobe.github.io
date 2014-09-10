@@ -1738,6 +1738,7 @@ var ProtectedPresentation;
 
     var ProtectedPresentation = window["ProtectedPresentation"] = function (el, config) {
         this.el = el;
+        this.hypeDocument = null;
         this.progressEl = HTMLElement("div", {
             "class": "play-progress", "append to": el,
             "make stateful": true,
@@ -1825,9 +1826,8 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype.continueSpeaking = function () {
         if (this.pausedSpoken)
             this.pausedSpoken.play();
-        var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
-        if (doc)
-            doc.continueTimelineNamed("Main Timeline");
+        if (this.hypeDocument)
+            this.hypeDocument.continueTimelineNamed("Main Timeline");
     };
 
     ProtectedPresentation.pauseSpeaking = function () {
@@ -1840,9 +1840,8 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype.pauseSpeaking = function () {
         if (this.playingSpoken)
             this.playingSpoken.pause();
-        var doc = window["HYPE"] ? HYPE.documents[this.hypeId] : null;
-        if (doc)
-            doc.pauseTimelineNamed("Main Timeline");
+        if (this.hypeDocument)
+            this.hypeDocument.pauseTimelineNamed("Main Timeline");
     };
 
     ProtectedPresentation.skipSpeaking = function () {
@@ -1860,10 +1859,9 @@ var ProtectedPresentation;
 
         this.preload.close();
 
-        if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
-            var doc = HYPE.documents[this.hypeId];
-            doc.showNextScene();
-            doc.playTimelineNamed("Main Timeline");
+        if (this.hypeDocument) {
+            this.hypeDocument.showNextScene();
+            this.hypeDocument.playTimelineNamed("Main Timeline");
         }
     };
 
@@ -1882,10 +1880,9 @@ var ProtectedPresentation;
 
         this.preload.close();
 
-        if (window["HYPE"] && this.hypeId && HYPE.documents[this.hypeId]) {
-            var doc = HYPE.documents[this.hypeId];
-            doc.showPreviousScene();
-            doc.playTimelineNamed("Main Timeline");
+        if (this.hypeDocument) {
+            this.hypeDocument.showPreviousScene();
+            this.hypeDocument.playTimelineNamed("Main Timeline");
         }
     };
 
@@ -2063,7 +2060,7 @@ function SpokenWord(name, conf, docId, sceneName) {
     this.registered;
 
     this.instance;
-}
+};
 
 !function () {
     var logger = Resolver("essential::console::")();
