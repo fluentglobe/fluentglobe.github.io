@@ -39,9 +39,6 @@ base-body-class:
 <body class="{{ page.base-body-class }}{{ page.body-class }}"
 {% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
 >
-  {% if page.og-images %}{% for image in page.og-images %}<img src="{{ image }}" rel="image_src" class="principal-pic" alt="{{ page.title }} - Principal Picture">
-  {% endfor %}{% endif %}
-
 {{ content }}
 
   <script src="/js/jquery.min.js"></script>  
