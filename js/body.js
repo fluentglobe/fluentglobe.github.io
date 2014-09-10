@@ -489,7 +489,7 @@ var fluentglobe;
 
     var baseUrl = location.href.substring(0, location.href.lastIndexOf("/") + 1);
 
-    Resolver("document::essential.state").copyToScope = Resolver("document::essential.geoip").copyToScope = function (scope, names, adjuster) {
+    Resolver.method("copyToScope", function (scope, names, adjuster) {
         var v = {};
         for (var n in names) {
             v[n] = this.get(n);
@@ -499,9 +499,9 @@ var fluentglobe;
         for (var n in names) {
             scope[names[n]] = v[n];
         }
-    };
+    });
 
-    Resolver("document::essential.state").intoAngularScope = Resolver("document::essential.geoip").intoAngularScope = function (scope, names, adjuster) {
+    Resolver.method("intoAngularScope", function (scope, names, adjuster) {
         this.copyToScope(scope, names, adjuster);
 
         this.on("change", this, function (ev) {
@@ -511,7 +511,7 @@ var fluentglobe;
             else
                 scope.$digest();
         });
-    };
+    });
 
     function RouterPath(href, resources, fn) {
         this.href = href.toLowerCase();
