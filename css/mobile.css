@@ -9380,12 +9380,11 @@ main article section.first {
 }
 .play-progress {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -100px;
-  margin-top: -100px;
-  width: 200px;
-  height: 200px;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-image: url(/images/05.png);
   z-index: 10;
 }
 .play-progress::before {
@@ -9395,7 +9394,8 @@ main article section.first {
   position: absolute;
   font-size: 30px;
   line-height: 30px;
-  top: 85px;
+  top: 50%;
+  margin-top: -15px;
   left: 0;
   right: 0;
   text-align: center;
