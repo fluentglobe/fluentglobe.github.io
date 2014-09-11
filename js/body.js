@@ -2208,12 +2208,12 @@ var SpokenWord = function (name, conf, docId, sceneName) {
     };
 
     SpokenWord.prototype._failed = function (event) {
-        debugger;
+        logger.error("Failed spoken word", event);
     };
 
     SpokenWord.prototype.play = function () {
         if (!this.instance) {
-            logger.log("playing before load of", this.name, this.preloaded ? "was" : "wasn't", "preloaded");
+            logger.log("playing before load of", this.name, this.preloaded ? "was" : "wasn't", "preloaded", this.preloading);
             if (this.preloaded)
                 this._createInstance();
             else {
