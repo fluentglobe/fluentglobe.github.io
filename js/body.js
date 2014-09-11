@@ -1745,6 +1745,7 @@ var ProtectedPresentation;
             "enhance element": true,
             "role": "resolved"
         }, '<div class="progress" data-resolve="info.progress"></div>');
+        this.progressEl.stateful.set("state.hidden", true);
         this.spokenScene = {};
         this.spokenWords = {};
 
