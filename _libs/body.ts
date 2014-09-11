@@ -69,7 +69,7 @@ if (window["angular"]) {
     }]);
 
     fluentApp.controller("blank",['$scope', function($scope) {
-        
+
     }]);
 
     fluentApp.directive('fgSpokenControls', SpokenWord.fgSpokenControls);

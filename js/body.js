@@ -1763,6 +1763,8 @@ var ProtectedPresentation;
 
         this.allowBack = false;
         this.allowSkip = true;
+
+        this.useCache = false;
     };
 
     ProtectedPresentation.active = null;
@@ -1928,6 +1930,7 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype.applyFeature = function (feature) {
         if (feature.js) {
             this.resourcePath = feature.path;
+            this.resourcePrefix = (location.host == "fluentglobe.com" && this.useCache) ? "http://cache.fluentglobe.com" + this.resourcePath : this.resourcePath;
             this.elementId = feature.id;
             this.hypeId = feature.doc;
 
@@ -1958,7 +1961,7 @@ var ProtectedPresentation;
                 var spoken = scene.spoken[n];
                 var names = spoken.types, spokenId = spoken.name;
                 var manifest = [
-                    { id: spokenId, src: this.resourcePath + names.ogg }
+                    { id: spokenId, src: this.resourcePrefix + names.ogg }
                 ];
                 if (!spoken.preloading && !spoken.preloaded) {
                     this.preload.loadManifest(manifest);
@@ -2014,7 +2017,7 @@ var ProtectedPresentation;
 
     ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
         var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId], manifest = [
-            { id: spokenId, src: this.resourcePath + names.ogg }
+            { id: spokenId, src: this.resourcePrefix + names.ogg }
         ];
 
         if (spoken == undefined) {
