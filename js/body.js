@@ -1959,12 +1959,9 @@ var ProtectedPresentation;
                 this.progressEl.stateful.set("state.hidden", false);
 
                 var spoken = scene.spoken[n];
-                var names = spoken.types, spokenId = spoken.name;
-                var manifest = [
-                    { id: spokenId, src: this.resourcePrefix + names.ogg }
-                ];
+
                 if (!spoken.preloading && !spoken.preloaded) {
-                    this.preload.loadManifest(manifest);
+                    this.preload.loadManifest(spoken.getManifest());
                     spoken.preloading = true;
                 }
             }
@@ -2015,13 +2012,11 @@ var ProtectedPresentation;
         }
     };
 
-    ProtectedPresentation.prototype.addSpoken = function (spokenId, names, sceneName) {
-        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId], manifest = [
-            { id: spokenId, src: this.resourcePrefix + names.ogg }
-        ];
+    ProtectedPresentation.prototype.addSpoken = function (spokenId, name, sceneName) {
+        var scene = this.spokenScene[sceneName] = this.spokenScene[sceneName] || { spoken: {}, unplayed: [] }, spoken = this.spokenWords[spokenId];
 
         if (spoken == undefined) {
-            spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, names, this.hypeId, sceneName);
+            spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, name, this.hypeId, sceneName);
             scene.unplayed.push(spokenId);
             this.spokenWords[spokenId] = spoken;
         } else {
@@ -2030,7 +2025,7 @@ var ProtectedPresentation;
         }
 
         if (!spoken.preloading && !spoken.preloaded) {
-            this.preload.loadManifest(manifest);
+            this.preload.loadManifest(spoken.getManifest());
             spoken.preloading = true;
         }
 
@@ -2117,7 +2112,7 @@ var ProtectedPresentation;
         instance.destroy();
     };
 }();
-createjs.Sound.alternateExtensions = ["ogg", "mp3"];
+createjs.Sound.alternateExtensions = ["mp3"];
 
 createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 
@@ -2132,13 +2127,14 @@ Resolver("spoken-words", {
     }
 });
 
-var SpokenWord = function (name, conf, docId, sceneName) {
+var SpokenWord = function (id, name, docId, sceneName) {
+    this.id = id;
     this.name = name;
-    this.types = conf;
     this.docId = docId;
     this.sceneName = sceneName;
     this.known[name] = this;
     this.presentation = ProtectedPresentation.prototype.byId[docId];
+    this.path = this.presentation ? this.presentation.resourcePrefix + this.name : "/assets/default/" + this.name;
 
     this.registered;
 
@@ -2165,10 +2161,16 @@ var SpokenWord = function (name, conf, docId, sceneName) {
     };
 
     SpokenWord.prototype._createInstance = function () {
-        this.instance = createjs.Sound.createInstance(this.name);
+        this.instance = createjs.Sound.createInstance(this.id);
 
         this.instance.addEventListener("playComplete", this._completed.bind(this));
         this.instance.addEventListener("failed", this._failed.bind(this));
+    };
+
+    SpokenWord.prototype.getManifest = function () {
+        return [
+            { id: this.id, src: this.path }
+        ];
     };
 
     SpokenWord.prototype.markLoaded = function (item) {
@@ -2186,9 +2188,7 @@ var SpokenWord = function (name, conf, docId, sceneName) {
 
         this._prepareLoad();
 
-        var resourcePath = this.presentation ? this.presentation.getResourcePath() : "/assets/default/";
-        var fileName = createjs.Sound.getCapability("ogg") ? this.types.ogg : this.types.mp3, path = resourcePath + fileName;
-        this.registered = createjs.Sound.registerSound(path, this.name, 1);
+        this.registered = createjs.Sound.registerSound(this.path, this.id, 1);
     };
 
     SpokenWord.prototype.unload = function () {
@@ -2196,7 +2196,7 @@ var SpokenWord = function (name, conf, docId, sceneName) {
             return;
 
         this.instance = null;
-        createjs.Sound.removeSound(this.name);
+        createjs.Sound.removeSound(this.id);
         this.preloaded = false;
         this.preloading = false;
     };
