@@ -1976,10 +1976,17 @@ var ProtectedPresentation;
             logger.log("Loaded scene", sceneName, "spoken:", scene.unplayed.join(" "));
         }
 
-        this._updatePrevNext();
+        this._updatePrevNextRestart();
     };
 
     ProtectedPresentation.prototype.droppingScene = function (sceneName) {
+        if (this.playingSpoken || this.pausedSpoken) {
+            var spoken = this.playingSpoken || this.pausedSpoken;
+            spoken.stop();
+        }
+        var spokenWords = Resolver("spoken-words");
+        spokenWords.set("available.playing", false);
+
         var scene = this.spokenScene[sceneName];
         if (scene) {
             scene.unplayed.length = 0;
