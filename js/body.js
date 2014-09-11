@@ -1764,6 +1764,9 @@ var ProtectedPresentation;
             }
             this.applyFeature(feature);
         }
+
+        this.allowBack = false;
+        this.allowSkip = true;
     };
 
     ProtectedPresentation.active = null;
@@ -1819,6 +1822,20 @@ var ProtectedPresentation;
         this.progressEl.stateful.set("info.file", "");
         this.progressEl.stateful.set("info.progress", (this.preload.progress.toFixed(2) * 100) + "%");
         this.progressEl.firstChild.innerHTML = (this.preload.progress.toFixed(2) * 100) + "%";
+    };
+
+    ProtectedPresentation.restart = function () {
+        this._newLoadQueue();
+        for (var n in ProtectedPresentation.byId) {
+            var pp = ProtectedPresentation.byId[n];
+            pp.restart();
+        }
+    };
+
+    ProtectedPresentation.prototype.restart = function () {
+        if (this.hypeDocument) {
+            this.hypeDocument.showSceneNamed("Main Scene");
+        }
     };
 
     ProtectedPresentation.continueSpeaking = function () {
@@ -1937,16 +1954,18 @@ var ProtectedPresentation;
             }
     };
 
-    ProtectedPresentation.prototype._updatePrevNext = function () {
+    ProtectedPresentation.prototype._updatePrevNextRestart = function () {
         ProtectedPresentation.active = this;
 
         if (this.hypeDocument && this.hypeId) {
             var scenes = this.hypeDocument.sceneNames(), current = this.hypeDocument.currentSceneName(), ixc = scenes.indexOf(current);
             var spokenWords = Resolver("spoken-words");
 
-            spokenWords.set("available.next", (scenes.length - 1 > ixc));
+            spokenWords.set("available.next", (scenes.length - 1 > ixc) && this.allowSkip);
 
-            spokenWords.set("available.prev", (0 < ixc));
+            spokenWords.set("available.prev", (0 < ixc) && this.allowBack);
+
+            spokenWords.set("available.restart", true);
         }
     };
 
@@ -2081,6 +2100,7 @@ createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
 
 Resolver("spoken-words", {
     available: {
+        restart: false,
         queued: false,
         paused: false,
         playing: false,
@@ -2312,6 +2332,7 @@ SpokenWord.fgSpokenControls = [
         var logger = Resolver("essential::console::")();
 
         var POINTS = {
+            "restart": "available.restart",
             "next": "available.next",
             "prev": "available.prev",
             "play": "available.queued || available.paused",
@@ -2471,6 +2492,12 @@ if (window["angular"]) {
 document.essential.router.manage({ href: "/stress-free-presentation" }, "essential.resources", function (path, action) {
     impress('stress-free-presentation').init();
 
+    return false;
+});
+
+document.essential.router.manage({ href: "/restart-presentation" }, "essential.resources", function (path, action) {
+    ProtectedPresentation.restart();
+    document.essential.router.clearHash();
     return false;
 });
 

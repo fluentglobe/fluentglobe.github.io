@@ -133,6 +133,13 @@ document.essential.router.manage({ href:"/stress-free-presentation"}, "essential
     return false;
 });
 
+document.essential.router.manage({ href:"/restart-presentation" },"essential.resources",function(path,action) {
+
+    ProtectedPresentation.restart();
+    document.essential.router.clearHash();
+    return false;
+});
+
 document.essential.router.manage({ href:"/continue-speaking" },"essential.resources",function(path,action) {
 
     ProtectedPresentation.continueSpeaking();
