@@ -1748,12 +1748,7 @@ var ProtectedPresentation;
         this.spokenScene = {};
         this.spokenWords = {};
 
-        this.preload = new createjs.LoadQueue();
-        this.preload.installPlugin(createjs.Sound);
-        this.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
-        this.preload.addEventListener("complete", this._complete.bind(this));
-        this.preload.addEventListener("error", this._error.bind(this));
-        this.preload.addEventListener("progress", this._progress.bind(this));
+        this._newLoadQueue();
 
         if (config.featureId) {
             var feature = {
@@ -1795,6 +1790,19 @@ var ProtectedPresentation;
         this.el.style.maxHeight = layout.width + "px";
     };
 
+    ProtectedPresentation.prototype._newLoadQueue = function () {
+        if (this.preload) {
+            this.preload.removeAllEventListeners();
+            this.preload.removeAll();
+        }
+        this.preload = new createjs.LoadQueue();
+        this.preload.installPlugin(createjs.Sound);
+        this.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
+        this.preload.addEventListener("complete", this._complete.bind(this));
+        this.preload.addEventListener("error", this._error.bind(this));
+        this.preload.addEventListener("progress", this._progress.bind(this));
+    };
+
     ProtectedPresentation.prototype._fileloadComplete = function (event) {
         this.spokenWords[event.item.id].markLoaded(event.item);
     };
@@ -1825,7 +1833,6 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.restart = function () {
-        this._newLoadQueue();
         for (var n in ProtectedPresentation.byId) {
             var pp = ProtectedPresentation.byId[n];
             pp.restart();
@@ -1833,6 +1840,7 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.restart = function () {
+        this._newLoadQueue();
         if (this.hypeDocument) {
             this.hypeDocument.showSceneNamed("Main Scene");
         }
@@ -1848,6 +1856,9 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype.continueSpeaking = function () {
         if (this.pausedSpoken)
             this.pausedSpoken.play();
+        else if (this.hypeDocument) {
+            this.playNextSpoken(this.hypeDocument.currentSceneName());
+        }
         if (this.hypeDocument)
             this.hypeDocument.continueTimelineNamed("Main Timeline");
     };
@@ -1883,7 +1894,7 @@ var ProtectedPresentation;
             spoken.stop();
         }
 
-        this.preload.close();
+        this._newLoadQueue();
 
         if (this.hypeDocument) {
             this.hypeDocument.showNextScene();
@@ -1904,7 +1915,8 @@ var ProtectedPresentation;
             spoken.stop();
         }
 
-        this.preload.close();
+        this.preload.removeAll();
+        this._newLoadQueue();
 
         if (this.hypeDocument) {
             this.hypeDocument.showPreviousScene();
