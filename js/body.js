@@ -1749,6 +1749,8 @@ var ProtectedPresentation;
         this.spokenScene = {};
         this.spokenWords = {};
 
+        this.track = new SpokenTrack();
+
         if (config.featureId) {
             var feature = {
                 doc: config.featureId
@@ -1791,39 +1793,6 @@ var ProtectedPresentation;
         this.el.style.maxHeight = layout.width + "px";
     };
 
-    ProtectedPresentation.prototype._newLoadQueue = function (sceneName) {
-        this._dropLoadQueue(sceneName);
-        this._ensureLoadQueue(sceneName);
-    };
-
-    ProtectedPresentation.prototype._ensureLoadQueue = function (sceneName) {
-        var scene = this._getScene(sceneName);
-        if (scene.preload == undefined) {
-            scene.preload = new createjs.LoadQueue();
-            scene.preload.sceneName = sceneName;
-            scene.preload.installPlugin(createjs.Sound);
-            scene.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
-            scene.preload.addEventListener("complete", this._complete.bind(this));
-            scene.preload.addEventListener("error", this._error.bind(this));
-            scene.preload.addEventListener("progress", this._progress.bind(this));
-        }
-    };
-
-    ProtectedPresentation.prototype._dropLoadQueue = function (sceneName) {
-        var scene = this._getScene(sceneName);
-
-        if (scene.preload) {
-            scene.preload.removeAllEventListeners();
-            scene.preload.removeAll();
-            scene.preload = null;
-        }
-    };
-
-    ProtectedPresentation.prototype._fileloadComplete = function (event) {
-        this.spokenWords[event.item.id].markLoaded(event.item);
-        logger.info("file load complete", event.item);
-    };
-
     ProtectedPresentation.prototype._completedPlaying = function (spoken) {
     };
 
@@ -1852,7 +1821,7 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype._progress = function (event) {
-        var scene = this._getScene(event.target.sceneName);
+        var scene = this.spokenScene[event.target.sceneName];
 
         this.progressEl.stateful.set("state.error", false);
         this.progressEl.stateful.set("info.file", "");
@@ -1872,9 +1841,10 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.restart = function () {
-        this._newLoadQueue(this.currentSceneName);
+        this.currentSceneName = this.startSceneName;
+        this.track._newLoadQueue(this.spokenScene[this.startSceneName]);
         if (this.hypeDocument) {
-            this.hypeDocument.showSceneNamed("Main Scene");
+            this.hypeDocument.showSceneNamed(this.currentSceneName);
         }
     };
 
@@ -1926,7 +1896,7 @@ var ProtectedPresentation;
             spoken.stop();
         }
 
-        this._newLoadQueue(this.currentSceneName);
+        this.track._newLoadQueue(this.spokenScene[this.currentSceneName]);
 
         if (this.hypeDocument) {
             this.hypeDocument.showNextScene();
@@ -1947,7 +1917,7 @@ var ProtectedPresentation;
             spoken.stop();
         }
 
-        this._newLoadQueue(this.currentSceneName);
+        this.track._newLoadQueue(this.spokenScene[this.currentSceneName]);
 
         if (this.hypeDocument) {
             this.hypeDocument.showPreviousScene();
@@ -1979,20 +1949,6 @@ var ProtectedPresentation;
         }
     };
 
-    ProtectedPresentation.prototype._preloadSpoken = function (sceneName) {
-        this._ensureLoadQueue(sceneName);
-
-        var scene = this.spokenScene[sceneName];
-        if (scene)
-            for (var n in scene.spoken) {
-                this.progressEl.stateful.set("state.loading", true);
-                this.progressEl.stateful.set("state.hidden", false);
-
-                var spoken = scene.spoken[n];
-                spoken.load();
-            }
-    };
-
     ProtectedPresentation.prototype._updatePrevNextRestart = function () {
         ProtectedPresentation.active = this;
 
@@ -2008,9 +1964,28 @@ var ProtectedPresentation;
         }
     };
 
+    ProtectedPresentation.prototype.willPlay = function (scenes) {
+        var scene;
+        this.startSceneName = scenes[0];
+
+        for (var i = 0, sceneName; sceneName = scenes[i]; ++i) {
+            scene = this.spokenScene[sceneName] = { name: sceneName, spoken: {}, unplayed: [], presentation: this };
+
+            this.spokenWords[sceneName] = scene.spoken[sceneName] = new SpokenWord(sceneName, sceneName + ".ogg", this.hypeId, sceneName);
+            scene.unplayed.push(sceneName);
+        }
+
+        if (this.startSceneName) {
+            this.currentSceneName = this.startSceneName;
+            scene = this.spokenScene[this.currentSceneName];
+            this.track._ensureLoadQueue(scene);
+            scene.spoken[this.currentSceneName].load();
+        }
+    };
+
     ProtectedPresentation.prototype.loadingScene = function (sceneName) {
         this.currentSceneName = sceneName;
-        this._preloadSpoken(sceneName);
+        this.track.preloadScene(this.spokenScene[sceneName]);
         this._updatePrevNextRestart();
     };
 
@@ -2035,7 +2010,7 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.addSpoken = function (spokenId, name, sceneName) {
-        var scene = this._getScene(sceneName), spoken = this.spokenWords[spokenId];
+        var scene = this.spokenScene[sceneName], spoken = this.spokenWords[spokenId];
 
         if (spoken == undefined) {
             spoken = scene.spoken[spokenId] = new SpokenWord(spokenId, name, this.hypeId, sceneName);
@@ -2051,7 +2026,7 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.queueNextSpoken = function (sceneName) {
-        var scene = this._getScene(sceneName);
+        var scene = this.spokenScene[sceneName];
         scene.queued = scene.unplayed.shift();
         var spoken = this.spokenWords[scene.queued];
         if (spoken) {
@@ -2064,7 +2039,7 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.playNextSpoken = function (sceneName) {
-        var scene = this._getScene(sceneName), spoken = this.spokenWords[scene.queued];
+        var scene = this.spokenScene[sceneName], spoken = this.spokenWords[scene.queued];
         scene.queued = null;
         var spokenWords = Resolver("spoken-words");
 
@@ -2076,14 +2051,6 @@ var ProtectedPresentation;
         } else {
             logger.error("no spoken to play in", sceneName, "queue.");
         }
-    };
-
-    ProtectedPresentation.prototype._getScene = function (sceneName) {
-        var scene = this.spokenScene[sceneName];
-        if (scene == undefined) {
-            scene = this.spokenScene[sceneName] = { spoken: {}, unplayed: [] };
-        }
-        return scene;
     };
 
     ProtectedPresentation.prototype.getResourcePath = function () {
@@ -2153,6 +2120,62 @@ Resolver("spoken-words", {
     }
 });
 
+function SpokenTrack() {
+    this.doc = document;
+}
+
+SpokenTrack.prototype._createTag = function (src) {
+    var tag = this.doc.createElement("audio");
+    tag.autoplay = false;
+    tag.preload = "none";
+
+    tag.src = src;
+    return tag;
+};
+
+SpokenTrack.prototype.preloadScene = function (scene) {
+    if (scene == null)
+        return;
+
+    this._ensureLoadQueue(scene);
+
+    for (var n in scene.spoken) {
+        scene.presentation.progressEl.stateful.set("state.loading", true);
+        scene.presentation.progressEl.stateful.set("state.hidden", false);
+
+        var spoken = scene.spoken[n];
+        spoken.load();
+    }
+};
+
+SpokenTrack.prototype._fileloadComplete = function (event) {
+};
+
+SpokenTrack.prototype._newLoadQueue = function (scene) {
+    this._dropLoadQueue(scene);
+    this._ensureLoadQueue(scene);
+};
+
+SpokenTrack.prototype._ensureLoadQueue = function (scene) {
+    if (scene.preload == undefined) {
+        scene.preload = new createjs.LoadQueue();
+        scene.preload.sceneName = scene.name;
+        scene.preload.installPlugin(createjs.Sound);
+        scene.preload.addEventListener("fileload", this._fileloadComplete.bind(this));
+        scene.preload.addEventListener("complete", scene.presentation._complete.bind(scene.presentation));
+        scene.preload.addEventListener("error", scene.presentation._error.bind(scene.presentation));
+        scene.preload.addEventListener("progress", scene.presentation._progress.bind(scene.presentation));
+    }
+};
+
+SpokenTrack.prototype._dropLoadQueue = function (scene) {
+    if (scene.preload) {
+        scene.preload.removeAllEventListeners();
+        scene.preload.removeAll();
+        scene.preload = null;
+    }
+};
+
 var SpokenWord = function (id, name, docId, sceneName) {
     this.id = id;
     this.name = name;
@@ -2213,7 +2236,7 @@ var SpokenWord = function (id, name, docId, sceneName) {
             return;
 
         if (this.presentation) {
-            var scene = this.presentation._getScene(this.presentation.currentSceneName);
+            var scene = this.presentation.spokenScene[this.presentation.currentSceneName];
             scene.preload.loadManifest(this.getManifest());
             this.preloading = true;
         }
@@ -2317,12 +2340,7 @@ function afterDefineScene(sceneName, map, defaultTimeline) {
     var presentation = ProtectedPresentation.byId[this.documentName()];
     if (presentation)
         presentation._preloadSpoken(sceneName);
-    for (var n in map) {
-        if (presentation)
-            this.spokenWords[n] = presentation.addSpoken(n, map[n], sceneName);
-        else
-            this.spokenWords[n] = new SpokenWord(n, map[n], this.documentName(), sceneName);
-    }
+
     presentation.hypeDocument.pauseTimelineNamed(defaultTimeline || "Main Timeline");
 }
 
@@ -2347,8 +2365,10 @@ function hypeDocCallback(hypeDocument, element, event) {
     hypeDocument.playNextSpoken = playNextSpoken;
 
     var presentation = ProtectedPresentation.byId[hypeDocument.documentName()];
-    if (presentation)
+    if (presentation) {
         presentation.hypeDocument = hypeDocument;
+        presentation.willPlay(hypeDocument.sceneNames());
+    }
 }
 
 function hypeSceneCallback(hypeDocument, element, event) {
