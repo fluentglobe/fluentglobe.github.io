@@ -978,7 +978,7 @@ var account;
         if (this.get(bn, "null") == null) {
             var bucket = this.set(bn, simperium.bucket(name));
             bucket.on('notify_init', function (id, data) {
-                console.info("init bucket", name, "with", id, "=", data);
+                logger.info("init bucket", name, "with", id, "=", data);
 
                 if (buckets(name) == null)
                     buckets.set(name, {});
@@ -1163,16 +1163,16 @@ var account;
 
         buckets.authenticate(_user.email, password, this, {
             success: function () {
-                console.info("User in business! ", _user.email);
+                logger.info("User in business! ", _user.email);
             },
             invalidPassword: function (err, tp, code) {
-                console.log("Unhandled .. pass", _user.email, err, tp, code);
+                logger.log("Unhandled .. pass", _user.email, err, tp, code);
             },
             unknown: function (err, tp, code) {
                 buckets.authenticate(_user.email, password, this, {
                     create: true,
                     success: function () {
-                        console.info("Created user", _user.email);
+                        logger.info("Created user", _user.email);
                     },
                     error: function (err, tp, code) {
                         switch (err.status) {
@@ -1184,7 +1184,7 @@ var account;
                                 break;
                         }
 
-                        console.log("Failed to create user for", _user.email);
+                        logger.log("Failed to create user for", _user.email);
                     }
                 });
             }
