@@ -9390,6 +9390,16 @@ main article section.first {
 .play-progress::before {
   content: "";
 }
+.play-progress .play-btn {
+  position: absolute;
+  background-image: url(/images/play_button.png);
+  width: 108px;
+  height: 108px;
+  left: 50%;
+  top: 50%;
+  margin-left: -54px;
+  margin-top: -54px;
+}
 .play-progress .progress {
   position: absolute;
   font-size: 30px;
