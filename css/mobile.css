@@ -3578,6 +3578,9 @@ article > footer {
   width: 300px;
   margin: 0 auto;
 }
+body.paper {
+  background-color: white;
+}
 body.open-book {
   overflow: hidden;
 }
