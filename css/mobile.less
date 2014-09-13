@@ -910,6 +910,10 @@ main article section.first {
     &.state-expanded {
         height: auto;
         bottom: 0;
+
+        .play-btn {
+            opacity:1;
+        }
     }
 
     .loading-sound {
@@ -935,6 +939,9 @@ main article section.first {
     }
 
     .play-btn {
+        opacity: 0;
+        transition: opacity .5s ease;
+
         position:absolute;
         background-image: url(/images/play_button.png);
         width: 108px; height: 108px;

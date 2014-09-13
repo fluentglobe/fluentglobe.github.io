@@ -9395,6 +9395,9 @@ main article section.first {
   height: auto;
   bottom: 0;
 }
+.play-progress.state-expanded .play-btn {
+  opacity: 1;
+}
 .play-progress .loading-sound {
   position: absolute;
   height: 6px;
@@ -9417,6 +9420,8 @@ main article section.first {
   border-right: 2px solid black;
 }
 .play-progress .play-btn {
+  opacity: 0;
+  transition: opacity .5s ease;
   position: absolute;
   background-image: url(/images/play_button.png);
   width: 108px;
