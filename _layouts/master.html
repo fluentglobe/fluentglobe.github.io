@@ -39,6 +39,7 @@ base-body-class:
 </head>
 
 <body class="{{ page.base-body-class }}{{ page.body-class }}"
+{% if page.appify %} appify="{{ page.appify }}"{% endif %}
 {% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
 >
   {% if page.facebook-app-id %}<div id="fb-root"></div>{% endif %}

@@ -10454,6 +10454,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 			session.set("username","");
 			session.set("access_token","");
 			session.set("password",false);
+			nextSession.set("access_token","");
 			state.set("authorised",false);
 
 		    //TODO (essential.session).wipeStored()
@@ -10542,6 +10543,12 @@ Resolver("page::state.managed").on("change",function(ev) {
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
+
+	var nextSession = Resolver("document::essential.nextSession");
+	nextSession.declare({
+		access_token: ""
+	});
+	nextSession.stored("load change","local");
 
 	Layouter.variant("intro-plus-article",Generator(function(key,el,conf,parent,context) {
 

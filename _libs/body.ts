@@ -37,6 +37,17 @@ Resolver("buckets::user.features").on("change",function(ev) {
     Resolver("page").set("state.appified", appified);
 });
 
+Resolver("document::essential.state").on("change",function(ev) {
+    switch(ev.symbol) {
+        case "authenticated": if (ev.value) {
+            // if appify body
+            var appified = !!document.body.getAttribute("appify"); //TODO boolean convert
+            Resolver("page").set("state.appified", appified);
+        }
+        break;
+    }
+});
+
 Resolver("document").set("essential.handlers.enhance.book", reader.Book.handlers.enhance);
 Resolver("document").set("essential.handlers.layout.book", reader.Book.handlers.layout);
 Resolver("document").set("essential.handlers.discard.book", reader.Book.handlers.discard);

@@ -936,7 +936,7 @@ var account;
     var buckets = Resolver("buckets");
     buckets.getSimperium = function () {
         if (this.simperium == undefined) {
-            var access_token = session('access_token'), username = session().username;
+            var access_token = session().access_token, username = session().username;
             if (!access_token || !username)
                 return null;
             this.simperium = new Simperium(this.app_id, { token: access_token, username: username });
@@ -993,16 +993,17 @@ var account;
             bucket.on('error', function (errortype) {
                 if (errortype == "auth") {
                     Resolver("document").set("essential.session.access_token", null);
+                    Resolver("document").set("essential.nextSession.access_token", null);
 
                     if (session("username"))
                         buckets.authenticate(session("username"), buckets.lastPassword || '-', this, {});
                     return;
                 }
 
-                console.log("got error:", errortype);
+                logger.log("got error:", errortype);
             });
             bucket.on('ready', function () {
-                console.info("Bucket", name, "ready.");
+                logger.info("Bucket", name, "ready.");
                 var names = buckets(name);
 
                 if (buckets.created || name == "user")
@@ -1050,6 +1051,7 @@ var account;
             session.set("username", data.username);
             session.set("userid", data.userid);
             session.set("access_token", data.access_token);
+            nextSession.set("access_token", data.access_token);
             session.set("password", buckets.lastPassword == "-");
             state.set("authenticated", true);
             Resolver("page").set("state.authenticated", true);
@@ -1123,7 +1125,7 @@ var account;
         "CH25": account.OUR_CITIES.zurich
     };
 
-    var state = Resolver("document::essential.state"), basic = Resolver("buckets::user.basic"), session = Resolver("document::essential.session"), geoip = Resolver("document::essential.geoip"), console = Resolver("essential::console::")();
+    var state = Resolver("document::essential.state"), basic = Resolver("buckets::user.basic"), session = Resolver("document::essential.session"), nextSession = Resolver("document::essential.nextSession"), geoip = Resolver("document::essential.geoip"), logger = Resolver("essential::console::")();
 
     buckets.declare("user.basic", {});
 
@@ -2631,6 +2633,17 @@ Resolver("buckets::user.features").on("change", function (ev) {
 
     var appified = enabled;
     Resolver("page").set("state.appified", appified);
+});
+
+Resolver("document::essential.state").on("change", function (ev) {
+    switch (ev.symbol) {
+        case "authenticated":
+            if (ev.value) {
+                var appified = !!document.body.getAttribute("appify");
+                Resolver("page").set("state.appified", appified);
+            }
+            break;
+    }
 });
 
 Resolver("document").set("essential.handlers.enhance.book", reader.Book.handlers.enhance);
