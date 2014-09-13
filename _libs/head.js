@@ -176,6 +176,7 @@
 		this.el.className = this.baseClass + resolver(this.selectors[0]);
 	}
 
+	//TODO put in Essential
 	HTMLElement.fn.makeClassSubstitution = function(el,selector) {
 		var baseClass = el.className; if (baseClass) baseClass += " ";
 
@@ -187,6 +188,19 @@
 		};
 	};
 
+	function styleRenderSelector(resolver) {
+		this.el.style[this.prop] = resolver(this.selectors[0]);
+	}
+
+	HTMLElement.fn.makeStyleSubstitution = function(el,prop,selector) {
+		// el.style[prop] = 
+		return {
+			el: el,
+			prop: prop,
+			selectors: [selector],
+			renderStyle: styleRenderSelector
+		};
+	};
 
 	var policy = {
 		DECORATORS: {
@@ -204,6 +218,7 @@
 		attrs = HTMLElement.fn.describeAttributes(el,policy);
 		attrs.texts = [];
 		attrs.classes = [];
+		attrs.styles = [];
 		//TODO support data-resolve on root element ?
 
 		if (attrs.texts.length === 0) {
@@ -223,6 +238,7 @@
 
 			attrs.texts = [];
 			attrs.classes = [];
+			attrs.styles = [];
 
 			if (dataResolve) {
 				if (dataResolve.props.text) {
@@ -233,6 +249,9 @@
 				}
 				if (dataResolve.props["class"]) {
 					attrs.classes.push(HTMLElement.fn.makeClassSubstitution(ce,dataResolve.props["class"]));
+				}
+				if (dataResolve.props["width"]) {
+					attrs.styles.push(HTMLElement.fn.makeStyleSubstitution(ce,"width",dataResolve.props["width"]));
 				}
 			} 
 			if (attrs.texts.length === 0) {
@@ -275,6 +294,12 @@
 		};
 	}
 
+	function styleRefresher(c,resolver) {
+		return function(ev) {
+			c.renderStyle.call(c,resolver);
+		};
+	}
+
 	function classUpdaters(attrs,resolver) {
 		for(var i=0,c; c = attrs.classes[i]; ++i) {
 			c.renderClass.call(c,resolver);
@@ -287,12 +312,25 @@
 		}
 	}
 
+	function styleUpdaters(attrs,resolver) {
+		for(var i=0,c; c = attrs.styles[i]; ++i) {
+			c.renderStyle.call(c,resolver);
+			for(var j=0,s; s = c.selectors[j]; ++j) if (s.indexOf("::")>=0) {
+				var parts = s.split("::");
+				Resolver(parts[0]).on("change",parts[1],styleRefresher(c,resolver));
+			} else {
+				resolver.on("change",s,styleRefresher(c,resolver));
+			}
+		}
+	}
+
 	Resolver("page").declare("handlers.enhance.resolved", function(el,role,config,context) {
 
 		if (el.queued) {
 			for(var i=0,q; q = el.queued[i]; ++i) {
 				textUpdaters(q,el.stateful);
 				classUpdaters(q,el.stateful);
+				styleUpdaters(q,el.stateful);
 			}
 			//TODO update on any part change
 			//TODO update state.blank

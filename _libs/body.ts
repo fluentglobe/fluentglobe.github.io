@@ -7,7 +7,6 @@
 
 /// <reference path="head.d.ts"/>
 /// <reference path="../../libs/book-reader/lib/fluent-app-def.ts"/>
-// in head:  <reference path="../../libs/immerse.js/lib/resolved.ts"/>
 /// <reference path="../../libs/immerse.js/lib/impl.ts"/>
 /// <reference path="form.ts"/>
 /// <reference path="../../libs/immerse.js/lib/router.ts"/>
@@ -17,6 +16,8 @@
 /// <reference path="../../libs/book-reader/lib/slider.ts"/>
 /// <reference path="../../libs/book-reader/lib/audio.ts"/>
 
+// in head:  <reference path="../../libs/immerse.js/lib/resolved.ts"/>
+// in head:  <reference path="../../libs/immerse.js/lib/navigation.ts"/>
 /// <reference path="../../libs/immerse.js/index.ts"/>
 
 //TODO generalise for multiple countries
