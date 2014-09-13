@@ -1,11 +1,9 @@
-(function(__dependency1__, __dependency2__, __dependency3__, __dependency4__) {
-  "use strict";
+"use strict";
 
-  var Resolver = __dependency1__;
-  var Generator = __dependency2__;
-  var $ = __dependency3__;
-  var ProtectedPresentation = __dependency4__;
+// import Resolver from "Resolver";
+// import Generator from "Generator";
+// import $ from "jquery";
+var ProtectedPresentation = require("lib/ProtectedPresentation.js")["default"];
 
-  var x = 0;
-  // export x;
-})(window.Resolver, window.Generator, window.jquery, window../ProtectedPresentation.js);
+var x = 0;
+// export x;

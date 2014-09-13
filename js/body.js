@@ -1669,7 +1669,7 @@ var ProtectedPresentation;
         this.spokenScene = {};
         this.spokenWords = {};
 
-        this.track = new SpokenTrack(this.progressEl.stateful);
+        this.track = new SpokenTrack(this.progressEl.stateful, this);
 
         if (config.featureId) {
             var feature = {
@@ -1691,9 +1691,13 @@ var ProtectedPresentation;
 
     ProtectedPresentation.prototype._hackResolved = function (ev) {
         var that = ev.data;
-        that.progressEl.getElementsByClassName("loading-sound")[0].style.width = ev.resolver("info.loadingSoundProgress");
-        that.progressEl.getElementsByClassName("playing-sound")[0].style.width = ev.resolver("info.playingSoundProgress");
-        that.progressEl.getElementsByClassName("playing-presentation")[0].style.width = ev.resolver("info.playingPresentationProgress");
+        try  {
+            that.progressEl.getElementsByClassName("loading-sound")[0].style.width = ev.resolver("info.loadingSoundProgress");
+            that.progressEl.getElementsByClassName("playing-sound")[0].style.width = ev.resolver("info.playingSoundProgress");
+            that.progressEl.getElementsByClassName("playing-presentation")[0].style.width = ev.resolver("info.playingPresentationProgress");
+        } catch (ex) {
+            debugger;
+        }
     };
 
     ProtectedPresentation.active = null;
@@ -1720,6 +1724,15 @@ var ProtectedPresentation;
 
     ProtectedPresentation.prototype.layout = function (layout) {
         this.el.style.maxHeight = layout.width + "px";
+    };
+
+    ProtectedPresentation.prototype.getCurrentTimePercent = function (soundDuration) {
+        if (this.hypeDocument == undefined)
+            return 0;
+
+        var duration = soundDuration;
+
+        return this.hypeDocument.currentTimeInTimelineNamed("Main Timeline") / duration * 100;
     };
 
     ProtectedPresentation.prototype._completedPlaying = function (spoken) {
@@ -2062,7 +2075,9 @@ var SpokenTrack;
         return ".mp3";
     }
 
-    function SpokenTrackHTML5(stateful) {
+    function SpokenTrackHTML5(stateful, presentation) {
+        this.presentation = presentation;
+
         this.extension = bestExtension();
         this.silentPath = '/assets/audio/silent' + this.extension;
 
@@ -2154,6 +2169,10 @@ var SpokenTrack;
             this.current.preloaded = false;
             this.current.preloading = false;
             this.currentTag.src = this.silentPath;
+
+            this.stateful.set("info.loadingSoundProgress", "0%");
+            this.stateful.set("info.playingSoundProgress", "0%");
+            this.stateful.set("info.playingPresentationProgress", "0%");
         }
     };
 
@@ -2170,8 +2189,6 @@ var SpokenTrack;
             this.currentTag.src = this.silentPath;
             var old = this.currentTag;
             this.currentTag = this.nextTag;
-            this._updateLoadingProgress(this.currentTag);
-            this._updatePlayingProgress(this.currentTag);
             this.nextTag = old;
 
             if (nextScene) {
@@ -2227,8 +2244,11 @@ var SpokenTrack;
 
     SpokenTrackHTML5.prototype._updatePlayingProgress = function (target) {
         if (target && target.duration > 0) {
-            var percent = target.currentTime / target.duration * 100;
+            if (this.presentation) {
+                this.stateful.set("info.playing", this.presentation.getCurrentTimePercent(target.duration).toFixed(2) + "%");
+            }
 
+            var percent = target.currentTime / target.duration * 100;
             this.stateful.set("info.playingSoundProgress", percent.toFixed(2) + "%");
             logger.info("audio time", target.currentTime + "s", "/", target.duration.toFixed(2) + "s");
         }
