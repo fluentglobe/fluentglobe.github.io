@@ -9383,12 +9383,17 @@ main article section.first {
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
-  background-image: url(/images/05.png);
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
+  overflow: hidden;
 }
 .play-progress::before {
   content: "";
+}
+.play-progress.state-expanded {
+  height: auto;
+  bottom: 0;
 }
 .play-progress .loading-sound {
   position: absolute;

@@ -1661,6 +1661,9 @@ var ProtectedPresentation;
         this.progressEl.stateful.on("change", "info", this, this._hackResolved);
 
         this.progressEl.stateful.set("state.hidden", true);
+        this.progressEl.stateful.set("state.expanded", true);
+        this.progressEl.stateful.set("state.audioReady", false);
+        this.progressEl.stateful.set("state.showPlay", true);
         this.spokenScene = {};
         this.spokenWords = {};
 
@@ -1731,7 +1734,7 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype._complete = function (event) {
         this.progressEl.stateful.set("state.error", false);
         this.progressEl.stateful.set("state.loading", false);
-        this.progressEl.stateful.set("state.hidden", true);
+        this.progressEl.stateful.set("state.expanded", false);
 
         var sceneName = event.target.sceneName, scene = this.spokenScene[sceneName];
         if (scene) {
@@ -1857,6 +1860,8 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.applyFeature = function (feature) {
+        this.progressEl.stateful.set("state.hidden", false);
+
         if (feature.js) {
             this.track.requireAudio();
 
@@ -1968,6 +1973,7 @@ var ProtectedPresentation;
         this.track.play(spoken);
         this.playingSpoken = spoken;
         this.pausedSpoken = null;
+        this.progressEl.stateful.set("state.expanded", false);
 
         if (this.hypeDocument)
             this.hypeDocument.continueTimelineNamed("Main Timeline");
@@ -2154,6 +2160,9 @@ var SpokenTrack;
             return;
 
         if (scene.name == this.next.name) {
+            this.stateful.set("state.expanded", true);
+            this.stateful.set("state.showPlay", true);
+
             this.current = this.next;
             this.next = {};
             this.currentTag.src = this.silentPath;
@@ -2257,6 +2266,9 @@ var SpokenTrack;
         if (this.currentTag.src.indexOf(this.silentPath) >= 0) {
             this.markAudioReady();
         } else {
+            this.stateful.set("state.expanded", false);
+            this.stateful.set("state.showPlay", false);
+
             spokenWords.set("available.playing", true);
             spokenWords.set("available.queued", false);
             spokenWords.set("available.paused", false);
@@ -2277,6 +2289,9 @@ var SpokenTrack;
             return;
 
         if (this.current.name) {
+            this.stateful.set("state.expanded", true);
+            this.stateful.set("state.showPlay", true);
+
             spokenWords.set("available.playing", false);
             spokenWords.set("available.paused", this.currentTag.currentTime > 0);
         }

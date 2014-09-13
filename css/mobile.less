@@ -895,19 +895,21 @@ main article section.first {
 .play-progress {
     position: absolute;
     left: 0; right: 0;
-    top: 0; bottom: 0;
-    background-image: url(/images/05.png);
-    // left: 50%;
-    // top: 50%;
-    // margin-left: -100px;
-    // margin-top: -100px;
-    // width: 200px;
-    // height: 200px;
+    top: 0; 
+    height: 6px;
+    // background-image: url(/images/05.png);
+    background-color: rgba(0,0,0,.3);
     z-index: 10;
+    overflow: hidden;
 
     &::before {
         content: "";
         // background-image:url();
+    }
+
+    &.state-expanded {
+        height: auto;
+        bottom: 0;
     }
 
     .loading-sound {
