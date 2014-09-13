@@ -910,6 +910,28 @@ main article section.first {
         // background-image:url();
     }
 
+    .loading-sound {
+        position: absolute;
+        height: 6px;
+        top:0;
+        left:0;
+        background-color: rgba(100,100,100,.5);
+    }
+    .playing-sound {
+        position: absolute;
+        height: 3px;
+        top:0;
+        left:0;
+        background-color: @fluent-red;
+    }
+    .playing-presentation {
+        position: absolute;
+        height: 6px;
+        top:0;
+        left:0;
+        border-right: 2px solid black;
+    }
+
     .play-btn {
         position:absolute;
         background-image: url(/images/play_button.png);
@@ -917,6 +939,8 @@ main article section.first {
         left: 50%; top: 50%;
         margin-left: -54px;
         margin-top: -54px;
+        cursor: pointer;
+        .user-select(none);
     }
 
     .progress {

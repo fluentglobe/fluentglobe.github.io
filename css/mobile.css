@@ -9390,6 +9390,27 @@ main article section.first {
 .play-progress::before {
   content: "";
 }
+.play-progress .loading-sound {
+  position: absolute;
+  height: 6px;
+  top: 0;
+  left: 0;
+  background-color: rgba(100, 100, 100, 0.5);
+}
+.play-progress .playing-sound {
+  position: absolute;
+  height: 3px;
+  top: 0;
+  left: 0;
+  background-color: #fb441b;
+}
+.play-progress .playing-presentation {
+  position: absolute;
+  height: 6px;
+  top: 0;
+  left: 0;
+  border-right: 2px solid black;
+}
 .play-progress .play-btn {
   position: absolute;
   background-image: url(/images/play_button.png);
@@ -9399,6 +9420,11 @@ main article section.first {
   top: 50%;
   margin-left: -54px;
   margin-top: -54px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .play-progress .progress {
   position: absolute;
