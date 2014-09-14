@@ -1,6 +1,8 @@
 <div class="center-col">
 
-        <audio class="pitch" controls role="audio" data-role="'text':'#pitch-text'">
+        <audio class="pitch" controls data-role="'text':'#pitch-text'"
+        {% if include.autoplay %} autoplay="autoplay" {% endif %}
+        >
             <!-- @todo WebM? -->
             <source src="/assets/audio/pitch.mp3" type="audio/mp3">
             <source src="/assets/audio/pitch.ogg" type="audio/ogg">
