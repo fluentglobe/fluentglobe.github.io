@@ -1652,6 +1652,7 @@ var ProtectedPresentation;
     var ProtectedPresentation = window["ProtectedPresentation"] = function (el, config) {
         this.el = el;
         this.hypeDocument = null;
+        this.defaultTimeline = "Main Timeline";
         this.progressEl = HTMLElement("div", {
             "class": "play-progress", "append to": el,
             "make stateful": true,
@@ -1756,10 +1757,6 @@ var ProtectedPresentation;
             this.track.markLoaded(scene, event);
         }
         logger.info("preload complete", event, scene);
-
-        if (this.hypeDocument)
-            this.hypeDocument.continueTimelineNamed("Main Timeline");
-        this.waitingForPreloadComplete = false;
     };
 
     ProtectedPresentation.prototype._error = function (event) {
@@ -1944,6 +1941,11 @@ var ProtectedPresentation;
     };
 
     ProtectedPresentation.prototype.loadingScene = function (sceneName) {
+        if (this.hypeDocument)
+            setTimeout(function () {
+                this.hypeDocument.pauseTimelineNamed(this.defaultTimeline);
+            }.bind(this), 100);
+
         this.currentSceneName = sceneName;
         var scene = this.spokenScene[sceneName];
         this.track.stageScene(scene, this.spokenScene[scene.nextName]);
@@ -1990,8 +1992,10 @@ var ProtectedPresentation;
         this.pausedSpoken = null;
         this.progressEl.stateful.set("state.expanded", false);
 
-        if (this.hypeDocument)
-            this.hypeDocument.continueTimelineNamed("Main Timeline");
+        if (this.hypeDocument) {
+            this.hypeDocument.continueTimelineNamed(this.defaultTimeline);
+            this.hypeDocument.continueTimelineNamed(this.defaultTimeline);
+        }
     };
 
     ProtectedPresentation.prototype.getResourcePath = function () {
@@ -2526,8 +2530,6 @@ function registerSpoken(map) {
 function afterDefineScene(sceneName, map, defaultTimeline) {
     this.spokenWords = this.spokenWords || {};
     var presentation = ProtectedPresentation.byId[this.documentName()];
-
-    presentation.hypeDocument.pauseTimelineNamed(defaultTimeline || "Main Timeline");
 }
 
 function queueNextSpoken(sceneName) {
@@ -2555,11 +2557,6 @@ function hypeSceneCallback(hypeDocument, element, event) {
     var presentation = ProtectedPresentation.byId[hypeDocument.documentName()];
     switch (event.type) {
         case "HypeSceneLoad":
-            if (!presentation.waitingForPreloadComplete)
-                setTimeout(function () {
-                    hypeDocument.pauseTimelineNamed("Main Timeline");
-                }, 0);
-            presentation.waitingForPreloadComplete = true;
             presentation.loadingScene(hypeDocument.currentSceneName());
             break;
 
