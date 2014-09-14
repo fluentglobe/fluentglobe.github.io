@@ -9481,3 +9481,18 @@ main article section.first {
   margin-left: -121px;
   margin-right: -121px;
 }
+main article > footer .photo-credits {
+  position: relative;
+  padding: 1em;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 800px;
+}
+main article > footer .photo-credits h1,
+main article > footer .photo-credits h2,
+main article > footer .photo-credits h3 {
+  text-align: center;
+}
+main article > footer .photo-credits iframe {
+  display: inline-block;
+}
