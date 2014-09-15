@@ -2096,6 +2096,8 @@ var SpokenTrack;
     function SpokenTrackHTML5(stateful, presentation) {
         this.presentation = presentation;
 
+        this.audios = document.body.querySelectorAll("audio");
+
         this.extension = bestExtension();
         this.silentPath = '/assets/audio/silent' + this.extension;
 
@@ -2118,6 +2120,14 @@ var SpokenTrack;
         this.nextTag.load();
         this.currentTag.play();
         this.nextTag.play();
+
+        this._pauseOtherAudio();
+    };
+
+    SpokenTrackHTML5.prototype._pauseOtherAudio = function () {
+        for (var i = 0, a; a = this.audios[i]; ++i) {
+            a.pause();
+        }
     };
 
     SpokenTrackHTML5.prototype.play = function (spoken) {
