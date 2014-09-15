@@ -37,31 +37,14 @@ og-images:
 
     {% include stress-free/switzerland-offer-lead.html %}
 
-
-
     <footer class="links-bar">
-      <!-- <h3>Fluent Globe has mentioned in </h3> -->
-
-        <div class="press-mentions">
-          <h3>As seen in</h3>
-
-          <a class="daily-news" rel="_new" href="http://www.nydailynews.com/life-style/must-have-travel-guides-brazil-bound-world-cup-fans-article-1.1811433" alt="New York Daily News">
-          <!-- New York Daily News -->
-          </a>
-
-          <a class="marie-claire" rel="_new" href="http://www.marieclaire.co.uk/news/travel/546568/hot-spot-s-o-paulo-brazil.html" alt="Marie Claire Travel">
-            <!-- Marie Claire Travel -->
-          </a>
-
-          <a class="reuters" rel="_new" href="http://uk.reuters.com/article/2014/05/23/fluent-globe-guide-idUKnPncgNwZv+8a+PRN20140523" alt="Reuters">
-            <!-- Reuters -->
-          </a>
-        </div>
+        {% include site-follow.html %}
     </footer>
   </header>
 
   <article>
-    <section class="four even hide-when-stress-free-feature-enabled" style="background-color: white;">
+    <section class="first hide-when-stress-free-feature-enabled">
+    {% include stress-free/the-product.html %}
     </section>
 
     <section class="first hide-when-stress-free-feature-enabled" style="text-align:center;">
@@ -76,14 +59,19 @@ og-images:
     {% include intro/henrik-and-katty-with-audio.html %}
     </section>
 
+    <section class="fourth even hide-when-stress-free-feature-enabled">
+      {% include stress-free/switzerland-offer.html %}
+    </section>
+
 		<footer class="constrained" style="height:50px;">
       <div class="photo-credits">
         <h3>Thanks to these great photographers</h3>
-<!--
+
 <iframe src="https://www.flickr.com/photos/gnews/4687255079/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 <iframe src="https://www.flickr.com/photos/timecaptured/8222176156/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
+<!--
 <iframe src="https://www.flickr.com/photos/chaulet/3691040322/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 <iframe src="https://www.flickr.com/photos/johnseb/9072883650/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
