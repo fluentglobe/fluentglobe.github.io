@@ -6,10 +6,16 @@ body-class: paper
 <h3>Thank You!</h3>
 
 <script>
+try {
 if (window.parent) {
+	parent.postMessage("stress-free-iframe complete","*");
+
 	var parentIframe = parent.document.getElementById("stress-free-iframe");
 	if (parentIframe) parentIframe.stateful.set("state.hidden",true);
 }	
+} catch(ex) {
+	//ignore
+}
 </script>
 
 <!-- Facebook Conversion Code for LeadIn -->
