@@ -2748,6 +2748,17 @@ if (window["angular"]) {
     fluentApp.directive('fgCard', $FgCardDirective);
 }
 
+try  {
+    window.addEventListener("message", function (ev) {
+        if (ev.data == "stress-free-iframe complete") {
+            var el = document.getElementById("stress-free-iframe");
+            if (el)
+                el.stateful.set("state.hidden", true);
+        }
+    }, false);
+} catch (ex) {
+}
+
 document.essential.router.manage({ href: "/stress-free-presentation" }, "essential.resources", function (path, action) {
     impress('stress-free-presentation').init();
 

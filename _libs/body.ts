@@ -138,6 +138,20 @@ if (window["angular"]) {
 
 }
 
+try {
+    window.addEventListener("message",function(ev) {
+        //TODO support this in form with a flag
+        //TODO perhaps guard origin being from the expected domain
+        if (ev.data == "stress-free-iframe complete") {
+            var el:any = document.getElementById("stress-free-iframe");
+            if (el) el.stateful.set("state.hidden",true);
+        }
+    },false);
+    
+} catch(ex) {
+    // ignore
+}
+
 document.essential.router.manage({ href:"/stress-free-presentation"}, "essential.resources", function(path,action) {
 
     impress('stress-free-presentation').init();
