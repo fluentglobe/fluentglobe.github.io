@@ -316,7 +316,7 @@ var fluentbook;
     EnhancedForm.prototype.onIframeLoad = function (ev) {
         ev = MutableEvent(ev);
 
-        if (this.inIframeSubmit) {
+        if (this.inIframeSubmit && ev.target == this.targetIframe) {
             if (this.showSubmitResult) {
                 ev.target.stateful.set("state.hidden", false);
             }
