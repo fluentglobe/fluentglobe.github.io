@@ -9333,6 +9333,19 @@ main article section.first {
 .pitch-audio {
   margin-top: -55px;
 }
+.stress-free-lead {
+  position: relative;
+  max-width: 600px;
+  margin-left: 2em;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.stress-free-lead .signup-phrases .signup-box {
+  margin: 0;
+}
 #stress-free .when-subscribed,
 #signup .when-subscribed {
   display: none;
@@ -9346,11 +9359,18 @@ main article section.first {
   display: block;
 }
 #stress-free {
-  min-height: 33em;
+  position: relative;
+  min-height: 320px;
 }
 #stress-free iframe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   width: 100%;
-  height: 320px;
+  height: 100%;
+  z-index: 100;
 }
 .fallback-message {
   display: none;

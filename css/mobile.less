@@ -830,7 +830,20 @@ main article section.first {
     margin-top: -55px;
 }
 
+.stress-free-lead {
+    position: relative;
+    max-width: 600px;
+    margin-left: 2em;
+    color: white;
+    .user-select(none);
 
+    .signup-phrases .signup-box {
+        margin: 0;
+        //TODO perhaps center in the greater box
+    }
+}
+
+// signup forms
 #stress-free,
 #signup {
     .when-subscribed {
@@ -846,11 +859,16 @@ main article section.first {
 }
 
 #stress-free {
-    min-height: 33em;
+    position: relative;
+    min-height: 320px;
 
     iframe {
+        position: absolute;
+        left:0; right:0;
+        top:0; bottom:0;
         width: 100%;
-        height: 320px;
+        height: 100%;
+        z-index: 100;
     }
 }
 

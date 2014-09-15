@@ -23,18 +23,45 @@ og-images:
 <main class="with-lead-and-menu with-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
 
   <header id="stress-free-presentation" role="presentation" data-role="'feature':'stress-free-switzerland'">
-  {% include intro/understood-networked.html %}
+  <!-- {% include intro/understood-networked.html %} -->
   <!-- {% include intro/fallback-message.html %} -->
   {% include spoken-controls.html %}
 
+    <audio class="pitch" data-role="'text':'#lead-text'" autoplay>
+        <!-- @todo WebM? -->
+        <source src="/assets/audio/Lead Speak.m4a" type="audio/aac">
+        <source src="/assets/audio/Lead Speak.ogg" type="audio/ogg">
+        <source src="/assets/audio/Lead Speak.wav" type="audio/wav">
+        <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
+    </audio>
+
+    {% include stress-free/switzerland-offer-lead.html %}
+
+
+
     <footer class="links-bar">
-      {% include site-follow.html %}
+      <!-- <h3>Fluent Globe has mentioned in </h3> -->
+
+        <div class="press-mentions">
+          <h3>As seen in</h3>
+
+          <a class="daily-news" rel="_new" href="http://www.nydailynews.com/life-style/must-have-travel-guides-brazil-bound-world-cup-fans-article-1.1811433" alt="New York Daily News">
+          <!-- New York Daily News -->
+          </a>
+
+          <a class="marie-claire" rel="_new" href="http://www.marieclaire.co.uk/news/travel/546568/hot-spot-s-o-paulo-brazil.html" alt="Marie Claire Travel">
+            <!-- Marie Claire Travel -->
+          </a>
+
+          <a class="reuters" rel="_new" href="http://uk.reuters.com/article/2014/05/23/fluent-globe-guide-idUKnPncgNwZv+8a+PRN20140523" alt="Reuters">
+            <!-- Reuters -->
+          </a>
+        </div>
     </footer>
   </header>
 
   <article>
     <section class="four even hide-when-stress-free-feature-enabled" style="background-color: white;">
-      {% include stress-free/switzerland-offer.html %}
     </section>
 
     <section class="first hide-when-stress-free-feature-enabled" style="text-align:center;">
@@ -46,13 +73,13 @@ og-images:
     </section>
 
     <section class="third hide-when-stress-free-feature-enabled">
-    {% include intro/henrik-and-katty-with-audio.html autoplay="yes" %}
+    {% include intro/henrik-and-katty-with-audio.html %}
     </section>
 
 		<footer class="constrained" style="height:50px;">
       <div class="photo-credits">
         <h3>Thanks to these great photographers</h3>
-
+<!--
 <iframe src="https://www.flickr.com/photos/gnews/4687255079/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 <iframe src="https://www.flickr.com/photos/timecaptured/8222176156/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
@@ -84,7 +111,7 @@ og-images:
 <iframe src="https://www.flickr.com/photos/93482748@N02/14658492290/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
 
 <iframe src="https://www.flickr.com/photos/rockingroshan/9619728664/in/faves-127663989@N03/player/" width="75" height="75" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
-
+-->
       </div>
 
 			{% include page-footer-copyright.html %}
