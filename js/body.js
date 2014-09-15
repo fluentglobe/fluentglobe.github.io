@@ -255,6 +255,8 @@ var fluentbook;
         if (config.defaultAction) {
             this.applyAction(el, config.defaultAction);
         }
+
+        this.addCompleteListener();
     }
 
     EnhancedForm.prototype.destroy = function (el) {
@@ -317,12 +319,24 @@ var fluentbook;
         ev = MutableEvent(ev);
 
         if (this.inIframeSubmit && ev.target == this.targetIframe) {
-            if (this.showSubmitResult) {
+            if (this.showSubmitResult && !this.processComplete) {
                 ev.target.stateful.set("state.hidden", false);
             }
             this.stateful.set("state.subscribed", true);
 
             this.inIframeSubmit = false;
+        }
+    };
+
+    EnhancedForm.prototype.addCompleteListener = function () {
+        try  {
+            window.addEventListener("message", function (ev) {
+                if (ev.data == this.iframeId + " complete") {
+                    this.targetIframe.stateful.set("state.hidden", true);
+                    this.processComplete = true;
+                }
+            }.bind(this), false);
+        } catch (ex) {
         }
     };
 
@@ -2746,17 +2760,6 @@ if (window["angular"]) {
     fluentApp.directive('fgStep', $FgStepDirective);
 
     fluentApp.directive('fgCard', $FgCardDirective);
-}
-
-try  {
-    window.addEventListener("message", function (ev) {
-        if (ev.data == "stress-free-iframe complete") {
-            var el = document.getElementById("stress-free-iframe");
-            if (el)
-                el.stateful.set("state.hidden", true);
-        }
-    }, false);
-} catch (ex) {
 }
 
 document.essential.router.manage({ href: "/stress-free-presentation" }, "essential.resources", function (path, action) {

@@ -175,6 +175,9 @@ function EnhancedForm(el,config) {
 	if (config.defaultAction) {
 		this.applyAction(el,config.defaultAction);
 	}
+
+	// allow completion pages to signal
+	this.addCompleteListener();
 }
 
 // EnhancedForm.prototype.
@@ -241,7 +244,7 @@ EnhancedForm.prototype.onIframeLoad = function(ev) {
 	// IE/FF does load event on blank iframes, and no way to identify from attributes
 	if (this.inIframeSubmit && ev.target == this.targetIframe) {
 
-		if (this.showSubmitResult) {
+		if (this.showSubmitResult && !this.processComplete) {
 			ev.target.stateful.set("state.hidden",false);
 			//TODO pop it up
 		}
@@ -250,6 +253,28 @@ EnhancedForm.prototype.onIframeLoad = function(ev) {
 		this.inIframeSubmit = false;
 	}
 }
+
+EnhancedForm.prototype.addCompleteListener = function() {
+
+// the iframe must be shown in multi-step forms until completion
+
+//TODO make generic
+try {
+    window.addEventListener("message",function(ev) {
+        //TODO support this in form with a flag
+        //TODO perhaps guard origin being from the expected domain
+        if (ev.data == this.iframeId + " complete") {
+            this.targetIframe.stateful.set("state.hidden",true);
+            this.processComplete = true;
+        }
+    }.bind(this),false);
+    
+} catch(ex) {
+    // ignore
+}
+
+};
+
 
 EnhancedForm.prototype.planIframeSubmit = function(el) {
 	this.iframeId = el.target || "form-target-" + (newIframeId++);

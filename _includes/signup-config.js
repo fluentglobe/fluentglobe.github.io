@@ -62,7 +62,9 @@
     showSubmitResult: true,
 
     actions: {
-      mapName: { name:"cm-name", email:"cm-wjjul-wjjul" },
-      path: "/t/i/s/wjjul/"
+      "new-stress-free-subscriber": {
+        mapName: { name:"cm-name", "first-name":"cm-name", email:"cm-wjjul-wjjul" },
+        path: "/t/i/s/wjjul/"
+      }
     }
   });
