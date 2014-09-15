@@ -47,6 +47,10 @@
   }
 }
 @media only screen and (min-width: 750px) {
+  .stress-free-lead {
+    width: 50%;
+    margin-left: 2em;
+  }
   #intro .center-piece,
   main.fluid > header .center-piece {
     margin-top: -100px;

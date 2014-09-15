@@ -9335,8 +9335,8 @@ main article section.first {
 }
 .stress-free-lead {
   position: relative;
-  max-width: 600px;
-  margin-left: 2em;
+  width: 300px;
+  margin-left: 10px;
   color: white;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -9344,6 +9344,8 @@ main article section.first {
   user-select: none;
 }
 .stress-free-lead .signup-phrases .signup-box {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
   margin: 0;
 }
 #stress-free .when-subscribed,
