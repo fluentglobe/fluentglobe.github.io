@@ -3750,7 +3750,8 @@ body .hamburger button.show-menu label {
   left: 160px;
   margin-right: -160px;
 }
-.with-menu.menu-shown main {
+.with-menu.menu-shown main.fluid > header,
+.with-menu.menu-shown main.fluid article {
   left: 160px;
   margin-right: -160px;
 }

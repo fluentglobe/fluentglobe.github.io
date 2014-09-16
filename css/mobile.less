@@ -85,6 +85,11 @@ body {
     &.open-book {
         overflow: hidden;
     }
+
+    .hamburger {
+        .hamburger-button(13em, @app-menu-bg); //TODO on plain page
+        .hamburger-button-color(@app-menu-bg, @app-menu-group-bg,#c00,#e0e0e0,white);
+    }
 }
 
 .with-menu {
@@ -92,38 +97,23 @@ body {
         .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
         .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
         .transition(.3s ease-in-out left);
-        .site-menu-flag(13em, @app-menu-bg); //TODO on plain page
     }
 
-    &.state-expanded {
+    &.menu-shown {
 
         #intro {
             left: @menu-width;
             margin-right: -@menu-width;
         }
-        article {
-            margin-left: @menu-width;
-
-            /*
-            > header {
+        main.fluid {
+            > header,
+            article {
                 left: @menu-width;
+                margin-right: -@menu-width;
             }
-            */
-            > section {
-                position: relative;
-                // margin-right: -@menu-width;
-            }
-        }
+        } 
         .menu {
             left: 0;
-        }
-    }
-}
-main.with-menu {
-    &.state-expanded {
-        > header {
-            left: @menu-width;
-            margin-right: -@menu-width;
         }
     }
 }
@@ -131,7 +121,10 @@ main.with-menu {
 .black-menu .menu {
     //TODO background matching ?
     .side-menu-color(@black-app-menu-bg,@black-app-menu-group-bg,#c00,#e0e0e0,white);
-    .site-menu-flag(13em, @black-app-menu-bg);
+}
+
+.black-menu .hamburger {
+    .hamburger-button-color(@black-app-menu-bg, @black-app-menu-group-bg,#c00,#e0e0e0,white);
 }
 
 @import (less) "../../libs/world-flags-sprite/stylesheets/flags16.css";
@@ -188,6 +181,7 @@ main.with-menu {
 }
 
 main.fluid {
+    // has to be static to avoid main overlapping #intro blocking interaction
 
     // placed at the bottom of the #intro or article > header
     footer.links-bar {
@@ -239,23 +233,9 @@ main.fluid {
     }
 }
 
-/*
-@media only screen and (max-width: 799px) and (max-height : 719px) {
-    #intro {
-        min-height: 74em; // before increasing to 80em, resize the bg-image
-    }
-}
-*/
-
 // tablets and desktop heights
 @media only screen and (min-width: 800px) 
 {
-    html body {
-        .menu {
-            position: fixed;
-        }
-    }
-
     html body.splash {
         #intro {
             position: fixed;
