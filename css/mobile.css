@@ -2753,9 +2753,9 @@ html[lang=ch] body [lang=ar] {
   padding-top: 50px;
   padding-bottom: 50px;
   min-height: 50em;
-  -webkit-transition: 0.3s ease-in-out left;
-  -o-transition: 0.3s ease-in-out left;
-  transition: 0.3s ease-in-out left;
+  -webkit-transition: left 0.3s ease-in-out;
+  -o-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
 }
 #intro .intro-column {
   position: relative;
@@ -3642,9 +3642,9 @@ body .hamburger button.show-menu label {
   border-color: #f83104;
   background-color: #f83104;
   color: #e0e0e0;
-  -webkit-transition: 0.3s ease-in-out left;
-  -o-transition: 0.3s ease-in-out left;
-  transition: 0.3s ease-in-out left;
+  -webkit-transition: left 0.3s ease-in-out;
+  -o-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
 }
 .with-menu .menu ol,
 .with-menu .menu ul {
@@ -3745,6 +3745,17 @@ body .hamburger button.show-menu label {
 .with-menu .menu li ul li a:hover,
 .with-menu .menu li ul:not( :hover ) li.active a {
   background-color: #f83104;
+}
+.with-menu #intro {
+  -webkit-transition: left 0.3s ease-in-out;
+  -o-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
+}
+.with-menu main.fluid > header,
+.with-menu main.fluid article {
+  -webkit-transition: left 0.3s ease-in-out;
+  -o-transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out;
 }
 .with-menu.menu-shown #intro {
   left: 160px;
@@ -9245,9 +9256,9 @@ body {
   padding-top: 50px;
   width: 100%;
   height: 650px;
-  -webkit-transition: height 1.2s ease;
-  -o-transition: height 1.2s ease;
-  transition: height 1.2s ease;
+  -webkit-transition: left .3 ease, height .5s ease;
+  -o-transition: left .3 ease, height .5s ease;
+  transition: left .3 ease, height .5s ease;
   background-image: url(/images/Kat-Henry-86.jpg);
   background-position: top right;
   background-size: auto 100%;

@@ -96,7 +96,16 @@ body {
     .menu {
         .side-menu(@menu-width,@menu-edge-width,@body-bg,darken(@body-bg,5%),#c00,#c0c0c0,white);
         .side-menu-color(@app-menu-bg,@app-menu-group-bg,#c00,#e0e0e0,white);
-        .transition(.3s ease-in-out left);
+        .transition(left .3s ease-in-out);
+    }
+    #intro {
+        .transition(left .3s ease-in-out);
+    }
+    main.fluid {
+        > header,
+        article {
+            .transition(left .3s ease-in-out);
+        }
     }
 
     &.menu-shown {
@@ -732,7 +741,7 @@ body {
         padding-top: 50px;
         width: 100%;
         height: 650px;
-        .transition(height 1.2s ease);
+        .transition(~"left .3 ease, height .5s ease");
 
         // cant as it blocks the presentation click z-index: -1; // lets article header hover over content
         background-image: url(/images/Kat-Henry-86.jpg);
