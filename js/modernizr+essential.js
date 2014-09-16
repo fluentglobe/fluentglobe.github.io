@@ -1850,7 +1850,7 @@ function Resolver(name_andor_expr,ns,options)
                 subnames.push(symbol);
 
                 //TODO if typeof base != object 
-                var oldValue = base[symbol];
+                var oldValue = base?base[symbol]:undefined;
                 if (oldValue === undefined) return;
                 delete base[symbol];
 
@@ -1862,7 +1862,7 @@ function Resolver(name_andor_expr,ns,options)
             } else {
                 var symbol = names[names.length - 1];
                 var base = _resolve(baseNames,null,onundefinedSet);
-                var oldValue = base[symbol];
+                var oldValue = base?base[symbol]:undefined;
                 if (oldValue === undefined) return;
                 delete base[symbol];
 
@@ -1895,7 +1895,7 @@ function Resolver(name_andor_expr,ns,options)
                 }
         	} else {
 				var base = _resolve(baseNames,null,onundefinedSet);
-                var oldValue = base[leafName];
+                var oldValue = base?base[leafName]:undefined;
 
                 if (_setValue(value,baseNames,base,leafName)) {
                     this._callListener("change",baseNames,base,leafName,value,oldValue);
@@ -1917,7 +1917,7 @@ function Resolver(name_andor_expr,ns,options)
                 var parentName = combined.join(".");
                 subnames.push(symbol);
                 value = arguments[1];
-                var oldValue = base[symbol];
+                var oldValue = base?base[symbol]:undefined;
 
                 if (base[symbol] === undefined) {
                     if (_setValue(value,combined,base,symbol)) {
@@ -1930,7 +1930,7 @@ function Resolver(name_andor_expr,ns,options)
                 return base[symbol];
         	} else {
                 var base = _resolve(baseNames,null,onundefinedSet);
-                var oldValue = base[leafName];
+                var oldValue = base?base[leafName]:undefined;
 
                 if (base[leafName] === undefined) {
                     if (_setValue(value,baseNames,base,leafName)) {
@@ -1969,7 +1969,7 @@ function Resolver(name_andor_expr,ns,options)
         function setEntry(key,value) {
             var symbol = names.pop();
         	var base = _resolve(names,null,onundefined);
-            var oldValue = base[symbol];
+            var oldValue = base?base[symbol]:undefined;
         	names.push(symbol);
         	if (base[symbol] === undefined) _setValue({},names,base,symbol);
         	
@@ -2178,7 +2178,7 @@ function Resolver(name_andor_expr,ns,options)
             names = name.split(".");
         }
         var symbol = names.pop();
-        var base = _resolve(names,null,onundefined), oldValue = base[symbol];
+        var base = _resolve(names,null,onundefined), oldValue = base?base[symbol]:undefined;
         if (oldValue === undefined) return;
         delete base[symbol];
 
@@ -2244,7 +2244,7 @@ function Resolver(name_andor_expr,ns,options)
             names.push(leaf);
             base = _resolve(names,null,onundefined);
         }
-        var oldValue = base[symbol];
+        var oldValue = base?base[symbol]:undefined;
 		if (_setValue(value,names,base,symbol)) {
 			var ref = resolver.references[name];
 			if (ref) ref._callListener("change",names,base,symbol,value,oldValue);
@@ -2514,7 +2514,7 @@ Resolver.storages.session = {
             var value;
             try { value = JSON.parse(v); }
             catch(ex) {} //TODO consider parse issue
-            ref.set(value);
+            ref.set(value); //TODO call internal version that doesn't store
         }
     },
     store: function(ref) {
@@ -2534,7 +2534,7 @@ Resolver.storages.local = {
             var value;
             try { value = JSON.parse(v); }
             catch(ex) {} //TODO consider parse issue
-            ref.set(value);
+            ref.set(value);//TODO call internal version that doesn't store
         }
     },
 
@@ -2570,7 +2570,7 @@ Resolver.storages.cookie = {
 
             //TODO type coercion
             ref._reading_cookie = true;
-            ref.set(value);
+            ref.set(value);//TODO call internal version that doesn't store
             delete ref._reading_cookie;
         }
     },
@@ -6136,6 +6136,53 @@ Resolver.config.ROLE_POLICY = {
 	}
 };
 
+Resolver.resolverFromElement = function(el,expr) {
+	if (!expr) expr = "stateful(0)";
+
+	//TODO consider optional force flag and support el(..)
+
+	if (expr.substring(0,9) == "stateful(") {
+		for(var jumps = parseFloat(expr.substring(9,expr.length-1)), sel = el; sel && jumps>0;--jumps) { 
+
+			do { sel = sel.parentNode; } while(sel && sel.stateful == undefined);
+		}
+		return sel? sel.stateful : el.stateful;
+	} else {
+		return Resolver(expr);
+	}
+
+	return resolver;
+};
+
+Resolver.exec = function(resolver,expr,onundefined,cmd,value) {
+	//TODO resolver.exec(expr,onundefined,cmd,value);
+	switch(cmd) {
+		case "toggle":
+			resolver.toggle(expr);
+			break;
+		case "true":
+			resolver.set(expr,true);
+			break;
+		case "false":
+			resolver.set(expr,false);
+			break;
+		case "blank":
+			resolver.set(expr,"");
+			break;
+		case "remove":
+			resolver.remove(expr);
+			break;
+		case "=":
+		case "set":
+			resolver.set(expr,value);
+			break;
+		case "declare":
+			resolver.declare(expr,value);
+			break;
+	}
+
+};
+
 !function() {
 	var essential = Resolver("essential"),
 		HTMLElement = essential("HTMLElement"),
@@ -9119,22 +9166,31 @@ Resolver.config.ROLE_POLICY = {
 			}
 		} 
 		else {
-			el = HTMLElement.getEnhancedParent(ev.commandElement);
+			var parts = ev.commandName.split("::"), cmd = parts.pop(),
+				parent = HTMLElement.getEnhancedParent(ev.commandElement);
+			var resolver = Resolver.resolverFromElement(ev.commandElement,parts.length==2? parts[0] : null);
 
-			switch(ev.commandName) {
+			switch(cmd) {
 			//TODO other builtin commands
 			case "parent.toggle-expanded":
 			// if (el == null) el = ancestor enhanced
-				StatefulResolver(el.parentNode,true).toggle("state.expanded");
+				StatefulResolver(parent.parentNode,true).toggle("state.expanded");
 				break;
 
 			case "toggle-expanded":
-				StatefulResolver(el,true).toggle("state.expanded");
+				StatefulResolver(parent,true).toggle("state.expanded");
 				break;
 
 			case "close":
 				//TODO close up shop
 				if (ev.submitElement) HTMLElement.discard(ev.submitElement);
+				break;
+			default:
+				if (parts.length) {
+					var expr = parts.pop();
+					var value; //TODO value for cmd
+					Resolver.exec(resolver, expr, "fill",cmd.charAt(0) == "="? "=" : cmd, value);
+				} 
 				break;
 			}
 		}
@@ -10450,6 +10506,8 @@ Resolver("page::state.managed").on("change",function(ev) {
 	pageState.set("authenticated",false);
 	pageState.set("authorised",false);
 	state.on("change",function(ev) {
+
+		// when logging out
 		if (ev.symbol == "authenticated" && !ev.value) {
 			session.set("username","");
 			session.set("access_token","");
@@ -10543,6 +10601,14 @@ Resolver("page::state.managed").on("change",function(ev) {
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
+	session.on("change",function(ev) {
+		var access_token = session().access_token,
+			username = session().username;
+		if (access_token && username) {
+			state.set("authenticated",true);
+			// alert("we're back");
+		}
+	});
 
 	var nextSession = Resolver("document::essential.nextSession");
 	nextSession.declare({
