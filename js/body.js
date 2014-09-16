@@ -1045,7 +1045,9 @@ var account;
     buckets.resumeSession = function () {
         var access_token = session().access_token, username = session().username;
         if (access_token && username) {
+            state.set("authenticated", true);
             var user = this.getBucket("user");
+        } else if (nextSession().access_token) {
         }
     };
 
@@ -1068,7 +1070,6 @@ var account;
             nextSession.set("access_token", data.access_token);
             session.set("password", buckets.lastPassword == "-");
             state.set("authenticated", true);
-            Resolver("page").set("state.authenticated", true);
 
             var bucket = buckets.getBucket("user");
 
@@ -2662,6 +2663,7 @@ SpokenWord.fgSpoken = [
         };
     }
 ];
+Resolver("page").set("map.class.state.menu-shown", "menu-shown");
 Resolver("page").set("map.class.state.stress-free-feature", "stress-free-feature-enabled");
 Resolver("page").set("map.class.state.appified", "appified");
 

@@ -15,6 +15,8 @@
 	pageState.set("authenticated",false);
 	pageState.set("authorised",false);
 	state.on("change",function(ev) {
+
+		// when logging out
 		if (ev.symbol == "authenticated" && !ev.value) {
 			session.set("username","");
 			session.set("access_token","");
@@ -108,6 +110,14 @@
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
+	session.on("change",function(ev) {
+		var access_token = session().access_token,
+			username = session().username;
+		if (access_token && username) {
+			state.set("authenticated",true);
+			// alert("we're back");
+		}
+	});
 
 	var nextSession = Resolver("document::essential.nextSession");
 	nextSession.declare({
