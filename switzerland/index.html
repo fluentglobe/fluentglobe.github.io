@@ -7,7 +7,8 @@ blog-link: no
 js-bundle: /js/body.js
 app-name: fluentApp
 fresh-button: E73A00
-no-body-class: impress-not-supported
+body-class: impress-not-supported with-menu
+base-body-class: with-menu 
 og-tags:
 - Language Learning
 - Learning German
@@ -20,9 +21,11 @@ og-images:
 
 <script type="application/config">{% include signup-config.js %}</script>
 
-<main class="with-lead-and-menu with-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
+<main class="with-lead-and-menu fluid">
 
   <header id="stress-free-presentation" role="presentation" data-role="'feature':'stress-free-switzerland'">
+    {% include hamburger.html %}
+
   <!-- {% include intro/understood-networked.html %} -->
   <!-- {% include intro/fallback-message.html %} -->
   {% include spoken-controls.html %}
@@ -108,7 +111,7 @@ put back when IDs are split up
 		</footer>
 
     </article>
-
-  {% include site-menu.html %}
 </main>
+
+{% include site-menu.html %}
 

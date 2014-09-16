@@ -3584,7 +3584,55 @@ body.paper {
 body.open-book {
   overflow: hidden;
 }
+body .hamburger.flag {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 13em;
+}
+body .hamburger.flag label {
+  border-radius: 1px;
+  border: 1px solid #f83104;
+  padding: 5px 9px 4px 9px;
+  min-width: 5em;
+}
+body .hamburger.flag label output {
+  color: #f83104;
+}
+body .hamburger.flag button.show-menu {
+  border: 0;
+  display: inline-block;
+  padding: 6px 8px;
+  -webkit-appearance: none;
+}
+body .hamburger.flag button.show-menu:focus {
+  outline: none;
+}
+body .hamburger.flag label {
+  display: inline-block;
+  margin-left: 8px;
+  text-align: center;
+}
+body .hamburger.flag output {
+  display: inline-block;
+  padding-top: 0;
+  color: #aaa;
+}
+body .hamburger button.show-menu {
+  background-color: #f83104;
+  color: #e0e0e0;
+  font-size: 18px;
+  vertical-align: top;
+}
+body .hamburger button.show-menu:hover {
+  color: #ffffff;
+}
+body .hamburger button.show-menu label {
+  color: #e0e0e0;
+  font-size: 1.2em;
+}
 .with-menu .menu {
+  position: absolute;
   top: 0;
   bottom: 0;
   left: -160px;
@@ -3608,30 +3656,6 @@ body.open-book {
 }
 .with-menu .menu a {
   text-decoration: none;
-}
-.with-menu .menu nav.flag {
-  position: absolute;
-  left: 100%;
-  top: 10px;
-}
-.with-menu .menu nav.flag button.show-menu {
-  border: 0;
-  display: inline-block;
-  padding: 6px 8px;
-  -webkit-appearance: none;
-}
-.with-menu .menu nav.flag button.show-menu:focus {
-  outline: none;
-}
-.with-menu .menu nav.flag label {
-  display: inline-block;
-  margin-left: 8px;
-  text-align: center;
-}
-.with-menu .menu nav.flag output {
-  display: inline-block;
-  padding-top: 0;
-  color: #aaa;
 }
 .with-menu .menu ul {
   padding: 0;
@@ -3683,19 +3707,6 @@ body.open-book {
   top: 0.6em;
   content: "\2713";
 }
-.with-menu .menu nav.flag button.show-menu {
-  background-color: #f83104;
-  color: #e0e0e0;
-  font-size: 18px;
-  vertical-align: top;
-}
-.with-menu .menu nav.flag button.show-menu:hover {
-  color: #ffffff;
-}
-.with-menu .menu nav.flag button.show-menu label {
-  color: #e0e0e0;
-  font-size: 1.2em;
-}
 .with-menu .menu ul li > ul {
   border-top: 1px solid #fb441b;
 }
@@ -3735,57 +3746,21 @@ body.open-book {
 .with-menu .menu li ul:not( :hover ) li.active a {
   background-color: #f83104;
 }
-.with-menu .menu nav.flag {
-  width: 13em;
-}
-.with-menu .menu nav.flag label {
-  border-radius: 1px;
-  border: 1px solid #f83104;
-  padding: 5px 9px 4px 9px;
-  min-width: 5em;
-}
-.with-menu .menu nav.flag label output {
-  color: #f83104;
-}
-.with-menu.state-expanded #intro {
+.with-menu.menu-shown #intro {
   left: 160px;
   margin-right: -160px;
 }
-.with-menu.state-expanded article {
-  margin-left: 160px;
-  /*
-            > header {
-                left: @menu-width;
-            }
-            */
+.with-menu.menu-shown main {
+  left: 160px;
+  margin-right: -160px;
 }
-.with-menu.state-expanded article > section {
-  position: relative;
-}
-.with-menu.state-expanded .menu {
+.with-menu.menu-shown .menu {
   left: 0;
-}
-main.with-menu.state-expanded > header {
-  left: 160px;
-  margin-right: -160px;
 }
 .black-menu .menu {
   border-color: #000000;
   background-color: #000000;
   color: #e0e0e0;
-}
-.black-menu .menu nav.flag button.show-menu {
-  background-color: #000000;
-  color: #e0e0e0;
-  font-size: 18px;
-  vertical-align: top;
-}
-.black-menu .menu nav.flag button.show-menu:hover {
-  color: #ffffff;
-}
-.black-menu .menu nav.flag button.show-menu label {
-  color: #e0e0e0;
-  font-size: 1.2em;
 }
 .black-menu .menu ul li > ul {
   border-top: 1px solid #040404;
@@ -3826,17 +3801,18 @@ main.with-menu.state-expanded > header {
 .black-menu .menu li ul:not( :hover ) li.active a {
   background-color: #000000;
 }
-.black-menu .menu nav.flag {
-  width: 13em;
+.black-menu .hamburger button.show-menu {
+  background-color: #000000;
+  color: #e0e0e0;
+  font-size: 18px;
+  vertical-align: top;
 }
-.black-menu .menu nav.flag label {
-  border-radius: 1px;
-  border: 1px solid #000000;
-  padding: 5px 9px 4px 9px;
-  min-width: 5em;
+.black-menu .hamburger button.show-menu:hover {
+  color: #ffffff;
 }
-.black-menu .menu nav.flag label output {
-  color: #000000;
+.black-menu .hamburger button.show-menu label {
+  color: #e0e0e0;
+  font-size: 1.2em;
 }
 .f16 .flag {
   display: inline-block;
@@ -4808,17 +4784,7 @@ main.fluid article > footer a {
     height: 0 !important;
   }
 }
-/*
-@media only screen and (max-width: 799px) and (max-height : 719px) {
-    #intro {
-        min-height: 74em; // before increasing to 80em, resize the bg-image
-    }
-}
-*/
 @media only screen and (min-width: 800px) {
-  html body .menu {
-    position: fixed;
-  }
   html body.splash #intro {
     position: fixed;
     top: 0;
@@ -9335,6 +9301,7 @@ main article section.first {
 }
 .stress-free-lead {
   position: relative;
+  max-width: 600px;
   width: 300px;
   margin-left: 10px;
   color: white;

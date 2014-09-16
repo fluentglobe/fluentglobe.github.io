@@ -6,6 +6,7 @@ js-bundle: /js/body.js
 app-name: fluentApp
 fresh-form: true
 no-body-class: impress-not-supported
+base-body-class: with-menu 
 og-tags:
 - Language Learning
 - Learning German
@@ -18,9 +19,10 @@ og-images:
 
 <script type="application/config">{% include signup-config.js %}</script>
 
-<main class="with-lead-and-menu with-menu fluid" data-class="'!state.menu-expanded':'menu-collapsed'">
+<main class="with-lead-and-menu fluid">
 
   <header>
+    {% include hamburger.html %}
   {% include intro/understood-networked.html %}
 
     <footer class="links-bar">
@@ -52,7 +54,7 @@ og-images:
 		</footer>
 
     </article>
-
-  {% include site-menu.html %}
 </main>
+
+{% include site-menu.html %}
 

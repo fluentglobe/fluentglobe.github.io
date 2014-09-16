@@ -1,0 +1,10 @@
+<nav class="hamburger flag f16">
+<!-- could use stateful(1):: -->
+    <button class="show-menu" role="button" name="page::state.menu-shown::toggle">
+      &#x2630;
+    </button>
+    <label role="button" name="page::state.menu-shown::toggle">
+      <output data-resolve="text:document::essential.language">English</output>
+      <i class="flag" data-resolve="class: document::essential.countryCode"></i>
+    </label>
+</nav>

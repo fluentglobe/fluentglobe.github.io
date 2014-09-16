@@ -22,6 +22,7 @@
 
 //TODO generalise for multiple countries
 
+Resolver("page").set("map.class.state.menu-shown","menu-shown");
 Resolver("page").set("map.class.state.stress-free-feature","stress-free-feature-enabled");
 Resolver("page").set("map.class.state.appified","appified");
 

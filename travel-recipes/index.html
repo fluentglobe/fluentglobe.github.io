@@ -1,11 +1,11 @@
 ---
 title: World Cup Travel Recipes
 layout: katty-book
+base-body-class: with-menu 
 with_layerslider: true
 fresh-form: true
 js-bundle: ../js/product-app.js
 app-name: fluentApp
-debug: true
 facebook-like-title: Going to Brazil?
 facebook-fan-page-url: https://www.facebook.com/FluentGlobeTravelRecipes
 og-namespace: http://ogp.me/ns/book#
@@ -20,6 +20,7 @@ plus-author: 116691201522610578456
 ---
 
 <div id="intro" class="bookspread" data-class="'!state.menu-expanded':'menu-collapsed'" >
+    {% include hamburger.html %}
 
 <div class="two-cols">
   <section class="left-col on-dark-picture-bg" style="color:#bbb;">
