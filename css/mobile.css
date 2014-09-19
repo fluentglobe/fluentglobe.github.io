@@ -8229,15 +8229,20 @@ body * .ls-container .ls-webkit-hack,
 .feature-dvd {
   width: 240px;
 }
+.signup-phrases h3 {
+  font-size: 20px;
+  line-height: 20px;
+}
 .signup-phrases p {
-  font-size: 1.5em;
-  line-height: 1.5;
+  font-size: 1.3em;
+  line-height: 1.3;
 }
 .signup-phrases em {
   color: #fb441b;
 }
 .signup-phrases input[type=text],
 .signup-phrases input[type=email] {
+  max-width: 100%;
   border-width: 0 0 1px 0;
   border-style: dashed;
   background-color: transparent;
@@ -8247,24 +8252,31 @@ body * .ls-container .ls-webkit-hack,
   text-align: right;
 }
 .signup-phrases .extra-space {
-  margin: 30px 0;
+  margin: 20px 0 10px 0;
 }
-@media only screen and (max-width: 499px) {
+@media only screen and (max-width: 479px) {
   .feature-dvd {
     display: block;
     margin: 0 auto;
   }
 }
-@media only screen and (min-width: 500px) {
+@media only screen and (min-width: 480px) {
   .feature-dvd {
     float: left;
     width: 300px;
   }
-  .signup-phrases .signup-box {
-    border: 1px solid #d8d8d8;
+  .stress-free-lead .signup-phrases .signup-box {
     padding: 30px;
-    margin: -20px;
     max-width: 420px;
+  }
+  .stress-free-lead .signup-phrases .signup-box .signup-info-usage {
+    display: inherit;
+  }
+  .stress-free-lead .signup-phrases .extra-space {
+    margin: 30px 0 10px 0;
+  }
+  #stress-free {
+    min-height: 320px;
   }
 }
 body.ibook-product .top-fade {
@@ -9323,37 +9335,41 @@ main article section.first {
 .pitch-audio {
   margin-top: -55px;
 }
+.subscribed-box .when-subscribed {
+  display: none;
+}
+.subscribed-box.state-subscribed .when-unsubscribed {
+  display: none;
+}
+.subscribed-box.state-subscribed .when-subscribed {
+  display: block;
+}
+.signup-phrases .signup-box .signup-info-usage {
+  display: none;
+}
+.signup-phrases .stress-free-signup-box {
+  border: 1px solid #d8d8d8;
+  padding: 20px;
+  min-height: 17em;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  margin: 0;
+}
 .stress-free-lead {
   position: relative;
   max-width: 600px;
   width: 300px;
-  margin-left: 10px;
+  margin-left: auto;
+  margin-right: auto;
   color: white;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-.stress-free-lead .signup-phrases .signup-box {
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100%;
-  margin: 0;
-}
-#stress-free .when-subscribed,
-#signup .when-subscribed {
-  display: none;
-}
-#stress-free.state-subscribed .when-unsubscribed,
-#signup.state-subscribed .when-unsubscribed {
-  display: none;
-}
-#stress-free.state-subscribed .when-subscribed,
-#signup.state-subscribed .when-subscribed {
-  display: block;
-}
 #stress-free {
   position: relative;
-  min-height: 320px;
+  min-height: 220px;
 }
 #stress-free iframe {
   position: absolute;
