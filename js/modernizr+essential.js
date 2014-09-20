@@ -2023,6 +2023,7 @@ function Resolver(name_andor_expr,ns,options)
             }
         }
         function empty(key) {
+            var oldValue;
             if (arguments.length > 0) {
                 var subnames = (typeof arguments[0] == "object")? arguments[0] : arguments[0].split(".");
                 var symbol = subnames.pop();
@@ -2033,7 +2034,6 @@ function Resolver(name_andor_expr,ns,options)
 
                 //TODO if typeof base != object 
                 // var oldValue = base?base[symbol]:undefined;
-                // if (oldValue === undefined) return;
                 _setValue({},names,base,symbol);
 
                 var childRef = resolver.references[parentName + "." + symbol];
