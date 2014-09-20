@@ -1122,6 +1122,7 @@ var account;
             this.set("user.features", {});
         }
         session.set("access_token", null);
+        session.empty("features");
         setTimeout(function () {
             if (buckets.get("user", null))
                 basic.set({});
@@ -1705,7 +1706,7 @@ var ProtectedPresentation;
                 feature[n] = config.featureData[n];
             }
             this.applyFeature(feature);
-        } else if (config.feature && Resolver("document")("essential", "session", "features", config.feature)) {
+        } else if (config.feature && Resolver("page::state.authenticated::") && Resolver("document")(["essential", "session", "features", config.feature])) {
             this.el.stateful.set("state.loading", true);
         }
 
@@ -2840,12 +2841,13 @@ document.essential.router.manage({ href: "/skip-speaking" }, "essential.resource
 });
 
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (path, action) {
+    document.essential.router.clearHash();
+
     Resolver("document").set("essential.state.authenticated", false);
     Resolver("page").set("state.authenticated", false);
+    Resolver("page").set("state.show-menu", false);
     Resolver("buckets").logOut();
     Resolver("page").set("state.expanded", false);
-
-    document.essential.router.clearHash();
 
     return false;
 });
