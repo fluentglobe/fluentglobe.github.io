@@ -708,6 +708,8 @@ var fluentglobe;
             location.hash = clearAll;
         } else {
             location.hash = "";
+            if (window.history)
+                history.pushState('', document.title, window.location.pathname);
         }
     };
 
