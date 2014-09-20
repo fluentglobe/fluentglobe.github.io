@@ -89,6 +89,7 @@ body {
     .hamburger {
         .hamburger-button(13em, @app-menu-bg); //TODO on plain page
         .hamburger-button-color(@app-menu-bg, @app-menu-group-bg,#c00,#e0e0e0,white);
+        z-index: 15;
     }
 }
 
@@ -202,7 +203,7 @@ main.fluid {
         position: absolute;
         left:0; right:0;
         bottom: 0; height: @links-bar-height;
-        z-index: 5; // above dynamic presentation (TODO review)
+        z-index: 15; // above dynamic presentation & play/progress shield (TODO review)
 
         .follow {
             position: absolute;
