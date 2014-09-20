@@ -1729,6 +1729,7 @@ var ProtectedPresentation;
 
     ProtectedPresentation.prototype.destroy = function () {
         this.hypeDocument = null;
+        this.presentationEl = null;
 
         if (ProtectedPresentation.active == this)
             ProtectedPresentation.active = null;
@@ -1915,7 +1916,7 @@ var ProtectedPresentation;
             if (this.hypeId)
                 this.byId[this.hypeId] = this;
 
-            var el = HTMLElement("div", { id: feature.id });
+            var el = this.presentationEl = HTMLElement("div", { id: feature.id, style: "display:none;" });
             this.el.appendChild(el);
 
             var script = HTMLElement("script", {
@@ -1946,7 +1947,10 @@ var ProtectedPresentation;
         var scene;
         this.startSceneName = scenes[0];
 
+        this.el.stateful.set("state.loading", false);
         this.el.stateful.set("state.running", true);
+
+        this.presentationEl.style.display = "";
 
         for (var i = 0, sceneName; sceneName = scenes[i]; ++i) {
             scene = this.spokenScene[sceneName] = {

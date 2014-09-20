@@ -680,6 +680,36 @@ main article section.first {
     }
 }
 
+// for elements in a particular feature
+.show-when-this-feature-enabled {
+    display:none;
+}
+
+.feature-presentation.state-loading,
+.feature-presentation.state-running {
+    .hide-when-this-feature-enabled {
+        display:none;
+    }
+    .show-when-this-feature-enabled {
+        display:inherit;
+    }
+}
+
+// for elements in any feature
+.show-when-feature-enabled {
+    display:none;
+}
+
+.feature-loading,
+.feature-running {
+    .hide-when-feature-enabled {
+        display:none;
+    }
+    .show-when-feature-enabled {
+        display:inherit;
+    }
+}
+
 .show-when-impress-enabled {
     display:none;
     .impress-enabled & {
@@ -805,6 +835,7 @@ main article section.first {
 #sfpch_hype_container {
 
     .hype_container(936px,936px);
+    background: #444; // assuming that the presentation is transparent
 
     #kat-henry-bg {
         background-size: 100% auto;

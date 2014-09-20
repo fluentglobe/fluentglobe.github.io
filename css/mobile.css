@@ -3596,6 +3596,9 @@ body.paper {
 body.open-book {
   overflow: hidden;
 }
+body .hamburger {
+  z-index: 15;
+}
 body .hamburger.flag {
   position: absolute;
   left: 0;
@@ -9175,6 +9178,28 @@ main article section.first {
 .stress-free-feature-enabled .show-when-stress-free-feature-enabled {
   display: inherit;
 }
+.show-when-this-feature-enabled {
+  display: none;
+}
+.feature-presentation.state-loading .hide-when-this-feature-enabled,
+.feature-presentation.state-running .hide-when-this-feature-enabled {
+  display: none;
+}
+.feature-presentation.state-loading .show-when-this-feature-enabled,
+.feature-presentation.state-running .show-when-this-feature-enabled {
+  display: inherit;
+}
+.show-when-feature-enabled {
+  display: none;
+}
+.feature-loading .hide-when-feature-enabled,
+.feature-running .hide-when-feature-enabled {
+  display: none;
+}
+.feature-loading .show-when-feature-enabled,
+.feature-running .show-when-feature-enabled {
+  display: inherit;
+}
 .show-when-impress-enabled {
   display: none;
 }
@@ -9276,6 +9301,7 @@ main article section.first {
   top: 0;
   width: 100%;
   height: 100%;
+  background: #444;
 }
 #sfpch_hype_container .HYPE_scene {
   overflow-x: visible;
