@@ -9196,7 +9196,9 @@ Resolver.exec = function(resolver,expr,onundefined,cmd,value) {
 				//TODO else dev_note("Submit of " submitName " unknown to DialogAction " action)
 			}
 		} 
-		else {
+
+		//TODO withAactionInfo perhaps decode commandName from href, or negotiate with router
+		else if (ev.commandName) {
 			var parts = ev.commandName.split("::"), cmd = parts.pop(),
 				parent = HTMLElement.getEnhancedParent(ev.commandElement);
 			var resolver = Resolver.resolverFromElement(ev.commandElement,parts.length==2? parts[0] : null);
@@ -10633,7 +10635,7 @@ Resolver("page::state.managed").on("change",function(ev) {
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
-	session.declare("features",[]);
+	session.declare("features",{});
 	session.on("change",function(ev) {
 		var access_token = session().access_token,
 			username = session().username;
