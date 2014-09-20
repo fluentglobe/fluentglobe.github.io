@@ -108,12 +108,14 @@
 
 	var session = Resolver("document::essential.session");
 	session.declare({
+		features: {},// set
 		userid: "",
 		username: "",
 		access_token: "",
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
+	session.declare("features",{});
 
 	var nextSession = Resolver("document::essential.nextSession");
 	nextSession.declare({

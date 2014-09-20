@@ -1666,6 +1666,11 @@ var ProtectedPresentation;
 
     var ProtectedPresentation = window["ProtectedPresentation"] = function (el, config) {
         this.el = el;
+        this.el.stateful.set("map.class.state.running", "state-running");
+        this.el.stateful.set("state.running", false);
+        this.el.stateful.set("map.class.state.loading", "state-loading");
+        this.el.stateful.set("state.loading", false);
+
         this.hypeDocument = null;
         this.defaultTimeline = "Main Timeline";
         this.progressEl = HTMLElement("div", {
@@ -1695,6 +1700,8 @@ var ProtectedPresentation;
                 feature[n] = config.featureData[n];
             }
             this.applyFeature(feature);
+        } else if (config.feature && Resolver("document")("essential", "session", "features", config.feature)) {
+            this.el.stateful.set("state.loading", true);
         }
 
         this.resourcePrefix = "/assets/default/";
@@ -1738,8 +1745,14 @@ var ProtectedPresentation;
             this.byId[this.hypeId] = null;
     };
 
+    ProtectedPresentation.prototype.smallSizeMaxWidth = 767;
+
     ProtectedPresentation.prototype.layout = function (layout) {
-        this.el.style.maxHeight = layout.width + "px";
+        if (layout.width > this.smallSizeMaxWidth || this.el.stateful("state.running") || this.el.stateful("state.loading")) {
+            this.el.style.maxHeight = "100%";
+        } else {
+            this.el.style.maxHeight = "";
+        }
     };
 
     ProtectedPresentation.prototype.getCurrentTimePercent = function (soundDuration) {
@@ -1932,6 +1945,8 @@ var ProtectedPresentation;
     ProtectedPresentation.prototype.willPlay = function (scenes) {
         var scene;
         this.startSceneName = scenes[0];
+
+        this.el.stateful.set("state.running", true);
 
         for (var i = 0, sceneName; sceneName = scenes[i]; ++i) {
             scene = this.spokenScene[sceneName] = {
@@ -2671,7 +2686,12 @@ Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.fe
 Resolver("page").set("state.appified", !!Resolver("buckets")("user.features.stress-free-switzerland", "null"));
 
 Resolver("buckets::user.features").on("change", function (ev) {
-    var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland", "null");
+    var session = Resolver("document::essential.session"), buckets = Resolver("buckets"), features = buckets("user.features");
+
+    for (var n in features)
+        session.set(["features", n], true);
+
+    var enabled = !!buckets("user.features.stress-free-switzerland", "null");
     Resolver("page").set("state.stress-free-feature", enabled);
 
     var appified = enabled;

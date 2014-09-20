@@ -2,22 +2,6 @@
 @import "variables";
 @import "application"; // Modify this for custom colors, font-sizes, etc
 
-@media only screen and (max-device-width: 480px) and  (-webkit-min-device-pixel-ratio:2) {
-	// iPhone
-}
-
-@media only screen and (device-width: 768px) {
-	// iPad either
-
-}
-
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
-	// iPad portrait
-}
-
-@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
-	// iPad landscape
-}
 
 /* 640 */
 @media only screen and ( max-width: 40em ) 
@@ -156,6 +140,38 @@
         }
     }
 }
+
+// Android tablets and desktop heights
+//TODO move android to mobile styling
+@media only screen and (min-width: 800px) 
+{
+    html body.splash {
+        #intro {
+            position: fixed;
+            top: 0;
+            left: 0; right: 0;
+            // z-index: -1;
+
+            .left-col, .right-col {
+                z-index: 1;
+            }
+
+            // the footer is used to set start of article when intro is fixed
+            > footer {
+                // position:relative;
+                margin-top: @intro-bottom-gap-800-plus;
+            }
+        }
+        article {
+            top: 100%; //TODO perhaps main instead
+            z-index: 100;
+            margin-top: -5px;
+        }
+    }
+}
+
+
+
 @media only screen and (min-width: 960px) {
 
     // split columns centering

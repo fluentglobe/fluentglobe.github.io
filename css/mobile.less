@@ -189,6 +189,9 @@ body {
 
 }
 
+// @center-width: 340px;
+
+
 main.fluid {
     // has to be static to avoid main overlapping #intro blocking interaction
 
@@ -232,44 +235,6 @@ main.fluid {
     }
 }
 
-@center-width: 340px;
-
-// tablets and desktop heights
-@media only screen and (max-height : 719px) 
-{
-    #tracer {
-        height: 0 !important;
-    }
-}
-
-// tablets and desktop heights
-@media only screen and (min-width: 800px) 
-{
-    html body.splash {
-        #intro {
-            position: fixed;
-            top: 0;
-            left: 0; right: 0;
-            // z-index: -1;
-
-            .left-col, .right-col {
-                z-index: 1;
-            }
-
-            // the footer is used to set start of article when intro is fixed
-            > footer {
-                // position:relative;
-                margin-top: @intro-bottom-gap-800-plus;
-            }
-        }
-        article {
-            top: 100%; //TODO perhaps main instead
-            z-index: 100;
-            margin-top: -5px;
-        }
-    }
-}
-
 @top-splash-room: 650px;
 @top-splash-room-640: 560px;
 @top-splash-max: 800px;
@@ -277,89 +242,6 @@ main.fluid {
     //background-image: url(../images/inthepark.jpg); 
     //background-image: url(../images/free-blurred-backgrounds.jpg); 
     //background-image: url(../images/girl-on-terrace.jpg);
-
-// Phone < 5:
-@media screen and (device-aspect-ratio: 2/3) {
-
-    html body.splash {
-        article {
-            // article should just be relative, disabled for now
-            //            margin-top: 100%;
-        }
-    }
-
-    .bookspread {
-        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
-    }
-}
-
-// iPhone 5 portrait
-@media screen and (device-aspect-ratio: 40/71) and (orientation:portrait) {
-
-    .bookspread {
-        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
-    }
-}
-
-// iPhone 5 landscape and squashed browser:
-@media screen and (device-aspect-ratio: 40/71) and (orientation:landscape),
-        only screen and (max-height:321px) {
-
-    html body.splash {
-        article {
-            // article should just be relative, disabled for now
-            // margin-top: 100%;
-        }
-    }
-
-    .bookspread {
-        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
-    }
-}
-
-// iPad:
-@media screen and (device-aspect-ratio: 3/4) {}
-
-// logo and message top left
-.understood-networked {
-
-    position: relative;
-    height: @we-love-height / 2;
-    margin-left: @col1-left;
-    width: 100% - (2*@col1-left);
-
-    figure {
-        position: absolute;
-        top: 0; 
-        left: 0; //-100px; 
-        // z-index: -9999;
-        width: @we-love-width;
-        height: @we-love-height;
-        // width: (@we-love-width / 2);
-        // height: (@we-love-height / 2);
-        margin: 0;
-        //zoom: .5; TODO do this for IE
-        .scale(.5,.5);
-        -ms-transform-origin: left top;
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
-
-        background-image: url(../images/around-globe.png);
-        background-repeat: no-repeat;
-    }
-    h3 {
-        padding-top: 1em;
-        padding-left: 100px;
-    }
-    p {
-        padding-left: 100px;
-    }
-
-    //temp
-    .forward-looking {
-        color: transparent;
-    }
-}    
 
 html.body.splash-desktop {
 //TODO image?
@@ -849,6 +731,15 @@ main article section.first {
     }
 }
 
+// feature presentations
+
+.feature-presentation {
+    position: relative;
+    width: 100%;
+    height: 650px;
+}
+
+
 .signup-phrases {
     .signup-box {
         .signup-info-usage {
@@ -913,18 +804,6 @@ main article section.first {
 #sfpch_hype_container {
 
     .hype_container(936px,936px);
-
-    // transform: scale(.3333333);
-
-    // @media only screen and (min-width: 400px) and (max-width: 624px) {
-    //     transform: scale(.66666666);
-    // }
-    // @media only screen and (min-width: 625px) and (max-width: 936px) {
-    //     transform: scale(1);
-    // }
-    // @media only screen and (min-width: 937px) and (max-width: 1150px) {
-    //     transform: scale(1.25);
-    // }
 
     #kat-henry-bg {
         background-size: 100% auto;
@@ -1058,5 +937,153 @@ main article > footer .photo-credits {
     iframe {
         display: inline-block;
     }
+}
+
+// logo and message top left
+.understood-networked {
+
+    position: relative;
+    height: @we-love-height / 2;
+    margin-left: @col1-left;
+    width: 100% - (2*@col1-left);
+
+    figure {
+        position: absolute;
+        top: 0; 
+        left: 0; //-100px; 
+        // z-index: -9999;
+        width: @we-love-width;
+        height: @we-love-height;
+        // width: (@we-love-width / 2);
+        // height: (@we-love-height / 2);
+        margin: 0;
+        //zoom: .5; TODO do this for IE
+        .scale(.5,.5);
+        -ms-transform-origin: left top;
+        -webkit-transform-origin: left top;
+        transform-origin: left top;
+
+        background-image: url(../images/around-globe.png);
+        background-repeat: no-repeat;
+    }
+    h3 {
+        padding-top: 1em;
+        padding-left: 100px;
+    }
+    p {
+        padding-left: 100px;
+    }
+
+    //temp
+    .forward-looking {
+        color: transparent;
+    }
+}    
+
+
+//
+// @media MODIFICATIONS for phones
+//
+
+// tablets and desktop heights
+@media only screen and (max-height : 719px) 
+{
+    #tracer {
+        height: 0 !important;
+    }
+}
+
+// iPhone ..6 portrait
+// smaller Android
+@media only screen and (max-width: 399px) {
+
+    html body .feature-presentation {
+        height: 480px;
+    }
+
+}
+
+// iPhone 6 plus portrait
+// medium Android
+@media only screen and (min-width: 400px) and (max-width: 479px) {
+
+    html body .feature-presentation {
+        height: 600px;
+    }
+
+}
+
+// all iPhone landscape
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    
+    // feature presentation uses default height
+
+}
+
+// iPad portrait
+// Largish Android
+@media only screen and (min-width: 768px) and (max-width: 800px) {
+    //TODO there should be nothing here.
+    // this is the default resolution without media queries
+}
+
+
+// Phone < 5:
+@media screen and (device-aspect-ratio: 2/3) {
+
+    html body.splash {
+        article {
+            // article should just be relative, disabled for now
+            //            margin-top: 100%;
+        }
+    }
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
+    }
+}
+
+// iPhone 5 portrait
+@media screen and (device-aspect-ratio: 40/71) and (orientation:portrait) {
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
+    }
+}
+
+// iPhone 5 landscape and squashed browser:
+@media screen and (device-aspect-ratio: 40/71) and (orientation:landscape),
+        only screen and (max-height:321px) {
+
+    html body.splash {
+        article {
+            // article should just be relative, disabled for now
+            // margin-top: 100%;
+        }
+    }
+
+    .bookspread {
+        .book-origin-layout(@bk-cover-base-width * .45,@bk-cover-base-height * .45);
+    }
+}
+
+// iPad:
+@media screen and (device-aspect-ratio: 3/4) {}
+
+@media only screen and (max-device-width: 480px) and  (-webkit-min-device-pixel-ratio:2) {
+    // iPhone
+}
+
+@media only screen and (device-width: 768px) {
+    // iPad either
+
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    // iPad portrait
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    // iPad landscape
 }
 

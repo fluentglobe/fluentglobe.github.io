@@ -10595,12 +10595,14 @@ Resolver("page::state.managed").on("change",function(ev) {
 
 	var session = Resolver("document::essential.session");
 	session.declare({
+		features: {},// set
 		userid: "",
 		username: "",
 		access_token: "",
 		password: false 	// username is password protected
 	});
 	session.stored("load change","session");
+	session.declare("features",[]);
 	session.on("change",function(ev) {
 		var access_token = session().access_token,
 			username = session().username;
