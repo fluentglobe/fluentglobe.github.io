@@ -1038,10 +1038,11 @@ var account;
     };
     buckets.clear = function () {
         this.simperium = null;
-        for (var n in this.namespace) {
-            this.set(n, null);
-            ;
-        }
+        if (this.namespace)
+            for (var n in this.namespace) {
+                this.set(n, null);
+                ;
+            }
     };
 
     buckets.resumeSession = function () {
@@ -1116,8 +1117,10 @@ var account;
     };
 
     buckets.forgetUser = function () {
-        this.set("user.basic", {});
-        this.set("user.features", {});
+        if (this.namespace.user) {
+            this.set("user.basic", {});
+            this.set("user.features", {});
+        }
         session.set("access_token", null);
         setTimeout(function () {
             if (buckets.get("user", null))
