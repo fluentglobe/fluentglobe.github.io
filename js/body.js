@@ -2845,7 +2845,7 @@ document.essential.router.manage({ href: "/log-out" }, "essential.resources", fu
 
     Resolver("document").set("essential.state.authenticated", false);
     Resolver("page").set("state.authenticated", false);
-    Resolver("page").set("state.show-menu", false);
+    Resolver("page").set("state.menu-shown", false);
     Resolver("buckets").logOut();
     Resolver("page").set("state.expanded", false);
 

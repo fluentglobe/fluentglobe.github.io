@@ -186,7 +186,7 @@ document.essential.router.manage({ href:"/log-out" },"essential.resources",funct
 
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.authenticated",false); //TODO move to new flag
-    Resolver("page").set("state.show-menu",false);
+    Resolver("page").set("state.menu-shown",false);
     Resolver("buckets").logOut();
     Resolver("page").set("state.expanded",false); //TODO collapse the menu I'm in
     //TODO reset signup form
