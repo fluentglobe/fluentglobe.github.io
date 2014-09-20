@@ -2843,11 +2843,14 @@ document.essential.router.manage({ href: "/skip-speaking" }, "essential.resource
 document.essential.router.manage({ href: "/log-out" }, "essential.resources", function (path, action) {
     document.essential.router.clearHash();
 
-    Resolver("document").set("essential.state.authenticated", false);
-    Resolver("page").set("state.authenticated", false);
-    Resolver("page").set("state.menu-shown", false);
-    Resolver("buckets").logOut();
-    Resolver("page").set("state.expanded", false);
+    try  {
+        Resolver("document").set("essential.state.authenticated", false);
+        Resolver("page").set("state.authenticated", false);
+        Resolver("page").set("state.menu-shown", false);
+        Resolver("buckets").logOut();
+        Resolver("page").set("state.expanded", false);
+    } catch (ex) {
+    }
 
     return false;
 });
