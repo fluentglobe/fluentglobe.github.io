@@ -1,9 +1,11 @@
   <div class="follow">
     <h4>Follow {{site.title}}</h4>
     <nav>
-    {% if site.facebook_page %}
+    {% if page.facebook_page %}
+    <a class="social-icon" href="https://www.facebook.com/{{page.facebook_page}}" target="_blank">f</a>
+    {% else %}{% if site.facebook_page %}
     <a class="social-icon" href="https://www.facebook.com/{{site.facebook_page}}" target="_blank">f</a>
-    {% endif %}
+    {% endif %}{% endif %}
     {% if site.twitter_id %}
     <a class="social-icon" href="https://twitter.com/{{site.twitter_id}}" target="_blank">l</a>
     {% endif %}
