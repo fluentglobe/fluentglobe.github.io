@@ -3607,12 +3607,8 @@ body .hamburger.flag {
 }
 body .hamburger.flag label {
   border-radius: 1px;
-  border: 1px solid #f83104;
   padding: 5px 9px 4px 9px;
   min-width: 5em;
-}
-body .hamburger.flag label output {
-  color: #f83104;
 }
 body .hamburger.flag button.show-menu {
   border: 0;
@@ -3631,7 +3627,6 @@ body .hamburger.flag label {
 body .hamburger.flag output {
   display: inline-block;
   padding-top: 0;
-  color: #aaa;
 }
 body .hamburger button.show-menu {
   background-color: #f83104;
@@ -3645,6 +3640,13 @@ body .hamburger button.show-menu:hover {
 body .hamburger button.show-menu label {
   color: #e0e0e0;
   font-size: 1.2em;
+}
+body .hamburger.flag label {
+  border: 1px solid #f83104;
+  color: #f83104;
+}
+body .hamburger.flag label output {
+  color: #f83104;
 }
 .with-menu .menu {
   position: absolute;
@@ -3840,6 +3842,13 @@ body .hamburger button.show-menu label {
 .black-menu .hamburger button.show-menu label {
   color: #e0e0e0;
   font-size: 1.2em;
+}
+.black-menu .hamburger.flag label {
+  border: 1px solid #000000;
+  color: #000000;
+}
+.black-menu .hamburger.flag label output {
+  color: #000000;
 }
 .f16 .flag {
   display: inline-block;
