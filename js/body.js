@@ -441,7 +441,7 @@ var fluentbook;
     function dialog_button_click(ev) {
         ev = MutableEvent(ev).withActionInfo();
 
-        if (ev.commandElement) {
+        if (ev.commandElement && ev.commandName) {
             if (ev.stateful && ev.stateful("state.disabled"))
                 return;
             if (ev.ariaDisabled)
