@@ -182,6 +182,17 @@ body {
     }
 }
 
+.crossed-out {
+    display: inline-block;
+    position: relative;
+    text-decoration: line-through;
+
+    &:before {
+        content: "";
+
+    }
+}
+
 @import "lesson";
 
 .splash article {
@@ -508,6 +519,13 @@ img.right-side-80 {
         border-width: 0 0 1px 0;
         border-style: dashed;
         background-color: transparent;
+    }
+
+    .beefy-statement {
+        font-size: 1.4em;
+        white-space: nowrap;
+        padding: 0 1em;
+        vertical-align: -2px;
     }
 
     .right-aligned {

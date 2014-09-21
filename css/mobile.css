@@ -4640,6 +4640,14 @@ body .hamburger button.show-menu label {
 .picture-background .center-piece p {
   text-shadow: 0px 0px 2px #444;
 }
+.crossed-out {
+  display: inline-block;
+  position: relative;
+  text-decoration: line-through;
+}
+.crossed-out:before {
+  content: "";
+}
 .lesson #intro {
   position: absolute;
   top: 0;
@@ -8119,6 +8127,12 @@ body * .ls-container .ls-webkit-hack,
   border-width: 0 0 1px 0;
   border-style: dashed;
   background-color: transparent;
+}
+.signup-phrases .beefy-statement {
+  font-size: 1.4em;
+  white-space: nowrap;
+  padding: 0 1em;
+  vertical-align: -2px;
 }
 .signup-phrases .right-aligned {
   display: block;
