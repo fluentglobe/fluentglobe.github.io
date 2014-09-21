@@ -4640,6 +4640,29 @@ body .hamburger button.show-menu label {
 .picture-background .center-piece p {
   text-shadow: 0px 0px 2px #444;
 }
+.endorsement {
+  padding-top: 5px;
+  padding-left: 110px;
+  min-height: 140px;
+}
+.endorsement:before,
+.endorsement:after {
+  content: " ";
+  display: table;
+}
+.endorsement:after {
+  clear: both;
+}
+.endorsement img.left {
+  position: absolute;
+  left: 1em;
+  width: 100px;
+}
+.endorsement img.right {
+  position: absolute;
+  right: 1em;
+  width: 100px;
+}
 .crossed-out {
   display: inline-block;
   position: relative;
@@ -8150,7 +8173,6 @@ body * .ls-container .ls-webkit-hack,
 @media only screen and (min-width: 480px) {
   .feature-dvd {
     float: left;
-    width: 300px;
   }
   .stress-free-lead .signup-phrases .signup-box {
     padding: 30px;
