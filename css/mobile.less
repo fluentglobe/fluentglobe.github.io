@@ -997,6 +997,21 @@ main article > footer .photo-credits {
     margin-left: @col1-left;
     width: 100% - (2*@col1-left);
 
+    .with-minilead-and-menu & {
+        height: @we-love-height / 4;
+
+        figure {
+            .scale(.25,.25);
+
+        }
+        h3 {
+            padding-top: .4em;
+        }
+        .links-bar {
+            height: 55px;
+        }
+    }
+
     figure {
         position: absolute;
         top: 0; 
