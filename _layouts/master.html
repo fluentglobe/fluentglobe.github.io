@@ -9,6 +9,15 @@ base-body-class:
 {% if page.og-namespace %}prefix="vertical: {{ page.og-namespace }}" {% endif %}
 >
   <meta name="p:domain_verify" content="3b56841eaf51184a3ddc7b704a471e45"/>
+
+  {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
+  {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
+  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
+  {% endfor %}{% endif %}
+  {% if page.og-images %}{% for image in page.og-images %}<meta property="og:image" content="{{ image }}">
+  <meta property="twitter:image" content="{{ image }}">
+  {% endfor %}{% endif %}
+
   <script type="application/config">
   declare("body",{});
   declare("body.layouter","intro-plus-article");
@@ -20,14 +29,6 @@ base-body-class:
   Resolver("document").declare("essential.simperium_api_key","{{ site.website_simperium_api_key }}");
   {% endif %}
   </script>
-
-  {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
-  {% if page.og-author %}<meta property="vertical:author" content="{{ page.og-author }}">{% endif %}
-  {% if page.og-tags %}{% for tag in page.og-tags %}<meta property="vertical:tag" content="{{ tag }}">
-  {% endfor %}{% endif %}
-  {% if page.og-images %}{% for image in page.og-images %}<meta property="og:image" content="{{ image }}">
-  <meta property="twitter:image" content="{{ image }}">
-  {% endfor %}{% endif %}
   {% include ipad_friendly_html5_head.html %}
 
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
