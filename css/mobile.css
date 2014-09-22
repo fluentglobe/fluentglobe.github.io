@@ -4657,7 +4657,7 @@ body .hamburger.flag label output {
 }
 .endorsement {
   padding-top: 5px;
-  padding-left: 118px;
+  padding-left: 120px;
   min-height: 140px;
 }
 .endorsement:before,
@@ -9523,8 +9523,8 @@ main article > footer .photo-credits iframe {
 }
 @media only screen and (max-width: 399px) {
   .single-column {
-    width: 316px;
-    margin-left: -158px;
+    width: 300px;
+    margin-left: -150px;
   }
   html body .feature-presentation {
     height: 480px;
