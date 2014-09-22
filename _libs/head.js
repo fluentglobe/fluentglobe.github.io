@@ -112,12 +112,16 @@
 	});
 	session.stored("load change","session");
 	session.declare("features",{});
-	session.on("change",function(ev) {
+
+	// session is loaded immediately
+	session.on("bind change",function(ev) {
 		var access_token = session().access_token,
 			username = session().username;
 		if (access_token && username) {
 			state.set("authenticated",true);
 			// alert("we're back");
+
+		//TODO features ?
 		}
 	});
 
