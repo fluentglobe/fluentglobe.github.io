@@ -30,7 +30,13 @@ Resolver("page").set("state.stress-free-feature", !!Resolver("buckets")("user.fe
 Resolver("page").set("state.appified", !!Resolver("buckets")("user.features.stress-free-switzerland","null"));
 
 Resolver("buckets::user.features").on("change",function(ev) {
-    var enabled = !!Resolver("buckets")("user.features.stress-free-switzerland","null");
+    var session = Resolver("document::essential.session"),
+        buckets = Resolver("buckets"),
+        features = buckets("user.features");
+
+    for(var n in features) session.set(["features",n], true);
+    //TODO trigger change
+    var enabled = !!buckets("user.features.stress-free-switzerland","null");
     Resolver("page").set("state.stress-free-feature", enabled);
 
     //TODO list of appified features
@@ -184,6 +190,8 @@ document.essential.router.manage({ href:"/skip-speaking" },"essential.resources"
 document.essential.router.manage({ href:"/log-out" },"essential.resources",function(path,action) {
     document.essential.router.clearHash();
 
+    try {
+
     Resolver("document").set("essential.state.authenticated",false);
     Resolver("page").set("state.authenticated",false); //TODO move to new flag
     Resolver("page").set("state.menu-shown",false);
@@ -192,10 +200,12 @@ document.essential.router.manage({ href:"/log-out" },"essential.resources",funct
     //TODO reset signup form
     //TODO update features
 
+    } catch(ex) {} //TODO shouldn't fail
 
     return false;
 });
 
+//TODO router manage "prevent click default":true
 document.essential.router.manage({ href:"/present_for"}, "essential.resources", function(path,action) {
     var parts = path.split("&"), present = parts[0].split("=");
 

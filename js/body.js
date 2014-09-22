@@ -1048,7 +1048,6 @@ var account;
     buckets.resumeSession = function () {
         var access_token = session().access_token, username = session().username;
         if (access_token && username) {
-            state.set("authenticated", true);
             var user = this.getBucket("user");
         } else if (nextSession().access_token) {
         }
