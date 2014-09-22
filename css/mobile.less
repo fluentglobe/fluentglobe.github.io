@@ -660,7 +660,7 @@ body {
     -webkit-overflow-scrolling: touch
 }
 
-.with-minilead-and-menu {
+main.kat-henry-info-page {
     position: relative;
     > header {
         position: relative;
@@ -710,6 +710,22 @@ body {
 
 main article section.first {
     background-color: white;
+}
+
+.show-when-authenticated {
+    display: none;
+
+    body.authenticated & {
+        display: inherit;
+    }
+}
+
+.hide-when-authenticated {
+    // display: block;
+
+    body.authenticated & {
+        display: none;
+    }
 }
 
 .show-when-stress-free-feature-enabled {
@@ -1015,7 +1031,8 @@ main article > footer .photo-credits {
     margin-left: @col1-left;
     width: 100% - (2*@col1-left);
 
-    .with-minilead-and-menu & {
+    // reduced size on squashed pages
+    .kat-henry-info-page & {
         height: @we-love-height / 4;
 
         figure {

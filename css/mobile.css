@@ -9183,10 +9183,10 @@ body {
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -webkit-overflow-scrolling: touch;
 }
-.with-minilead-and-menu {
+main.kat-henry-info-page {
   position: relative;
 }
-.with-minilead-and-menu > header {
+main.kat-henry-info-page > header {
   position: relative;
   padding-top: 50px;
   background-color: #eee;
@@ -9219,6 +9219,15 @@ body {
 }
 main article section.first {
   background-color: white;
+}
+.show-when-authenticated {
+  display: none;
+}
+body.authenticated .show-when-authenticated {
+  display: inherit;
+}
+body.authenticated .hide-when-authenticated {
+  display: none;
 }
 .show-when-stress-free-feature-enabled {
   display: none;
@@ -9474,19 +9483,19 @@ main article > footer .photo-credits iframe {
   margin-left: 3%;
   width: 94%;
 }
-.with-minilead-and-menu .understood-networked {
+.kat-henry-info-page .understood-networked {
   height: 107.75px;
 }
-.with-minilead-and-menu .understood-networked figure {
+.kat-henry-info-page .understood-networked figure {
   -webkit-transform: scale(0.25, 0.25);
   -ms-transform: scale(0.25, 0.25);
   -o-transform: scale(0.25, 0.25);
   transform: scale(0.25, 0.25);
 }
-.with-minilead-and-menu .understood-networked h3 {
+.kat-henry-info-page .understood-networked h3 {
   padding-top: .4em;
 }
-.with-minilead-and-menu .understood-networked .links-bar {
+.kat-henry-info-page .understood-networked .links-bar {
   height: 55px;
 }
 .understood-networked figure {
