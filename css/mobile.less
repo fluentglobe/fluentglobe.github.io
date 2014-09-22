@@ -182,10 +182,19 @@ body {
     }
 }
 
+.single-column {
+    @width: 640px;
+
+    position: relative;
+    left: 50%;
+    width: @width;
+    margin-left: -.5 * @width;
+}
+
 .endorsement {
     .clearfix();
     padding-top: 5px;
-    padding-left: 110px;
+    padding-left: 120px;
     min-height: 140px;
 
     img.left {
@@ -1071,6 +1080,14 @@ main article > footer .photo-credits {
 // smaller Android
 @media only screen and (max-width: 399px) {
 
+    .single-column {
+        @width: 316px;
+
+        width: @width;
+        margin-left: -.5 * @width;
+    }
+
+
     html body .feature-presentation {
         height: 480px;
     }
@@ -1090,6 +1107,13 @@ main article > footer .photo-credits {
 // medium Android
 @media only screen and (min-width: 400px) and (max-width: 479px) {
 
+    .single-column {
+        @width: 316px;
+
+        width: @width;
+        margin-left: -.5 * @width;
+    }
+
     html body .feature-presentation {
         height: 600px;
     }
@@ -1108,6 +1132,13 @@ main article > footer .photo-credits {
 // all iPhone landscape
 @media only screen and (min-width: 480px) and (max-width: 767px) {
     
+    .single-column {
+        @width: 400px;
+
+        width: @width;
+        margin-left: -.5 * @width;
+    }
+
     // feature presentation uses default height
 
     .survey-page {
