@@ -524,6 +524,18 @@ img.right-side-80 {
 
 .illustrated-content {
     .clearfix();
+    max-width: 900px;
+    margin: 0 auto;
+
+    .content {
+        position: relative;
+        font-size:1.2em;
+        padding: 15px 200px 15px 210px;
+
+        b {
+            color: @fluent-red;
+        }
+    }
 
     .content-illustration {
         float: left;
@@ -534,7 +546,6 @@ img.right-side-80 {
         float: right;
     }  
 }
-
 
 .feature-dvd {
     // margin-top: 30px;
@@ -1129,6 +1140,32 @@ main article > footer .photo-credits {
     }
 }
 
+// all mobile formats
+@media only screen and (max-width: 767px) {
+
+    .illustrated-content {
+        .content {
+            width: 100%;
+            padding: 200px 15px 280px 15px;
+        }
+
+        .content-illustration,
+        .product-illustration {
+            float: none;
+            position: absolute;
+            margin-left: -100px;
+            left: 50%;
+        }
+        .content-illustration {
+
+        }
+        .product-illustration {
+            bottom: 260px;
+        }
+    }
+
+}
+
 // iPhone ..6 portrait
 // smaller Android
 @media only screen and (max-width: 399px) {
@@ -1140,6 +1177,17 @@ main article > footer .photo-credits {
         margin-left: -.5 * @width;
     }
 
+    .illustrated-content {
+        .content-illustration {
+            // width: 100px;
+        }
+        .content {
+            // float: left;
+        }
+        .product-illustration {
+            bottom: 340px; //TODO figure out this magic number
+        }
+    }
 
     html body .feature-presentation {
         background-size: auto 100%;
