@@ -8163,6 +8163,9 @@ body * .ls-container .ls-webkit-hack,
 .feature-dvd {
   width: 200px;
 }
+.feature-dvd-big {
+  width: 240px;
+}
 .signup-phrases h3 {
   font-size: 20px;
   line-height: 20px;
@@ -9329,9 +9332,11 @@ body.authenticated .hide-when-authenticated {
   border: 1px solid #d8d8d8;
   padding: 20px;
   min-height: 17em;
-  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
   margin: 0;
+}
+.picture-background .signup-phrases .stress-free-signup-box {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 .stress-free-lead {
   position: relative;
