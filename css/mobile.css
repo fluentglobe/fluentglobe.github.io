@@ -4668,14 +4668,20 @@ body .hamburger.flag label output {
 .endorsement:after {
   clear: both;
 }
-.endorsement img.left {
+.endorsement .left {
   position: absolute;
   left: 1em;
   width: 100px;
 }
-.endorsement img.right {
+.endorsement .left audio {
+  width: 100px;
+}
+.endorsement .right {
   position: absolute;
   right: 1em;
+  width: 100px;
+}
+.endorsement .right audio {
   width: 100px;
 }
 .crossed-out {
