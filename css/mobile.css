@@ -9195,6 +9195,18 @@ main.kat-henry-info-page > header {
   background-size: 100%;
   background-repeat: no-repeat;
 }
+main.kat-henry-feature-page {
+  position: relative;
+}
+main.kat-henry-feature-page > header {
+  position: relative;
+  padding-top: 50px;
+  background-color: white;
+  background-image: url(/images/Kat-Henry-86.jpg);
+  background-position: top right;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
 .with-lead-and-menu {
   position: relative;
   height: 100%;
@@ -9207,15 +9219,6 @@ main.kat-henry-info-page > header {
   -webkit-transition: left .3 ease, height .5s ease;
   -o-transition: left .3 ease, height .5s ease;
   transition: left .3 ease, height .5s ease;
-  background-image: url(/images/Kat-Henry-86.jpg);
-  background-position: top right;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
-  background-color: white;
-}
-.appified .with-lead-and-menu > header {
-  height: 100%;
-  background-color: white;
 }
 main article section.first {
   background-color: white;
