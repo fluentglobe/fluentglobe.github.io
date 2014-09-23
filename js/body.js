@@ -1705,8 +1705,12 @@ var ProtectedPresentation;
                 feature[n] = config.featureData[n];
             }
             this.applyFeature(feature);
-        } else if (config.feature && Resolver("page::state.authenticated::") && Resolver("document")(["essential", "session", "features", config.feature])) {
-            this.el.stateful.set("state.loading", true);
+        } else {
+            if (config.feature && Resolver("page::state.authenticated::") && Resolver("document")(["essential", "session", "features", config.feature])) {
+                this.el.stateful.set("state.loading", true);
+            } else {
+                this.track.startAutoplay(this.el.querySelectorAll("audio[data-autoplay=guest]"));
+            }
         }
 
         this.resourcePrefix = "/assets/default/";
@@ -2134,6 +2138,8 @@ var SpokenTrack;
         this.stateful = stateful;
         this.currentTag = this._createTag(this.silentPath);
         this.nextTag = this._createTag(this.silentPath);
+
+        this.autoplaying = [];
     }
 
     SpokenTrackHTML5.prototype.requireAudio = function () {
@@ -2149,10 +2155,30 @@ var SpokenTrack;
         this._pauseOtherAudio();
     };
 
+    SpokenTrackHTML5.prototype.startAutoplay = function (audios) {
+        for (var i = 0, e; e = audios[i]; ++i)
+            this.autoplaying.push(e);
+
+        this._playNextAutoplaying();
+    };
+
     SpokenTrackHTML5.prototype._pauseOtherAudio = function () {
         for (var i = 0, a; a = this.audios[i]; ++i) {
             a.pause();
         }
+    };
+
+    SpokenTrackHTML5.prototype._playNextAutoplaying = function () {
+        var audio = this.autoplaying.shift();
+        if (audio) {
+            audio.play();
+
+            audio.addEventListener("ended", this._onendedAutoplaying.bind(this), false);
+        }
+    };
+
+    SpokenTrackHTML5.prototype._onendedAutoplaying = function (ev) {
+        this._playNextAutoplaying();
     };
 
     SpokenTrackHTML5.prototype.play = function (spoken) {
