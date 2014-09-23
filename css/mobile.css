@@ -8145,8 +8145,23 @@ body * .ls-container .ls-webkit-hack,
 .mejs-audio.page-audio .mejs-controls .mejs-time-rail .mejs-time-loaded {
   background: transparent;
 }
+.illustrated-content:before,
+.illustrated-content:after {
+  content: " ";
+  display: table;
+}
+.illustrated-content:after {
+  clear: both;
+}
+.illustrated-content .content-illustration {
+  float: left;
+  width: 200px;
+}
+.illustrated-content .product-illustration {
+  float: right;
+}
 .feature-dvd {
-  width: 240px;
+  width: 200px;
 }
 .signup-phrases h3 {
   font-size: 20px;
