@@ -383,7 +383,7 @@ function form_input_change(ev) {
 function dialog_button_click(ev) {
 	ev = MutableEvent(ev).withActionInfo();
 
-	if (ev.commandElement && ev.commandName) {
+	if (ev.commandElement && (ev.commandName || ev.commandElement.type == "submit")) {
 		if (ev.stateful && ev.stateful("state.disabled")) return; // disable
 		if (ev.ariaDisabled) return; //TODO fold into stateful
 
