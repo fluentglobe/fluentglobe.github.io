@@ -1,18 +1,19 @@
 #machine:
-#	node:
-#		version: 0.10.28
+#   node:
+#       version: 0.10.28
 
 dependencies:
-	pre:
-		- npm install -g karma
-	post:
-		- bower install
-	cache_directories:
-		- ~/nvm
+    pre:
+        - npm install -g karma
+    post:
+        - bower install
+    cache_directories:
+        - ~/nvm
 
 deployment:
-	tasks:
-		branch: master
-		commands:
-			- ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM: {parallel: true}
+    tasks:
+        branch: master
+        owner: fluentglobe
+        commands:
+            - ./scripts/circle/deploy.sh --sha1=$CIRCLE_SHA1 --index=$CIRCLE_NODE_INDEX --build-number=$CIRCLE_BUILD_NUM: {parallel: true}
 
