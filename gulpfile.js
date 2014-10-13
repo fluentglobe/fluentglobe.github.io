@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  karma = require('karma').server;
   jade = require('gulp-jade'),
 	uglify = require('gulp-uglify'),
   rigger = require('gulp-rigger'),
@@ -29,12 +30,28 @@ gulp.task('rigger', function () {
     .pipe(gulp.dest('./site/assets/js/'));
 });
 
-gulp.task('watch',function() {
+gulp.task('watch',['tdd'],function() {
   gulp.watch(paths.site, ['site']);
   gulp.watch(paths.rigger, ['rigger']);
   // gulp.watch(paths.scripts, ['scripts']);
+
 });
 gulp.task('default', ['watch','site','rigger']);
+
+
+gulp.task('test', function(done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done);
+});
+
+gulp.task('tdd', function(done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js'
+  }, done);
+});
+
 
 // gulp.task('build', ['lint', 'test'], function() {
 //   return gulp.src(['src/main.js']).pipe(Amdclean.gulp({
