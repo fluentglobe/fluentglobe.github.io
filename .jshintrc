@@ -1,0 +1,13 @@
+{
+    "quotmark": true,
+    "indent": 4,
+    "esnext": true,
+    "node": true,
+    "browser": true,
+    "curly": true,
+    "immed": true,
+    "trailing": true,
+    "newcap": true,
+    "nonew": true,
+    "noarg": true
+}
