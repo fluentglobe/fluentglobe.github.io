@@ -2,11 +2,18 @@ var gulp = require('gulp'),
   karma = require('karma').server;
   jade = require('gulp-jade'),
 	uglify = require('gulp-uglify'),
+  sourcemaps = require('gulp-sourcemaps'),
   rigger = require('gulp-rigger'),
+  cached = require('gulp-cached'),
+  remember = require('gulp-remember'),
+  concat = require('gulp-concat'),
   Amdclean  = require('gulp-amdclean'),
 	// imagemin = require('gulp-imagemin'),
 	// sourcemaps = require('gulp-sourcemaps'),
   sass = require('gulp-sass');
+
+// package data
+var pkg = require('./package.json');
 
 var paths = {
   site: ['site/**/*.jade'],
@@ -25,7 +32,22 @@ gulp.task('site', function() {
 });
 
 gulp.task('rigger', function () {
-  gulp.src('./client/rigged/*.js')
+
+  gulp.src( pkg["libs-js"])
+    .pipe(cached())
+    //.pipe(concat('libs.js'))
+    .pipe(sourcemaps.init({ loadingMaps: true }))
+    .pipe(uglify())  // { outSourceMap: true }
+    .pipe(remember())
+    .pipe(concat({ path:'libs.min.js' }))  //TODO header
+    .pipe(sourcemaps.write('./maps'))
+    .pipe(gulp.dest('./site/assets/js/'));
+
+  gulp.src( pkg["libs-js"])
+    .pipe(concat({ path:'libs.js' }))
+    .pipe(gulp.dest('./site/assets/js/'));
+
+  gulp.src('./client/code/rigged/*.js')
     .pipe(rigger())
     .pipe(gulp.dest('./site/assets/js/'));
 });
