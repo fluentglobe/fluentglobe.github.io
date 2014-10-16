@@ -11,6 +11,7 @@ var gulp = require('gulp'),
   Amdclean  = require('gulp-amdclean'),
 	// imagemin = require('gulp-imagemin'),
 	// sourcemaps = require('gulp-sourcemaps'),
+  less = require('gulp-less-sourcemap'),
   sass = require('gulp-sass');
 
 // package data
@@ -34,12 +35,19 @@ gulp.task('site', function() {
 });
 
 gulp.task('sass', function () {
-    gulp.src('./client/css/site/**/*.scss')
-        .pipe(sass())
-        .pipe(gulp.dest('./site/css'));
+  gulp.src('./client/css/site/**/*.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./site/assets/css'));
 });
 
-
+gulp.task('less', function() {
+  gulp.src('./client/css/site/**/*.less')
+    .pipe(less({
+      generateSourceMap: true,
+      paths: [ path.join(__dirname, 'lib')]
+    }))
+    .pipe(gulp.dest('./site/assets/css'));
+});
 
 gulp.task('rigger', function () {
 
