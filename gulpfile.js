@@ -63,14 +63,14 @@ gulp.task('default', ['watch','site','rigger']);
 
 gulp.task('test', function(done) {
   karma.start({
-    configFile: __dirname + '/karma.conf.js',
+    configFile: __dirname + '/test/karma.conf.js',
     singleRun: true
   }, done);
 });
 
 gulp.task('tdd', function(done) {
   karma.start({
-    configFile: __dirname + '/karma.conf.js'
+    configFile: __dirname + '/test/karma.conf.js'
   }, done);
 });
 
