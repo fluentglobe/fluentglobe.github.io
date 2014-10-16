@@ -64,6 +64,7 @@
     "jshint-stylish": "~0.1.5",
     "karma": "^0.12.24",
     "karma-chrome-launcher": "^0.1.5",
+    "karma-firefox-launcher": "*",
     "karma-jasmine": "^0.1.5",
     "load-grunt-tasks": "~0.2.0",
     "marked": "^0.3.2",
