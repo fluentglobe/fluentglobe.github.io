@@ -21,6 +21,19 @@ ss.http.route('/discuss', function(req, res){
   res.serveClient('discuss');
 });
 
+
+// Jasmine Test Runner
+ss.client.define('test', {
+	view: 'SpecRunner.jade',
+	css: ['libs/test'],
+	code: ['libs','tests','app'],
+	templ: 'none'
+});
+
+ss.http.route('/test', function(req,res) {
+	res.serveClient('test');
+});
+
 // Code Formatters
 ss.client.formatters.add(require('ss-sass'));
 
