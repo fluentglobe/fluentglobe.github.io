@@ -1,0 +1,49 @@
+// For iPad down in size
+
+// @import "../libs/_normalize.scss";
+// @import "../../components/normalize.scss/_normalize.scss"
+
+@charset "UTF-8";
+
+@import
+  // Ionicons
+  "../../components/ionic/scss/ionicons/ionicons.scss",
+
+  // Variables
+  "../../components/ionic/scss/mixins",
+  "../../components/ionic/scss/variables",
+
+  // Base
+  "../../components/ionic/scss/reset",
+  "../../components/ionic/scss/scaffolding",
+  "../../components/ionic/scss/type",
+
+  // Components
+  "../../components/ionic/scss/action-sheet",
+  "../../components/ionic/scss/bar",
+  "../../components/ionic/scss/tabs",
+  "../../components/ionic/scss/menu",
+  "../../components/ionic/scss/modal",
+  "../../components/ionic/scss/popup",
+  "../../components/ionic/scss/items",
+  "../../components/ionic/scss/list",
+  "../../components/ionic/scss/badge",
+  "../../components/ionic/scss/slide-box",
+  "../../components/ionic/scss/split-pane",
+
+  // Forms
+  "../../components/ionic/scss/form",
+  "../../components/ionic/scss/checkbox",
+  "../../components/ionic/scss/toggle",
+  "../../components/ionic/scss/radio",
+  "../../components/ionic/scss/range",
+
+  // Buttons
+  "../../components/ionic/scss/button",
+  "../../components/ionic/scss/button-bar",
+
+  // Util
+  "../../components/ionic/scss/animations",
+  "../../components/ionic/scss/grid",
+  "../../components/ionic/scss/util",
+  "../../components/ionic/scss/platform";

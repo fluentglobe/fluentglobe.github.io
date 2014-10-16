@@ -8,11 +8,12 @@ var gulp = require('gulp'),
   cached = require('gulp-cached'),
   remember = require('gulp-remember'),
   concat = require('gulp-concat'),
+  flatten = require('gulp-flatten'),
   Amdclean  = require('gulp-amdclean'),
 	// imagemin = require('gulp-imagemin'),
 	// sourcemaps = require('gulp-sourcemaps'),
   less = require('gulp-less-sourcemap'),
-  sass = require('gulp-sass');
+  sass = require('gulp-ruby-sass');
 
 // package data
 var pkg = require('./package.json');
@@ -26,6 +27,10 @@ var paths = {
 gulp.task('site', function() {
   var YOUR_LOCALS = {};
 
+  gulp.src('./client/components/ionic/**/*.{ttf,woff,eof,svg}')
+    .pipe(flatten())
+    .pipe(gulp.dest('./site/assets/fonts'));
+
   gulp.src('./site/*.jade')
     .pipe(jade({
       basedir: path.join(__dirname,'lib'),
@@ -36,7 +41,9 @@ gulp.task('site', function() {
 
 gulp.task('sass', function () {
   gulp.src('./client/css/site/**/*.scss')
-    .pipe(sass())
+    .pipe(sass({
+      loadPath: [ path.join(__dirname,'lib'), path.join(__dirname,'client/components/mixin-compass')]
+    }))
     .pipe(gulp.dest('./site/assets/css'));
 });
 
