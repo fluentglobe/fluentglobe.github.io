@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  path = require('path'),
   karma = require('karma').server;
   jade = require('gulp-jade'),
 	uglify = require('gulp-uglify'),
@@ -26,10 +27,19 @@ gulp.task('site', function() {
 
   gulp.src('./site/*.jade')
     .pipe(jade({
+      basedir: path.join(__dirname,'lib'),
       locals: YOUR_LOCALS
     }))
     .pipe(gulp.dest('./site/'))
 });
+
+gulp.task('sass', function () {
+    gulp.src('./client/css/site/**/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./site/css'));
+});
+
+
 
 gulp.task('rigger', function () {
 
