@@ -11,7 +11,7 @@ ss.client.options.dirs.assets = "/site/assets";
 // Define a single-page client called 'discuss'
 ss.client.define('discuss', {
   view: 'discuss.jade',
-  css:  ['libs/reset.css', 'discuss.scss'],
+  css:  ['discuss.scss'],
   code: ['app'],
   tmpl: '*'
 });
