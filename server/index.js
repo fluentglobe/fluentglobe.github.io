@@ -22,6 +22,18 @@ ss.http.route('/discuss', function(req, res){
 });
 
 
+// Define a single-page client called 'my-lesson'
+ss.client.define('my-lesson', {
+  view: 'my-lesson.jade',
+  css:  ['my-lesson.scss'],
+  code: ['app'],
+  tmpl: '*'
+});
+
+ss.http.route('/my-lesson', function(req,res) {
+	res.serveClient('my-lesson');
+});
+
 // Jasmine Test Runner
 ss.client.define('test', {
 	view: 'SpecRunner.jade',
