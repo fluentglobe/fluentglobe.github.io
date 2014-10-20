@@ -17,7 +17,9 @@
     "base64": "~0.3.0",
     "es5-shim": "~4.0.3",
     "normalize.scss": "~3.0.1+normalize.3.0.1",
-    "normalize-less": "*"
+    "normalize-less": "*",
+    "mixin-compass": "*",
+    "uri.js": "~1.14.1"
   },
   "devDependencies": {}
 }

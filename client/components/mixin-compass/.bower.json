@@ -1,0 +1,25 @@
+{
+  "name": "mixin-compass",
+  "homepage": "https://github.com/sym3tri/mixin-compass",
+  "authors": [
+    "Ed Rooth"
+  ],
+  "description": "just the compass mixins",
+  "keywords": [
+    "compass",
+    "mixin",
+    "sass",
+    "scss"
+  ],
+  "license": "MIT",
+  "_release": "6ef161c7b1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "6ef161c7b17dd576407151867058b912b761d762"
+  },
+  "_source": "git://github.com/sym3tri/mixin-compass.git",
+  "_target": "*",
+  "_originalSource": "mixin-compass",
+  "_direct": true
+}
