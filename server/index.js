@@ -3,15 +3,23 @@
 
 var http = require('http'),
 	path = require('path'),
+	less = require('ss-less'),
+	amdclean = require('../lib/ss/amdclean'),
     ss = require('socketstream');
 
 ss.client.options.dirs.static = "/site";
 ss.client.options.dirs.assets = "/site/assets";
 
+ss.session.options.maxAge = 2.6*Math.pow(10,9);
+
+// LESS/SASS config
+// less.prependLess('@assets-path: "' + '' + '"');
+
 // Define a single-page client called 'discuss'
 ss.client.define('discuss', {
   view: 'discuss.jade',
   css:  ['discuss.scss'],
+  // code: ['app/lesson.es','app/entry.js'],
   code: ['app'],
   tmpl: '*'
 });
@@ -48,6 +56,8 @@ ss.http.route('/test', function(req,res) {
 
 // Code Formatters
 ss.client.formatters.add(require('ss-sass'));
+ss.client.formatters.add(less);
+ss.client.formatters.add(amdclean);
 
 // HTML template formatters
 ss.client.formatters.add(require('../lib/ss/jade'),{
@@ -58,6 +68,9 @@ ss.client.formatters.add(require('../lib/ss/jade'),{
 
 // Use server-side compiled Hogan (Mustache) templates. Others engines available
 ss.client.templateEngine.use(require('ss-hogan'));
+
+// respond with angular content
+ss.responders.add(require('../lib/ss/angular/server'),{pollFreq: 1000});
 
 ss.ws.transport.use(require('ss-sockjs'), {
 	client: {
