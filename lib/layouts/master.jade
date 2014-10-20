@@ -9,7 +9,6 @@ html.no-js(lang="en")
   head
     meta(charset="utf-8")
     +head-assets()
-    != SocketStream
     title
       block title
     block head
@@ -20,8 +19,8 @@ html.no-js(lang="en")
       block content
         p Content block to be filled in
 
-
     +body-assets
+    != SocketStream
     if googleAnalyticsSiteID
       script.
         var _gaq=[['_setAccount','#{googleAnalyticsSiteID}'],['_trackPageview']];

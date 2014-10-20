@@ -18,7 +18,7 @@ ss.server.on('ready', function(){
     
     // Load app
     require('/app');
-
+    // require('/lesson');
   });
 
 });
