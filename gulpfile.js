@@ -31,7 +31,7 @@ gulp.task('site', function() {
     .pipe(flatten())
     .pipe(gulp.dest('./site/assets/fonts'));
 
-  gulp.src('./site/*.jade')
+  gulp.src('./site/**/*.jade')
     .pipe(jade({
       basedir: path.join(__dirname,'lib'),
       locals: YOUR_LOCALS
