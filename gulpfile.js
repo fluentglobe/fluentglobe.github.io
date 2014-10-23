@@ -1,6 +1,7 @@
 var gulp = require('gulp'),
   path = require('path'),
-  karma = require('karma').server;
+  karma = require('karma').server,
+  mocha = require('gulp-mocha'),
   jade = require('gulp-jade'),
 	uglify = require('gulp-uglify'),
   sourcemaps = require('gulp-sourcemaps'),
@@ -84,13 +85,19 @@ gulp.task('watch',['tdd'],function() {
 
 });
 gulp.task('default', ['watch','site','rigger']);
+  
+gulp.task('test',['test-node','test-browser']);
 
-
-gulp.task('test', function(done) {
+gulp.task('test-browser', function(done) {
   karma.start({
     configFile: __dirname + '/test/karma.conf.js',
     singleRun: true
   }, done);
+});
+
+gulp.task('test-node',function() {
+    return gulp.src('test/node/**/*.js', {read: false})
+        .pipe(mocha({reporter: 'nyan'}));
 });
 
 gulp.task('tdd', function(done) {
@@ -127,8 +134,6 @@ gulp.src('./scss/*.scss')
 
 // will write the source maps to ./dest/css/maps
 
-var 
-
 //Compile to JS
 
 var jade = require('gulp-jade');
@@ -142,9 +147,6 @@ gulp.task('templates', function() {
 });
 
 
-
-var    ;
-
 var jshint = require('gulp-jshint');
 
 gulp.task('lint', function() {
@@ -153,11 +155,7 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('YOUR_REPORTER_HERE'));
 });
 
-var mocha = require('gulp-mocha');
-
 gulp.task('default', function () {
-    return gulp.src('test.js', {read: false})
-        .pipe(mocha({reporter: 'nyan'}));
 });
 
 */
