@@ -30,11 +30,15 @@ describe('SS ECMAScript',function() {
     var formatter = es.init(path.join(__dirname,'..'))
 
     it('should render blank ES file', function(done) {
-        var filePath = path.join(__dirname,'../blank.js'),
+        var filePath = path.join(__dirname,'../fixture/blank.es'),
             options = {};
-        debugger;
-        formatter.compile(filePath, options, function(output) {
 
+        formatter.compile(filePath, options, function(output) {
+            var scope = {};
+            with(scope) {
+                (new Function(output))();
+            }
+            expect(scope.incl1).to.equal("incl1");
             expect(output).to.equal('');
             done();
         });
