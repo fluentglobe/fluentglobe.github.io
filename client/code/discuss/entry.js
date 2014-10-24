@@ -19,6 +19,10 @@ ss.server.on('ready', function(){
     // Load app
     require('/app');
     // require('/lesson');
+
+    var lesson = require('lesson');
+    var book = require('book');
+    var router = require('router');
   });
 
 });

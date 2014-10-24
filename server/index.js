@@ -20,7 +20,7 @@ ss.client.define('discuss', {
   view: 'discuss.jade',
   css:  ['discuss.scss'],
   // code: ['app/lesson.es','app/entry.js'],
-  code: ['discuss'],
+  code: ['discuss','system'],
   tmpl: '*'
 });
 
