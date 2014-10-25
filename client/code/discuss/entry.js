@@ -3,11 +3,22 @@
 // Make 'ss' available to all modules and the browser console
 window.ss = require('socketstream');
 
+require('/filters');
+require('/services');
+require('/directives');
+
+var discuss = angular.module('discuss', ['ui.router','discuss.filters','discuss.services','discuss.directives']);
+
+require('/routes')(discuss);
+require('/controllers')(discuss);
+
 ss.server.on('disconnect', function(){
+  // $('#warning').modal('show');
   console.log('Connection down :-(');
 });
 
 ss.server.on('reconnect', function(){
+  // $('#warning').modal('hide');
   console.log('Connection back up :-)');
 });
 
@@ -15,14 +26,7 @@ ss.server.on('ready', function(){
 
   // Wait for the DOM to finish loading
   jQuery(function(){
-    
-    // Load app
-    require('/app');
-    // require('/lesson');
-
-    var lesson = require('lesson');
-    var book = require('book');
-    var router = require('router');
+    // nah
   });
 
 });
