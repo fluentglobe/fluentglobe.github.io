@@ -65,7 +65,9 @@ ss.client.formatters.add(amdclean);
 // HTML template formatters
 ss.client.formatters.add(require('../lib/ss/jade'),{
     basedir: path.join(__dirname,"../lib"),
-	locals: {} // extra variables
+	locals: {
+		debug: !(ss.env === 'production')
+	} // extra variables
 	// headers {}
 });
 
