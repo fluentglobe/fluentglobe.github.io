@@ -12,6 +12,9 @@ ss.client.options.dirs.assets = "/site/assets";
 
 ss.session.options.maxAge = 2.6*Math.pow(10,9);
 
+ss.client.assets.send('shims','json.min.js','');
+ss.client.assets.send('libs','browserify.js','');
+
 // LESS/SASS config
 // less.prependLess('@assets-path: "' + '' + '"');
 
