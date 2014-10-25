@@ -6,6 +6,7 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
   sourcemaps = require('gulp-sourcemaps'),
   rigger = require('gulp-rigger'),
+  browserify = require('gulp-browserify'),
   cached = require('gulp-cached'),
   remember = require('gulp-remember'),
   concat = require('gulp-concat'),
@@ -78,13 +79,31 @@ gulp.task('rigger', function () {
     .pipe(gulp.dest('./site/assets/js/'));
 });
 
+gulp.task('body', function() {
+
+  gulp.src('client/code/site/body.js')
+    .pipe(browserify({
+      installGlobals: true,
+      shim: {
+        jquery: {
+          path: './client/components/jquery/jquery.js',
+          exports: 'jQuery'
+        }
+      }
+    }))
+    .on('prebundle', function(bundle) {
+
+    })
+    .pipe(gulp.dest('./site/assets/js/'));
+});
+
 gulp.task('watch',['tdd'],function() {
   gulp.watch(paths.site, ['site']);
   gulp.watch(paths.rigger, ['rigger']);
   // gulp.watch(paths.scripts, ['scripts']);
 
 });
-gulp.task('default', ['watch','site','rigger']);
+gulp.task('default', ['watch','site','rigger','body']);
   
 gulp.task('test',['test-node','test-browser']);
 
