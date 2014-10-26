@@ -69,7 +69,7 @@
       }
     }
   });
-</script><div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'"><nav class="hamburger flag f16"><!-- could use stateful(1):: --><button role="button" name="page::state.menu-shown::toggle" class="show-menu">&#x2630;</button><label role="button" name="page::state.menu-shown::toggle"><output data-resolve="text:document::essential.language">English<aside class="understood-networked on-dark-picture-bg"><figure></figure>
+</script><div id="intro" data-class="'!state.menu-expanded':'menu-collapsed'"><nav class="hamburger flag f16"><!-- could use stateful(1):: --><button role="button" name="page::state.menu-shown::toggle" class="show-menu">&#x2630;</button><label role="button" name="page::state.menu-shown::toggle"><output data-resolve="text:document::essential.language">English</output><i data-resolve="class: document::essential.countryCode" class="flag"></i></label></nav><aside class="understood-networked on-dark-picture-bg"><figure></figure>
 
           <h3 lang="en">Understood and Networked</h3>
           <h3 lang="es">Entendido y Networked</h3>
@@ -111,165 +111,37 @@
           <span lang="ja"></span>
           <span lang="ar"></span>
           </a>
- </aside>          <div class="know-secret"><form id="signup" class="signup-phrases secret-signup subscribed-box intro-column" role="form"
-      action="client+http://email.fluentglobe.com/t/i/s/vjikj/" 
-      method="post"
-      enctype="application/x-www-form-urlencoded"
-      class="hide-when-stress-free-feature-enabled"
-      target="signup-iframe"
-      >
-
-<fieldset class="when-unsubscribed">
-    <p>
-    <span lang="en">I live in </span>
-
-     <select name="cm-fo-cbky">
-            <option value="235945">Zürich</option>
-            <option value="235946">Basel</option>
-            <option value="235947">Bern</option>
-            <option value="235948">Geneve</option>
-            <option value="235949">München</option>
-            <option value="235950">Frankfurt</option>
-            <option value="235951">Amsterdam</option>
-            <option value="235952">Copenhagen</option>
-            <option value="235953">Stockholm</option>
-            <option value="235954">Wien</option>
-     </select>
-     .
-
-     <span lang="en">I would like to know <em>the secrets</em> to living here.</span>
-    </p>
-
-    <p>
-     <span lang="en">My name is</span> 
-         <input placeholder="Your Name" name="name" type="text" size="15" required>
-     <span lang="en">and my email is</span> 
-         <input placeholder="e-mail" name="email" type="email" size="25" required>
-
-     .</p>
-
-
-     <p style="text-align: right; margin: 25px 0 0 0;">
-         <input type="hidden" name="from-country">
-         <input type="hidden" name="native-language">
-
-         <button class="btn tinted double-corner"> {% include intro/lets-talk.html %} </button>
-    </p>
-
-</fieldset>
-
-<fieldset class="when-subscribed">
-     <p>Like you, we would love to know the secrets as well.</p>
-     <p>Having moved 4 times in 5 years we have learned a lot, so we are compiling the <em>first step</em> to living in Switzerland.</p>
-     <p>We will get back to you soon with more information.</p>
-</fieldset>
-
-</form>
-</div><footer></footer></output><i data-resolve="class: document::essential.countryCode" class="flag"></i></label></nav></div><main class="fluid"><article><header class="floating"><footer class="links-bar"><div class="follow"><h4>Follow {{site.title}}</h4><nav>{% if page.facebook_page %}<a>class="social-icon" href="https://www.facebook.com/{{page.facebook_page}}" target="_blank">f</a></a>{% else %}{% if site.facebook_page %}<a>class="social-icon" href="https://www.facebook.com/{{site.facebook_page}}" target="_blank">f</a></a>{% endif %}{% endif %}
+ </aside>          <div class="know-secret"><form id="signup" role="form" action="client+http://email.fluentglobe.com/t/i/s/vjikj/" method="post" enctype="application/x-www-form-urlencoded" target="signup-iframe" class="signup-phrases secret-signup subscribed-box intro-column hide-when-stress-free-feature-enabled"><fieldset class="when-unsubscribed"><p><span lang="en">I live in&nbsp;</span><select name="cm-fo-cbky"><option value="235945">Zürich</option><option value="235946">Basel</option><option value="235947">Bern</option><option value="235948">Geneve</option><option value="235949">München</option><option value="235950">Frankfurt</option><option value="235951">Amsterdam</option><option value="235952">Copenhagen</option><option value="235953">Stockholm</option><option value="235954">Wien</option></select>.<span lang="en">I would like to know <em>the secrets</em> to living here.</span></p><p><span lang="en">My name is&nbsp;<input placeholder="Your Name" name="name" type="text" size="15" required></span><span lang="en">and my email is&nbsp;<input placeholder="e-mail" name="email" type="email" size="25" required></span>.</p><p style="text-align: right; margin: 25px 0 0 0;"><input type="hidden" name="from-country"><input type="hidden" name="native-language"><button class="btn tinted double-corner"><span lang="en">Let's Talk!</span>
+<span lang="es">Hablemos!</span>
+<span lang="de">Lassen Sie uns sprechen!</span>
+<span lang="pt">Vamos falar!</span>
+<span lang="fr">Parlons!</span>
+<span lang="it">Parliamo!</span></button></p></fieldset><fieldset class="when-subscribed"><p>Like you, we would love to know the secrets as well.</p><p>Having moved 4 times in 5 years we have learned a lot, so we are compiling the <em>first step</em> to living in Switzerland.</p><p>We will get back to you soon with more information.</p></fieldset></form></div><footer></footer></div><main class="fluid"><article><header class="floating"><footer class="links-bar"><div class="follow"><h4>Follow {{site.title}}</h4><nav>{% if page.facebook_page %}<a>class="social-icon" href="https://www.facebook.com/{{page.facebook_page}}" target="_blank">f</a></a>{% else %}{% if site.facebook_page %}<a>class="social-icon" href="https://www.facebook.com/{{site.facebook_page}}" target="_blank">f</a></a>{% endif %}{% endif %}
 {% if site.twitter_id %}<a>class="social-icon" href="https://twitter.com/{{site.twitter_id}}" target="_blank">l</a></a>{% endif %}<a>class="social-icon" href="https://www.linkedin.com/company/{{site.linkedin_company_id}}" target="_blank">i</a></a>{% if page.plus-author %}<a class="social-icon" href="https://plus.google.com/{{ page.plus-author }}?rel=author" rel="author" target="_blank">g</a>
-{% else %}<a class="social-icon" href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher" target="_blank">g</a>{% endif %}<span style="display:none"><a href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher">Google+</a></span></nav></div></footer></header><section style="text-align:center;" class="first">      <h1>Welcome to your new city</h1>
-
-    <span class="hide-when-stress-free-feature-enabled">
-      <a href="http://artmagenta.com" target="artmagenta">
-      <img src="/images/Nyhavn-Copenhagen.jpg" alt="Nice life, first year in your new city" style="display:inline-block;width:300px;">
-      </a>
-      <h3 style="margin-left:10%;">Do I need to pay for health insurance? Which One?</h3>
-      <h3 style="margin-left:-40%;">What type of Work Permit?</h3>
-      <h3 style="margin:0 0 0 30%;">Which Bank to use?</h3>
-      <h3 style="margin-left:-30%;">How does taxes work?</h3>
-      <!-- <h3>&nbsp;</h3> -->
-      <h3 style="color:red">So many questions, need a hand?</h3>
-      <!-- <h3>&nbsp;</h3> -->
-      <h3 style="margin-left:30%;">Should I get a car?</h3>
-      <h3 style="margin-left:-20%;">When are holidays, will shops be closed?</h3>
-      <h3 style="margin-left:30%;">The dialect is strange, I feel left out.</h3>
-      <h3 style="margin-left:-10%;">How do I keep fit and find the best food?</h3>
-      <h3 style="margin-left:20%;">Where and How to meet new people?</h3>
-    </span>
-
-    <div class="show-when-stress-free-feature-enabled">
-      <a href="/switzerland/" class="btn tinted">Start presentation</a>
-    </div>
-
-</section><section style="min-height:250px;padding: 35px;" class="even kat-henry-intro on-dark-picture-bg hide-when-stress-free-feature-enabled">    <h3 style="text-align:left;">We moved to Zürich a few years ago. </h3>
-    <h3 style="text-align:left;">
-    The 4th move in 4 years. It has taught us a lot.
-
-    </h3>
-    <h3 style="text-align:left;">
-    We would like to give you the <br>formula for a Stress-Free First Year.
-    </h3>
-</section><section class="first hide-when-stress-free-feature-enabled"><div class="center-col">
-
-        <audio class="pitch" controls data-role="'text':'#pitch-text'"
-        {% if include.autoplay %} autoplay="autoplay" {% endif %}
-        >
-            <!-- @todo WebM? -->
-            <source src="/assets/audio/pitch.mp3" type="audio/mp3">
-            <source src="/assets/audio/pitch.ogg" type="audio/ogg">
-            <source src="/assets/audio/pitch.wav" type="audio/wav">
-            <em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em>
-        </audio>
-        <div id="pitch-text">
-<p>Hi, I’m are Henrik Vendelbo</p>
-<p>And, I’m Caterine Apruzzese</p>
-
-<p>We moved to Zürich a few years ago from London.</p>
-<p>Before that We lived in New York.</p>
-<p>Actually we have moved 4 times in 4 years. It has taught us a lot.</p>
-
-<p>Many of our friends have lived in several countries. </p>
-<p>So we have been collecting the experiences 
-and piecing together The Stress-Free First Year formula.</p>
-
-<p>For the past 3 years I’ve been writing language books and I believe the best way to learn a language is by living it and getting to experience the culture.<br> 
-Learning the local language is of course part of the formula, but we have a different approach focused on getting to socialise and network quickly.</p>
-
-<p>We are making a complimentary presentation for a Stress-Free First Year in your City, so you can enjoy life there. <br>
-If you live in Switzerland you can get it free of charge right away, otherwise you will have to wait a bit for us to finish it for your city.</p>
-
-<p>This presentation is for Expats that have just moved to a new city and want to get the most out of the place and the people</p>
-<p>If you are just visiting for a holiday or a business trip, this isn't for you</p>
-
-<p>As expats we would like to share our experience with others in the same situation</p>
-
-<p>So if this is you, just fill in the form, and we will get you started A.S.A.P. </p>     
-		</div>
+{% else %}<a class="social-icon" href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher" target="_blank">g</a>{% endif %}<span style="display:none"><a href="https://plus.google.com/{{site.gplus_page_id}}" rel="publisher">Google+</a></span></nav></div></footer></header><section style="text-align:center;" class="first"><h1>Welcome to your new city</h1><span class="hide-when-stress-free-feature-enabled"><a href="http://artmagenta.com" target="artmagenta"><img src="/assets/images/Nyhavn-Copenhagen.jpg" alt="Nice life, first year in your new city" style="display:inline-block;width:300px;"></a><h3 style="margin-left:10%;">Do I need to pay for health insurance? Which One?</h3><h3 style="margin-left:-40%;">What type of Work Permit?</h3><h3 style="margin:0 0 0 30%;">Which Bank to use?</h3><h3 style="margin-left:-30%;">How does taxes work?</h3><h3 style="color:red">So many questions, need a hand?</h3><h3 style="margin-left:30%;">Should I get a car?</h3><h3 style="margin-left:-20%;">When are holidays, will shops be closed?</h3><h3 style="margin-left:30%;">The dialect is strange, I feel left out.</h3><h3 style="margin-left:-10%;">How do I keep fit and find the best food?</h3><h3 style="margin-left:20%;">Where and How to meet new people?</h3></span><div class="show-when-stress-free-feature-enabled"><a href="/stress-free-presentation" class="btn tinted">Start presentation</a></div></section><section style="min-height:250px;padding: 35px;" class="even kat-henry-intro on-dark-picture-bg hide-when-stress-free-feature-enabled"><h3 style="text-align:left;">We moved to Zürich a few years ago.</h3><h3 style="text-align:left;">The 4th move in 4 years. It has taught us a lot.</h3><h3 style="text-align:left;">We would like to give you the <br>formula for a Stress-Free First Year.</h3></section><section class="first hide-when-stress-free-feature-enabled"><div class="center-col"><audio controls data-role="'text':'#pitch-text'" class="pitch"><!--TODO!! - {% if include.autoplay %} autoplay="autoplay" {% endif %}--><source src="/assets/audio/pitch.mp3" type="audio/mp3"><source src="/assets/audio/pitch.ogg" type="audio/ogg"><source src="/assets/audio/pitch.wav" type="audio/wav"><em class="error"><strong>Error:</strong> Your browser doesn't appear to support HTML5 Audio.</em></audio><div id="pitch-text"><p>Hi, I’m are Henrik Vendelbo</p><p>And, I’m Caterine Apruzzese</p><p>We moved to Zürich a few years ago from London.</p><p>Before that We lived in New York.</p><p>Actually we have moved 4 times in 4 years. It has taught us a lot.</p><p>Many of our friends have lived in several countries. </p><p>So we have been collecting the experiences 
+and piecing together The Stress-Free First Year formula.</p><p> 
+For the past 3 years I’ve been writing language books and I believe the best way to learn a language is by living it and getting to experience the culture.<br> 
+Learning the local language is of course part of the formula, but we have a different approach focused on getting to socialise and network quickly.</p><p> 
+We are making a complimentary presentation for a Stress-Free First Year in your City, so you can enjoy life there. <br>
+If you live in Switzerland you can get it free of charge right away, otherwise you will have to wait a bit for us to finish it for your city.</p><p>This presentation is for Expats that have just moved to a new city and want to get the most out of the place and the people</p><p>If you are just visiting for a holiday or a business trip, this isn't for you</p><p>As expats we would like to share our experience with others in the same situation</p><p>So if this is you, just fill in the form, and we will get you started A.S.A.P. </p></div></div></section><section class="second even hide-when-stress-free-feature-enabled"><div class="two-cols"><div class="left-col">signup-phrases" nong-app="swiss-first-year"><form id="stress-free" role="form" action="client+http://email.fluentglobe.com/t/i/s/wjjul/" method="post" enctype="application/x-www-form-urlencoded" target="stress-free-iframe" class="signup-box stress-free-signup-box subscribed-box"><fieldset class="when-unsubscribed"><p>Hi Fluent Globe,</p><p><span>I am&nbsp;</span><input type="text" name="first-name" placeholder="First Name"><span>and my email is</span><input type="email" name="email" placeholder="e-Mail"><span>.</span></p><p><span>I am just getting started in Swizerland.</span><span>Please send me the complimentary presentation,</span><span> <em>Stress-Free First Year in Swizerland</em></span><span>, so I can enjoy the life here.</span></p><label class="right-aligned extra-space"><button role="button" class="btn tinted double-corner"><span lang="en">Send me the Presentation</span></button></label><label><span class="icon-lock"></span><span lang="en">Your information will only be used by us to help you and others to get started in Switzerland.</span></label></fieldset><fieldset class="when-subscribed"><p>Great! Check your e-mail for a link to the presentation</p><p>It is best viewed on mobile phones and iPads, but modern PCs and Laptops should work as well.</p><p>Do tell us how you like it, and enjoy.</p><p><span displayText="ShareThis" class="st_sharethis_large"></span><span displayText="Facebook" class="st_facebook_large"></span><span displayText="Tweet" class="st_twitter_large"></span><span displayText="LinkedIn" class="st_linkedin_large"></span><span displayText="Email" class="st_email_large"></span></p></fieldset></form></div><div class="right-col"><img src="/assets/images/Cover-with-DVD.png" alt="Enjoy your new city, first year in Switzerland" class="feature-dvd-big"></div></div></section><section style="height:580px;" class="third bookspread"><h4 class="center-col">Language Learning books by Caterine Apruzzese</h4><div style="height:360px"><div role="book" style="margin-top: 0px;" data-role="'prefix':'r4vb','src':'/travel-recipes/recipes-brazil.html','spread':true" class="book-left-1"> <a href="/travel-recipes/#r4vb">
+<div class="bk-front">
+<img src="/others/recipes-brazil-staged-400.png" alt="e-Book, Recipes for Visiting Brazil">
 </div>
-</section><section class="second even hide-when-stress-free-feature-enabled"><div class="two-cols"><div class="left-col">signup-phrases" nong-app="swiss-first-year"><form id="stress-free" role="form" action="client+http://email.fluentglobe.com/t/i/s/wjjul/" method="post" enctype="application/x-www-form-urlencoded" target="stress-free-iframe" class="signup-box stress-free-signup-box subscribed-box"><fieldset class="when-unsubscribed"><p>Hi Fluent Globe,</p><p><span>I am&nbsp;</span><input type="text" name="first-name" placeholder="First Name"><span>and my email is</span><input type="email" name="email" placeholder="e-Mail"><span>.</span></p><p><span>I am just getting started in Swizerland.</span><span>Please send me the complimentary presentation,</span><span> <em>Stress-Free First Year in Swizerland</em></span><span>, so I can enjoy the life here.</span></p><label class="right-aligned extra-space"><button role="button" class="btn tinted double-corner"><span lang="en">Send me the Presentation</span></button></label><label><span class="icon-lock"></span><span lang="en">Your information will only be used by us to help you and others to get started in Switzerland.</span></label></fieldset><fieldset class="when-subscribed"><p>Great! Check your e-mail for a link to the presentation</p><p>It is best viewed on mobile phones and iPads, but modern PCs and Laptops should work as well.</p><p>Do tell us how you like it, and enjoy.</p><p><span displayText="ShareThis" class="st_sharethis_large"></span><span displayText="Facebook" class="st_facebook_large"></span><span displayText="Tweet" class="st_twitter_large"></span><span displayText="LinkedIn" class="st_linkedin_large"></span><span displayText="Email" class="st_email_large"></span></p></fieldset></form></div><div class="right-col"><img src="/images/Cover-with-DVD.png" alt="Enjoy your new city, first year in Switzerland" class="feature-dvd-big"></div></div></section><section style="height:580px;" class="third bookspread">      <h4 class="center-col">Language Learning books by Caterine Apruzzese</h4>
 
-        <!-- <img style="position: absolute; right:10px; width: 50px;" src="/images/itunes-store-bw.png"> -->
+<div class="bk-promo">
+	<div class="bk-left-page"></div>
+	<div class="bk-middle-page"></div>
+	<div class="bk-right-page"></div>
+</div></a></div><div role="book" style="margin-top: 0px;" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true" class="book-right-1"> <a href="/speak/#seil">
+<div class="bk-front">
+<img src="/others/speak-london-staged-400.png" alt="e-Book, Speak English in London">
+</div>
 
-        <div style="height:360px">
-        <div role="book" class="book-left-1" style="margin-top: 0px;" data-role="'prefix':'r4vb','src':'/travel-recipes/recipes-brazil.html','spread':true">
-            <a href="/travel-recipes/#r4vb">
-            {% include book/r4vb-info.html %}
-            </a>
-        </div>
-
-        <div role="book" class="book-right-1" style="margin-top: 0px;" data-role="'prefix':'seil','src':'/speak/speak-london.html','spread':true">
-            <a href="/speak/#seil">
-            {% include book/seil-info.html %}
-            </a>
-        </div>
-        </div>
-
-        <div class="press-mentions">
-          <h3>As seen in</h3>
-
-          <a class="daily-news" rel="_new" href="http://www.nydailynews.com/life-style/must-have-travel-guides-brazil-bound-world-cup-fans-article-1.1811433" alt="New York Daily News">
-          <!-- New York Daily News -->
-          </a>
-
-          <a class="marie-claire" rel="_new" href="http://www.marieclaire.co.uk/news/travel/546568/hot-spot-s-o-paulo-brazil.html" alt="Marie Claire Travel">
-            <!-- Marie Claire Travel -->
-          </a>
-
-          <a class="reuters" rel="_new" href="http://uk.reuters.com/article/2014/05/23/fluent-globe-guide-idUKnPncgNwZv+8a+PRN20140523" alt="Reuters">
-            <!-- Reuters -->
-          </a>
-        </div>
-</section><footer class="constrained bookspread"><nav style="min-height: 400px;" class="etc two-cols"><div hidden class="left-col center-block"><h4>Recent Articles</h4></div><iframe id="freshwidget-embedded-form" src="http://help.fluentglobe.com/widgets/feedback_widget/new?&amp;widgetType=embedded&amp;screenshot=no" scrolling="no" height="360px" width="100%" frameborder="0" class="right-col freshwidget-embedded-form"> </iframe></nav><div class="centered-content copyright">&trade; and &copy; of Right Here Inc, 2013.</div></footer></article></main></div><script src="/assets/js/libs.min.js"></script><script>var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+<div class="bk-promo">
+	<div class="bk-left-page"></div>
+	<div class="bk-middle-page"></div>
+	<div class="bk-right-page"></div>
+</div></a></div></div><div class="press-mentions"><h3>As seen in</h3><a rel="_new" href="http://www.nydailynews.com/life-style/must-have-travel-guides-brazil-bound-world-cup-fans-article-1.1811433" alt="New York Daily News" class="daily-news"></a><a rel="_new" href="http://www.marieclaire.co.uk/news/travel/546568/hot-spot-s-o-paulo-brazil.html" alt="Marie Claire Travel" class="marie-claire"></a><a rel="_new" href="http://uk.reuters.com/article/2014/05/23/fluent-globe-guide-idUKnPncgNwZv+8a+PRN20140523" alt="Reuters" class="reuters"></a></div></section><footer class="constrained bookspread"><nav style="min-height: 400px;" class="etc two-cols"><div hidden class="left-col center-block"><h4>Recent Articles</h4></div><iframe id="freshwidget-embedded-form" src="http://help.fluentglobe.com/widgets/feedback_widget/new?&amp;widgetType=embedded&amp;screenshot=no" scrolling="no" height="360px" width="100%" frameborder="0" class="right-col freshwidget-embedded-form"> </iframe></nav><div class="centered-content copyright">&trade; and &copy; of Right Here Inc, 2013.</div></footer></article></main></div><script src="/assets/js/libs.min.js"></script><script>var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src='//www.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));

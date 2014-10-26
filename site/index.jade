@@ -6,12 +6,13 @@ block title
 block content
   script(type="application/config"): include ../lib/includes/old/signup-config.js
 
-  #intro(data-class="'!state.menu-expanded':'menu-collapsed'"): include ../lib/includes/old/hamburger
+  #intro(data-class="'!state.menu-expanded':'menu-collapsed'")
+    include ../lib/includes/old/hamburger
 
     include ../lib/includes/intro/understood-networked.html
 
     div.know-secret
-      include ../lib/includes/intro/know-secret-form.html
+      include ../lib/includes/intro/know-secret-form
 
     footer
 
@@ -27,19 +28,19 @@ block content
 
 
       section.first(style="text-align:center;")
-        include ../lib/includes/intro/new-city.html
+        include ../lib/includes/intro/new-city
 
       section.even.kat-henry-intro.on-dark-picture-bg.hide-when-stress-free-feature-enabled(style="min-height:250px;padding: 35px;")
-        include ../lib/includes/intro/henrik-and-katty-lead.html
+        include ../lib/includes/intro/henrik-and-katty-lead
 
       section.first.hide-when-stress-free-feature-enabled
-        include ../lib/includes/intro/henrik-and-katty-with-audio.html
+        include ../lib/includes/intro/henrik-and-katty-with-audio
 
       section.second.even.hide-when-stress-free-feature-enabled
         include ../lib/includes/stress-free/switzerland-offer
 
       section.third.bookspread(style="height:580px;")
-        include ../lib/includes/intro/publications.html
+        include ../lib/includes/intro/publications
 
       footer.constrained.bookspread
         include ../lib/includes/old/page-footer-etc
