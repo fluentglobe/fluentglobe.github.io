@@ -7,7 +7,7 @@ require('/filters');
 require('/services');
 require('/directives');
 
-var discuss = angular.module('discuss', ['ui.router','discuss.filters','discuss.services','discuss.directives']);
+var discuss = angular.module('discuss', ['ngRoute','discuss.filters','discuss.services','discuss.directives']);
 
 require('/routes')(discuss);
 require('/controllers')(discuss);
