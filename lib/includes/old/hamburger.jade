@@ -1,0 +1,6 @@
+nav.hamburger.flag.f16
+  // could use stateful(1):: 
+  button.show-menu(role="button", name="page::state.menu-shown::toggle") &#x2630;
+  label(role="button", name="page::state.menu-shown::toggle")
+    output(data-resolve="text:document::essential.language") English
+    i.flag(data-resolve="class: document::essential.countryCode")

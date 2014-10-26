@@ -1,29 +1,47 @@
 extends /layouts/master
 
 block title
-  | HTML5 Demo App
+  | Fluent Globe
 
 block content
-  a(href="https://github.com/socketstream/socketstream")
-    img(src="/assets/images/logo.png", alt="SocketStream Logo", width=160, height=160)
+  script(type="application/config"): include ../lib/includes/old/signup-config.js
 
-  h1 Discuss the page
+  #intro(data-class="'!state.menu-expanded':'menu-collapsed'"): include ../lib/includes/old/hamburger
 
-  form#demo(onsubmit="return false")
-    h3 Quick Chat Demo
-    h5 Open this page in multiple tabs or browsers and type a message below
-    #chatlog
-    input#myMessage(type="text", autocomplete="off")
+    include ../lib/includes/intro/understood-networked.html
 
-  p This is a dummy page
+    div.know-secret
+      include ../lib/includes/intro/know-secret-form.html
+
+    footer
+
+  main.fluid
+    article
+      header.floating
+        footer.links-bar
+          //- div.contact
+          //-   h4 Schweiz/Suisse +41-435081057 &nbsp; * 
+          //-   h4
+          //-   h4 U.K. +44-2036088053 
+          include ../lib/includes/old/site-follow
 
 
-  ul
-    li: a(href="/discuss") See your page discussions.
-    li: a(href="/support") Get Help
+      section.first(style="text-align:center;")
+        include ../lib/includes/intro/new-city.html
 
-  p TODO drop cache when static changes
+      section.even.kat-henry-intro.on-dark-picture-bg.hide-when-stress-free-feature-enabled(style="min-height:250px;padding: 35px;")
+        include ../lib/includes/intro/henrik-and-katty-lead.html
 
-  p TODO variables shared, include --
+      section.first.hide-when-stress-free-feature-enabled
+        include ../lib/includes/intro/henrik-and-katty-with-audio.html
 
-  p sdfsdfsjdf
+      section.second.even.hide-when-stress-free-feature-enabled
+        include ../lib/includes/stress-free/switzerland-offer
+
+      section.third.bookspread(style="height:580px;")
+        include ../lib/includes/intro/publications.html
+
+      footer.constrained.bookspread
+        include ../lib/includes/old/page-footer-etc
+        include ../lib/includes/old/page-footer-copyright
+

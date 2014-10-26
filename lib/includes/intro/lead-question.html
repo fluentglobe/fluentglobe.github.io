@@ -1,0 +1,34 @@
+<div class="{{ include.class }}">
+	<header>
+		<h5 class="right"><a> Sign In </a></h5>
+		<h4 class="orange">Living in Zürich</h4>
+	</header>
+
+	<form>
+		<fieldset>
+			<p>Would it help if you understood Swiss German?</p>
+			<select fg-choices="radio" name="understood-swiss">
+
+				<option value="daily-life"> Yes, it would make my daily life much easier</option>
+				<option value="relatives"> Yes, my relatives only speak Swiss German</option>
+				<option value="belong"> Yes, I'd like to feel like I belong here</option>
+				<option value="socially"> Yes, It's good socially</option>
+				<option value="no-german"> No, I would rather speak german German</option>
+				<option value="english"> No, English is fine</option>
+			</select>
+
+			<p><input type="radio" name="understood-swiss" value="daily-life"> Yes, it would make my daily life much easier</p>
+			<p><input type="radio" name="understood-swiss" value="relatives"> Yes, my relatives only speak Swiss German</p>
+			<p><input type="radio" name="understood-swiss" value="belong"> Yes, I'd like to feel like I belong here</p>
+			<p><input type="radio" name="understood-swiss" value="socially"> Yes, It's good socially</p>
+			<p><input type="radio" name="understood-swiss" value="no-german"> No, I would rather speak german German</p>
+			<p><input type="radio" name="understood-swiss" value="english"> No, English is fine</p>
+		</fieldset>
+	</form>
+
+	<!-- <form sf-schema="schema" sf-form="form" sf-model="data" sf-decorator="div"></form> -->
+
+	<footer>
+		<h5 class="center"><a>More Information</a></h5>
+	</footer>
+</div>
