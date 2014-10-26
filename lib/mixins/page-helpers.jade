@@ -64,3 +64,10 @@ mixin simperium()
     else
       script(type="text/javascript",src="/js/server.min.js")
 
+mixin connection-popup()
+  div.modal.hide.fade#warning
+    div.modal-header
+      h3 Connection Lost!
+    div.modal-body
+      p The connection to the server has been lost.
+    div.modal-footer

@@ -9,8 +9,21 @@ block content
 
   h1 Discuss the page
 
-  form#demo(onsubmit="return false")
-    h3 Quick Chat Demo
-    h5 Open this page in multiple tabs or browsers and type a message below
-    #chatlog
-    input#myMessage(type="text", autocomplete="off")
+  div(ng-app="discuss")
+    div.row(ng-controller="ChatCtrl")
+      //- div(discuss) Chatting here
+      div.span1
+      div.span10
+        h3.legend
+        h5 Open this page in multiple tabs or browsers and type a message below
+        
+        ul.unstyled
+          li(ng-repeat="message in messages")
+            span {{message.text}}
+            span.pull-right {{ message.time | date:'medium' }}
+
+        form#demo(ng-submit="postMessage()")
+          h3 Quick Chat Demo
+          #chatlog
+          input.span10#myMessage(type="text", autocomplete="off",ng-model="myMessage")
+      div.span1

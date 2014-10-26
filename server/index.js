@@ -37,7 +37,7 @@ ss.http.route('/discuss', function(req, res){
 ss.client.define('my-lesson', {
   view: 'my-lesson.jade',
   css:  ['my-lesson.scss'],
-  code: ['app'],
+  code: ['my-lesson'],
   tmpl: '*'
 });
 
