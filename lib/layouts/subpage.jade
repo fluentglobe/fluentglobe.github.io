@@ -1,5 +1,6 @@
 include /mixins/page-helpers.jade
 
+- facebookAppId = "266550166850505"
 - googleAnalyticsSiteID = "UA-XXXXX-X"
 doctype html
 <!--[if IE 8 ]><html lang="en" class="no-js ie8"><![endif]-->
@@ -9,23 +10,16 @@ html.no-js(lang="en")
   head
     meta(charset="utf-8")
     +head-assets()
+    != SocketStream
     title
       block title
-        - var title = 'a b c'
-        TODO common title extraction
     block head
 
   body
     +facebook-root()
-    main
-      div#content
-        block content
-          p Content block to be filled in
-      != SocketStream
-      script(type="application/config").
-        //TODO declare('title'...)
-        declare('title','#{title}')
-        declare('entry module','/entry');
+    div#content
+      block content
+        p Content block to be filled in
 
 
     +body-assets
@@ -36,5 +30,4 @@ html.no-js(lang="en")
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
 
-    +connection-popup()
-      
+
