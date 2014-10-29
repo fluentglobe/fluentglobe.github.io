@@ -9,6 +9,7 @@ var http = require('http'),
 
 ss.client.options.dirs.static = "/site";
 ss.client.options.dirs.assets = "/site/assets";
+ss.client.options.entryModuleName = '';
 
 ss.session.options.maxAge = 2.6*Math.pow(10,9);
 
