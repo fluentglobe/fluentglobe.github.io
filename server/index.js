@@ -18,13 +18,20 @@ ss.client.assets.send('libs','browserify.js','');
 // LESS/SASS config
 // less.prependLess('@assets-path: "' + '' + '"');
 
+// Common codepage for all pages
+ss.client.define('common', {
+	view: 'common.jade',
+	code: ['common'],
+	tmpl: ['common']
+});
+
 // Define a single-page client called 'discuss'
 ss.client.define('discuss', {
   view: 'discuss.jade',
   css:  ['discuss.scss'],
   // code: ['app/lesson.es','app/entry.js'],
   code: ['discuss','system'],
-  tmpl: '*'
+  tmpl: ['discuss']
 });
 
 // Serve this client on the root URL
