@@ -27,3 +27,8 @@ block content
           #chatlog
           input.span10#myMessage(type="text", autocomplete="off",ng-model="myMessage")
       div.span1
+
+block body-tail
+  script.
+    require('/discuss/entry')
+      

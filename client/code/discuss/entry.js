@@ -5,14 +5,14 @@ window.ss = require('socketstream');
 
 require('ssAngular');
 
-require('/filters');
-require('/services');
-require('/directives');
+require('./filters');
+require('./services');
+require('./directives');
 
 var discuss = angular.module('discuss', ['ngRoute','ssAngular','discuss.filters','discuss.services','discuss.directives']);
 
-require('/routes')(discuss);
-require('/controllers')(discuss);
+require('./routes')(discuss);
+require('./controllers')(discuss);
 
 ss.server.on('disconnect', function(){
   // $('#warning').modal('show');

@@ -10,6 +10,7 @@ var http = require('http'),
 ss.client.options.dirs.static = "/site";
 ss.client.options.dirs.assets = "/site/assets";
 ss.client.options.entryModuleName = '';
+ss.client.options.globalModules = true;
 
 ss.session.options.maxAge = 2.6*Math.pow(10,9);
 
@@ -74,16 +75,24 @@ ss.client.formatters.add(amdclean);
 ss.client.formatters.add(require('../lib/ss/jade'),{
     basedir: path.join(__dirname,"../lib"),
 	locals: {
+		//TODO howto add view definition path + entry name
 		debug: !(ss.env === 'production')
 	} // extra variables
 	// headers {}
 });
 
-// Use server-side compiled Hogan (Mustache) templates. Others engines available
 ss.client.templateEngine.use('angular');
 
 // respond with angular content
 ss.responders.add(require('../lib/ss/angular/server'),{pollFreq: 1000});
+
+/*
+ss.client.assets.send('initContent','.. $templateCache.put('id','content') ..')
+
+angular.module('name').run(['$templateCache',function($templateCache) {
+	..
+}]);
+*/
 
 ss.ws.transport.use(require('ss-sockjs'), {
 	client: {
