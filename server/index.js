@@ -7,12 +7,23 @@ var http = require('http'),
 	amdclean = require('../lib/ss/amdclean'),
     ss = require('socketstream');
 
+ss.client.set({
+	dirs: {
+		'static': '/site',
+		'assets': '/site/assets'
+	},
+	'maxAge': 2.6*Math.pow(10,9),
+	'entryModuleName': null,
+	'globalModules': true
+}); 
+/*
 ss.client.options.dirs.static = "/site";
 ss.client.options.dirs.assets = "/site/assets";
-ss.client.options.entryModuleName = '';
+ss.client.options.entryModuleName = null;
 ss.client.options.globalModules = true;
 
 ss.session.options.maxAge = 2.6*Math.pow(10,9);
+*/
 
 ss.client.assets.send('shims','json.min.js','');
 ss.client.assets.send('libs','browserify.js','');
