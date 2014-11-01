@@ -7,6 +7,8 @@ var gulp = require('gulp'),
   sourcemaps = require('gulp-sourcemaps'),
   rigger = require('gulp-rigger'),
   browserify = require('gulp-browserify'),
+  ss = require('socketstream'),
+  server = require('./server'),
   cached = require('gulp-cached'),
   remember = require('gulp-remember'),
   concat = require('gulp-concat'),
@@ -95,6 +97,11 @@ gulp.task('body', function() {
 
     })
     .pipe(gulp.dest('./site/assets/js/'));
+});
+
+gulp.task('ss', function() {
+
+  // gulp.pipe().pipe(gulp.dest('./site/assets/js/'));
 });
 
 gulp.task('watch',['tdd'],function() {

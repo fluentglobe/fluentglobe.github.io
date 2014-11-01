@@ -43,7 +43,6 @@ ss.http.route('/discuss', function(req, res){
   res.serveClient('discuss');
 });
 
-
 // Define a single-page client called 'my-lesson'
 ss.client.define('my-lesson', {
   view: 'my-lesson.jade',
@@ -121,12 +120,22 @@ else {
 	// }));
 }
 
-// Start web server
-var server = http.Server(ss.http.middleware);
-server.listen(3000);
+/**
+ * Start server with config
+ */
+module.exports = function(config) {
+	config = config || {};
+	var server = http.Server(ss.http.middleware);
+	server.listen(config.port || 3000);
 
-//TODO configurable port
-//TODO config SSL
+	//TODO configurable port
+	//TODO config SSL
 
-// Start SocketStream
-ss.start(server);
+	// Start SocketStream
+	ss.start(server);
+	 // Socket server load
+	 // Http server load
+	 // calls ss.client.load
+	 // event server:start
+};
+
