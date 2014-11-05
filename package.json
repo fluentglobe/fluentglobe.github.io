@@ -1,8 +1,8 @@
 {
-  "name": "demoapp",
-  "author": "Henrik Vendelbo <hvendelbo@gmail.com>",
+  "name": "fluentstream",
+  "author": "Henrik Vendelbo <henrik@thepia.com>",
   "description": "Demo of mobile-centric multi-channel user access",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "server.js",
   "engines": {
     "node": ">=0.8.0"
