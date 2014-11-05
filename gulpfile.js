@@ -7,8 +7,6 @@ var gulp = require('gulp'),
   sourcemaps = require('gulp-sourcemaps'),
   rigger = require('gulp-rigger'),
   browserify = require('gulp-browserify'),
-  ss = require('socketstream'),
-  server = require('./server'),
   cached = require('gulp-cached'),
   remember = require('gulp-remember'),
   concat = require('gulp-concat'),
@@ -100,17 +98,24 @@ gulp.task('body', function() {
 });
 
 gulp.task('ss', function() {
+  var ssBuild = require('ss-build')(require('socketstream')),
+      server = require('./server');
 
-  // gulp.pipe().pipe(gulp.dest('./site/assets/js/'));
+  ssBuild.system.js(require('./server/settings'))
+    .pipe(gulp.dest(path.join(__dirname,'site/assets/js/')));
+  ssBuild.system.initCode(require('./server/settings'))
+    .pipe(gulp.dest(path.join(__dirname,'site/assets/js/')));
 });
 
 gulp.task('watch',['tdd'],function() {
   gulp.watch(paths.site, ['site']);
   gulp.watch(paths.rigger, ['rigger']);
   // gulp.watch(paths.scripts, ['scripts']);
-
+  gulp.watch(paths.body, ['body']);
+  gulp.watch(paths.ss, ['ss']);
 });
-gulp.task('default', ['watch','site','rigger','body']);
+
+gulp.task('default', ['watch','site','rigger','body','ss']);
   
 gulp.task('test',['test-node','test-browser']);
 

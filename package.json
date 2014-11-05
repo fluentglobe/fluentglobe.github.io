@@ -82,6 +82,7 @@
     "mocha": "^1.21.4",
     "node-sass": "^0.9.6",
     "requirejs": "^2.1.15",
+    "ss-build": "^0.1.0",
     "ss-clientjade": "0.0.7",
     "ss-console": "^0.1.3",
     "ss-hogan": "^0.1.3",
