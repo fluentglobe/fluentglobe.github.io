@@ -107,6 +107,16 @@ gulp.task('ss', function() {
     .pipe(gulp.dest(path.join(__dirname,'site/assets/js/')));
 });
 
+gulp.task('ss-debug' /*, 'Run ss in debug mode'*/, function (cb) {
+  var spawn = require('child_process').spawn;
+
+  spawn('node', [
+    '--debug-brk',
+    path.join(__dirname, 'node_modules/gulp/bin/gulp.js'),
+    'ss'
+  ], { stdio: 'inherit' });
+});
+
 gulp.task('watch',['tdd'],function() {
   gulp.watch(paths.site, ['site']);
   gulp.watch(paths.rigger, ['rigger']);

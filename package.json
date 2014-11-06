@@ -39,7 +39,7 @@
     "serve-static": "^1.6.4",
     "socketstream": "git+https://github.com/thepian/socketstream.git",
     "sockjs": "^0.3.9",
-    "ss-sockjs": "^0.1.1",
+    "ss-sockjs": "git+https://github.com/thepian/ss-sockjs.git",
     "vinyl-fs": "^0.3.9",
     "winston": "^0.8.1"
   },

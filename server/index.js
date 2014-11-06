@@ -32,6 +32,11 @@ ss.client.define('common', {
 // Define a single-page client called 'discuss'
 ss.client.define('discuss', {
   view: 'discuss.jade',
+  includes: {
+  	system:false,
+  	initCode: false
+  },
+  globals: {}, // passed to view, css, tmpl
   css:  ['discuss.scss'],
   // code: ['app/lesson.es','app/entry.js'],
   code: ['discuss','system'],
@@ -88,14 +93,6 @@ ss.client.templateEngine.use('angular');
 ss.responders.add(require('../lib/ss/angular/server'),{pollFreq: 1000});
 
 ss.responders.add(require('../lib/ss/echo/server'));
-
-/*
-ss.client.assets.send('initContent','.. $templateCache.put('id','content') ..')
-
-angular.module('name').run(['$templateCache',function($templateCache) {
-	..
-}]);
-*/
 
 ss.ws.transport.use(require('ss-sockjs'), {
 	client: {

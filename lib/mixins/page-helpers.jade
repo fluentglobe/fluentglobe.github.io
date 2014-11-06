@@ -3,12 +3,14 @@ mixin head-assets()
   //if ie8
     script(src="/assets/css/ie8.css")
   script(src="/assets/js/core.js")
+  script(src="/assets/js/system.js")
 
 mixin body-assets()
   if debug
     script(src="/assets/js/libs.js")
   else
     script(src="/assets/js/libs.min.js")
+  script(src="/assets/js/initCode.js")
 
 mixin object-graph(ogType,ogAuthor)
   meta(property="og:type", content="#{ogType}")
