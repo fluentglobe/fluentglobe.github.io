@@ -92,7 +92,8 @@
     "time-grunt": "~0.2.0"
   },
   "scripts": {
-    "start": "node -e \"require('./server')(require('./server/settings'));\"",
+    "start": "node -e \"var server = require('./server'); server.start(server.settings);\"",
+    "stop": "node -e \"var server = require('./server'); server..stop(server.settings);\"",
     "test": "gulp test"
   }
 }

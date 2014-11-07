@@ -117,10 +117,12 @@ else {
 	// }));
 }
 
+exports.settings = require('./settings');
+
 /**
  * Start server with config
  */
-module.exports = function(config) {
+exports.start = function(config) {
 	config = config || {};
 	var server = http.Server(ss.http.middleware);
 	server.listen(config.port || 3000);
@@ -134,5 +136,9 @@ module.exports = function(config) {
 	 // Http server load
 	 // calls ss.client.load
 	 // event server:start
+};
+
+exports.stop = function(config) {
+
 };
 
