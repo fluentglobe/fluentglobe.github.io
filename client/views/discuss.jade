@@ -17,15 +17,15 @@ block content
         h3.legend
         h5 Open this page in multiple tabs or browsers and type a message below
         
-        ul.unstyled
-          li(ng-repeat="message in messages")
-            span {{message.text}}
-            span.pull-right {{ message.time | date:'medium' }}
-
         form#demo(ng-submit="postMessage()")
           h3 Quick Chat Demo
-          #chatlog
-          input.span10#myMessage(type="text", autocomplete="off",ng-model="myMessage")
+          ul.unstyled#chatlog(ng-repeat="message in messages")
+            li
+              span {{message.text}}
+              span.pull-right.secondary-look(am-time-ago="message.time") {{ message.time }}
+          ul.unstyled
+            li
+                input.span10#myMessage(type="text", autocomplete="off",ng-model="myMessage")
       div.span1
 
 block body-tail
