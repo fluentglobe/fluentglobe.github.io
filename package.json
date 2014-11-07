@@ -8,9 +8,11 @@
     "node": ">=0.8.0"
   },
   "libs-js": [
+    "client/components/moment/moment.js",
     "client/components/jquery/jquery.js",
     "client/components/i18next/i18next.js",
     "client/components/angular/angular.js",
+    "client/components/angular-moment/angular-moment.js",
     "client/components/angular-route/angular-route.js",
     "client/components/angular-animate/angular-animate.js",
     "client/components/angular-sanitize/angular-sanitize.js",

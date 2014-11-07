@@ -9,7 +9,7 @@ require('./filters');
 require('./services');
 require('./directives');
 
-var discuss = angular.module('discuss', ['ngRoute','ssAngular','discuss.filters','discuss.services','discuss.directives']);
+var discuss = angular.module('discuss', ['ngRoute','ssAngular','angularMoment','discuss.filters','discuss.services','discuss.directives']);
 
 require('./routes')(discuss);
 require('./controllers')(discuss);
