@@ -1,7 +1,8 @@
-require('../components/angular-route/angular-route.js');
-require('../components/angular-toggle-switch/angular-toggle-switch.min.js');
+//TODO make alternate implementation
+// require('../components/angular-route/angular-route.js');
+// require('../components/angular-toggle-switch/angular-toggle-switch.min.js');
 
-var books = require('../../libs/book-reader/controllers.js');
+// var books = require('../../libs/book-reader/controllers.js');
 
 var speakApp = angular.module('speakApp', ['ngRoute','speakControllers']); // ,'toggle-switch'
 speakApp.config(['$interpolateProvider', function($interpolateProvider) {
@@ -25,7 +26,7 @@ function ReviewBookController($scope,$routeParams) {
   var ngView = document.querySelector("[ng-view]");
   // debugger;
   HTMLElement.query(ngView).withBranch().queue();
-} 
+}
 
 speakApp
   .controller('SpeakController',SpeakController)

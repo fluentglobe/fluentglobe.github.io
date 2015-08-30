@@ -23,9 +23,9 @@ module.exports = function(grunt) {
         src: [
           '_libs/prefix.js',
           '../libs/EssentialJS/js/modernizr-custom.js',
-          // 'components/es5-shim/es5-shim.min.js',          
+          // 'components/es5-shim/es5-shim.min.js',
           'components/es5-shim/es5-shim.js',
-          'components/base64/base64.js',          
+          'components/base64/base64.js',
           '../libs/EssentialJS/essential.js',
           '_libs/head.js'
         ],
@@ -79,9 +79,9 @@ module.exports = function(grunt) {
         files: {
           'js/modernizr+essential.min.js': [
             'js/modernizr-custom.js',
-            // 'components/es5-shim/es5-shim.min.js',          
+            // 'components/es5-shim/es5-shim.min.js',
             'components/es5-shim/es5-shim.js',
-            'components/base64/base64.js',          
+            'components/base64/base64.js',
             '../libs/EssentialJS/essential.js',
             '_libs/head.js'
           ]
@@ -186,15 +186,11 @@ module.exports = function(grunt) {
           cwd: 'assets/',
           src: 'max/*.{mp4,mov}',
           dest: 'assets/video/'
-        }] 
+        }]
       }
     },
 
     browserify: {
-      product: {
-        src: '_libs/product-app.js',
-        dest: 'js/product-app.js'
-      },
       speak: {
         src: '_libs/speak.js',
         dest: 'js/speak.js'
@@ -276,49 +272,6 @@ module.exports = function(grunt) {
     //   }
     // },
 
-    transpile: {
-      immerse: {
-        type: "cjs",
-        // cwd: '../libs/immerse.js/',
-        src: [ 
-          '../libs/immerse.js/ProtectedPresentation.js',
-          '../libs/immerse.js/index.js' ],
-        dest: 'js/immerse.js'
-      },
-
-      // immerse_globals: {
-      //   type: "globals",
-      //   // expand: true,
-      //   imports: {
-      //     Resolver: "Resolver",
-      //     Generator: "Generator"
-      //   },
-      //   files: {
-      //     'js/immerse.js' : [ '../libs/immerse.js/index.js' ]
-      //   }
-      // }
-    },
-
-    traceur: {
-      // immerse: {
-      //   cwd: '../libs/impress.js/',
-      //   src: [ 'index.js' ],
-      //   dest: 'js/impress.js'
-      // }
-    },
-
-    typescript: {
-      body: {
-        src: ['_libs/body.ts'],
-        dest: 'js/body.js',
-        options: {
-          // watch: true,
-          // after: [tasks]
-          basePath: '_libs',
-          target: 'es5' //or es3
-        }
-      }
-    },
 
     watch: {
       // options: {
@@ -343,14 +296,6 @@ module.exports = function(grunt) {
       //   files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
       //   tasks: 'sass:dev'
       // },
-      transpile: {
-        files: [ '../libs/immerse.js/**/*.js' ],
-        tasks: ['transpile']
-      },
-      typescript: {
-        files: ['Gruntfile.js','**/*.ts','../libs/book-reader/*.ts'],
-        tasks: ['typescript','jekyll:dev']
-      },
       scripts: {
         files: ['_libs/*.js', 'assets/lib/**/*.js' /*,'components/** /*.js'*/],
         tasks: [
@@ -489,7 +434,7 @@ module.exports = function(grunt) {
       simperiuminstall: {
         cmd:"cd ../libs/simperium-js;make"
       },
-    
+
       ffmpeg: {
         cmd: "brew install ffmpeg --with-libvorbis --with-nonfreee --with-gpl --with-libvpx --with-pthreads --with-libx264 --with-libfaac --with-theora --with-libogg"
       }
@@ -520,17 +465,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-typescript');
-  // grunt.loadNpmTasks('grunt-traceur');
-  grunt.loadNpmTasks('grunt-es6-module-transpiler');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-responsive-videos');
 
   // Default Task
   grunt.registerTask('default', [
-    'browserify','copy',/*'traceur',*/'transpile',
+    'browserify','copy',
     'less:dev','less:dist',
-    'typescript',
     'concat:essential','concat:mods', 'coffee:serverDev', 'uglify:server','concat:serverDev','jekyll:dev',
     'uglify',
     'concurrent']
@@ -540,8 +481,8 @@ module.exports = function(grunt) {
     'modernizr','copy:mediaelement','exec:ffmpeg'
     ]);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
-    'qunit','coffee','concat','typescript',/*'traceur',*/'transpile',
-    'uglify','jekyll:dist' //TODO should there be a dist typescript build
+    'qunit','coffee','concat',
+    'uglify','jekyll:dist'
     ]);
   grunt.registerTask('serve', ['jekyll:serve']);
 
@@ -552,7 +493,7 @@ module.exports = function(grunt) {
   //   var $splashpage = "http://www.website.com/protected.php";
   //   var $b64splash = base64_encode($splashpage);
   //   var $expiretime = time() + 60; // unix epoch
-  //   var $user_ip = $_SERVER['REMOTE_ADDR']; 
+  //   var $user_ip = $_SERVER['REMOTE_ADDR'];
   //   var $rules = "expiretime=$expiretime;ip=$user_ip;badurl=$b64splash";
   //   var $hash = hash_hmac('sha256',$rules . $filepath, $secret, FALSE);
   //   var $link = "http://username.cachefly.net/Protected/$rules/$hash/$filepath";
