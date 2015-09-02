@@ -43,7 +43,7 @@ exclude:
 #- fonts
 fb_admins: 739870725
 lsi: false
-pygments: true
+highlighter: true
 markdown: redcarpet
 permalink: pretty
 maruku:
