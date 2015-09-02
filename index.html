@@ -12,7 +12,7 @@ og-images:
 ---
 <script type="application/config">{% include signup-config.js %}</script>
 
-<main class="fluid">
+<main class="spread-of-subpages">
   <article class="subpage press-details">
   </article>
 
@@ -20,7 +20,7 @@ og-images:
   </article>
 
   <article class="subpage frontpage">
-    {% include frontpage-content.html %}
+    {% include subpages/frontpage.html %}
   </article>
 
   <article class="subpage course-1-month">
@@ -29,7 +29,7 @@ og-images:
   <article class="subpage course-subscribe">
   </article>
 
-  <article class="subpage bookspread other-products">
-    {% include intro/publications.html %}
-  </article>
+  <!-- <article class="subpage bookspread publications">
+    { % include subpages/publications.html % }
+  </article> -->
 </main>
