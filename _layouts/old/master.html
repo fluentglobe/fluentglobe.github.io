@@ -21,13 +21,6 @@ base-body-class:
   <script type="application/config">
   declare("body",{});
   declare("body.layouter","intro-plus-article");
-  {% if page.fluentbook_simperium %}
-  Resolver("document").declare("essential.simperium_app_id", "{{ site.fluentbook_simperium_app_id }}");
-  Resolver("document").declare("essential.simperium_api_key","{{ site.fluentbook_simperium_api_key }}");
-  {% else %}
-  Resolver("document").declare("essential.simperium_app_id", "{{ site.website_simperium_app_id }}");
-  Resolver("document").declare("essential.simperium_api_key","{{ site.website_simperium_api_key }}");
-  {% endif %}
   </script>
   {% include ipad_friendly_html5_head.html %}
 
@@ -111,6 +104,5 @@ base-body-class:
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({publisher: "4910723e-7c4c-40ba-b388-fe6d4ddbb688", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-<script src="components/swiper/dist/idangerous.swiper.js"></script>
 </body>
 </html>

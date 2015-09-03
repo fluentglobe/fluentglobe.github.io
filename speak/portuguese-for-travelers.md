@@ -1,5 +1,5 @@
 ---
-layout: book
+layout: old/book
 theme: main
 blog-link: no
 body-class: with-menu lesson lesson-color

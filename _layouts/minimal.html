@@ -12,13 +12,6 @@ base-body-class:
   <script type="application/config">
   declare("body",{});
   declare("body.layouter","intro-plus-article");
-  {% if page.fluentbook_simperium %}
-  Resolver("document").declare("essential.simperium_app_id", "{{ site.fluentbook_simperium_app_id }}");
-  Resolver("document").declare("essential.simperium_api_key","{{ site.fluentbook_simperium_api_key }}");
-  {% else %}
-  Resolver("document").declare("essential.simperium_app_id", "{{ site.website_simperium_app_id }}");
-  Resolver("document").declare("essential.simperium_api_key","{{ site.website_simperium_api_key }}");
-  {% endif %}
   </script>
 
   {% if page.og-type %}<meta property="og:type" content="{{ page.og-type }}">{% endif %}
@@ -61,9 +54,6 @@ base-body-class:
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
 </script>{% endif %}
-
-{% if site.hostedSimperiumJs %}<script type="text/javascript" src="https://js.simperium.com/v0.1/"></script>
-{% else %}<script type="text/javascript" {% if site.debug %}src="/js/server.js"{% else %}src="/js/server.min.js"{% endif %}></script>{% endif %}
 
 </body>
 </html>

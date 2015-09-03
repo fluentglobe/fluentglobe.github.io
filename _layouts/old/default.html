@@ -1,10 +1,10 @@
 ---
-layout: master
+layout: old/master
 thirds: production
 flawless: production
 theme: main
 ---
-{% unless page.no_header %}{% include page-header.html %}{% endunless %}
+{% unless page.no_header %}{% include old/page-header.html %}{% endunless %}
 <div class="main constrained">
 	<div class="thirds-content">
 			
@@ -15,12 +15,12 @@ theme: main
 		</article>
 		
 		<aside class="third normal-read two-columns">
-			{% include page-sidebar.html %}
+			{% include old/page-sidebar.html %}
 		</aside>
 </div></div> 
 
 <footer class="constrained">
-	{% include page-footer-etc.html %}
+	{% include old/page-footer-etc.html %}
 	{% if page.show_offset_info %}
 	<code class="info">Etc (<var data-parent-prop="offsetWidth"></var> x <var data-parent-prop="offsetHeight"></var>)</code>
 	{% endif %}
