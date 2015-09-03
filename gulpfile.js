@@ -37,8 +37,9 @@ gulp.task("jekyll:prod", $.shell.task("jekyll build --config _config.yml,_config
 // Compiles the SASS files and moves them into the "assets/stylesheets" directory
 gulp.task("styles", function () {
   // Looks at the style.scss file for what to include and creates a style.css file
-  return gulp.src("_scss/style.scss")
-    .pipe($.sass())
+  return gulp.src(["css/*.scss","!css/_*.scss"])
+    .pipe($.plumber())
+    .pipe($.sass({ includePaths: ["_scss"] }))
     // AutoPrefix your CSS so it works between browsers
     .pipe($.autoprefixer("last 1 version", { cascade: true }))
     // Directory your CSS file goes to
