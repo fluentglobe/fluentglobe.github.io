@@ -8,10 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=8" />
     <![endif]-->
 
-    <!--[if lt IE 8]>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
-    <![endif]-->
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="initial-scale=1.0"><!-- width=device-width,  -->
     <meta name="google" value="notranslate">
@@ -31,4 +27,4 @@
 
     <link rel="stylesheet" href="/css/mobile.min.css">
     <link rel="stylesheet" href="/css/enhanced.min.css">
-    <script src="/js/modernizr+essential.js"></script>
+    {% unless page.skip-essential %}<script src="/js/modernizr+essential.js"></script>{% endunless %}

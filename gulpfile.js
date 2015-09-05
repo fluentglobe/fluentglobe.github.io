@@ -79,8 +79,19 @@ gulp.task("copy", function () {
     .pipe($.size({ title: "xml & txt" }))
 });
 
+gulp.task("body.js", function() {
+  return gulp.src('_js/*.js')
+    .pipe($.plumber())
+    .pipe($.sourcemaps.init())
+    .pipe($.babel())
+    // .pipe($.concat('js/body.js'))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js/'))
+    .pipe(gulp.dest('_site/js/'));
+});
+
 // Optimizes all the CSS, HTML and concats the JS etc
-gulp.task("html", ["styles"], function () {
+gulp.task("html", ["styles","body.js"], function () {
   var assets = $.useref.assets({searchPath: "_site"});
 
   return gulp.src("_site/**/*.html")
@@ -107,7 +118,7 @@ gulp.task("html", ["styles"], function () {
       removeRedundantAttributes: true
     })))
     // Send the output to the correct folder
-    .pipe(gulp.dest("site"))
+    .pipe(gulp.dest("_site"))
     .pipe($.size({title: "optimizations"}));
 });
 
@@ -138,7 +149,7 @@ gulp.task("doctor", $.shell.task("jekyll doctor"));
 // BrowserSync will serve our site on a local server for us and other devices to use
 // It will also autoreload across all devices as well as keep the viewport synchronized
 // between them.
-gulp.task("serve:dev", ["styles", "jekyll:dev"], function () {
+gulp.task("serve:dev", ["styles", "body.js", "jekyll:dev"], function () {
   bs = browserSync({
     notify: true,
     // tunnel: "",
@@ -153,7 +164,8 @@ gulp.task("serve:dev", ["styles", "jekyll:dev"], function () {
 gulp.task("watch", function () {
   gulp.watch(["**/*.md", "**/*.html", "**/*.xml", "**/*.txt", "**/*.js", "!_site/**/*.*","!node_modules/**/*.*"], ["jekyll-rebuild"]);
   gulp.watch(["_site/css/*.css"], reload);
-  gulp.watch(["scss/**/*.scss"], ["styles"]);
+  gulp.watch(["_scss/**/*.scss"], ["styles"]);
+  gulp.watch(["_js/**/*.js"], ["body.js"]);
 });
 
 // Serve the site after optimizations to see that everything looks fine
