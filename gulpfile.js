@@ -92,59 +92,15 @@ gulp.task("copy", function () {
 });
 
 
-// https://truongtx.me/2015/06/07/gulp-with-browserify-and-watchify-updated/
-function updateJs() {
-  // return js_bundle.bundle()
-  //   .on('error', gutil.log.bind(gutil, 'browserify error'))
-  //   .pipe(source('file name'))
-  //   .pipe(gulp.dest('js/'))
-  //   .pipe(gulp.dest('_site/js/'));
-
-  return gulp.src('_js/*.js')
-    .pipe($.plumber({errorHandler:browserifyError}))
-    // .pipe($.sourcemaps.init())
-    .pipe(createBundler("dev"))
-    //.pipe(gulpif(mode === "prod", uglify({mangle:false})));
-    // .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('js/'))
-    .pipe(gulp.dest('_site/js/'));
-}
+// obsoleted https://truongtx.me/2015/06/07/gulp-with-browserify-and-watchify-updated/
 
 function browserifyError(err) {
   gutil.log(gutil.colors.red('Error: '+err.message));
   this.end();
 }
 
-gulp.task("body.js", updateJs);
-// js_bundle.on('update', updateJs);
-// js_bundle.on('log', gutil.log);
-
 
 gulp.task('browserify', function() {
-  var bundler = function() {
-    var stream = through2.obj(function(file, enc, next) {
-      var b = browserify({
-        ignore: ['jquery']
-      });
-      // add each file to the bundle
-      b.add(file.path);
-      b.transform(babelify.configure({
-        modules: "common",
-        sourceMapRelative: __dirname
-      }))
-      b.bundle(function(err, src) {
-        if (err) console.log(err);
-        // create a new vinyl file with bundle contents
-        // and push it to the stream
-        stream.push(new vinyl({
-          path: file.path.replace('/www/js', ''), // this path is relative to dest path
-          contents: src
-        }));
-        next();
-      });
-    });
-    return stream;
-  };
   return gulp
     .src(['_js/**/*.js','!**/_*.js','!*.spec.js'])
     // .pipe($.sourcemaps.init())
@@ -152,14 +108,25 @@ gulp.task('browserify', function() {
     //.pipe(gulpif(mode === "prod", uglify({mangle:false})));
     // .pipe($.sourcemaps.write('.'))
     .pipe($.rename(function(file) {
-      // console.log(file);
       file.dirname = '.';
     }))
     .pipe(gulp.dest('js/'))
     .pipe(gulp.dest('_site/js/'));
 });
 
-
+gulp.task('watchify', function() {
+  return gulp
+    .src(['_js/**/*.js','!**/_*.js','!*.spec.js'])
+    // .pipe($.sourcemaps.init())
+    .pipe(createBundler("watch"))
+    //.pipe(gulpif(mode === "prod", uglify({mangle:false})));
+    // .pipe($.sourcemaps.write('.'))
+    .pipe($.rename(function(file) {
+      file.dirname = '.';
+    }))
+    .pipe(gulp.dest('js/'))
+    .pipe(gulp.dest('_site/js/'));
+});
 
 // Optimizes all the CSS, HTML and concats the JS etc
 gulp.task("html", ["styles","browserify"], function () {
@@ -232,11 +199,11 @@ gulp.task("serve:dev", ["styles", "browserify", "jekyll:dev"], function () {
 
 // These tasks will look for files that change while serving and will auto-regenerate or
 // reload the website accordingly. Update or add other files you need to be watched.
-gulp.task("watch", function () {
+gulp.task("watch", ["watchify"], function () {
   gulp.watch(["**/*.md", "**/*.html", "**/*.xml", "**/*.txt", "**/*.js", "!_site/**/*.*","!node_modules/**/*.*"], ["jekyll-rebuild"]);
   gulp.watch(["_site/css/*.css"], reload);
   gulp.watch(["_scss/**/*.scss"], ["styles"]);
-  // gulp.watch(["_js/**/*.js"], ["body.js"]);
+  // gulp.watch(["_js/**/*.js"], ["browserify"]);
 });
 
 // Serve the site after optimizations to see that everything looks fine
@@ -301,7 +268,7 @@ function createBundler(mode) {
     // event
     b.on('error', browserifyError);
     if(mode === 'watch') {
-      b.on('time', function(time){util.log(util.colors.green('Browserify'), file.path, util.colors.blue('in ' + time + ' ms'));});
+      b.on('time', function(time){gutil.log(gutil.colors.green('Browserify'), file.path, gutil.colors.blue('in ' + time + ' ms'));});
       /* ?? not sure if the task should be run again in this case
       b.on('update', function(){
         // on file changed, run the bundle again
