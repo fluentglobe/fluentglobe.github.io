@@ -1,7 +1,19 @@
 // Generated on 2015-09-02 using generator-jekyllized 0.7.3
 "use strict";
 
-var gulp = require("gulp");
+var _ = require("lodash"),
+    gulp = require("gulp"),
+    gutil = require("gulp-util"),
+    fs = require("fs"),
+    path = require("path"),
+    through2 = require("through2"),
+    vinyl = require("vinyl"),
+    transform = require("vinyl-transform"),
+    browserify = require("browserify"),
+    watchify = require("watchify"),
+    shimify = require("browserify-shim"),
+    babelify = require("babelify");
+
 // Loads the plugins without having to list all of them, but you need
 // to call them as $.pluginname
 var $ = require("gulp-load-plugins")();
@@ -79,19 +91,78 @@ gulp.task("copy", function () {
     .pipe($.size({ title: "xml & txt" }))
 });
 
-gulp.task("body.js", function() {
+
+// https://truongtx.me/2015/06/07/gulp-with-browserify-and-watchify-updated/
+function updateJs() {
+  // return js_bundle.bundle()
+  //   .on('error', gutil.log.bind(gutil, 'browserify error'))
+  //   .pipe(source('file name'))
+  //   .pipe(gulp.dest('js/'))
+  //   .pipe(gulp.dest('_site/js/'));
+
   return gulp.src('_js/*.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.babel())
-    // .pipe($.concat('js/body.js'))
-    .pipe($.sourcemaps.write('.'))
+    .pipe($.plumber({errorHandler:browserifyError}))
+    // .pipe($.sourcemaps.init())
+    .pipe(createBundler("dev"))
+    //.pipe(gulpif(mode === "prod", uglify({mangle:false})));
+    // .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('js/'))
+    .pipe(gulp.dest('_site/js/'));
+}
+
+function browserifyError(err) {
+  gutil.log(gutil.colors.red('Error: '+err.message));
+  this.end();
+}
+
+gulp.task("body.js", updateJs);
+// js_bundle.on('update', updateJs);
+// js_bundle.on('log', gutil.log);
+
+
+gulp.task('browserify', function() {
+  var bundler = function() {
+    var stream = through2.obj(function(file, enc, next) {
+      var b = browserify({
+        ignore: ['jquery']
+      });
+      // add each file to the bundle
+      b.add(file.path);
+      b.transform(babelify.configure({
+        modules: "common",
+        sourceMapRelative: __dirname
+      }))
+      b.bundle(function(err, src) {
+        if (err) console.log(err);
+        // create a new vinyl file with bundle contents
+        // and push it to the stream
+        stream.push(new vinyl({
+          path: file.path.replace('/www/js', ''), // this path is relative to dest path
+          contents: src
+        }));
+        next();
+      });
+    });
+    return stream;
+  };
+  return gulp
+    .src(['_js/**/*.js','!**/_*.js','!*.spec.js'])
+    // .pipe($.sourcemaps.init())
+    .pipe(createBundler("dev"))
+    //.pipe(gulpif(mode === "prod", uglify({mangle:false})));
+    // .pipe($.sourcemaps.write('.'))
+    .pipe($.rename(function(file) {
+      // console.log(file);
+      file.dirname = '.';
+    }))
     .pipe(gulp.dest('js/'))
     .pipe(gulp.dest('_site/js/'));
 });
 
+
+
 // Optimizes all the CSS, HTML and concats the JS etc
-gulp.task("html", ["styles","body.js"], function () {
+gulp.task("html", ["styles","browserify"], function () {
   var assets = $.useref.assets({searchPath: "_site"});
 
   return gulp.src("_site/**/*.html")
@@ -149,7 +220,7 @@ gulp.task("doctor", $.shell.task("jekyll doctor"));
 // BrowserSync will serve our site on a local server for us and other devices to use
 // It will also autoreload across all devices as well as keep the viewport synchronized
 // between them.
-gulp.task("serve:dev", ["styles", "body.js", "jekyll:dev"], function () {
+gulp.task("serve:dev", ["styles", "browserify", "jekyll:dev"], function () {
   bs = browserSync({
     notify: true,
     // tunnel: "",
@@ -165,7 +236,7 @@ gulp.task("watch", function () {
   gulp.watch(["**/*.md", "**/*.html", "**/*.xml", "**/*.txt", "**/*.js", "!_site/**/*.*","!node_modules/**/*.*"], ["jekyll-rebuild"]);
   gulp.watch(["_site/css/*.css"], reload);
   gulp.watch(["_scss/**/*.scss"], ["styles"]);
-  gulp.watch(["_js/**/*.js"], ["body.js"]);
+  // gulp.watch(["_js/**/*.js"], ["body.js"]);
 });
 
 // Serve the site after optimizations to see that everything looks fine
@@ -195,3 +266,69 @@ gulp.task("build", ["jekyll:prod", "styles"], function () {});
 gulp.task("publish", ["build"], function () {
   gulp.start("html", "copy", "images", "fonts");
 });
+
+
+//
+// create bundler
+//
+var browserifyConfig = {
+  basedir: ".",
+  paths: ["_js","./components"]
+};
+
+// caching for the next build (in watch task) instead of create new bundle
+var cached = {};
+
+// create browserify transform
+function createBundler(mode) {
+
+  var stream = through2.obj(function(file, enc, next) {
+    var b;
+    if(mode === "dev") {
+      // debug: true for creating source map
+      b = browserify(file, _.extend(browserifyConfig, {debug: true}));
+    } else if(mode === 'prod') {
+      b = browserify(file, browserifyConfig);
+    } else if(mode === 'watch') {
+      // for the next build of watchify, get the watchify instance out from
+      // cached and build
+      if(cached[file.path]) return cached[file.path].bundle();
+      // create new watchify instance for the first build only
+      b = watchify(browserify(file, _.extend(browserifyConfig, watchify.args, {debug: true})));
+      cached[file] = b; // store it in cached
+    }
+
+    // event
+    b.on('error', browserifyError);
+    if(mode === 'watch') {
+      b.on('time', function(time){util.log(util.colors.green('Browserify'), file.path, util.colors.blue('in ' + time + ' ms'));});
+      /* ?? not sure if the task should be run again in this case
+      b.on('update', function(){
+        // on file changed, run the bundle again
+        bundle(file, createBundler('watch'), 'watch');
+      });
+      */
+    }
+
+    // add each file to the bundle
+    b.add(file.path);
+    b.transform(babelify.configure({
+      modules: "common",
+      sourceMapRelative: __dirname
+    }));
+    // b.transform(shimify);
+    b.bundle(function(err, src) {
+      if (err) console.log(err);
+      // create a new vinyl file with bundle contents
+      // and push it to the stream
+      stream.push(new vinyl({
+        path: file.path.replace('/www/js', ''), // this path is relative to dest path
+        contents: src
+      }));
+      next();
+    });
+  });
+
+  return stream;
+}
+
