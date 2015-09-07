@@ -66,6 +66,7 @@ test/
 
 /components/es5-shim/
 /components/normalize-css/
+/components/bourbon/
 /components/bootstrap/
 /components/essentialjs/
 /components/hammerjs/

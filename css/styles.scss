@@ -1,1 +1,21 @@
+@import "bourbon/app/assets/stylesheets/bourbon";
+
+@import "fonts";
+
+
+@import (inline) "normalize.css/normalize.css"; // CSS Reset
+// @import "bootstrap/less/print.less";
+
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html,body {
+    height: 100%;
+    overflow-x: hidden;  // make sure that menu shown doesn't add horz scroll bars
+}
+body {
+    overflow-y: visible;
+    width: 100%; // make sure that menu shown doesn't add horz scroll bars
+    -webkit-font-smoothing: antialiased;
+}
+
 @import "swiper.scss";

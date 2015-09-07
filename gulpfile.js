@@ -51,7 +51,7 @@ gulp.task("styles", function () {
   // Looks at the style.scss file for what to include and creates a style.css file
   return gulp.src(["css/*.scss","!css/_*.scss"])
     .pipe($.plumber())
-    .pipe($.sass({ includePaths: ["_scss"] }))
+    .pipe($.sass({ includePaths: ["_scss","components"] }))
     // AutoPrefix your CSS so it works between browsers
     .pipe($.autoprefixer("last 1 version", { cascade: true }))
     // Directory your CSS file goes to
