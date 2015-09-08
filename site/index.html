@@ -1,0 +1,39 @@
+---
+layout: main-swiper
+initial-slide: 3
+og-tags:
+- Language Learning
+- Learning German
+- Learning Portuguese
+og-images:
+- http://fluentglobe.com/images/icon.jpg
+---
+<script type="application/config">{% include signup-config.js %}</script>
+
+<main class="swiping">
+  <button class="go-left">Left</button>
+  <button class="go-right">Right</button>
+  
+  <article class="swiper-wrapper">
+    <section class="swiper-slide subpage press-details">
+    </section>
+
+    <section class="swiper-slide subpage about">
+    </section>
+
+    <section class="swiper-slide subpage frontpage">
+      {% include frontpage-content.html %}
+    </section>
+
+    <section class="swiper-slide subpage course-1-month">
+    </section>
+
+    <section class="swiper-slide subpage course-subscribe">
+    </section>
+
+    <section class="swiper-slide subpage bookspread other-products">
+      {% include intro/publications.html %}
+    </section>
+  </article>
+  <aside class="pagination"></aside>
+</main>

@@ -43,11 +43,9 @@ local development setup
 
     sudo gem install jekyll
     .. enter password
-    sudo npm install -g grunt
     cd ~/Sites/fluentglobe.github.io
     npm install
-    node_modules/.bin/bower install
-    grunt
+    npm start
 
 You may need to install Homebrew (http://brew.sh) and node/npm (nodejs.org)
 

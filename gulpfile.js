@@ -8,7 +8,6 @@ var _ = require("lodash"),
     path = require("path"),
     through2 = require("through2"),
     vinyl = require("vinyl"),
-    transform = require("vinyl-transform"),
     browserify = require("browserify"),
     watchify = require("watchify"),
     shimify = require("browserify-shim"),
@@ -49,13 +48,13 @@ gulp.task("jekyll:prod", $.shell.task("jekyll build --config _config.yml,_config
 // Compiles the SASS files and moves them into the "assets/stylesheets" directory
 gulp.task("styles", function () {
   // Looks at the style.scss file for what to include and creates a style.css file
-  return gulp.src(["css/*.scss","!css/_*.scss"])
+  return gulp.src(["site/css/*.scss","!site/css/_*.scss"])
     .pipe($.plumber())
-    .pipe($.sass({ includePaths: ["_scss","components"] }))
+    .pipe($.sass({ includePaths: ["site/_scss","site/components","node_modules/bourbon/app/assets/stylesheets"] }))
     // AutoPrefix your CSS so it works between browsers
     .pipe($.autoprefixer("last 1 version", { cascade: true }))
     // Directory your CSS file goes to
-    .pipe(gulp.dest("css/"))
+    .pipe(gulp.dest("site/css/"))
     .pipe(gulp.dest("_site/css/"))
     // Outputs the size of the CSS file
     .pipe($.size({title: "styles"}))
@@ -202,7 +201,7 @@ gulp.task("serve:dev", ["styles", "browserify", "jekyll:dev"], function () {
 gulp.task("watch", ["watchify"], function () {
   gulp.watch(["**/*.md", "**/*.html", "**/*.xml", "**/*.txt", "**/*.js", "!_site/**/*.*","!node_modules/**/*.*"], ["jekyll-rebuild"]);
   gulp.watch(["_site/css/*.css"], reload);
-  gulp.watch(["_scss/**/*.scss"], ["styles"]);
+  gulp.watch(["_scss/**/*.scss","site/css/*.scss"], ["styles"]);
   // gulp.watch(["_js/**/*.js"], ["browserify"]);
 });
 
@@ -240,7 +239,7 @@ gulp.task("publish", ["build"], function () {
 //
 var browserifyConfig = {
   basedir: ".",
-  paths: ["_js","./components"]
+  paths: ["site/_js","./site/components"]
 };
 
 // caching for the next build (in watch task) instead of create new bundle

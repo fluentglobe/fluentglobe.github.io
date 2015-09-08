@@ -1,0 +1,31 @@
+@import "bourbon";
+
+@import "variables";
+
+@import "fonts";
+
+@import "normalize"; // reset
+
+@import "buttons";
+@import "forms";
+@import "lists";
+@import "tables";
+@import "typography";
+
+html,body {
+  	position: relative;
+    height: 100%;
+    // overflow-x: hidden;  // make sure that menu shown doesn't add horz scroll bars
+}
+body {
+    // overflow-y: visible;
+    width: 100%; // make sure that menu shown doesn't add horz scroll bars
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: rgba(255,0,70,0.8);
+    color: white;
+}
+
+@import "swiper.scss";

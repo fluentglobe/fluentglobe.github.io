@@ -59,34 +59,33 @@ test/
 *.sublime-workspace
 *.sublime-projectcompletions
 
-/components/angular/
-/components/angular-route/
-/components/angular-socialshare/
-/components/angular-toggle-switch/
+/site/components/angular/
+/site/components/angular-route/
+/site/components/angular-socialshare/
+/site/components/angular-toggle-switch/
 
-/components/es5-shim/
-/components/normalize-css/
-/components/bourbon/
-/components/bootstrap/
-/components/essentialjs/
-/components/hammerjs/
-/components/jquery/
-/components/mediaelement/
-/components/snapjs/
-/components/togetherjs/
-/components/turnjs/
-/components/greensock/
-/components/responsiveSlides.js/
-/components/swiper/
-/components/swiper-3d-flow/
-/components/swiper-smooth-progress/
-/components/base64/
-/components/impress.js/
-/components/sockjs-client/
+/site/components/es5-shim/
+/site/components/bourbon/
+/site/components/normalize-css/
+/site/components/bootstrap/
+/site/components/essentialjs/
+/site/components/hammerjs/
+/site/components/jquery/
+/site/components/mediaelement/
+/site/components/snapjs/
+/site/components/togetherjs/
+/site/components/turnjs/
+/site/components/greensock/
+/site/components/responsiveSlides.js/
+/site/components/swiper/
+/site/components/swiper-3d-flow/
+/site/components/swiper-smooth-progress/
+/site/components/base64/
+/site/components/impress.js/
+/site/components/sockjs-client/
 
 # Output folders
 serve
-site
 _site
 
 # hide the AWS and Rsync credentials file
