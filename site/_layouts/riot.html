@@ -24,6 +24,7 @@ base-body-class:
 {% if page.load-swiper %}
   <script>var mainSwiper = new Swiper("main", {
     pagination: '.pagination',
+    paginationClickable: true,
     prevButton: '.go-left',
     nextButton: '.go-right',
     initialSlide: {{ page.initial-slide }},

@@ -9,8 +9,8 @@ main.spread-of-subpages {
       text-align: center;
       font-size: 18px;
       background: #fff;
-      /* Center slide text vertically */
-      /*
+
+      // Center slide text vertically 
       display: -webkit-box;
       display: -ms-flexbox;
       display: -webkit-flex;
@@ -23,15 +23,13 @@ main.spread-of-subpages {
       -ms-flex-align: center;
       -webkit-align-items: center;
       align-items: center;
-      */
   }
 
   // just for subpage named frontpage
-  section.frontpage {
+  .frontpage {
     background-image: url("../images/table-phone.jpg");
     background-repeat: no-repeat;
     background-position: top center;
-    background-attachment: fixed;
     background-size: cover;
     display: block;
     margin-left: auto;
@@ -52,14 +50,9 @@ main.spread-of-subpages {
   }
 
   .pagination {
-    .swiper-pagination-bullet {
-      width: 1em;
-      height: 1em;
-      &:before {
-        content: "*";
-      }
-    }
   }
+
+  .go-left-text, .go-right-text,
   .go-left, .go-right {
     display: block;
     position: absolute;
@@ -68,12 +61,21 @@ main.spread-of-subpages {
     background: none;
     border: 0 none;
     text-decoration: none;
+    z-index: 20;
+  }
+  
+  .go-left-text {
+    left: 2em;
   }
   .go-left {
     &:before {
       content: "〈 ";
     }
     left: 1em;
+  }
+
+  .go-right-text {
+    right: 2em;
   }
   .go-right {
     &:after {
