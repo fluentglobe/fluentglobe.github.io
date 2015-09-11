@@ -66,7 +66,7 @@
 	margin: 0 auto;
 }
 .swiper-slide {
-	float: left;
+	// float: left;
 }
 
 /* IE10 Windows Phone 8 Fixes */
@@ -90,8 +90,8 @@ sizes, pagination, etc.
 .swiper-slide {
 	/* Specify Slides's Size: */
 	
-	/*width: 100%;
-	height: 100%;*/
+	width: 100%;
+	height: 100%;
 }
 .swiper-slide-active {
 	/* Specific active slide styling: */
@@ -115,49 +115,4 @@ Pagination Styles
 .swiper-visible-switch {
 	/* Specific visible button style: */	
 	
-}
-
-main.swiping {
-	@extend .swiper-container;
-    width: 100%;
-    height: 100%;
-
-    .subpage {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
-
-    .pagination {
-    	.swiper-pagination-bullet {
-    		width: 1em;
-    		height: 1em;
-    		&:before {
-    			content: "*";
-    		}
-    	}
-    }
-    .go-left, .go-right {
-    	position: absolute;
-    	top: 1em;
-    }
-    .go-left {
-    	left: 1em;
-    }
-    .go-right {
-    	right: 1em;
-    }
 }

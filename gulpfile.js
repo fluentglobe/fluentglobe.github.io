@@ -50,7 +50,10 @@ gulp.task("styles", function () {
   // Looks at the style.scss file for what to include and creates a style.css file
   return gulp.src(["site/css/*.scss","!site/css/_*.scss"])
     .pipe($.plumber())
-    .pipe($.sass({ includePaths: ["site/_scss","site/components","node_modules/bourbon/app/assets/stylesheets"] }))
+    .pipe($.sass({ includePaths: [
+      "site/_scss",
+      "site/components",
+      "node_modules/bourbon/app/assets/stylesheets"] }))
     // AutoPrefix your CSS so it works between browsers
     .pipe($.autoprefixer("last 1 version", { cascade: true }))
     // Directory your CSS file goes to
@@ -201,7 +204,7 @@ gulp.task("serve:dev", ["styles", "browserify", "jekyll:dev"], function () {
 gulp.task("watch", ["watchify"], function () {
   gulp.watch(["**/*.md", "**/*.html", "**/*.xml", "**/*.txt", "**/*.js", "!_site/**/*.*","!node_modules/**/*.*"], ["jekyll-rebuild"]);
   gulp.watch(["_site/css/*.css"], reload);
-  gulp.watch(["_scss/**/*.scss","site/css/*.scss"], ["styles"]);
+  gulp.watch(["site/_scss/**/*.scss","site/css/*.scss"], ["styles"]);
   // gulp.watch(["_js/**/*.js"], ["browserify"]);
 });
 

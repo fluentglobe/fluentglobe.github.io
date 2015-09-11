@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: 'socialicoregular';
   src: url("../fonts/socialico-webfont.eot");
@@ -598,7 +599,7 @@ body {
  *
  * Released on: January 29, 2014
 */
-.swiper-container, main.swiping {
+.swiper-container, main.spread-of-subpages {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -642,9 +643,6 @@ body {
   transition-timing-function: ease-out;
   margin: 0 auto; }
 
-.swiper-slide {
-  float: left; }
-
 /* IE10 Windows Phone 8 Fixes */
 .swiper-wp8-horizontal {
   -ms-touch-action: pan-y; }
@@ -656,15 +654,15 @@ body {
 Your custom styles, here you need to specify container's and slide's
 sizes, pagination, etc.
 ================================================================*/
-.swiper-container, main.swiping {
+.swiper-container, main.spread-of-subpages {
   /* Specify Swiper's Size: */
   /*width:200px;
 	height: 100px;*/ }
 
 .swiper-slide {
   /* Specify Slides's Size: */
-  /*width: 100%;
-	height: 100%;*/ }
+  width: 100%;
+  height: 100%; }
 
 .swiper-slide-active {
   /* Specific active slide styling: */ }
@@ -684,35 +682,81 @@ Pagination Styles
 .swiper-visible-switch {
   /* Specific visible button style: */ }
 
-main.swiping {
+main.spread-of-subpages {
   width: 100%;
   height: 100%; }
-  main.swiping .subpage {
+  main.spread-of-subpages .subpage {
     text-align: center;
     font-size: 18px;
     background: #fff;
     /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center; }
-  main.swiping .pagination .swiper-pagination-bullet {
+    /*
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+      */ }
+  main.spread-of-subpages section.frontpage {
+    background-image: url("../images/table-phone.jpg");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+    background-size: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+    main.spread-of-subpages section.frontpage .slogan {
+      font-family: sans-serif;
+      font-weight: 200;
+      float: left;
+      marging-top: 200px;
+      padding-left: 6px;
+      font-size: 1.8em;
+      position: absolute;
+      top: 50%;
+      left: 1em;
+      right: 50%; }
+  main.spread-of-subpages .pagination .swiper-pagination-bullet {
     width: 1em;
     height: 1em; }
-    main.swiping .pagination .swiper-pagination-bullet:before {
+    main.spread-of-subpages .pagination .swiper-pagination-bullet:before {
       content: "*"; }
-  main.swiping .go-left, main.swiping .go-right {
+  main.spread-of-subpages .go-left, main.spread-of-subpages .go-right {
+    display: block;
     position: absolute;
-    top: 1em; }
-  main.swiping .go-left {
+    top: 1em;
+    color: black;
+    background: none;
+    border: 0 none;
+    text-decoration: none; }
+  main.spread-of-subpages .go-left {
     left: 1em; }
-  main.swiping .go-right {
+    main.spread-of-subpages .go-left:before {
+      content: "〈 "; }
+  main.spread-of-subpages .go-right {
     right: 1em; }
+    main.spread-of-subpages .go-right:after {
+      content: " 〉"; }
+
+.subpage.press-details {
+  background: purple; }
+
+.subpage.about {
+  background: pink; }
+
+.subpage.course-1-month {
+  background: blue; }
+
+.subpage.course-subscribe {
+  background: green; }
+
+.subpage.other-products {
+  background: yellow; }
