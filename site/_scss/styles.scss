@@ -2,15 +2,15 @@
 
 @import "variables";
 
-@import "fonts";
+@import "general/fonts";
 
-@import "normalize"; // reset
+@import "general/normalize"; // reset
 
-@import "buttons";
-@import "forms";
-@import "lists";
-@import "tables";
-@import "typography";
+@import "general/buttons";
+@import "general/forms";
+@import "general/lists";
+@import "general/tables";
+@import "general/typography";
 
 html,body {
   	position: relative;
@@ -28,5 +28,5 @@ body {
     color: white;
 }
 
-@import "swiper";
-@import "frontpage";
+@import "presentation/swiper";
+@import "presentation/frontpage";
