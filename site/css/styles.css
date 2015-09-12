@@ -982,20 +982,23 @@ main.spread-of-subpages {
     color: black;
     background: none;
     border: 0 none;
+    padding: 10px;
     text-decoration: none;
     z-index: 20; }
   main.spread-of-subpages .go-left-text {
     left: 2em; }
   main.spread-of-subpages .go-left {
-    left: 1em; }
+    left: .25em; }
     main.spread-of-subpages .go-left:before {
-      content: "〈 "; }
+      content: "〈 ";
+      font-size: 30px; }
   main.spread-of-subpages .go-right-text {
     right: 2em; }
   main.spread-of-subpages .go-right {
-    right: 1em; }
+    right: .25em; }
     main.spread-of-subpages .go-right:after {
-      content: " 〉"; }
+      content: " 〉";
+      font-size: 30px; }
 
 .subpage.press-details {
   background: purple; }
