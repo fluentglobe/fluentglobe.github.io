@@ -956,13 +956,16 @@ main.spread-of-subpages {
     -webkit-align-items: center;
     align-items: center; }
   main.spread-of-subpages .frontpage {
-    background-image: url("../images/table-phone.jpg");
+    background-image: url("../images/lamp-bg-small.png");
     background-repeat: no-repeat;
-    background-position: top center;
-    background-size: cover;
+    background-position: center center;
+    background-size: auto 100%;
     display: block;
     margin-left: auto;
     margin-right: auto; }
+    @media (min-height: 641px) {
+      main.spread-of-subpages .frontpage {
+        background-image: url(../images/lamp-bg.png); } }
     main.spread-of-subpages .frontpage .slogan {
       font-family: sans-serif;
       font-weight: 200;

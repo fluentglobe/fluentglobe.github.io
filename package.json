@@ -64,11 +64,13 @@
   },
   "scripts": {
     "prebuild": "node_modules/.bin/bower install",
+    "test": "node_modules/.bin/jshint",
     "start": "gulp"
   },
   "devDependencies": {
     "base64": "^2.1.0",
     "framework7": "^1.2.0",
+    "jshint": "^2.8.0",
     "riot": "^2.2.4",
     "swiper": "^3.1.2"
   }

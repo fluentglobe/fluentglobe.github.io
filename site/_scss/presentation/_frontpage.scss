@@ -27,13 +27,18 @@ main.spread-of-subpages {
 
   // just for subpage named frontpage
   .frontpage {
-    background-image: url("../images/table-phone.jpg");
+    background-image: url("../images/lamp-bg-small.png");
     background-repeat: no-repeat;
-    background-position: top center;
-    background-size: cover;
+    background-position: center center;
+    background-size: auto 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+
+    // for msaller screens there is no need for the big size, and it will load faster on mobile networks
+    @media (min-height:641px) {
+      background-image: url(../images/lamp-bg.png);
+    }
 
     //Our slogan
     .slogan {
