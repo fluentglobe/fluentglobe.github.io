@@ -1,0 +1,59 @@
+---
+layout: old/master
+theme: main
+blog-link: no
+js-bundle: /js/body.js
+app-name: fluentApp
+fresh-form: true
+no-body-class: impress-not-supported
+base-body-class: with-menu 
+og-tags:
+- Language Learning
+- Learning German
+- Learning French
+- Learning Italian
+- Expatriates
+og-images:
+- http://fluentglobe.com/images/icon.jpg
+---
+
+<script type="application/config">{% include signup-config.js %}</script>
+
+<main class="survey-page kat-henry-info-page fluid">
+
+  <header class="picture-background">
+    {% include old/hamburger.html %}
+  {% include intro/understood-networked.html %}
+
+    <footer class="links-bar">
+      {% include old/site-follow.html %}
+    </footer>
+  </header>
+
+  <article class="expat-happiness">
+
+    <section class="first">
+    <div class="center-piece wide-center-piece">
+    {% include stress-free/expat-happiness.html %}
+    </div>
+    </section>
+
+    <section class="second even" style="background-color: #eee;">
+      <div class="center-piece wide-center-piece">
+      <h2>Please Participate</h2>
+      <p>Could you spare a minute to fill out our survey?</p>
+      <iframe class="wufoo" src="https://fluentglobe.wufoo.com/forms/expat-happiness/" style="">
+      </iframe>
+      </div>
+    </section>
+
+		<footer class="constrained bookspread">
+      {% include old/page-footer-etc.html %}
+			{% include page-footer-copyright.html %}
+		</footer>
+
+    </article>
+</main>
+
+{% include old/site-menu.html %}
+

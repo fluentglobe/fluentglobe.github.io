@@ -1,0 +1,58 @@
+---
+layout: old/master
+js-bundle: /js/body.js
+app-name: fluentApp
+fresh-form: true
+no-body-class: impress-not-supported
+base-body-class: with-menu 
+og-tags:
+- Language Learning
+- Learning German
+- Learning French
+- Learning Italian
+- Expatriates
+og-images:
+- http://fluentglobe.com/images/icon.jpg
+---
+
+<script type="application/config">{% include signup-config.js %}</script>
+
+<main class="kat-henry-feature-page with-lead-and-menu fluid">
+
+  <header class="picture-background feature-presentation" role="presentation">
+    {% include old/hamburger.html %}
+  {% include intro/understood-networked.html %}
+  <!-- {% include intro/fallback-message.html %} -->
+
+    <div class="center-piece future-show-when-authenticated" style="position:relative;">
+      <h1>Stress-Free First Year in Switzerland, the Book</h1>
+      <p>Now that you have been going through the presentation, I really hope you like it, I thought you may want it as a book</p>
+      <p>There's a lot of information and links, so it is easier to skim through a book instead
+      of listening to the presentation all over again.</p>
+
+      <div>
+      <a href="http://cache.fluentglobe.com/assets/7766449900/First%20Year%20in%20Switzerland.pdf" class="btn tinted" target="_file">Download as PDF</a>
+      </div>
+    </div>
+  
+    <footer class="links-bar">
+      {% include old/site-follow.html %}
+    </footer>
+  </header>
+
+  <article class="cta-download-file">
+
+    <section class="first hide-when-authenticated" style="background-color: white;">
+      {% include stress-free/switzerland-offer.html %}
+    </section>
+
+		<footer class="constrained bookspread">
+      {% include old/page-footer-etc.html %}
+			{% include page-footer-copyright.html %}
+		</footer>
+
+    </article>
+
+</main>
+{% include old/site-menu.html %}
+

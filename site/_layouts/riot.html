@@ -1,0 +1,47 @@
+---
+base-body-class:
+---
+<!DOCTYPE html>
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8" ng-app="{{ page.app-name }}"> <![endif]-->
+<!--[if (gte IE 9)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html lang="en" class="no-js" ng-app="{{ page.app-name }}"><!--<![endif]-->
+
+<head>
+  {% include mobile-first-head.html %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+  {% if site.y_key %}<META name="y_key" content="{{ site.y_key }}">{% endif %}
+</head>
+
+<body class="{{ page.base-body-class }}{{ page.body-class }}"
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
+>
+
+{{ content }}
+
+  {% if page.js-bundle %}
+  <script src="{{ page.js-bundle }}"></script>
+  {% endif %}
+  
+{% if page.load-swiper %}
+  <script>var mainSwiper = new Swiper("main", {
+    pagination: '.pagination',
+    paginationClickable: true,
+    prevButton: '.go-left',
+    nextButton: '.go-right',
+    initialSlide: {{ page.initial-slide }},
+    speed: 400,
+    spaceBetween: 100
+  });</script>
+{% endif %}
+
+  {% if site.analytics_id %}<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '{{ site.analytics_id }}', '{{ site.domain }}');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+</script>{% endif %}
+</body>
+</html>

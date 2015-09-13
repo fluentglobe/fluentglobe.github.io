@@ -1,0 +1,13 @@
+{
+  "name": "fluentglobe",
+  "version": "0.0.1",
+  "main": "assets/styles.css",
+  "dependencies": {
+    "mediaelement": "latest",
+    "swiper": "~2.4.1",
+    "base64": "~0.3.0",
+    "sockjs-client": "~0.3.4",
+    "framework7": "~1.2.0",
+    "riot": "~2.2.4"
+  }
+}
