@@ -56,6 +56,7 @@ gulp.task("styles", function () {
       "node_modules/bourbon/app/assets/stylesheets"] }))
     // AutoPrefix your CSS so it works between browsers
     .pipe($.autoprefixer("last 1 version", { cascade: true }))
+    //TODO or perhaps postcss
     // Directory your CSS file goes to
     .pipe(gulp.dest("site/css/"))
     .pipe(gulp.dest("_site/css/"))
@@ -101,6 +102,7 @@ function browserifyError(err) {
   this.end();
 }
 
+//TODO userev riot + swiper + dom7
 
 gulp.task('browserify', function() {
   return gulp
