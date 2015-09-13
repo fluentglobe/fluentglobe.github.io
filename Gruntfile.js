@@ -128,14 +128,6 @@ module.exports = function(grunt) {
       */
     },
 
-    coffee: {
-      serverDev: {
-        files: {
-          'js/sync.js':'../libs/simperium-js/sync.coffee'
-        }
-      }
-    },
-
     // --- COPY ---
     copy: {
       angular: {
@@ -283,14 +275,9 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
 
-      html: {
-        files: ['**/*.html','js/*.js','css/*.css','assets','fonts','images'],
-        tasks: ['jekyll:dev']
-      },
-
       less: {
         files: ['_less/*.less','assets/less/**/*.less',"./css/*.less","components/**/*.less"],
-        tasks: ['less:dev','less:dist','jekyll:dev']
+        tasks: ['less:dev','less:dist']
       },
       // sass: {
       //   files: ['assets/sass/partials/**/*.scss', 'assets/sass/modules/**/*.scss',"./css/*.scss"],
@@ -301,8 +288,7 @@ module.exports = function(grunt) {
         tasks: [
           //'jshint',
           // 'browserify', //TODO gotta go
-          'concat:essential','concat:mods',  'coffee:serverDev', 'uglify:server', 'concat:serverDev',
-          'jekyll:dev'
+          'concat:essential','concat:mods',  'uglify:server', 'concat:serverDev'
           ],
 
         options: {
@@ -379,47 +365,6 @@ module.exports = function(grunt) {
         "customTests" : []
     },
 
-    jekyll: {
-      options: {
-        // bundleExec: true
-        // ,src: '<%= app %>'
-      },
-
-      dev: {
-        options: {
-          dest: '../fluentglobe_site',
-          config: ['_config.yml','_config_dev.yml']
-        }
-      },
-
-      dist: {
-        options: {
-          dest: '../fluentglobe_site',
-          config: '_config.yml'
-        }
-      },
-
-      serve: {
-        options: {
-          serve: true,
-          drafts: true,
-          watch: true
-        }
-      }
-    },
-
-    connect: {
-      server: {
-        options: {
-          keepalive: true,
-          hostname: '*',
-          // livereload: true,
-          base: '../fluentglobe_site/',
-          port: 4400
-        }
-      }
-    },
-
     concurrent: {
       tasks: ['connect:server' , 'watch'],
       options: {
@@ -453,7 +398,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -461,7 +405,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   // grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-jekyll');
   grunt.loadNpmTasks('grunt-concurrent');
   grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-browserify');
@@ -472,7 +415,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'browserify','copy',
     'less:dev','less:dist',
-    'concat:essential','concat:mods', 'coffee:serverDev', 'uglify:server','concat:serverDev','jekyll:dev',
+    'concat:essential','concat:mods', 'uglify:server','concat:serverDev',
     'uglify',
     'concurrent']
     );
@@ -481,22 +424,7 @@ module.exports = function(grunt) {
     'modernizr','copy:mediaelement','exec:ffmpeg'
     ]);
   grunt.registerTask('build', ['clean','modernizr','jshint','copy:mediaelement',
-    'qunit','coffee','concat',
-    'uglify','jekyll:dist'
+    'qunit','concat',
+    'uglify'
     ]);
-  grunt.registerTask('serve', ['jekyll:serve']);
-
-  // grunt.registerTask('protectserve', function() {
-
-  //   var $secret = "mysecret";
-  //   var $filepath = "paidcontent.wmv";
-  //   var $splashpage = "http://www.website.com/protected.php";
-  //   var $b64splash = base64_encode($splashpage);
-  //   var $expiretime = time() + 60; // unix epoch
-  //   var $user_ip = $_SERVER['REMOTE_ADDR'];
-  //   var $rules = "expiretime=$expiretime;ip=$user_ip;badurl=$b64splash";
-  //   var $hash = hash_hmac('sha256',$rules . $filepath, $secret, FALSE);
-  //   var $link = "http://username.cachefly.net/Protected/$rules/$hash/$filepath";
-
-  // });
 };

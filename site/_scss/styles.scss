@@ -1,0 +1,32 @@
+@import "bourbon";
+
+@import "variables";
+
+@import "general/fonts";
+
+@import "general/normalize"; // reset
+
+@import "general/buttons";
+@import "general/forms";
+@import "general/lists";
+@import "general/tables";
+@import "general/typography";
+
+html,body {
+  	position: relative;
+    height: 100%;
+    // overflow-x: hidden;  // make sure that menu shown doesn't add horz scroll bars
+}
+body {
+    // overflow-y: visible;
+    width: 100%; // make sure that menu shown doesn't add horz scroll bars
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+    background: rgba(255,0,70,0.8);
+    color: white;
+}
+
+@import "presentation/swiper";
+@import "presentation/frontpage";
