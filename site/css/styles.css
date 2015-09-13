@@ -969,14 +969,40 @@ main.spread-of-subpages {
     main.spread-of-subpages .frontpage .slogan {
       font-family: sans-serif;
       font-weight: 200;
-      float: left;
-      marging-top: 200px;
       padding-left: 6px;
       font-size: 1.8em;
       position: absolute;
       top: 50%;
       left: 1em;
       right: 50%; }
+    main.spread-of-subpages .frontpage figure.iphone {
+      background-image: url(../images/iphone-4s-isolated.jpg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: auto 100%;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: -30%;
+      height: 35%;
+      width: 50%;
+      -webkit-transform: rotate(-30deg);
+          -ms-transform: rotate(-30deg);
+              transform: rotate(-30deg); }
+  main.spread-of-subpages .about figure.iphone {
+    background-image: url(../images/iphone-4s-isolated.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: auto 100%;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -30%;
+    height: 35%;
+    width: 50%;
+    -webkit-transform: rotate(-30deg);
+        -ms-transform: rotate(-30deg);
+            transform: rotate(-30deg); }
   main.spread-of-subpages .go-left-text, main.spread-of-subpages .go-right-text,
   main.spread-of-subpages .go-left, main.spread-of-subpages .go-right {
     display: block;
