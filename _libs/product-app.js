@@ -1,10 +1,10 @@
-require('./impl.js'); 
+require('./impl.js');
 require('./form.js');
 require('./router.js');
 
 function enhance_book(el,role,config) {
 
-	var reader = require('../../libs/book-reader/index.js');
+	// var reader = require('../../libs/book-reader/index.js');
 	var	book = new reader.Book(el,config);
 
 	return book;
@@ -44,4 +44,3 @@ if (window.angular) {
     }]);
 
 }
-
