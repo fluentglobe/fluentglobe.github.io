@@ -1,0 +1,18 @@
+main.spread-of-subpages {
+  .about {
+
+    figure.iphone {
+      background-image: url(../images/iphone-4s-isolated.jpg);
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: auto 100%;
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: -30%;
+      height: 35%;
+      width: 50%;
+      transform: rotate(-30deg);
+    }
+  }
+}
