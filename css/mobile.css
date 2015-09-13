@@ -1356,14 +1356,19 @@ body.frontpage main.spread-of-subpages article.subpage {
   min-width: 200px;
 }
 body.frontpage article.frontpage {
-  background-image: url("../images/table-phone.jpg");
+  background-image: url("../images/lamp-bg-small.png");
   background-repeat: no-repeat;
-  background-position: top center;
+  background-position: center center;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: auto 100%;
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+@media (min-height: 641px) {
+  body.frontpage article.frontpage {
+    background-image: url("../images/lamp-bg.png");
+  }
 }
 body.frontpage article.frontpage .slogan {
   font-family: sans-serif;
