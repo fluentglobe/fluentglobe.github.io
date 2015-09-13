@@ -37,9 +37,9 @@ local development setup
 2. install grunt command globally
 3. install node modules
 4. install bower modules
-4. Run default 'grunt' task locally on http://localhost:4000 using the Terminal
+4. Run default 'gulp' task locally on http://localhost:3000 using the Terminal
 5. Open ~/Sites/fluentglobe.github.io in Text Editor(atom)
-6. Open http://localhost:4400 in Safari
+6. Open http://localhost:3000 in Safari
 
     sudo gem install jekyll
     .. enter password
@@ -51,3 +51,15 @@ You may need to install Homebrew (http://brew.sh) and node/npm (nodejs.org)
 
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew install node
+
+local daily development
+=======================
+
+Once installed you can easily start the development server
+
+1. start server
+
+    cd ~/Sites/fluentglobe.github.io
+    npm start
+
+2. Open http://localhost:3000 in Safari
