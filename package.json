@@ -43,6 +43,7 @@
     "grunt-responsive-videos": "~0.1.1"
   },
   "scripts": {
+    "test": "node_modules/.bin/jshint",
     "start": "grunt build"
   }
 }
