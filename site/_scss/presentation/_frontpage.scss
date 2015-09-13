@@ -27,7 +27,7 @@ main.spread-of-subpages {
 
   // just for subpage named frontpage
   .frontpage {
-    background-image: url("../images/lamp-bg-small.png");
+    background-image: url("../images/lamp-bg-small.jpg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: auto 100%;
@@ -37,7 +37,7 @@ main.spread-of-subpages {
 
     // for msaller screens there is no need for the big size, and it will load faster on mobile networks
     @media (min-height:641px) {
-      background-image: url(../images/lamp-bg.png);
+      background-image: url(../images/lamp-bg.jpg);
     }
 
     //Our slogan
@@ -61,7 +61,9 @@ main.spread-of-subpages {
   .go-left, .go-right {
     display: block;
     position: absolute;
-    top:1em;
+    top:10px;
+    line-height: 30px;
+    height: 50px;
     color:black;
     background: none;
     border: 0 none;
@@ -78,7 +80,8 @@ main.spread-of-subpages {
       content: "〈 ";
       font-size: 30px;
     }
-    left: .25em;
+    left: 0;
+    padding-right: 100px;
   }
 
   .go-right-text {
@@ -89,7 +92,8 @@ main.spread-of-subpages {
       content: " 〉";
       font-size: 30px;
     }
-    right: .25em;
+    right: 0;
+    padding-left: 100px;
   }
 }
 
