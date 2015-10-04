@@ -22,24 +22,33 @@ main.spread-of-subpages {
       font-weight:200;
       // margin-top: 200px;
       padding-left: 6px;
-      font-size: 1.8em;
+      font-size: 1.5em;
       position: absolute;
-      top:50%;
-      left: 1em; right:50%;
+      top:40%;
+      left: 50%; right:1em;
+      text-align: right;
+
+      @media (min-width: 640px) {
+        margin: 0 auto; // in the middle under lamp
+        width: 12em;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
     }
 
     figure.iphone {
-      background-image: url(../images/iphone-4s-isolated.jpg);
+      background-image: url(../images/iphone-6-front.jpg);
       background-repeat: no-repeat;
       background-position: center center;
       background-size: auto 100%;
       display: block;
       position: absolute;
-      top: 50%;
-      left: -30%;
-      height: 35%;
+      top: 40%;
+      left: -10%;
+      height: 50%;
       width: 50%;
-      transform: rotate(-30deg);
+      // transform: rotate(-30deg);
     }
   }
 

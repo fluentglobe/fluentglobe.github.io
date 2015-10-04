@@ -1015,37 +1015,58 @@ main.spread-of-subpages .frontpage {
     font-family: sans-serif;
     font-weight: 200;
     padding-left: 6px;
-    font-size: 1.8em;
+    font-size: 1.5em;
     position: absolute;
-    top: 50%;
-    left: 1em;
-    right: 50%; }
+    top: 40%;
+    left: 50%;
+    right: 1em;
+    text-align: right; }
+    @media (min-width: 640px) {
+      main.spread-of-subpages .frontpage .slogan {
+        margin: 0 auto;
+        width: 12em;
+        left: 0;
+        right: 0;
+        text-align: center; } }
   main.spread-of-subpages .frontpage figure.iphone {
-    background-image: url(../images/iphone-4s-isolated.jpg);
+    background-image: url(../images/iphone-6-front.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-size: auto 100%;
     display: block;
     position: absolute;
-    top: 50%;
-    left: -30%;
-    height: 35%;
-    width: 50%;
-    -webkit-transform: rotate(-30deg);
-        -ms-transform: rotate(-30deg);
-            transform: rotate(-30deg); }
+    top: 40%;
+    left: -10%;
+    height: 50%;
+    width: 50%; }
 
 main.spread-of-subpages .about figure.iphone {
-  background-image: url(../images/iphone-4s-isolated.jpg);
+  background-image: url(../images/iphone-6-about.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto 100%;
   display: block;
   position: absolute;
-  top: 50%;
-  right: -30%;
-  height: 35%;
-  width: 50%;
-  -webkit-transform: rotate(-30deg);
-      -ms-transform: rotate(-30deg);
-          transform: rotate(-30deg); }
+  top: 40%;
+  right: -10%;
+  height: 45%;
+  width: 50%; }
+
+main.spread-of-subpages .about .slogan {
+  font-family: sans-serif;
+  font-weight: 200;
+  padding-left: 6px;
+  font-size: 1.5em;
+  position: absolute;
+  top: 30%;
+  left: 1em;
+  right: 50%;
+  text-align: left; }
+
+main.spread-of-subpages .about footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 35px;
+  text-align: center;
+  font-size: 9px; }
