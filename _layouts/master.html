@@ -41,14 +41,14 @@ base-body-class:
 
 <body class="{{ page.base-body-class }}{{ page.body-class }}"
 {% if page.appify %} appify="{{ page.appify }}"{% endif %}
-{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %} 
+{% if page.body-controller %} ng-controller="{{ page.body-controller }}"{% endif %}
 >
   {% if page.facebook-app-id %}<div id="fb-root"></div>{% endif %}
 {{ content }}
 
-  <script src="/js/jquery.min.js"></script>  
-  <script {%if site.debug %}src="/js/angular.js"{% else %}src="/js/angular.min.js"{% endif %}></script>  
-  <script {%if site.debug %}src="/js/angular-mods.js"{% else %}src="/js/angular-mods.min.js"{% endif %}></script>  
+  <script src="/js/jquery.min.js"></script>
+  <script {%if site.debug %}src="/js/angular.js"{% else %}src="/js/angular.min.js"{% endif %}></script>
+  <script {%if site.debug %}src="/js/angular-mods.js"{% else %}src="/js/angular-mods.min.js"{% endif %}></script>
   <script src="/js/mediaelement-and-player.min.js"></script>
   {% if page.with_layerslider %}<script src="/js/greensock.js" type="text/javascript"></script>
   <!-- LayerSlider script files -->
@@ -101,12 +101,6 @@ base-body-class:
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=266550166850505&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>{% endif %}
-
-{% if page.fresh-button or page.fresh-form %}<script type="text/javascript" src="http://assets.freshdesk.com/widget/freshwidget.js"></script>
-{% endif %}{% if page.fresh-button %}
-<script type="text/javascript">
-    FreshWidget.init("", {"queryString": "&widgetType=popup", "widgetType": "popup", "buttonText": "Help", "buttonColor": "white", "buttonBg": "#E73A00", "backgroundImage": "", "alignment": "3", "offset": "20px", "formHeight": "450px", "url": "http://help.fluentglobe.com"} );
-</script>{% endif %}
 
 <script type="text/javascript">var switchTo5x=true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
